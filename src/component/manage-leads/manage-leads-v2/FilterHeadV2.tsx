@@ -132,10 +132,10 @@ const FilterHeadV2: React.FC<PropsType> = ({
         });
         setSelectedValues((prev) => ({ ...prev, [name]: selectedOption }));
 
-        if (selectedOption && name === "current_lead_stage_display_name") {
+        if (selectedOption && name === "currentLeadStageDisplay_name") {
             dispatch(getleadSubStagesById(selectedOption.value));
         }
-        if (selectedOption && name === "academic_career_description") {
+        if (selectedOption && name === "academicCareerDescription") {
             dispatch(getApByCareerId(selectedOption.value));
         }
     };

@@ -35,7 +35,7 @@ export interface ManageLeadType {
 
 
 export interface ManageLeadV1Type  {
-  lead_capture_id: number;
+  leadCaptureId: number;
   created_at: string; 
   email: string;
   name: string;

@@ -7,14 +7,14 @@ import { sectionHeadData } from "../../../data/manage-leads/sectionHeadData";
 import { filterInputData } from "../../../data/manage-leads/filter-head-data";
 
 const ManageLeadsTableV1: React.FC = () => {
-  const initialPayload = localStorage.getItem("filterpayload");
+  const initialPayload = sessionStorage.getItem("filterpayload");
   const [filterpayload, setFilterPayload] = useState<Record<string, { key: string; value: string }>>(
     initialPayload ? JSON.parse(initialPayload) : {}
   );
 
   // Load filter from localStorage on initial mount
   useEffect(() => {
-    const savedPayload = localStorage.getItem("filterpayload");
+    const savedPayload = sessionStorage.getItem("filterpayload");
     if (savedPayload) {
       setFilterPayload(JSON.parse(savedPayload));
     }

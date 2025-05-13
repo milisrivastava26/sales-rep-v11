@@ -61,6 +61,10 @@ const CustomForm: React.FC<FormType> = ({
   const { responseForCampus } = useSelector((state: RootState) => state.getAllActiveCampus);
   const { isLoading: isLoadingFoCampusSave } = useSelector((state: RootState) => state.saveCampusInterestedIn);
 
+  const {
+    isLoading: isLoadingForUpdateLeadProperties,
+  } = useSelector((state: RootState) => state.LeadPropertiesUpdate);
+
   return (
     <Formik
       initialValues={initialValues}
@@ -190,7 +194,7 @@ const CustomForm: React.FC<FormType> = ({
                 isDisabled={
                   isMode === "quckAdd"
                     ? isLoadingForquickAdd
-                    : isMode === "personalDetails" ? isLoadingFoCampusSave : false
+                    : isMode === "personalDetails" ? isLoadingFoCampusSave || isLoadingForUpdateLeadProperties : false
                 }
                 style={`bg-blue-700 px-5 py-2 rounded text-white text-base font-medium`}
               />

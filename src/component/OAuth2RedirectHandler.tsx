@@ -22,11 +22,11 @@ const OAuth2RedirectHandler = () => {
       params.append("redirect_uri", `${redirect_URI}/login/oauth2/code/unifcrm`);
 
       axios.post(`${baseURL}:9001/oauth2/token`, params, {
-          auth: {
-            username: clientId,
-            password: "secret",
-          },
-        })
+        auth: {
+          username: clientId,
+          password: "secret",
+        },
+      })
         .then((response) => {
           const token = response.data.access_token;
           localStorage.setItem("access_token", response.data.access_token);

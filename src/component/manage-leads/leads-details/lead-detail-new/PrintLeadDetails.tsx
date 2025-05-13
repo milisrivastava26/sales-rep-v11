@@ -1,5 +1,6 @@
 import React from "react";
 import { transformAcademicDetails } from "../../../../util/actions/transformAcademicDetails";
+import dayjs from "dayjs";
  
 interface propstype {
   data: any;
@@ -9,6 +10,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
   const addressDetails = data[1];
   const bioInfo = data[2];
   const acadDetialsRaw = data[3];
+  const srmusetInfo = data[4];
   const logo = "/srmulogo.png";
  
   const academicDetails = transformAcademicDetails(acadDetialsRaw);
@@ -630,18 +632,18 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
         <div style={{ marginBottom: "0.5rem" }}>
           Are you interested in SRMUSET:
           <label style={{ display: "inline-flex", alignItems: "center", marginLeft: "0.5rem", marginRight: "1rem" }}>
-            <input type="checkbox" readOnly />
+            <input type="checkbox" readOnly checked={srmusetInfo.isSrmuSetOpted === true} />
             <span style={{ marginLeft: "0.25rem" }}>Yes</span>
           </label>
           <label style={{ display: "inline-flex", alignItems: "center" }}>
-            <input type="checkbox" />
+            <input type="checkbox" checked={srmusetInfo.isSrmuSetOpted === false} />
             <span style={{ marginLeft: "0.25rem" }}>No</span>
           </label>
         </div>
  
         <div>
           If Yes, then provide an examination date (dd/mm/yyyy):
-          <span style={{ display: "inline-block", borderBottom: "1px solid black", width: "12rem", marginLeft: "0.25rem" }}></span>
+          <span style={{ display: "inline-block", borderBottom: "1px solid black", width: "12rem", marginLeft: "0.25rem" }}>{srmusetInfo.isSrmuSetOpted === true ? dayjs(srmusetInfo.preferedDate || "").format("YYYY-MM-DD") : ""}</span>
         </div>
       </form>
     </div>

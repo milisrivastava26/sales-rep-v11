@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import store, { RootState } from "../../../../store";
 import ManageHamburgerColumn from "./ManageHamburgerColumn";
 import CustomModal from "../../../../util/custom/ui/CustomModal";
-import { onDisableModalForHamburger } from "../../../../store/ui/ui-slice";
+import { onDisableModalForHamburger, setSearchQuery } from "../../../../store/ui/ui-slice";
 import { InputDataType } from "../../../../data/manage-leads/filter-head-data";
 import { hamburgerModalData } from "../../../../data/manage-leads/ManageLeadsData";
 import { getleadSubStagesById } from "../../../../store/lead-capturing/get-allLeadSubStages-byId-slice";
@@ -21,7 +21,7 @@ import { getApplicationStatusValues } from "../../../../store/lead-capturing/get
 import { getAcademicCareerValues } from "../../../../store/get/get-all-academic-career-slice";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { getPaginatedLeads } from "../../../../store/pagination-v1/get-paginatedLead-slice";
-import { getsearchedLeads, resetsearchedLeads } from "../../../../store/pagination-v1/get-searched-leads-slice";
+import { resetsearchedLeads } from "../../../../store/pagination-v1/get-searched-leads-slice";
 
 interface PropsType {
   inputData: InputDataType[];
@@ -80,7 +80,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
 
   // Load from localStorage on mount
   useEffect(() => {
-    const storedSelected = localStorage.getItem("selectedValues");
+    const storedSelected = sessionStorage.getItem("selectedValues");
     if (storedSelected) {
       const parsed = JSON.parse(storedSelected);
       setSelectedValues(parsed);
@@ -93,10 +93,21 @@ const FilterHeadV1: React.FC<PropsType> = ({
     }
   }, []);
 
+  const { isLoading: isLoadingForSearchedLeads } = useSelector((state: RootState) => state.getsearchedLeads);
+
+  useEffect(() => {
+    if (isLoadingForSearchedLeads) {
+      setFilterPayload({});
+      setSelectedValues({});
+      sessionStorage.removeItem("filterpayload");
+      sessionStorage.removeItem("selectedValues");
+    }
+  }, [isLoadingForSearchedLeads])
+
   // Save to localStorage when filterpayload/selectedValues change
   useEffect(() => {
-    localStorage.setItem("filterpayload", JSON.stringify(filterpayload));
-    localStorage.setItem("selectedValues", JSON.stringify(selectedValues));
+    sessionStorage.setItem("filterpayload", JSON.stringify(filterpayload));
+    sessionStorage.setItem("selectedValues", JSON.stringify(selectedValues));
   }, [filterpayload, selectedValues]);
 
   const handleMenuOpen = (name: string) => {
@@ -124,7 +135,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
     selectedOption: { value: string; label: string } | null
   ) => {
     store.dispatch(resetsearchedLeads());
-    store.dispatch(getsearchedLeads(""));
+    store.dispatch(setSearchQuery(""));
     setFilterPayload((prev: any) => {
       const updated = { ...prev };
       if (!selectedOption) delete updated[name];
@@ -144,7 +155,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
 
   const handleDateChange = (name: string, value: string) => {
     store.dispatch(resetsearchedLeads());
-    store.dispatch(getsearchedLeads(""));
+    store.dispatch(setSearchQuery(""));
     setFilterPayload((prev: any) => {
       const updated = { ...prev };
       if (!value) delete updated[name];
@@ -156,12 +167,13 @@ const FilterHeadV1: React.FC<PropsType> = ({
 
   const resetFilters = () => {
     store.dispatch(resetsearchedLeads());
-    store.dispatch(getsearchedLeads(""));
+    store.dispatch(setSearchQuery(""));
     setFilterPayload({});
     setSelectedValues({});
-    localStorage.removeItem("filterpayload");
-    localStorage.removeItem("selectedValues");
+    sessionStorage.removeItem("filterpayload");
+    sessionStorage.removeItem("selectedValues");
   };
+
 
 
   useEffect(() => {
@@ -184,7 +196,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
   const handleRefresh = () => {
     if (Object.keys(userDetails).length !== 0) {
       store.dispatch(resetsearchedLeads());
-      store.dispatch(getsearchedLeads(""));
+      store.dispatch(setSearchQuery(""));
       const isSalesRepUser = !userDetails?.authority?.some(
         (role: string) => role === "ROLE_ADMIN" || role === "ROLE_MANAGER"
       );
@@ -312,7 +324,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
             return null;
           })}
 
-        
+
         </div>
         <div className="flex gap-3 items-center justify-end mt-2">
           <div className="">
@@ -329,7 +341,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
           <div className=" flex justify-end cursor-pointer" onClick={handleRefresh}>
             <HiOutlineRefresh className="text-xl" />
           </div>
-          </div>
+        </div>
 
         <Tooltip anchorSelect=".column" place="left" className="custom-tooltip">
           <div className="tooltip-content">

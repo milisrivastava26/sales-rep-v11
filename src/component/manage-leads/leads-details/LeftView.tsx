@@ -94,8 +94,6 @@ const LeftView: React.FC = () => {
   }, [responseOfCampusInterested])
 
   useEffect(() => {
-
-    console.log("inisde 2")
     const careerId = activeEnquiry[0]?.academicCareerId;
     const stateId = leadPropertiesDataById.stateId;
     const target = "currentCoreStateId";
@@ -148,7 +146,6 @@ const LeftView: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log("inisde 3")
     if (
       !isError &&
       responseOfUpdateLeadProperties !== "" &&

@@ -100,7 +100,7 @@ const AcademicInfoForm: React.FC<FormType> = ({
       setFieldValue("TwelfthMarksOrGrade", "N/A")
       setIsDisabledForTwelfthMarks(true)
     }
-    else {
+    else if(fieldName === "coreTwelfthResultStatus" && selectedOption?.value === "DECLARED") {
       setIsDisabledForTwelfthMarks(false);
       setFieldValue("TwelfthMarksOrGrade", "");
     }
@@ -109,7 +109,7 @@ const AcademicInfoForm: React.FC<FormType> = ({
       setFieldValue("coreDiplomaMarks", "N/A");
       setIsDisabledForDiplomaMarks(true)
     }
-    else {
+    else if(fieldName === "coreDiplomaResultStatus" && selectedOption?.value === "DECLARED") {
       setIsDisabledForDiplomaMarks(false);
       setFieldValue("coreDiplomaMarks", "");
     }
@@ -117,7 +117,7 @@ const AcademicInfoForm: React.FC<FormType> = ({
       setFieldValue("coreUgMarks", "N/A");
       setIsDisabledForUgMarks(true)
     }
-    else {
+    else if (fieldName === "coreUgResultStatus" && selectedOption?.value === "DECLARED") {
       setIsDisabledForUgMarks(false);
       setFieldValue("coreUgMarks", "");
     }

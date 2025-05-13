@@ -52,7 +52,7 @@ const ChangeStage: React.FC<changeStageType> = ({ onHideModal, isMode }) => {
     leadSubStagesDataById
   );
 
-  const key = isMode === "advanceSearch" ? "leadCaptureId" : "lead_capture_id";
+  const key = isMode === "advanceSearch" ? "leadCaptureId" : "leadCaptureId";
   const { getAllCheckSelectedDataFormCustomTable } = useSelector(
     (state: RootState) => state.ui
   );

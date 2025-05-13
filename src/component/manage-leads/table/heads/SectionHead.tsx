@@ -68,18 +68,6 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
     getAllCheckSelectedDataFormCustomTable
   );
 
-  // useEffect(() => {
-  //   let selectedCaptureId: Array<number> = [];
-  //   getAllCheckSelectedDataFormCustomTable &&
-  //     getAllCheckSelectedDataFormCustomTable.forEach((item: any) => {
-  //       if (item.application_status_name === "Offer Analysis") {
-  //         toast.error(`Merging not possible ${item.lead_capture_id} is at offer analysis step`)
-  //       } else {
-  //         selectedCaptureId.push(item.lead_capture_id);
-  //       }
-  //     });
-  //   setSelectedLeads(selectedCaptureId);
-  // }, [getAllCheckSelectedDataFormCustomTable]);
 
   // Define the callbacks to be executed
   const closeSubDataHandelr = () => dispatch(uiSliceAction.onDisabledSubData());
@@ -129,12 +117,12 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
     const selectedCaptureId: Array<number> = [];
     getAllCheckSelectedDataFormCustomTable &&
       getAllCheckSelectedDataFormCustomTable.forEach((item: any) => {
-        if (applicationStatus.includes(item.application_status_name)) {
+        if (applicationStatus.includes(item.applicationStatusName)) {
           toast.error(
-            `Merging not possible ${item.lead_capture_id} is at ${item.application_status_name} step`
+            `Merging not possible ${item.leadCaptureId} is at ${item.applicationStatusName} step`
           );
         } else {
-          selectedCaptureId.push(item.lead_capture_id);
+          selectedCaptureId.push(item.leadCaptureId);
         }
       });
 

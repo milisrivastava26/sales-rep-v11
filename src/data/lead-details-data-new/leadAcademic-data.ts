@@ -24,6 +24,7 @@ export const academicDetailsFormInput = [
         type: "select",
         name: "coreTenthMarkingSchemeId", //tenth_marketing_scheme
         label: "10th Marking Scheme",
+        isrequired: true,
       },
       {
         id: 4,
@@ -71,6 +72,7 @@ export const academicDetailsFormInput = [
         type: "select",
         name: "coreTwelfthMarkingSchemeId",
         label: "12th Marking Scheme",
+        isrequired: true,
       },
       {
         id: 5,
@@ -202,7 +204,7 @@ export const getValidationSchemaForAcademicDetails = (
     // Tenth Details
     school: Yup.string().required("10th School is required"),
     coreTenthBoardId: Yup.string().required("10th Board is required"),
-    coreTenthMarkingSchemeId: Yup.string(), // Not required
+    coreTenthMarkingSchemeId: Yup.string().required("10th Marking is required"), // Not required
     tenthMarksOrGrade: Yup.string().required("10th Marks or Grade is required"),
     tenth_plus_2_type: Yup.string().required("10 plus 2 type is required"),
 
@@ -213,7 +215,7 @@ export const getValidationSchemaForAcademicDetails = (
       coreTwelfthResultStatus: Yup.string().required(
         "12th Result Status is required"
       ),
-      coreTwelfthMarkingSchemeId: Yup.string(), // Not required
+      coreTwelfthMarkingSchemeId: Yup.string().required("12th marking scheme is required"), // Not required
       TwelfthMarksOrGrade: Yup.string().required(
         "12th Marks or Grade is required"
       ),

@@ -13,7 +13,7 @@ export const getManageLeadsColumnV1 = () => {
   columns.push({
     Header: "Action",
     Cell: ({ row }: { row: { original: ManageLeadV1Type; index: number } }) => {
-      return <ActionOptions pageFlag="details/" rowIndex={row.index} leadId={row.original.lead_capture_id} leadNum={row.original.phone} leadStageId={1} />;
+      return <ActionOptions pageFlag="details/" rowIndex={row.index} leadId={row.original.leadCaptureId} leadNum={row.original.phone} leadStageId={1} />;
     },
   });
  

@@ -28,7 +28,9 @@ const SearchV2: React.FC = () => {
             pageSize: paginatedProps.pageSize,
         }
 
-        store.dispatch(getsearchedLeads(payload));
+        if (searchQuery !== "") {
+            store.dispatch(getsearchedLeads(payload));
+        }
     };
 
     return (

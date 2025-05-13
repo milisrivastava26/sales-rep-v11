@@ -54,6 +54,10 @@ const RightView: React.FC = () => {
   const { isLoading: isLoadingForAddress, responseOfLeadAddressById } = useSelector((state: RootState) => state.getLeadAddressDataById);
   const { isLoading: isLoadingForAdditionalDetails, responseofLeadAdditionalInfo } = useSelector((state: RootState) => state.getAdditionalInfoByIdData);
   const { isLoading: isLoadingForAcademicDetails, responseOfLeadAcademicDetailsById } = useSelector((state: RootState) => state.getLeadAcademicDetailsDataById);
+  const { srmusetOptionDetails } = useSelector(
+      (state: RootState) => state.getSrmusetOptionDetails
+    );
+  
 
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById) ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE") : [];
   const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
@@ -140,7 +144,7 @@ const RightView: React.FC = () => {
     responseOfLeadAcademicDetailsById,
   ]);
 
-  const MergedLeadData = mergedLeadDetailsData(responseOfLeadEnquiryDetailsById, responseOfLeadAddressById, responseofLeadAdditionalInfo, responseOfLeadAcademicDetailsById);
+  const MergedLeadData = mergedLeadDetailsData(responseOfLeadEnquiryDetailsById, responseOfLeadAddressById, responseofLeadAdditionalInfo, responseOfLeadAcademicDetailsById, srmusetOptionDetails);
   console.log("general info data===", MergedLeadData);
 
   if (leadDetailsPrint && !isLoadingForAddress && !isLoadingForAdditionalDetails && !isLoadingForAcademicDetails && responseOfLeadAddressById && responseofLeadAdditionalInfo) {

@@ -25,7 +25,7 @@ const BulkChangeOwner: React.FC<changeOwnerProps> = ({
     (state: RootState) => state.ui
   );
 
-  const key = isMode === "advanceSearch" ? "leadCaptureId" : "lead_capture_id";
+  const key = isMode === "advanceSearch" ? "leadCaptureId" : "leadCaptureId";
   const leadCaptureIds = (getAllCheckSelectedDataFormCustomTable ?? []).map(
     (item: { lead_capture_id: number; leadCaptureId?: number }) => {
       return item[key as keyof typeof item];
