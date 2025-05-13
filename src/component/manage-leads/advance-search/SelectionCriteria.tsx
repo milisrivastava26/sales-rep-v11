@@ -85,31 +85,12 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
     });
   }, []);
 
-  const getModeOptions = (filedName: string) => {
-    const type = responseAdvanceSearchFieldsData.find(
-      (item: any) => item.value === filedName
-    )?.type;
-    // console.log("type", type);
-    if (type === "DATE" || type === "INT") {
-      return [
-        { value: "unique", label: "Unique" },
-        { value: "multiple", label: "Multiple" },
-        { value: "range", label: "Range" },
-      ];
-    } else {
-      return [
-        { value: "unique", label: "Unique" },
-        { value: "multiple", label: "Multiple" },
-      ];
-    }
+  const getModeOptions = () => {
+    return [{ value: "include", label: "Include" },
+    { value: "exclude", label: "Exclude" },]
   };
 
-  const getTypeFromFieldName = (fieldName: string) => {
-    const field = responseAdvanceSearchFieldsData.find(
-      (item: any) => item.value === fieldName
-    );
-    return field ? field.type : "";
-  };
+  
   return (
     <div>
       <FormikProvider value={formik}>
@@ -180,7 +161,6 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
                           <Select
                             options={
                               getModeOptions(
-                                formik.values.fields[index].type
                               ) || []
                             }
                             onChange={(selected) =>
@@ -192,11 +172,11 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
                             value={
                               field.mode
                                 ? {
-                                    value: field.mode,
-                                    label:
-                                      field.mode.charAt(0).toUpperCase() +
-                                      field.mode.slice(1),
-                                  }
+                                  value: field.mode,
+                                  label:
+                                    field.mode.charAt(0).toUpperCase() +
+                                    field.mode.slice(1),
+                                }
                                 : null
                             }
                             className="w-full"
@@ -221,192 +201,52 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
 
                       {/* Dynamic Select Based on Mode */}
                       {field.mode &&
-                        (field.mode === "unique" ? (
-                          <div className="grid w-full">
-                            <label className="text-gray-600 text-xs py-0 font-medium">
-                              Criteria:
-                            </label>
-                            <Select
-                              options={
-                                responseLeadFieldByNameData[
-                                  formik.values.fields[index].type
-                                ] || []
+                        <div className="grid w-full">
+                          <label className="text-gray-600 text-xs py-0 font-medium">
+                            Criteria:
+                          </label>
+                          <Select
+                            isMulti
+                            options={
+                              responseLeadFieldByNameData[
+                              formik.values.fields[index].type
+                              ] || []
+                            }
+                            onChange={(selected) =>
+                              formik.setFieldValue(
+                                `fields.${index}.value`,
+                                selected?.map((opt) => opt.value) || []
+                              )
+                            }
+                            value={(
+                              responseLeadFieldByNameData[
+                              formik.values.fields[index].type
+                              ] || []
+                            ).filter((opt) =>
+                              field.value?.includes(opt.value)
+                            )}
+                            className="w-full"
+                            placeholder="Select Multiple critrias"
+                            styles={advanceSearchStyle}
+                          />
+                          {typeof formik.errors.fields?.[index] ===
+                            "object" &&
+                            (
+                              formik.errors.fields?.[index] as {
+                                value?: string;
                               }
-                              onChange={(selected) =>
-                                formik.setFieldValue(
-                                  `fields.${index}.value`,
-                                  selected?.value || ""
-                                )
-                              }
-                              value={
-                                (
-                                  responseLeadFieldByNameData[
-                                    formik.values.fields[index].type
-                                  ] || []
-                                ).find(
-                                  (opt: any) =>
-                                    typeof field.value === "string" &&
-                                    opt.value === field.value
-                                ) || null
-                              }
-                              className="w-full"
-                              placeholder="Select criteria"
-                              styles={advanceSearchStyle}
-                            />
-                            {typeof formik.errors.fields?.[index] ===
-                              "object" &&
-                              (
-                                formik.errors.fields[index] as {
-                                  value?: string;
-                                }
-                              ).value && (
-                                <p className="text-red-500 text-sm">
-                                  {
-                                    (
-                                      formik.errors.fields[index] as {
-                                        value?: string;
-                                      }
-                                    ).value
-                                  }
-                                </p>
-                              )}
-                          </div>
-                        ) : field.mode === "multiple" ? (
-                          <div className="grid w-full">
-                            <label className="text-gray-600 text-xs py-0 font-medium">
-                              Criteria:
-                            </label>
-                            <Select
-                              isMulti
-                              options={
-                                responseLeadFieldByNameData[
-                                  formik.values.fields[index].type
-                                ] || []
-                              }
-                              onChange={(selected) =>
-                                formik.setFieldValue(
-                                  `fields.${index}.value`,
-                                  selected?.map((opt) => opt.value) || []
-                                )
-                              }
-                              value={(
-                                responseLeadFieldByNameData[
-                                  formik.values.fields[index].type
-                                ] || []
-                              ).filter((opt) =>
-                                field.value?.includes(opt.value)
-                              )}
-                              className="w-full"
-                              placeholder="Select Multiple critrias"
-                              styles={advanceSearchStyle}
-                            />
-                            {typeof formik.errors.fields?.[index] ===
-                              "object" &&
-                              (
-                                formik.errors.fields?.[index] as {
-                                  value?: string;
-                                }
-                              )?.value && (
-                                <p className="text-red-500 text-sm">
-                                  {
-                                    (
-                                      formik.errors.fields?.[index] as {
-                                        value?: string;
-                                      }
-                                    ).value
-                                  }
-                                </p>
-                              )}
-                          </div>
-                        ) : field.mode === "range" ? (
-                          <div className="grid w-full grid-cols-2 gap-4">
-                            {/* From Input */}
-                            <div className="flex flex-col">
-                              <label className="text-gray-600 text-xs py-0 font-medium">
-                                From:
-                              </label>
-                              <input
-                                type={
-                                  getTypeFromFieldName(
-                                    formik.values.fields[index].type
-                                  ) === "DATE"
-                                    ? "date"
-                                    : "text"
-                                }
-                                className="border px-2 py-1 rounded text-sm"
-                                placeholder="Enter From"
-                                value={formik.values.fields[index].from || ""}
-                                onChange={(e) =>
-                                  formik.setFieldValue(
-                                    `fields.${index}.from`,
-                                    e.target.value
-                                  )
-                                }
-                              />
-                              {/* Error Handling */}
-                              {typeof formik.errors.fields?.[index] ===
-                                "object" &&
-                                (
-                                  formik.errors.fields?.[index] as {
-                                    from?: string;
-                                  }
-                                )?.from && (
-                                  <p className="text-red-500 text-sm col-span-2">
-                                    {
-                                      (
-                                        formik.errors.fields?.[index] as {
-                                          from?: string;
-                                        }
-                                      ).from
+                            )?.value && (
+                              <p className="text-red-500 text-sm">
+                                {
+                                  (
+                                    formik.errors.fields?.[index] as {
+                                      value?: string;
                                     }
-                                  </p>
-                                )}
-                            </div>
-
-                            {/* To Input */}
-                            <div className="flex flex-col">
-                              <label className="text-gray-600 text-xs py-0 font-medium">
-                                To:
-                              </label>
-                              <input
-                                type={
-                                  getTypeFromFieldName(
-                                    formik.values.fields[index].type
-                                  ) === "DATE"
-                                    ? "date"
-                                    : "text"
+                                  ).value
                                 }
-                                className="border px-2 py-1 rounded text-sm"
-                                placeholder="Enter To"
-                                value={formik.values.fields[index].to || ""}
-                                onChange={(e) =>
-                                  formik.setFieldValue(
-                                    `fields.${index}.to`,
-                                    e.target.value
-                                  )
-                                }
-                              />
-                              {/* Error Handling */}
-                              {typeof formik.errors.fields?.[index] ===
-                                "object" &&
-                                (
-                                  formik.errors.fields?.[index] as {
-                                    to?: string;
-                                  }
-                                )?.to && (
-                                  <p className="text-red-500 text-sm col-span-2">
-                                    {
-                                      (
-                                        formik.errors.fields?.[index] as {
-                                          to?: string;
-                                        }
-                                      ).to
-                                    }
-                                  </p>
-                                )}
-                            </div>
-                          </div>
-                        ) : null)}
+                              </p>
+                            )}
+                        </div>}
                     </div>
 
                     {/* Remove Button */}
@@ -473,12 +313,3 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
 
 export default SelectionCriteria;
 
-// {
-//   "fields": [
-//       {
-//           "type": "email",
-//           "mode": "unique",
-//           "value": "drsinhaimsbhu@gmail.com"
-//       }
-//   ]
-// }

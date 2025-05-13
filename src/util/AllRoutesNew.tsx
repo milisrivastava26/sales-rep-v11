@@ -30,7 +30,10 @@ export const getRoutes = (userDetails: any) => {
     "ROLE_TWIGZ",
     "ROLE_DURGESH",
     "ROLE_CAREER_COACH",
-    "ROLE_COLLEGE_SKY"
+    "ROLE_COLLEGE_SKY",
+    "ROLE_WAKAR_CONSULTANCY",
+    "ROLE_FAISAL_ALI",
+    "ROLE_ADARSH_YADAV"
   ];
   const isThirdPartyUser = userDetails?.authority?.some((role: any) =>
     thirdPartyRoles.includes(role)

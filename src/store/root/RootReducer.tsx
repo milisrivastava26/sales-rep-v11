@@ -222,6 +222,9 @@ import { getCounsellingDetailsReducer } from "../dashboard/get-counselling-detai
 import { searchedLeadsReducer } from "../pagination-v1/get-searched-leads-slice";
 import { getAllWhatsappTemplateReducer } from "../whatsapp -messenger/get-allWhatsappTemplate-slice";
 import { getWhatsapptemplateByTemplateIdReducer } from "../whatsapp -messenger/get-whatsappTemplate-by-templateId-slice";
+import { getFaisalAliLeadsReducer } from "../third-party-slices/get-faisalAli-lead-slice";
+import { getAdarshYadavLeadsReducer } from "../third-party-slices/get-adarshYadav-leads-slice";
+import { getWakarConsultancyLeadReducer } from "../third-party-slices/get-wakar-consultancy-leads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -510,6 +513,9 @@ const RootReducer = {
   getDurgeshLeadsData: getDurgeshLeadsReducer,
   getCareerCoachLeads: getCareerCoachLeadsReducer,
   getCollegeSkyLeads: getCollegeSkyLeadsReducer,
+  getFaisalAliLeads: getFaisalAliLeadsReducer,
+  getAdarshYadavLeads: getAdarshYadavLeadsReducer,
+  getWakarConsultancyLeads: getWakarConsultancyLeadReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,

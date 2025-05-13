@@ -9,6 +9,9 @@ import { getTwigzLeads } from "../../store/third-party-slices/get-twigzLeads-sli
 import { getDurgeshLeads } from "../../store/third-party-slices/get-durgeshLeads-slice";
 import { getCareerCoachLeads } from "../../store/third-party-slices/get-careerCoachLeads-slice";
 import { getCollegeSkyLeads } from "../../store/third-party-slices/get-collegeSkyLeads-slice";
+import { getFaisalAliLeads } from "../../store/third-party-slices/get-faisalAli-lead-slice";
+import { getWakarConsultancyLead } from "../../store/third-party-slices/get-wakar-consultancy-leads-slice";
+import { getAdarshYadavLeads } from "../../store/third-party-slices/get-adarshYadav-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -36,6 +39,15 @@ const ThirdpartyHomePage: React.FC = () => {
   );
   const collegeSkyData = useSelector(
     (state: RootState) => state.getCollegeSkyLeads
+  );
+  const faisalAliLeads = useSelector(
+    (state: RootState) => state.getFaisalAliLeads
+  );
+  const adarshYadavLeads = useSelector(
+    (state: RootState) => state.getAdarshYadavLeads
+  );
+  const wakarConsultancyLeads = useSelector(
+    (state: RootState) => state.getWakarConsultancyLeads
   );
 
   // State object to store loader, response, and action
@@ -65,6 +77,15 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_COLLEGE_SKY") {
         dispatch(getCollegeSkyLeads({ startDate: currentDate }))
+      }
+      else if (role === "ROLE_FAISAL_ALI") {
+        dispatch(getFaisalAliLeads({ startDate: currentDate }))
+      }
+      else if (role === "ROLE_ADARSH_YADAV") {
+        dispatch(getAdarshYadavLeads({ startDate: currentDate }))
+      }
+      else if (role === "ROLE_WAKAR_CONSULTANCY") {
+        dispatch(getWakarConsultancyLead({ startDate: currentDate }))
       }
     }
   }, [userDetails, dispatch]);
@@ -117,7 +138,28 @@ const ThirdpartyHomePage: React.FC = () => {
         action: () => getCollegeSkyLeads, // Assign function (without calling dispatch)
       });
     }
-  }, [userDetails, collegeDkhoData, collegeDuniaData, shikshaData, twigzData, durgeshData, careerCoachData, collegeSkyData]);
+    else if (role === "ROLE_FAISAL_ALI") {
+      setApiState({
+        isLoading: faisalAliLeads.isLoading,
+        response: faisalAliLeads.responseOfGetFaisalAliLeads,
+        action: () => faisalAliLeads, // Assign function (without calling dispatch)
+      });
+    }
+    else if (role === "ROLE_ADARSH_YADAV") {
+      setApiState({
+        isLoading: adarshYadavLeads.isLoading,
+        response: adarshYadavLeads.responseOfGetAdarshYadavLeads,
+        action: () => adarshYadavLeads, // Assign function (without calling dispatch)
+      });
+    }
+    else if (role === "ROLE_WAKAR_CONSULTANCY") {
+      setApiState({
+        isLoading: wakarConsultancyLeads.isLoading,
+        response: wakarConsultancyLeads.responseOfGetWakarConsultancyLead,
+        action: () => wakarConsultancyLeads, // Assign function (without calling dispatch)
+      });
+    }
+  }, [userDetails, collegeDkhoData, collegeDuniaData, shikshaData, twigzData, durgeshData, careerCoachData, collegeSkyData, faisalAliLeads, adarshYadavLeads, wakarConsultancyLeads]);
 
   return (
     <ThirdPartyHome

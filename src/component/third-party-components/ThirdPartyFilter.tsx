@@ -9,6 +9,9 @@ import { getTwigzLeads } from "../../store/third-party-slices/get-twigzLeads-sli
 import { getDurgeshLeads } from "../../store/third-party-slices/get-durgeshLeads-slice";
 import { getCareerCoachLeads } from "../../store/third-party-slices/get-careerCoachLeads-slice";
 import { getCollegeSkyLeads } from "../../store/third-party-slices/get-collegeSkyLeads-slice";
+import { getFaisalAliLeads } from "../../store/third-party-slices/get-faisalAli-lead-slice";
+import { getAdarshYadavLeads } from "../../store/third-party-slices/get-adarshYadav-leads-slice";
+import { getWakarConsultancyLead } from "../../store/third-party-slices/get-wakar-consultancy-leads-slice";
 
 interface TyepFor {
   actionVal: () => {};
@@ -49,6 +52,15 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     else if (role === "ROLE_COLLEGE_SKY") {
       dispatch(getCollegeSkyLeads({ startDate: fromDate, endDate: toDate }));
     }
+    else if (role === "ROLE_FAISAL_ALI") {
+      dispatch(getFaisalAliLeads({ startDate: fromDate, endDate: toDate }))
+    }
+    else if (role === "ROLE_ADARSH_YADAV") {
+      dispatch(getAdarshYadavLeads({ startDate: fromDate, endDate: toDate }))
+    }
+    else if (role === "ROLE_WAKAR_CONSULTANCY") {
+      dispatch(getWakarConsultancyLead({ startDate: fromDate, endDate: toDate }))
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +88,15 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     }
     else if (role === "ROLE_COLLEGE_SKY") {
       dispatch(getCollegeSkyLeads());
+    }
+    else if (role === "ROLE_FAISAL_ALI") {
+      dispatch(getFaisalAliLeads())
+    }
+    else if (role === "ROLE_ADARSH_YADAV") {
+      dispatch(getAdarshYadavLeads())
+    }
+    else if (role === "ROLE_WAKAR_CONSULTANCY") {
+      dispatch(getWakarConsultancyLead())
     }
   };
 

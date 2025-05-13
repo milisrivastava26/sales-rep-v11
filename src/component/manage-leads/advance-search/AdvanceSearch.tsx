@@ -95,6 +95,7 @@ const AdvanceSearch: React.FC = () => {
     store.dispatch(fetchCoreViewLead(query));
   };
 
+
   useEffect(() => {
     getAdvanceSearchData(initialValues);
     if(initialValues.fields.length!==0){
