@@ -1,7 +1,7 @@
 import React from "react";
 import { transformAcademicDetails } from "../../../../util/actions/transformAcademicDetails";
 import dayjs from "dayjs";
- 
+
 interface propstype {
   data: any;
 }
@@ -12,11 +12,11 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
   const acadDetialsRaw = data[3];
   const srmusetInfo = data[4];
   const logo = "/srmulogo.png";
- 
+
   const academicDetails = transformAcademicDetails(acadDetialsRaw);
   const addressPermanent = addressDetails[0];
   const addressCorrespondence = addressDetails[1];
- 
+
   return (
     <div
       style={{
@@ -41,7 +41,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           </div>
         </div>
       </header>
- 
+
       <form
         style={{
           fontSize: "0.75rem",
@@ -65,7 +65,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           >
             For Official Use Only
           </span>
- 
+
           <div
             style={{
               display: "flex",
@@ -83,7 +83,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               <input style={{ display: "inline-block", width: "5rem", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
             </label>
           </div>
- 
+
           <div
             style={{
               display: "flex",
@@ -95,7 +95,6 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             <label style={{ width: "48%" }}>
               ERP ID:
               <input
-                defaultValue={generalInfo.leadCaptureId}
                 style={{ display: "inline-block", width: "103px", border: "none", borderBottom: "1px solid black", outline: "none" }}
                 readOnly
               />
@@ -104,9 +103,17 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               No.
               <input style={{ display: "inline-block", width: "5rem", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
             </label>
+            <label style={{ width: "48%" }}>
+              Lead #:
+              <input
+                defaultValue={generalInfo.leadCaptureId}
+                style={{ display: "inline-block", width: "103px", border: "none", borderBottom: "1px solid black", outline: "none" }}
+                readOnly
+              />
+            </label>
           </div>
         </fieldset>
- 
+
         <div style={{ display: "flex", columnGap: "1rem" }}>
           <div style={{ width: "100%" }}>
             <div style={{ marginBottom: "0.5rem", display: "flex", alignItems: "center" }}>
@@ -130,12 +137,12 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
                 <span style={{ marginLeft: "0.25rem" }}>Transfer</span>
               </label>
             </div>
- 
+
             <div style={{ marginBottom: "0.5rem", display: "flex", alignItems: "center" }}>
               <label style={{ display: "inline-flex", alignItems: "center", marginRight: "0.5rem" }}>
                 <span style={{ fontWeight: "600" }}>Academic Career:</span>
               </label>
- 
+
               <label style={{ display: "inline-flex", alignItems: "center", marginRight: "1rem" }}>
                 <input type="checkbox" readOnly checked={generalInfo.careerName === "Undergraduate"} />
                 <span style={{ marginLeft: "0.25rem" }}>UG</span>
@@ -153,7 +160,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
                 <span style={{ marginLeft: "0.25rem" }}>DP</span>
               </label>
             </div>
- 
+
             <div style={{ marginBottom: "0.5rem", display: "flex", columnGap: "1rem", alignItems: "center" }}>
               <label style={{ whiteSpace: "nowrap" }}>Course Applied For:</label>
               <input
@@ -162,9 +169,9 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
                 readOnly
               />
             </div>
- 
+
             <div style={{ marginBottom: "0.5rem", whiteSpace: "nowrap", fontWeight: "600" }}>Personal Details:</div>
- 
+
             <div style={{ marginBottom: "0.5rem", display: "flex", columnGap: "1rem", alignItems: "center" }}>
               <label style={{ whiteSpace: "nowrap" }}>Name:</label>
               <input
@@ -173,7 +180,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
                 readOnly
               />
             </div>
- 
+
             <div style={{ marginBottom: "0.5rem", display: "flex", columnGap: "1rem", alignItems: "center" }}>
               <div style={{ width: "100%", display: "flex", columnGap: "1rem", alignItems: "center" }}>
                 <label style={{ whiteSpace: "nowrap" }}>Date of Birth:</label>
@@ -193,7 +200,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               </div>
             </div>
           </div>
- 
+
           <div style={{ border: "1px solid #ccc", padding: "0.25rem", boxShadow: "0 1px 3px rgba(0,0,0,0.2)", width: "7rem", minWidth: "7rem", height: "9rem" }}>
             {/* <img
               alt="Photo"
@@ -204,7 +211,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             /> */}
           </div>
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Nationality:</label>
@@ -226,7 +233,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             </label>
           </div>
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Blood Group:</label>
@@ -256,7 +263,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
                 width: "100%",
                 border: "none",
                 borderBottom: "1px solid black",
- 
+
                 outline: "none",
               }}
             />
@@ -271,7 +278,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
                 width: "100%",
                 border: "none",
                 borderBottom: "1px solid black",
- 
+
                 outline: "none",
               }}
             />
@@ -307,7 +314,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             />
           </div>
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Designation, If any:</label>
@@ -338,7 +345,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             />
           </div>
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <label style={{ whiteSpace: "nowrap" }}>Father's Mobile:</label>
           <input
@@ -353,7 +360,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             }}
           />
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Mother's Name:</label>
@@ -384,7 +391,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             />
           </div>
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Designation, If any:</label>
@@ -415,7 +422,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             />
           </div>
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <label style={{ whiteSpace: "nowrap" }}>Mother's Mobile:</label>
           <input
@@ -430,15 +437,15 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             }}
           />
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <label style={{ whiteSpace: "nowrap" }}>Permanent Address:</label>
           <input
             defaultValue={
               addressPermanent
                 ? [addressPermanent.addressLine1, addressPermanent.addressLine2, addressPermanent.cityName, addressPermanent.stateName, addressPermanent.pin]
-                    .filter(Boolean)
-                    .join(", ")
+                  .filter(Boolean)
+                  .join(", ")
                 : ""
             }
             readOnly
@@ -451,7 +458,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             }}
           />
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", gap: "1rem", alignItems: "center" }}>
             <label style={{ whiteSpace: "nowrap" }}>District:</label>
@@ -482,21 +489,21 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             />
           </div>
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <label style={{ whiteSpace: "nowrap" }}>Correspondence Address:</label>
           <input
             defaultValue={
               addressCorrespondence
                 ? [
-                    addressCorrespondence.addressLine1,
-                    addressCorrespondence.addressLine2,
-                    addressCorrespondence.cityName,
-                    addressCorrespondence.stateName,
-                    addressCorrespondence.pin,
-                  ]
-                    .filter(Boolean)
-                    .join(", ")
+                  addressCorrespondence.addressLine1,
+                  addressCorrespondence.addressLine2,
+                  addressCorrespondence.cityName,
+                  addressCorrespondence.stateName,
+                  addressCorrespondence.pin,
+                ]
+                  .filter(Boolean)
+                  .join(", ")
                 : ""
             }
             readOnly
@@ -509,7 +516,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             }}
           />
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", gap: "1rem", alignItems: "center" }}>
             <label style={{ whiteSpace: "nowrap" }}>District:</label>
@@ -554,12 +561,12 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             />
           </div>
         </div>
- 
+
         <div style={{ marginBottom: "0.5rem", fontWeight: 600 }}>
           Academic Qualification:
           <span style={{ fontStyle: "italic" }}> (Enclose Attested Photocopies) </span>
         </div>
- 
+
         <table style={{ width: "100%", border: "1px solid black", borderCollapse: "collapse", fontSize: "10px", marginBottom: "1rem" }}>
           <thead>
             <tr>
@@ -576,80 +583,99 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <tbody>
             {academicDetails.length > 0
               ? academicDetails.map((item: any, index: any) => (
-                  <tr key={index}>
-                    <td style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
-                      <div
-                        style={{
-                          display: "inline-block",
-                          width: "100%",
-                          border: "none",
-                          textAlign: "center",
-                          outline: "none",
-                        }}
-                      >
-                        {`${index + 1}.`}
-                      </div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.exam}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.subject}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.board}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.school}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.year}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.marks}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.percentage}</div>
-                    </td>
-                  </tr>
-                ))
+                <tr key={index}>
+                  <td style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
+                    <div
+                      style={{
+                        display: "inline-block",
+                        width: "100%",
+                        border: "none",
+                        textAlign: "center",
+                        outline: "none",
+                      }}
+                    >
+                      {`${index + 1}.`}
+                    </div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.exam}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.subject}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.board}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.school}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.year}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.marks}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.percentage}</div>
+                  </td>
+                </tr>
+              ))
               : [...Array(1)].map((_, rowIndex) => (
-                  <tr key={`empty-${rowIndex}`}>
-                    {[...Array(8)].map((_, colIndex) => (
-                      <td key={colIndex} style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
-                        <div style={{ display: "inline-block", width: "100%", height: "30px" }}></div>
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                <tr key={`empty-${rowIndex}`}>
+                  {[...Array(8)].map((_, colIndex) => (
+                    <td key={colIndex} style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
+                      <div style={{ display: "inline-block", width: "100%", height: "30px" }}></div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
           </tbody>
         </table>
- 
+
         <div style={{ fontSize: "10px", marginBottom: "1rem" }}>Awards/Co-curricular Achievements(s): NCC/NSS/Sports/Cultural Activities (Attach Copies of Certificates)</div>
- 
+
         <div style={{ fontWeight: "bold", marginBottom: "0.25rem" }}>SRMUSET</div>
- 
+
         <div style={{ marginBottom: "0.5rem" }}>
           Are you interested in SRMUSET:
           <label style={{ display: "inline-flex", alignItems: "center", marginLeft: "0.5rem", marginRight: "1rem" }}>
-            <input type="checkbox" readOnly checked={srmusetInfo.isSrmuSetOpted === true} />
+            <input
+              type="checkbox"
+              readOnly
+              checked={srmusetInfo?.isSrmuSetOpted === true}
+            />
             <span style={{ marginLeft: "0.25rem" }}>Yes</span>
           </label>
           <label style={{ display: "inline-flex", alignItems: "center" }}>
-            <input type="checkbox" checked={srmusetInfo.isSrmuSetOpted === false} />
+            <input
+              type="checkbox"
+              readOnly
+              checked={srmusetInfo?.isSrmuSetOpted === false}
+            />
             <span style={{ marginLeft: "0.25rem" }}>No</span>
           </label>
         </div>
- 
+
         <div>
           If Yes, then provide an examination date (dd/mm/yyyy):
-          <span style={{ display: "inline-block", borderBottom: "1px solid black", width: "12rem", marginLeft: "0.25rem" }}>{srmusetInfo.isSrmuSetOpted === true ? dayjs(srmusetInfo.preferedDate || "").format("YYYY-MM-DD") : ""}</span>
+          <span
+            style={{
+              display: "inline-block",
+              borderBottom: "1px solid black",
+              width: "12rem",
+              marginLeft: "0.25rem"
+            }}
+          >
+            {srmusetInfo?.isSrmuSetOpted === true
+              ? dayjs(srmusetInfo?.preferedDate || "").format("YYYY-MM-DD")
+              : ""}
+          </span>
         </div>
+
       </form>
     </div>
   );
 };
- 
+
 export default PrintLeadDetails;
- 
- 
+

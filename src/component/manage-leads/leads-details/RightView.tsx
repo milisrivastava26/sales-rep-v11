@@ -55,9 +55,9 @@ const RightView: React.FC = () => {
   const { isLoading: isLoadingForAdditionalDetails, responseofLeadAdditionalInfo } = useSelector((state: RootState) => state.getAdditionalInfoByIdData);
   const { isLoading: isLoadingForAcademicDetails, responseOfLeadAcademicDetailsById } = useSelector((state: RootState) => state.getLeadAcademicDetailsDataById);
   const { srmusetOptionDetails } = useSelector(
-      (state: RootState) => state.getSrmusetOptionDetails
-    );
-  
+    (state: RootState) => state.getSrmusetOptionDetails
+  );
+
 
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById) ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE") : [];
   const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
@@ -176,9 +176,9 @@ const RightView: React.FC = () => {
           {activeTab !== 6 && (
             <div className="flex space-x-2 ml-auto">
               {/* <i className="fas fa-cog text-gray-500"></i> */}
-              <button type="button" className="border border-gray-300 px-2 py-1 rounded text-sm" onClick={handlePrintClick}>
+              {activeTab === 1 && <button type="button" className="border border-gray-300 px-2 py-1 rounded text-sm" onClick={handlePrintClick}>
                 Print Details
-              </button>
+              </button>}
               <button type="button" onClick={handleRefresh}>
                 <i className="fas fa-sync-alt text-gray-500"></i>
               </button>
