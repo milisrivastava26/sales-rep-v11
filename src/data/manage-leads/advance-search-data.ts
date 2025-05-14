@@ -315,3 +315,53 @@ export const advanceSearchHamburgerModalData = {
 };
 
 
+type Mode = "include" | "exclude";
+type FieldType =
+  | "career"
+  | "program"
+  | "city"
+  | "state"
+  | "source"
+  | "stage"
+  | "subStage"
+  | "applicationStatus";
+
+interface FieldInput {
+  type: FieldType;
+  mode: Mode;
+  value: string[];
+  from?: string;
+  to?: string;
+}
+
+type FilterPayload = Record<string, string[]>;
+
+export function buildFilterArrays(fields: FieldInput[] = []): FilterPayload {
+  const typeMap: Record<FieldType, string> = {
+    career: "AcademicCareerDescription",
+    program: "AcademicProgramDescription",
+    city: "CityName",
+    state: "StateName",
+    source: "LeadSourceDescription",
+    stage: "CurrentLeadStageDisplayName",
+    subStage: "CurrentLeadSubStageDisplayName",
+    applicationStatus: "ApplicationStatusName",
+  };
+
+  const result: FilterPayload = {};
+
+  for (const { type, mode, value } of fields) {
+    const suffix = typeMap[type];
+    if (!suffix || !mode || !Array.isArray(value)) continue;
+
+    const key = `${mode}${suffix}`;
+    if (!result[key]) {
+      result[key] = [];
+    }
+    result[key].push(...value);
+  }
+
+  return result;
+}
+
+

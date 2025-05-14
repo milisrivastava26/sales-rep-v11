@@ -184,9 +184,9 @@ const FilterHeadV1: React.FC<PropsType> = ({
       const payload =
         Object.keys(filterpayload).length > 0
           ? isSalesRepUser
-            ? { currentSalesrepFullName: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
-            : { currentSalesrepFullName: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
-          : { currentSalesrepFullName: fullName, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber };
+            ? { loggedInUser: fullName, currentSalesrepFullName: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
+            : { loggedInUser: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
+          : isSalesRepUser ? { loggedInUser: fullName, currentSalesrepFullName: fullName, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber } : { loggedInUser: fullName, currentSalesrepFullName: "", pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber };
       dispatch(getPaginatedLeads(payload));
     }
   }, [filterpayload, userDetails, paginatedProps, searchQuery]);
@@ -203,9 +203,9 @@ const FilterHeadV1: React.FC<PropsType> = ({
       const payload =
         Object.keys(filterpayload).length > 0
           ? isSalesRepUser
-            ? { currentSalesrepFullName: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
-            : { currentSalesrepFullName: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
-          : { currentSalesrepFullName: fullName, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber };
+            ? { loggedInUser: fullName, currentSalesrepFullName: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
+            : { loggedInUser: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
+          : isSalesRepUser ? { loggedInUser: fullName, currentSalesrepFullName: fullName, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber } : { loggedInUser: fullName, currentSalesrepFullName: "", pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber };
       dispatch(getPaginatedLeads(payload));
     }
   }
