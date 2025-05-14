@@ -13,6 +13,7 @@ import { getStateValues } from "../../../store/get/get-all-state-slice";
 import { getLeadSourceValues } from "../../../store/lead-capturing/get-allLeadSource-slice";
 import { getActiveCampusValues } from "../../../store/get/get-allActiveCampus-slice";
 import WhatsAppMessenger from "../genral/WhatsappMessanger";
+import { resetWhatsappTemplateById } from "../../../store/whatsapp -messenger/get-whatsappTemplate-by-templateId-slice";
 
 const ManageLeadsDetails: React.FC = () => {
   const { isLoading } = useSelector(
@@ -61,7 +62,10 @@ const ManageLeadsDetails: React.FC = () => {
   }, [responseOfLeadEnquiryDetailsById])
 
   const closeModalForCalling = () => store.dispatch(onDisableModalForCalling());
-  const closeModalForWhatsapp = () => store.dispatch(closeWhatsappMessengerModal());
+  const closeModalForWhatsapp = () => {
+    store.dispatch(closeWhatsappMessengerModal());
+    store.dispatch(resetWhatsappTemplateById());
+  };
 
   const callStageData = {
     title: "Call",

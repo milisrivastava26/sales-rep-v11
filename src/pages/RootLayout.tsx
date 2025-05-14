@@ -101,10 +101,9 @@ const RootLayout: React.FC = () => {
           {/* Show Navbar and Outlet only if the user is NOT a third-party user */}
           {!isThirdPartyUser && <>
             <Navbar />
-            {userDetails?.authority?.includes("ROLE_MANAGER") && <>
-              <NotificationSocket />
-              <NotificationPopup />
-            </>}
+            <NotificationSocket />
+            <NotificationPopup />
+
           </>
           }
           {isAuthenticated && !isThirdPartyUser && (

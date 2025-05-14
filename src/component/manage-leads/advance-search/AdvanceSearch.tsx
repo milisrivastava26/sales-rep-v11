@@ -4,19 +4,15 @@ import { useSelector } from "react-redux";
 import SelectionCriteria from "./SelectionCriteria";
 import {
   onCloseModalForAdvanceSearchColumn,
+  onOpenModalForAdvanceSearch,
   onOpenModalForAdvanceSearchColumn,
   onToggleForAdvanceSearch,
 } from "../../../store/ui/ui-slice";
-import {
-  fetchCoreViewLead,
-  resetViewLeadResponse,
-} from "../../../store/advance-search/get-coreViewLead-byQuery-slice";
 import { CustomDetailsTable } from "../../../util/custom/leadsFormat/CustomDetailsTable";
 import LoadingSpinner from "../../../util/custom/ui/LoadingSpinner";
 import { emptyDataIcon } from "../../../data/savgIcons";
 import Fallback from "../../../util/custom/ui/Fallback";
 import Search from "../../../util/custom/customSearchPagination/Search";
-import Pagination from "../../../util/custom/customSearchPagination/Pagination";
 import {
   ViewCoreLeadColumns,
   defaultAdvanceSearchColumns,
@@ -25,9 +21,11 @@ import useLocalStorage from "../../../hooks/useLocalStorage";
 import { PiColumnsPlusRightLight } from "react-icons/pi";
 import ColumnSelector from "./ColumnSelector";
 import CustomModal from "../../../util/custom/ui/CustomModal";
-import { advanceSearchHamburgerModalData } from "../../../data/manage-leads/advance-search-data";
+import { advanceSearchHamburgerModalData, buildFilterArrays } from "../../../data/manage-leads/advance-search-data";
 import { retrieveFromLocalStorage } from "../../../util/actions/localStorage";
 import SectionHeadAdvanceSearch from "./SectionHeadAdvanceSearch";
+import { fetchCoreViewLead, resetViewLeadResponse } from "../../../store/advance-search/get-coreViewLead-byQuery-slice";
+import PaginationAdvance from "../../../util/custom/advance-search-pagination/PaginationAdvance";
 
 const AdvanceSearch: React.FC = () => {
   const { advanceSearchModal, isModalOpenForAdvanceSearchColumn } = useSelector(
@@ -36,10 +34,20 @@ const AdvanceSearch: React.FC = () => {
   const { responseOfViewLead, isLoading } = useSelector(
     (state: RootState) => state.getCoreViewLead
   );
+
+  const data = (responseOfViewLead && typeof responseOfViewLead === 'object' && 'data' in responseOfViewLead)
+    ? (responseOfViewLead as { data: any[] }).data
+    : [];
+
   const [column, setColumn] = useLocalStorage(
     "advancedSearch",
     defaultAdvanceSearchColumns
   );
+
+  const { userDetails } = useSelector(
+    (state: RootState) => state.getLoggedInUserData
+  );
+  const fullName = userDetails?.fullName;
 
   const initialValues = retrieveFromLocalStorage(
     "advancedSearchFilterQuery"
@@ -48,60 +56,31 @@ const AdvanceSearch: React.FC = () => {
     "advancedSearchFilterQuery",
     initialValues
   );
-
-  const initialOp = retrieveFromLocalStorage("operator") || "AND";
-
-  const [operator, setOperator] = useLocalStorage("operator", initialOp);
-
-  let concatenatedValue = "";
-  const concatenatedValues: { [key: string]: [string, string] } = {}; // Using an object to store concatenated values per type
-
-  let concatenatedWithAnd = "";
+  
+  const {paginatedPropsForAdvanceSearch} = useSelector((state:RootState) => state.ui);
 
   const getAdvanceSearchData = (data: any) => {
-    data.fields.forEach((item: any) => {
-      if (Array.isArray(item.value)) {
-        // Concatenate values for arrays and store by type
-
-        const concatenatedArrayValue = "('" + item.value.join("', '") + "')";
-        concatenatedValues[item.type] = [concatenatedArrayValue, item.mode];
-      } else if (item.value) {
-        // Concatenate single value (for non-array items)
-        concatenatedValue = "('" + item.value + "')";
-        concatenatedValues[item.type] = [concatenatedValue, item.mode];
-      } else {
-        concatenatedValues[item.type] = [
-          "'" + item.from + "' AND '" + item.to + "'",
-          item.mode,
-        ];
-      }
-    });
-
-    concatenatedWithAnd =
-      "WHERE 1=1 AND " +
-      Object.entries(concatenatedValues)
-        .map((item: any) => {
-          return `${item[0]}  ${item[1][1] === "range" ? "BETWEEN" : "IN"} ${
-            item[1][0]
-          }`;
-        })
-        .join(` ${operator} `);
-
     store.dispatch(resetViewLeadResponse());
-    const query = {
-      query: concatenatedWithAnd,
+    const arraysOnly = buildFilterArrays(data?.fields);
+    console.log("arraysOnly", arraysOnly);
+
+    const payload = {
+      currentSalesrepFullName: fullName,
+      pageNumber: paginatedPropsForAdvanceSearch.pageNumber,
+      pageSize: paginatedPropsForAdvanceSearch.pageSize,
+      ...arraysOnly
     };
 
-    store.dispatch(fetchCoreViewLead(query));
+    store.dispatch(fetchCoreViewLead(payload));
   };
 
-
   useEffect(() => {
+    console.log("initialValues", initialValues)
     getAdvanceSearchData(initialValues);
-    if(initialValues.fields.length!==0){
-      store.dispatch(onToggleForAdvanceSearch())
+    if (initialValues.fields.length !== 0) {
+      store.dispatch(onOpenModalForAdvanceSearch())
     }
-  }, []);
+  }, [paginatedPropsForAdvanceSearch]);
   const handleColumnChange = (updatedColumns: any[]) => {
     setColumn(updatedColumns);
   };
@@ -113,47 +92,22 @@ const AdvanceSearch: React.FC = () => {
   return (
     <>
       <div className="mt-3 px-4">
-        <div className="flex justify-between items-center px-4">
+        <div className="flex justify-between items-center px-4 mb-3">
           <button
-            className="bg-blue-500 px-4 py-1 rounded text-white text-sm mb-3 font-medium"
+            className="bg-blue-500 px-4 py-1 rounded text-white text-sm  font-medium"
             onClick={() => store.dispatch(onToggleForAdvanceSearch())}
           >
             Select Criteria
           </button>
-          <div className="flex gap-4 items-center pr-5">
-            <div className="flex items-center gap-2">
-              <div className="flex gap-2 items-center">
-                <input
-                  type="radio"
-                  name="operator"
-                  value={operator}
-                  checked={operator === "AND" ? true : false}
-                  id="and"
-                  onChange={() => setOperator("AND")}
-                />
-                <label htmlFor="and">AND</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="radio"
-                  name="operator"
-                  value={operator}
-                  checked={operator === "OR" ? true : false}
-                  id="or"
-                  onChange={() => setOperator("OR")}
-                />
-                <label htmlFor="or">OR</label>
-              </div>
-            </div>
-            <div>
-              <SectionHeadAdvanceSearch />
-            </div>
+
+          <div >
+            <SectionHeadAdvanceSearch />
           </div>
+
         </div>
         <div
-          className={`${
-            advanceSearchModal ? "bg-white block" : "hidden"
-          } rounded-lg py-2 px-2 `}
+          className={`${advanceSearchModal ? "bg-white block" : "hidden"
+            } rounded-lg py-2 px-2 `}
         >
           <div className="">
             <SelectionCriteria
@@ -168,7 +122,7 @@ const AdvanceSearch: React.FC = () => {
           <div>
             <div className="flex gap-10 items-center my-3">
               <Search />
-              <Pagination />
+              <PaginationAdvance />
               <PiColumnsPlusRightLight
                 className="text-4xl cursor-pointer text-gray-700 mr-5"
                 onClick={() =>
@@ -179,7 +133,7 @@ const AdvanceSearch: React.FC = () => {
             <div className="overflow-scroll">
               <CustomDetailsTable
                 columns={column}
-                data={responseOfViewLead}
+                data={data}
                 isMode="advanceSearch"
               />
             </div>
@@ -192,7 +146,7 @@ const AdvanceSearch: React.FC = () => {
               size={20}
             />
           )}
-          {!isLoading && responseOfViewLead.length === 0 && (
+          {!isLoading && data?.length === 0 && (
             <Fallback
               isCenter={true}
               errorInfo="Data not found"
@@ -220,3 +174,4 @@ const AdvanceSearch: React.FC = () => {
 };
 
 export default AdvanceSearch;
+

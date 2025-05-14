@@ -57,7 +57,6 @@ const FilterHeadV1: React.FC<PropsType> = ({
   } = useSelector((state: RootState) => state.getAllApplicationStatus);
   const { isHamburgerModalOpen } = useSelector((state: RootState) => state.ui);
   const { paginatedProps, searchQuery } = useSelector((state: RootState) => state.ui);
-  console.log("searchQuery", searchQuery);
   const {
     isLoading: isLoadingForCareer,
     responseForFilterHeadAcademicCareer: careerOptions,

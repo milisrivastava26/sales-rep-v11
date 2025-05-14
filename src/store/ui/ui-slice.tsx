@@ -85,6 +85,10 @@ interface typeUI {
     pageSize: number,
     pageNumber: number,
   },
+  paginatedPropsForAdvanceSearch: {
+    pageSize: number,
+    pageNumber: number,
+  },
   searchQuery: string;
   whatsappMessengerModal : boolean;
 }
@@ -196,6 +200,10 @@ const initialState: typeUI = {
   lockOfferStatus: "",
   packageDeal: "",
   paginatedProps: {
+    pageSize: 50,
+    pageNumber: 0
+  },
+  paginatedPropsForAdvanceSearch: {
     pageSize: 50,
     pageNumber: 0
   },
@@ -557,6 +565,9 @@ const uiSlice = createSlice({
     onToggleForAdvanceSearch: (state) => {
       state.advanceSearchModal = !state.advanceSearchModal;
     },
+    onOpenModalForAdvanceSearch: (state) => {
+      state.advanceSearchModal = true;
+    },
 
     onOpenModalForAdvanceSearchColumn: (state) => {
       state.isModalOpenForAdvanceSearchColumn = true;
@@ -586,9 +597,10 @@ const uiSlice = createSlice({
       state.packageDeal = action.payload;
     },
     setPaginatedProps: (state, action) => {
-      console.log("reducer called", action.payload)
       state.paginatedProps = action.payload;
-      console.log("in reducer after set",  state.paginatedProps);
+    },
+    setPaginatedPropsForAdvanceSearch: (state, action) => {
+      state.paginatedPropsForAdvanceSearch = action.payload;
     },
     setSearchQuery : (state, action) => {
       state.searchQuery = action.payload;
@@ -673,6 +685,7 @@ export const {
   onDisableRecieveModal,
   onSetOpenModalForDownloadFeeAndInstallmentPdf,
   onToggleForAdvanceSearch,
+  onOpenModalForAdvanceSearch,
   onsetSelectedColumnToDisplayForAdvanceSearch,
   onOpenModalForAdvanceSearchColumn,
   onCloseModalForAdvanceSearchColumn,
@@ -683,7 +696,8 @@ export const {
   setPackageDeal,
   setPaginatedProps,
   getLeadsForManageTask,
-  setSearchQuery
+  setSearchQuery,
+  setPaginatedPropsForAdvanceSearch
 } = uiSlice.actions;
 
 export const uiSliceAction = uiSlice.actions;

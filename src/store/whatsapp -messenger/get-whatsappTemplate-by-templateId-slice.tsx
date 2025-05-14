@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import coreLeadCaptureApi from "../../interceptor/coreLeadCaptureApi";
 
 interface WhatsappTemplateByIdState {
-  whatsappTemplateById: any;
+  whatsappTemplateById: string;
   isLoading: boolean;
   isError: null | string;
 }
 
 const initialState: WhatsappTemplateByIdState = {
-  whatsappTemplateById: {},
+  whatsappTemplateById: "",
   isLoading: false,
   isError: null,
 };
@@ -30,7 +30,7 @@ const getWhatsapptemplateByTemplateIdSlice = createSlice({
   initialState,
   reducers: {
     resetWhatsappTemplateById: (state) => {
-      state.whatsappTemplateById = {};
+      state.whatsappTemplateById = "";
     },
   },
   extraReducers: (builder) => {

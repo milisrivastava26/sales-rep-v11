@@ -225,6 +225,7 @@ import { getWhatsapptemplateByTemplateIdReducer } from "../whatsapp -messenger/g
 import { getFaisalAliLeadsReducer } from "../third-party-slices/get-faisalAli-lead-slice";
 import { getAdarshYadavLeadsReducer } from "../third-party-slices/get-adarshYadav-leads-slice";
 import { getWakarConsultancyLeadReducer } from "../third-party-slices/get-wakar-consultancy-leads-slice";
+import { sendWhatsappByTemplateIdReducer } from "../whatsapp -messenger/send-whatsapp-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -560,6 +561,7 @@ const RootReducer = {
   //whatsapp messenger
   getAllWhatsappTemplate: getAllWhatsappTemplateReducer,
   getWhatsappTemplateByTemplateId: getWhatsapptemplateByTemplateIdReducer,
+  sendWhatsapp: sendWhatsappByTemplateIdReducer,
 };
 
 export default RootReducer;

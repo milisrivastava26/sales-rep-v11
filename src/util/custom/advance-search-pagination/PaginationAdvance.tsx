@@ -1,63 +1,45 @@
 import React, { useState } from 'react';
-import { setPaginatedProps } from '../../../store/ui/ui-slice';
+import { setPaginatedPropsForAdvanceSearch } from '../../../store/ui/ui-slice';
 import store, { RootState } from '../../../store';
 import { useSelector } from 'react-redux';
-import { getsearchedLeads } from '../../../store/pagination-v1/get-searched-leads-slice';
+
+interface ViewLeadResponse {
+    totalPageCount?: number;
+    // add other properties if needed
+}
+
 
 const PaginationAdvance: React.FC = () => {
     const table = useSelector((state: RootState) => state.table);
-
-    const { userDetails } = useSelector(
-        (state: RootState) => state.getLoggedInUserData
-    );
     const {
         paginationAction: { setPageSize },
     } = table;
-    const fullName = userDetails?.fullName;
 
     // These could come from Redux state too if you want global sync
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(50);
-    const { paginatedLeads } = useSelector((state: RootState) => state.getPaginatedLeads);
-    const { paginatedProps, searchQuery } = useSelector((state: RootState) => state.ui);
-    const { searchedLeads } = useSelector((state: RootState) => state.getsearchedLeads);
+
+    const { responseOfViewLead } = useSelector(
+        (state: RootState) => state.getCoreViewLead
+    ) as { responseOfViewLead: ViewLeadResponse | null };
 
     const totalPages: number =
-        searchedLeads && searchedLeads.length !== 0
-            ? searchedLeads.totalPageCount
-            : paginatedLeads?.totalPageCount || 0;
+        responseOfViewLead && !Array.isArray(responseOfViewLead) && typeof responseOfViewLead.totalPageCount === 'number'
+            ? responseOfViewLead.totalPageCount
+            : 0;
 
     const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newSize = parseInt(e.target.value);
         setPageSize(newSize);
         setSize(newSize);
         setPage(0); // Reset to page 1 when size changes
-        store.dispatch(setPaginatedProps({ pageNumber: 0, pageSize: newSize }));
-        if (searchQuery !== "") {
-            const payload = {
-                currentSalesrepFullName: fullName,
-                searchString: searchQuery,
-                pageNumber: paginatedProps.pageNumber,
-                pageSize: newSize
-            }
-
-            store.dispatch(getsearchedLeads(payload));
-        }
+        store.dispatch(setPaginatedPropsForAdvanceSearch({ pageNumber: 0, pageSize: newSize }));
     };
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage);
-        store.dispatch(setPaginatedProps({ pageNumber: newPage, pageSize: size }));
-        if (searchQuery !== "") {
-            const payload = {
-                currentSalesrepFullName: fullName,
-                searchString: searchQuery,
-                pageNumber: newPage,
-                pageSize: paginatedProps.pageSize
-            }
+        store.dispatch(setPaginatedPropsForAdvanceSearch({ pageNumber: newPage, pageSize: size }))
 
-            store.dispatch(getsearchedLeads(payload));
-        }
     };
 
     return (

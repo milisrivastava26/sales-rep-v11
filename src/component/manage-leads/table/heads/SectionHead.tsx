@@ -80,6 +80,9 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
     dispatch(uiSliceAction.onDisabledSettingData());
   const closeModalForLeadsImport = () =>
     dispatch(uiSliceAction.onManageLeadsImportModal(false));
+  const { userDetails } = useSelector(
+    (state: RootState) => state.getLoggedInUserData
+  );
 
   useClickOutside(
     [settingRef, subDataRef],
@@ -139,6 +142,8 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
   };
 
   useClickOutside([dropDownRef], [closeDropDown]);
+
+  const showExportLead = userDetails?.authority?.includes("ROLE_ADMIN");
   return (
     <div className="w-full border-b border-gray-200 mb-3 flex justify-between pb-3">
       <div className="flex gap-x-1 items-center">
@@ -187,12 +192,12 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
             <div ref={dropDownRef}>
               <ul className="absolute right-0 z-10 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                 {sectionHeadSelectData.map((item: any) => {
+                  if (item.id === 5 && !showExportLead) return;
                   return (
                     <li
                       key={item.id}
-                      className={`py-2 cursor-pointer hover:bg-gray-100 relative group ${
-                        item.id === 1 ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
+                      className={`py-2 cursor-pointer hover:bg-gray-100 relative group ${item.id === 1 ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
                       onClick={() => handleItemClick(item)}
                     >
                       {item.path ? (
@@ -209,12 +214,12 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
                       ) : (
                         <div className="flex gap-2 items-center">
                           <IoIosArrowBack
-                            className={`text-xl opacity-0 invisible group-hover:opacity-100 ${
-                              item.subMenu ? "group-hover:visible" : ""
-                            }`}
+                            className={`text-xl opacity-0 invisible group-hover:opacity-100 ${item.subMenu ? "group-hover:visible" : ""
+                              }`}
                           />
                           <span>{item.icon}</span>
                           <span
+                            className={``}
                             onClick={() => {
                               if (item.id === 2) {
                                 handleModal(item.id);
@@ -224,7 +229,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
                                 if (
                                   getAllCheckSelectedDataFormCustomTable &&
                                   getAllCheckSelectedDataFormCustomTable.length ===
-                                    0
+                                  0
                                 ) {
                                   toast.error(
                                     "Please select at least one lead"
@@ -376,7 +381,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
           onHideModal={closeModalForTestAction}
           data={bulkChangeOwnerData}
         >
-          <BulkChangeOwner onHideModal={closeModalForTestAction} isMode="bulkUpdate"/>
+          <BulkChangeOwner onHideModal={closeModalForTestAction} isMode="bulkUpdate" />
         </CustomModal>
       )}
       {isShowModalForChangeStage && (

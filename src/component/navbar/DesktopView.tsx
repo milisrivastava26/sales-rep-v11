@@ -259,12 +259,12 @@ const DesktopView: React.FC<Type> = ({ leadsItems, profileItems }) => {
             aria-hidden="true"
           ></i>
         </div>
-        {userDetails?.authority?.includes("ROLE_MANAGER") && <div>
+        <div>
           <IoMdNotifications className="text-3xl text-blue-500 cursor-pointer relative" onClick={(() => setNotificationMenu(!notifcationMenu))} />
           <p className="text-xs absolute top-2 right-[28px]">{notifications.length}</p>
-        </div>}
+        </div>
 
-        {notifcationMenu && userDetails?.authority?.includes("ROLE_MANAGER") && <div className="absolute top-16 right-0 w-[420px] h-screen bg-white shadow-lg rounded-lg p-6 overflow-y-auto pb-20 border border-gray-200">
+        {notifcationMenu && <div className="absolute top-16 right-0 w-[420px] h-screen bg-white shadow-lg rounded-lg p-6 overflow-y-auto pb-20 border border-gray-200">
           <div className="flex items-center justify-between mb-4 border-b pb-3 border-gray-300">
             <h2 className="text-xl font-semibold text-blue-600">Notifications</h2>
             {notifications.length > 0 && (

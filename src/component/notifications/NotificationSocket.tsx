@@ -84,15 +84,26 @@ const NotificationSocket = () => {
       webSocketFactory: () => socket,
       onConnect: () => {
         client.subscribe('/topic/notification', (msg: IMessage) => {
-          dispatch(addBarNotification({
-            id: Date.now().toString(),
-            body: formatBody(msg.body),
-          }));
+          try {
+            const parsed = JSON.parse(msg.body);
 
-          dispatch(addPopupNotification({
-            id: Date.now().toString(),
-            body: formatBody(msg.body),
-          }));
+            // Assuming 'userDetails.name' or 'userDetails.id' is used to match the 'owner'
+            if (parsed.owner === userDetails.fullName) {
+              const bodyContent = formatBody(msg.body);
+
+              dispatch(addBarNotification({
+                id: Date.now().toString(),
+                body: bodyContent,
+              }));
+
+              dispatch(addPopupNotification({
+                id: Date.now().toString(),
+                body: bodyContent,
+              }));
+            }
+          } catch (err) {
+            console.error('Invalid message format:', err);
+          }
         });
       },
       onStompError: (frame) => {

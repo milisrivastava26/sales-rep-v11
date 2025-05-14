@@ -6,7 +6,7 @@ import { addSpacesToCamelCase } from "../genral/CapitalizeName";
 import profile from "../../../assets/profile.png";
 import { IoCall, IoLogoWhatsapp } from "react-icons/io5";
 import { MdEmail, MdModeEdit } from "react-icons/md";
-import { onSetOpenModalForCalling } from "../../../store/ui/ui-slice";
+import { onSetOpenModalForCalling, openWhatsappMessengerModal } from "../../../store/ui/ui-slice";
 import CustomForm from "../../../util/custom/CustomForm";
 import {
   getCampusInterestedInInitialValues,
@@ -173,7 +173,7 @@ const LeftView: React.FC = () => {
                 className="text-[#3b82F6] cursor-pointer"
                 onClick={onCallHandler}
               />
-              <IoLogoWhatsapp size={22} />
+              <IoLogoWhatsapp className="text-green-600 cursor-pointer" size={22} onClick={() => store.dispatch(openWhatsappMessengerModal())}/>
               <MdEmail size={22} />
             </div>
           </div>

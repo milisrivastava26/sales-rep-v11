@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { advanceSearchStyle } from "../../../data/manage-leads/advance-search-data";
 import { getAllLeadFieldByName } from "../../../store/advance-search/get-allLeadField-byName-slice";
 import { resetViewLeadResponse } from "../../../store/advance-search/get-coreViewLead-byQuery-slice";
-
+ 
 interface selectionCriteriaPropsType {
   setFilterQuery: (e: any) => void;
   filterQuery: {
@@ -22,7 +22,7 @@ interface selectionCriteriaPropsType {
   };
   getAdvanceSearchData: (e: any) => void;
 }
-
+ 
 const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
   setFilterQuery,
   filterQuery,
@@ -62,18 +62,18 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
       getAdvanceSearchData(values);
     },
   });
-
+ 
   // console.log(formik.values.fields);
-
+ 
   const {
     responseAdvanceSearchFieldsData,
     isLoading: isLoadingForAdvanceSearchField,
   } = useSelector((state: RootState) => state.getAllAdvanceSearchFilterFields);
-
+ 
   const { responseLeadFieldByNameData } = useSelector(
     (state: RootState) => state.getAllLeadFieldByName
   );
-
+ 
   useEffect(() => {
     // console.log("formik.values.fields", formik.values.fields);
     formik.values.fields.forEach((field) => {
@@ -84,13 +84,13 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
       }
     });
   }, []);
-
+ 
   const getModeOptions = () => {
     return [{ value: "include", label: "Include" },
     { value: "exclude", label: "Exclude" },]
   };
-
-  
+ 
+ 
   return (
     <div>
       <FormikProvider value={formik}>
@@ -151,7 +151,7 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
                             </p>
                           )}
                       </div>
-
+ 
                       {/* Mode Select (Unique/Multiple) */}
                       {field.type && (
                         <div className="grid w-full">
@@ -198,7 +198,7 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
                             )}
                         </div>
                       )}
-
+ 
                       {/* Dynamic Select Based on Mode */}
                       {field.mode &&
                         <div className="grid w-full">
@@ -248,7 +248,7 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
                             )}
                         </div>}
                     </div>
-
+ 
                     {/* Remove Button */}
                     {formik.values.fields.length > 1 && (
                       <button
@@ -261,7 +261,7 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
                     )}
                   </div>
                 ))}
-
+ 
                 {/* Add Button */}
                 <div>
                   <button
@@ -277,7 +277,7 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
               </div>
             )}
           </FieldArray>
-
+ 
           {/* Submit Button */}
           <div className="flex gap-3 justify-end">
             <button
@@ -310,6 +310,9 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
     </div>
   );
 };
-
+ 
 export default SelectionCriteria;
-
+ 
+ 
+ 
+ 

@@ -22,156 +22,62 @@ export const ViewCoreLeadColumns: Column<any>[] = [
     Cell: ({ row }) => <span>{row.original.phone}</span>,
   },
   {
-    Header: "Lead Created At",
-    accessor: "leadCaptureCreatedAt",
-    Cell: ({ row }) => <span>{row.original.leadCaptureCreatedAt}</span>,
-  },
-  {
-    Header: "Lead Enquiry ID",
-    accessor: "leadEnquiryId",
-    Cell: ({ row }) => <span>{row.original.leadEnquiryId}</span>,
-  },
-  {
-    Header: "Status",
-    accessor: "status",
-    Cell: ({ row }) => <span>{row.original.status}</span>,
-  },
-  {
-    Header: "Action Track ID",
-    accessor: "actionTrackId",
-    Cell: ({ row }) => <span>{row.original.actionTrackId}</span>,
-  },
-  {
-    Header: "Lead Enquiry Created At",
-    accessor: "leadEnquiryCreatedAt",
-    Cell: ({ row }) => <span>{row.original.leadEnquiryCreatedAt}</span>,
+    Header: "Created At",
+    accessor: "createdAt",
+    Cell: ({ row }) => <span>{row.original.createdAt}</span>,
   },
   {
     Header: "Career",
-    accessor: "career",
-    Cell: ({ row }) => <span>{row.original.career}</span>,
+    accessor: "academicCareerDescription",
+    Cell: ({ row }) => <span>{row.original.academicCareerDescription}</span>,
   },
   {
     Header: "Program",
-    accessor: "program",
-    Cell: ({ row }) => <span>{row.original.program}</span>,
+    accessor: "academicProgramDescription",
+    Cell: ({ row }) => <span>{row.original.academicProgramDescription}</span>,
   },
   {
     Header: "State",
-    accessor: "state",
-    Cell: ({ row }) => <span>{row.original.state}</span>,
+    accessor: "stateName",
+    Cell: ({ row }) => <span>{row.original.stateName}</span>,
   },
   {
     Header: "City",
-    accessor: "city",
-    Cell: ({ row }) => <span>{row.original.city}</span>,
+    accessor: "cityName",
+    Cell: ({ row }) => <span>{row.original.cityName}</span>,
   },
   {
     Header: "Lead Source",
-    accessor: "leadSource",
-    Cell: ({ row }) => <span>{row.original.leadSource}</span>,
+    accessor: "leadCurrentSource",
+    Cell: ({ row }) => <span>{row.original.leadCurrentSource}</span>,
   },
   {
     Header: "Session",
-    accessor: "session",
-    Cell: ({ row }) => <span>{row.original.session}</span>,
+    accessor: "sessionName",
+    Cell: ({ row }) => <span>{row.original.sessionName}</span>,
   },
   {
     Header: "Sales Rep Name",
-    accessor: "salesRepName",
-    Cell: ({ row }) => <span>{row.original.salesRepName}</span>,
-  },
-  {
-    Header: "Sales Rep Phone",
-    accessor: "salesRepPhone",
-    Cell: ({ row }) => <span>{row.original.salesRepPhone}</span>,
-  },
-  {
-    Header: "Sales Rep Email",
-    accessor: "salesRepEmail",
-    Cell: ({ row }) => <span>{row.original.salesRepEmail}</span>,
+    accessor: "currentSalesrepFullName",
+    Cell: ({ row }) => <span>{row.original.currentSalesrepFullName}</span>,
   },
   {
     Header: "Application Status",
-    accessor: "applicationStatus",
-    Cell: ({ row }) => <span>{row.original.applicationStatus}</span>,
-  },
-  {
-    Header: "Fee Status",
-    accessor: "feeStatus",
-    Cell: ({ row }) => <span>{row.original.feeStatus}</span>,
-  },
-  {
-    Header: "Yearly Course Fee",
-    accessor: "yearlyCourseFee",
-    Cell: ({ row }) => <span>{row.original.yearlyCourseFee || "N/A"}</span>,
-  },
-  {
-    Header: "Scholarship Discount",
-    accessor: "scholarshipDiscount",
-    Cell: ({ row }) => <span>{row.original.scholarshipDiscount || "N/A"}</span>,
-  },
-  {
-    Header: "Special Discount",
-    accessor: "specialDiscount",
-    Cell: ({ row }) => <span>{row.original.specialDiscount || "N/A"}</span>,
-  },
-  {
-    Header: "Total Discount",
-    accessor: "totalDiscount",
-    Cell: ({ row }) => <span>{row.original.totalDiscount || "N/A"}</span>,
-  },
-  {
-    Header: "Net Fee",
-    accessor: "netFee",
-    Cell: ({ row }) => <span>{row.original.netFee || "N/A"}</span>,
-  },
-  {
-    Header: "Paid Application Fee",
-    accessor: "pyApplicationFee",
-    Cell: ({ row }) => <span>{row.original.pyApplicationFee || "N/A"}</span>,
-  },
-  {
-    Header: "Paid Course Fee",
-    accessor: "pyCourseFee",
-    Cell: ({ row }) => <span>{row.original.pyCourseFee || "N/A"}</span>,
-  },
-  {
-    Header: "Scholarship Category",
-    accessor: "scholarshipCategory",
-    Cell: ({ row }) => <span>{row.original.scholarshipCategory || "N/A"}</span>,
-  },
-  {
-    Header: "Scholarship Scheme",
-    accessor: "scholarshipScheme",
-    Cell: ({ row }) => <span>{row.original.scholarshipScheme || "N/A"}</span>,
-  },
-  {
-    Header: "Scholarship Slab",
-    accessor: "scholarshipSlab",
-    Cell: ({ row }) => <span>{row.original.scholarshipSlab || "N/A"}</span>,
-  },
-  {
-    Header: "Percentage Discount",
-    accessor: "percentageDiscount",
-    Cell: ({ row }) => <span>{row.original.percentageDiscount}%</span>,
-  },
-  {
-    Header: "Applicable On",
-    accessor: "applicableOn",
-    Cell: ({ row }) => <span>{row.original.applicableOn || "N/A"}</span>,
+    accessor: "applicationStatusName",
+    Cell: ({ row }) => <span>{row.original.applicationStatusName}</span>,
   },
   {
     Header: "Lead Stage",
-    accessor: "leadStage",
-    Cell: ({ row }) => <span>{row.original.lead_stage || "N/A"}</span>,
+    accessor: "currentLeadStageDisplayName",
+    Cell: ({ row }) => <span>{row.original.currentLeadStageDisplayName}</span>,
   },
   {
     Header: "Lead Sub Stage",
-    accessor: "leadSubStage",
-    Cell: ({ row }) => <span>{row.original.lead_sub_stage || "N/A"}</span>,
+    accessor: "currentLeadSubStageDisplayName",
+    Cell: ({ row }) => <span>{row.original.currentLeadSubStageDisplayName}</span>,
   },
 ];
+
 
 export const defaultAdvanceSearchColumns: Column<any>[] = [
   {
@@ -196,7 +102,8 @@ export const defaultAdvanceSearchColumns: Column<any>[] = [
   },
   {
     Header: "Sales Rep Name",
-    accessor: "salesRepName",
-    Cell: ({ row }) => <span>{row.original.salesRepName}</span>,
+    accessor: "currentSalesrepFullName",
+    Cell: ({ row }) => <span>{row.original.currentSalesrepFullName}</span>,
   },
 ];
+

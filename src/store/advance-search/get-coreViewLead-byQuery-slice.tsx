@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import coreservicesApi from "../../interceptor/coreservicesApi";
+import manageLeadsApi from "../../interceptor/manageLeadsApi";
 
 interface ViewCoreViewLeadState {
   isRun: string;
@@ -18,10 +18,10 @@ const initialState: ViewCoreViewLeadState = {
 
 export const fetchCoreViewLead = createAsyncThunk<any, any>(
   "view-core/lead",
-  async (query, { rejectWithValue }) => {
+  async (payload, { rejectWithValue }) => {
     try {
-      const response = await coreservicesApi.post(
-        "api/crm/core/advanceSearch/findCoreViewLead", query
+      const response = await manageLeadsApi.post(
+        "leads/getLeadsAdvance", payload
       );
       return response.data;
     } catch (error: any) {
