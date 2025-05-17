@@ -68,13 +68,13 @@ export const ManageTaskColumn: Column<any>[] = [
       <span>{row.original.isCompleted ? "Completed" : "Pending"}</span>
     ),
   },
-  // {
-  //   Header: "Sales Rep",
-  //   accessor: "salesrepName",
-  //   Cell: ({ row }: { row: { original: any } }) => (
-  //     <span>{row.original.salesrepName}</span>
-  //   ),
-  // },
+  {
+    Header: "Owner",
+    accessor: "salesrepName",
+    Cell: ({ row }: { row: { original: any } }) => (
+      <span>{row.original.salesrepName}</span>
+    ),
+  },
   // {
   //   Header: "Phone",
   //   accessor: "salesrepPhone",
