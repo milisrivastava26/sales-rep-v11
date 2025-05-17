@@ -33,7 +33,9 @@ export const getRoutes = (userDetails: any) => {
     "ROLE_COLLEGE_SKY",
     "ROLE_WAKAR_CONSULTANCY",
     "ROLE_FAISAL_ALI",
-    "ROLE_ADARSH_YADAV"
+    "ROLE_ADARSH_YADAV",
+    "ROLE_COLLEGE_CONNECT",
+    "ROLE_MERIT_ADMISSIONS",
   ];
   const isThirdPartyUser = userDetails?.authority?.some((role: any) =>
     thirdPartyRoles.includes(role)

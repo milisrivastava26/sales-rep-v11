@@ -16,7 +16,6 @@ const InboundWPMessagesPage: React.FC = () => {
   const { isRun } = useSelector((state: RootState) => state.updateNameWpLeadsData);
 
   useEffect(() => {
-    // // console.log("inisde the useEffect ")
     dispatch(getAllInboundWhatsappMessages());
   }, [dispatch, isRunURL1, isRunURL2, isRun]);
 

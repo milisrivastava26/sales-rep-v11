@@ -89,9 +89,7 @@ const  Activity: React.FC = () => {
   };
 
   const onGetActivityValues = (data: any, actions: any) => {
-    // console.log("leadCaptureId In= ", leadCaptureId);
     const newActivityData = { leadCaptureId: leadCaptureId, isTaskCreated: isTaskCreated, ...data };
-    // console.log("newActivityData= ", newActivityData);
     // Jai
     store.dispatch(CreateActivity(newActivityData));
      store.dispatch(takeActionForActivity(actions));
@@ -119,8 +117,6 @@ const  Activity: React.FC = () => {
     };
     store.dispatch(CreateCashPayment(payload));
   };
-
-  //  // console.log("selectedOption= ", selectedOption);
 
   return (
     <div>

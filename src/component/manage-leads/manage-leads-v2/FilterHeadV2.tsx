@@ -76,7 +76,6 @@ const FilterHeadV2: React.FC<PropsType> = ({
 
     const { paginatedProps } = useSelector((state: RootState) => state.ui);
 
-    console.log("paginatedProps", paginatedProps);
 
     // Load from localStorage on mount
     useEffect(() => {
@@ -100,7 +99,6 @@ const FilterHeadV2: React.FC<PropsType> = ({
     }, [filterpayload, selectedValues]);
 
     const handleMenuOpen = (name: string) => {
-        // console.log(name);
         if (name === "current_lead_stage_display_name") {
             dispatch(getLeadStageValues());
         } else if (name === "current_lead_sub_stage_display_name") {

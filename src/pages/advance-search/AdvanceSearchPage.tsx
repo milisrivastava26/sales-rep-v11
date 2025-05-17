@@ -23,9 +23,10 @@ const AdvanceSearchPage: React.FC = () => {
     )
   }
 
+
   return (
     <div>
-      {!isLoadingForUserDetails && <AdvanceSearch />}
+      {(!isLoadingForUserDetails && !isLoadingForAdvanceSearchField) && <AdvanceSearch />}
     </div>
   );
 };

@@ -12,9 +12,7 @@ interface tyeoFor{
 }
 const ViewFilterThirdPartyData: React.FC<tyeoFor>  = ({loaderVal, resValue}) => {
   // const { isLoading: clgDkhoLoader, responseOfGetCollegeDkhoLeads: clgDkhoRes } = useSelector((state: RootState) => state.getCollegeDkhoLeadsData);
- 
-  console.log("loaderVal", loaderVal)
-  return (
+   return (
     <div className="w-full">
       {loaderVal ? (
         <LoadingSpinner centered={false} size={20} message="loading.." mainLoading={true} />

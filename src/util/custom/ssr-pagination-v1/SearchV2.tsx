@@ -20,18 +20,20 @@ const SearchV2: React.FC = () => {
     const fullName = userDetails?.fullName;
 
     const handleSearch = () => {
+        const trimmedQuery = searchQuery.trim();
 
         const payload = {
             currentSalesrepFullName: fullName,
-            searchString: searchQuery,
+            searchString: trimmedQuery,
             pageNumber: paginatedProps.pageNumber,
             pageSize: paginatedProps.pageSize,
         }
 
-        if (searchQuery !== "") {
+        if (trimmedQuery !== "") {
             store.dispatch(getsearchedLeads(payload));
         }
     };
+
 
     return (
         <div className='flex items-center gap-2 py-4 rounded-md w-full'>

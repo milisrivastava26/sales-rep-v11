@@ -27,7 +27,6 @@ const AllOffers: React.FC<propsType> = ({ setIsNewOffer }) => {
 
   const ongetLeadOfferHistory = (selectedRowData: any) => {
 
-    console.log("offerId", selectedRowData.offerId);
     if (!selectedRowData) return;
     setIsNewOffer(false)
 

@@ -167,7 +167,6 @@ export function CustomTableThirdParty<T extends object>({
 
   useEffect(() => {
     const selectedData = selectedFlatRows.map((row: any) => row.original);
-    //  // console.log("selectedData= ", selectedData);
     dispatch(getThirdpartySelectedLead(selectedData));
   }, [selectedFlatRows]);
 

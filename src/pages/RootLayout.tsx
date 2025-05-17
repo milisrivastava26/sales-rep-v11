@@ -18,7 +18,6 @@ import NotificationSocket from "../component/notifications/NotificationSocket";
 import NotificationPopup from "../component/notifications/NotificationPopup";
 
 const RootLayout: React.FC = () => {
-  // // console.log("Root Layout")
   const { currentURL } = useForLocation();
   const { isConnectionRefused } = useNetworkStatus();
   const { resetFilters } = useSelector((state: RootState) => state.ui);
@@ -46,7 +45,9 @@ const RootLayout: React.FC = () => {
     "ROLE_COLLEGE_SKY",
     "ROLE_WAKAR_CONSULTANCY",
     "ROLE_FAISAL_ALI",
-    "ROLE_ADARSH_YADAV"
+    "ROLE_ADARSH_YADAV",
+    "ROLE_COLLEGE_CONNECT",
+    "ROLE_MERIT_ADMISSIONS",
   ];
 
   // Check if userDetails is available and determine if user is third-party
@@ -61,7 +62,6 @@ const RootLayout: React.FC = () => {
       window.location.replace(url);
     }
     if (token) {
-      // // console.log("Root Layout get user")
       store.dispatch(fetchUserDetails(token));
     }
     if (typeof resetFilters === "function") {

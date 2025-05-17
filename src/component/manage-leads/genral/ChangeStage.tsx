@@ -71,8 +71,6 @@ const ChangeStage: React.FC<changeStageType> = ({ onHideModal, isMode }) => {
     }
   );
 
-  console.log("leadCaptureIdsForTask", leadCaptureIdsForTask)
-  console.log("getLeadsForManageTask", getLeadsForManageTask)
   const onChangeOwner = (values: any, actions: any) => {
     const payload = {
       leadCaptureIds:

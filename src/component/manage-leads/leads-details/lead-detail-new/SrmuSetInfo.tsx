@@ -83,7 +83,6 @@ const SrmuSetInfo: React.FC = () => {
         preferedDate: examDate === "" ? null : examDate,
       };
 
-      console.log(payload);
       setEditing(false);
       store.dispatch(saveSrmuSetOptionById(payload));
     }

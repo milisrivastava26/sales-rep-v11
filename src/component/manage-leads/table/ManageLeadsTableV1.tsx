@@ -20,7 +20,6 @@ const ManageLeadsTableV1: React.FC = () => {
     }
   }, []);
 
-  // // console.log("filterpayload", filterpayload);
 
   return (
     <div className="my-4 mx-3 sm:mx-5 px-3 py-3 sm:px-6 sm:py-6 shadow-md rounded-md bg-white">

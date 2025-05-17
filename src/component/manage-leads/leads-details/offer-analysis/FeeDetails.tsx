@@ -31,7 +31,6 @@ const FeeDetails: React.FC = () => {
   useEffect(() => {
     let data: FeeDetail[] = [];
     if(lockOfferStatus === "void") {
-      console.log("inside if")
       data = transformApiResponse(FeeDetailsV2Response) as FeeDetail[];;
     }
     else if (
@@ -42,7 +41,6 @@ const FeeDetails: React.FC = () => {
       if (Object.keys(FeeDetailsV2Response).length !== 0) {
         dataToBeTransformed = FeeDetailsV2Response;
       } else {
-        console.log("hello")
         dataToBeTransformed = packageDealByLeadCaptureIdResponse;
       }
       data = transformApiResponse(dataToBeTransformed) as FeeDetail[];

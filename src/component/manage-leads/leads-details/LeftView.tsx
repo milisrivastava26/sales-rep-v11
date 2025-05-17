@@ -80,8 +80,6 @@ const LeftView: React.FC = () => {
       leadEnquiryId: activeEnquiry[0]?.leadEnquiryId,
       coreCampusId: values.coreCampusId,
     }
-    console.log("payload", payload);
-
     store.dispatch(saveCampusInterestedInDetails(payload));
   }
 

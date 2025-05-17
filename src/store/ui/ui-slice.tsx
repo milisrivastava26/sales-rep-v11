@@ -81,6 +81,7 @@ interface typeUI {
   getLeadsForManageTask: [];
   lockOfferStatus: string;
   packageDeal: string;
+  oneTimeDiscount: string;
   paginatedProps: {
     pageSize: number,
     pageNumber: number,
@@ -199,6 +200,7 @@ const initialState: typeUI = {
   getLeadsForManageTask: [],
   lockOfferStatus: "",
   packageDeal: "",
+  oneTimeDiscount: "",
   paginatedProps: {
     pageSize: 50,
     pageNumber: 0
@@ -596,6 +598,9 @@ const uiSlice = createSlice({
     setPackageDeal: (state, action) => {
       state.packageDeal = action.payload;
     },
+    setOneTimeDiscount: (state, action) => {
+      state.oneTimeDiscount = action.payload;
+    },
     setPaginatedProps: (state, action) => {
       state.paginatedProps = action.payload;
     },
@@ -694,6 +699,7 @@ export const {
   getLeadsForOverdueTask,
   setLockOfferStatus,
   setPackageDeal,
+  setOneTimeDiscount,
   setPaginatedProps,
   getLeadsForManageTask,
   setSearchQuery,

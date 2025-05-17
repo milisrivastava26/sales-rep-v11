@@ -10,6 +10,20 @@ export const ManageTaskColumn: Column<any>[] = [
     ),
   },
   {
+    Header: "Lead Name",
+    accessor: "leadName",
+    Cell: ({ row }: { row: { original: any } }) => (
+      <span>{row.original.leadName}</span>
+    ),
+  },
+  {
+    Header: "Phone",
+    accessor: "leadPhone",
+    Cell: ({ row }: { row: { original: any } }) => (
+      <span>{row.original.leadPhone}</span>
+    ),
+  },
+  {
     Header: "Date",
     accessor: (row) => {
       const { dateFormatted, timeFormatted } = extractDateTime(row.createdAt);
@@ -26,13 +40,13 @@ export const ManageTaskColumn: Column<any>[] = [
       );
     },
   },
-  {
-    Header: "Subject",
-    accessor: "subject",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.subject}</span>
-    ),
-  },
+  // {
+  //   Header: "Subject",
+  //   accessor: "subject",
+  //   Cell: ({ row }: { row: { original: any } }) => (
+  //     <span>{row.original.subject}</span>
+  //   ),
+  // },
   {
     Header: "Task Type",
     accessor: "taskType",
@@ -40,13 +54,13 @@ export const ManageTaskColumn: Column<any>[] = [
       <span>{row.original.taskType}</span>
     ),
   },
-  {
-    Header: "Details",
-    accessor: "taskDetails",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.taskDetails}</span>
-    ),
-  },
+  // {
+  //   Header: "Details",
+  //   accessor: "taskDetails",
+  //   Cell: ({ row }: { row: { original: any } }) => (
+  //     <span>{row.original.taskDetails}</span>
+  //   ),
+  // },
   {
     Header: "Status",
     accessor: "isCompleted",
@@ -54,27 +68,27 @@ export const ManageTaskColumn: Column<any>[] = [
       <span>{row.original.isCompleted ? "Completed" : "Pending"}</span>
     ),
   },
-  {
-    Header: "Sales Rep",
-    accessor: "salesrepName",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.salesrepName}</span>
-    ),
-  },
-  {
-    Header: "Phone",
-    accessor: "salesrepPhone",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.salesrepPhone}</span>
-    ),
-  },
-  {
-    Header: "Email",
-    accessor: "salesrepEmail",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.salesrepEmail}</span>
-    ),
-  },
+  // {
+  //   Header: "Sales Rep",
+  //   accessor: "salesrepName",
+  //   Cell: ({ row }: { row: { original: any } }) => (
+  //     <span>{row.original.salesrepName}</span>
+  //   ),
+  // },
+  // {
+  //   Header: "Phone",
+  //   accessor: "salesrepPhone",
+  //   Cell: ({ row }: { row: { original: any } }) => (
+  //     <span>{row.original.salesrepPhone}</span>
+  //   ),
+  // },
+  // {
+  //   Header: "Email",
+  //   accessor: "salesrepEmail",
+  //   Cell: ({ row }: { row: { original: any } }) => (
+  //     <span>{row.original.salesrepEmail}</span>
+  //   ),
+  // },
   {
     Header: "Lead Stage",
     accessor: "currentLeadStage",

@@ -1,48 +1,47 @@
-import { useEffect, useState } from "react";
 
 interface typeRefresh {
   onRefresh: () => void;
 }
 
 const CustomRefresh: React.FC<typeRefresh> = ({ onRefresh }) => {
-  const [counter, setCounter] = useState(300); // 5 minutes = 300 seconds
+  // const [counter, setCounter] = useState(300); // 5 minutes = 300 seconds
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter((prev) => {
-        if (prev === 1) {
-          onRefresh();
-          return 300; // Reset to 5 minutes
-        }
-        return prev - 1;
-      });
-    }, 1000); // Decrease every second
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCounter((prev) => {
+  //       if (prev === 1) {
+  //         onRefresh();
+  //         return 300; // Reset to 5 minutes
+  //       }
+  //       return prev - 1;
+  //     });
+  //   }, 1000); // Decrease every second
 
-    return () => clearInterval(interval);
-  }, [onRefresh]); // Do not include `counter` here
+  //   return () => clearInterval(interval);
+  // }, [onRefresh]); // Do not include `counter` here
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    const paddedSecs = secs < 10 ? `0${secs}` : secs;
-    return `${mins}:${paddedSecs}`;
-  };
+  // const formatTime = (seconds: number) => {
+  //   const mins = Math.floor(seconds / 60);
+  //   const secs = seconds % 60;
+  //   const paddedSecs = secs < 10 ? `0${secs}` : secs;
+  //   return `${mins}:${paddedSecs}`;
+  // };
 
   return (
     <div className="flex items-center text-[12px] sm:text-sm bg-gray-100 gap-x-2 px-2 rounded">
-      <div className="flex items-center py-1">
+      {/* <div className="flex items-center py-1">
         <span className="w-3 h-3 bg-green-600 rounded-full block mr-2"></span>
         <span>
           {counter === 0
             ? "Refreshing..."
             : `Next refresh in ${formatTime(counter)}`}
         </span>
-      </div>
+      </div> */}
       <div
-        className="flex items-center gap-x-1 pl-2 py-1 border-l cursor-pointer text-blue-600"
+        className="flex items-center gap-x-1 py-1 cursor-pointer text-blue-600"
         onClick={() => {
           onRefresh();
-          setCounter(300); // Reset on manual refresh
+          // setCounter(300); 
         }}
       >
         <svg

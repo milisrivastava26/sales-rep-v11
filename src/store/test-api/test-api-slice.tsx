@@ -70,9 +70,7 @@ const testApiSlice = createSlice({
       })
       .addCase(fetchTestApiData.fulfilled, (state, action) => {
         const { key, data } = action.payload;
-        // console.log(key, data)
         state[key] = { isLoading: false, isError: null, data };
-        // console.log( state[key]);
       })
       .addCase(fetchTestApiData.rejected, (state, action) => {
         const { key, error } = action.payload as { key: string; error: string };

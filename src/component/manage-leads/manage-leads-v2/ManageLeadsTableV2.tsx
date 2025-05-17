@@ -21,8 +21,6 @@ const ManageLeadsTableV2: React.FC = () => {
         }
     }, []);
 
-    // // console.log("filterpayload", filterpayload);
-
     return (
         <div className="mb-4 mx-3 sm:mx-5 px-3 py-3 sm:px-6 sm:py-6 shadow-md rounded-md bg-white">
             <div className="overflow-x-auto">

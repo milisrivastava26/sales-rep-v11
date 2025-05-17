@@ -28,7 +28,6 @@ export const updateUserPassword = createAsyncThunk<any, any>("User/updateUserPas
       return res.data;
     })
     .catch((e: any) => {
-      // console.log("error while updating the User Password: ", e.message);
       return rejectWithValue(e.message);
     });
 });

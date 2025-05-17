@@ -14,31 +14,39 @@ const initialState: FeeDetailsV2Type = {
   isError: null,
 };
 
-export const getFeeDetailsV2 = createAsyncThunk<any, any>("getFeeDetailsV2Response", async (payload, { rejectWithValue }) => {
-  try {
-    const response = await coreLeadCaptureApi.post("api/crm/lead/leadFeeCalculation/getLeadFeeV2", payload);
+export const getFeeDetailsV2 = createAsyncThunk<any, any>(
+  "getFeeDetailsV2Response",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const feePromise = coreLeadCaptureApi.post(
+        "api/crm/lead/leadFeeCalculation/getLeadFeeV2",
+        payload
+      );
 
-    toast.promise(Promise.resolve(response), {
-      loading: "Loading",
-      success: "Fees Details fetched successfully ",
-      error: (e: any) => {
-        // Extract the error message dynamically from response
-        const errorMessage = e.response?.data?.error || "Error occurred while submitting";
-        return errorMessage;
-      },
-    });
-    return response.data;
-  } catch (error: any) {
-    return rejectWithValue(error.response?.data.message || "An error occurred.");
+      const response = await toast.promise(
+        feePromise,
+        {
+          loading: "Loading...",
+          success: "Fees details fetched successfully.",
+          error: (e: any) =>
+            e?.response?.data?.error || "Error occurred while fetching fee details.",
+        }
+      );
+
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error?.response?.data?.message || "An error occurred."
+      );
+    }
   }
-});
+);
 
 const getFeeDetailsV2Slice = createSlice({
   name: "LeadCapture/getFeeDetailsV2",
   initialState,
   reducers: {
     resetResponseForGetFeeDetailsV2: (state) => {
-      console.log("inside reset")
       state.FeeDetailsV2Response = {};
     },
   },

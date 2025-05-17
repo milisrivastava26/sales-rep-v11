@@ -28,11 +28,11 @@ export function transformInstallmentTypePayload(
     netFee: feeResponse.courseFeeAfterDiscount,
     status: "validated", // Assuming this is constant
     applicableOn: feeResponse.scholarshipApplicableOn || "S",
-    // Default "S" if not provided
     leadEnquiryId: leadEnquiryId,
     additionalDiscount: feeResponse.additionalDiscount || 0,
     additionalDiscountReason: scholarshipData.discountReason || "",
     adjustedAmount: feeResponse.adjustedAmount || 0,
+    discountType: scholarshipData.scholarshipCategory == 9 ? "O" : scholarshipData.scholarshipCategory == 8 ? "P" : null
   };
 
   const scholarshipResponse = {

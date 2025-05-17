@@ -201,9 +201,6 @@ export function deepMerge(current: any, merged: any): any {
 }
 
 export const getCombinedValues = (updatedValues: any, mergedValues: any) => {
-  console.log("updatedValues", updatedValues)
-  console.log("mergedValues.name", mergedValues.name === "")
-  console.log("updatedValues.name", updatedValues.name)
   const values = {
     leadCaptureId:
       mergedValues.leadCaptureId !== ""

@@ -4,6 +4,7 @@ import store, { RootState } from '../../../store';
 import { useSelector } from 'react-redux';
 
 interface ViewLeadResponse {
+    totalRecords: ViewLeadResponse | null;
     totalPageCount?: number;
     // add other properties if needed
 }
@@ -21,7 +22,7 @@ const PaginationAdvance: React.FC = () => {
 
     const { responseOfViewLead } = useSelector(
         (state: RootState) => state.getCoreViewLead
-    ) as { responseOfViewLead: ViewLeadResponse | null };
+    ) as unknown as { responseOfViewLead: ViewLeadResponse | null };
 
     const totalPages: number =
         responseOfViewLead && !Array.isArray(responseOfViewLead) && typeof responseOfViewLead.totalPageCount === 'number'
@@ -44,6 +45,9 @@ const PaginationAdvance: React.FC = () => {
 
     return (
         <div className="flex gap-x-7 justify-between items-center">
+            <div className='text-nowrap'>
+                Total Data: {responseOfViewLead && typeof responseOfViewLead.totalRecords === 'number' ? responseOfViewLead.totalRecords : 0}
+            </div>
             <div className="flex items-center gap-x-2">
                 <label htmlFor="">Size</label>
                 <div className="flex gap-x-2">

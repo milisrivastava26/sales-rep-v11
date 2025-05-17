@@ -33,7 +33,6 @@ const AcademicInfo: React.FC = () => {
   const onUpdateLeadHandler = (data: any) => {
     const updatedData = transformPayloadForAcademicData(data.values, isEnableForTwelfthInputFields, isEnableForDiplomaInputFields, isEnableForUGInputFields, leadCaptureId);
 
-    console.log("updatedData", updatedData)
     store.dispatch(updateLeadAcademicDetails(updatedData));
     store.dispatch(takeActionsForUpdateLeadAcademicDetails(data.actions));
   };
@@ -55,7 +54,6 @@ const AcademicInfo: React.FC = () => {
   const diplomaResultStatus = initialValuesForAcademicInfo?.coreDiplomaResultStatus;
   const ugResultStatus = initialValuesForAcademicInfo?.coreUgResultStatus;
 
-  console.log("Tenth_plus_2_type", Tenth_plus_2_type)
   useEffect(() => {
     if (Tenth_plus_2_type === "TWELFTH") {
       store.dispatch(onSetEnableForTwefthInputFields());

@@ -15,7 +15,7 @@ const Search: React.FC = () => {
           className="border border-stroke focus:border-stroke rounded-md px-4 py-1 w-full outline-none dark:bg-form-input dark:border-strokedark "
           value={globalFilter || ""}
           onChange={(e: any) => {
-            return setGlobalfilter(e.target.value);
+            return setGlobalfilter(e.target.value.trimStart());
           }}
           placeholder="Search..."
         />

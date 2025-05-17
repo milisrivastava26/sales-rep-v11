@@ -14,6 +14,7 @@ import { getScholarSlabBySchemeId } from "../../../../../store/scholarship-get/g
 import { getScholarSchemeByCategId } from "../../../../../store/scholarship-get/get-all-scholarshipScheme-by-categoryId-slice";
 import AdjustPreviousAmount from "./AdjustPreviousAmount";
 import toast from "react-hot-toast";
+import OneTimeDiscountForm from "./OneTimeDiscountForm";
 
 interface FormValues {
   scholarshipCategory: any;
@@ -47,6 +48,8 @@ const OfferEvaluationForm: React.FC<propsType> = ({
   const [isPreviousEnquiryChecked, setIsPreviousEnquiryChecked] =
     useState(true);
   const [isPackageDealEnabled, setIsPackageDealEnabled] = useState(false);
+  const [isOneTimeDiscountEnabled, setIsOneTimeDiscountEnabled] = useState(false);
+
   const { scholarshipPercentageDiscountBySlabId } = useSelector(
     (state: RootState) => state.getScholarshipPercentageDiscountBySlabId
   );
@@ -72,6 +75,7 @@ const OfferEvaluationForm: React.FC<propsType> = ({
   }, []);
 
   const { packageDeal } = useSelector((state: RootState) => state.ui);
+  const { oneTimeDiscount } = useSelector((state: RootState) => state.ui);
 
   const handleCalculateFee = (values: any) => {
     const payload = {
@@ -82,7 +86,7 @@ const OfferEvaluationForm: React.FC<propsType> = ({
         scholarshipPercentageDiscountBySlabId.percentageDiscount,
       coreAcademicProgramId: programId,
       discountReason: values.discountReason,
-      additionalDiscount: values.additionalDiscount,
+      additionalDiscount: values.additionalDiscount !== 0 ? values.additionalDiscount : oneTimeDiscount !== "0" ? oneTimeDiscount : 0,
       adjustedPercentage: values.adjustedPercentage,
       adjustedAmount: values.adjustedAmount,
       packageDealAmount: packageDeal,
@@ -122,7 +126,6 @@ const OfferEvaluationForm: React.FC<propsType> = ({
             }}
           >
             {({ values, setFieldValue }) => {
-
               useEffect(() => {
                 if (!isManagerOrAdmin && values.scholarshipCategory == 8 && isNewOffer) {
                   toast.error("You are not eligible to give package deal");
@@ -157,6 +160,9 @@ const OfferEvaluationForm: React.FC<propsType> = ({
                         values={values}
                         isNewOffer={isNewOffer}
                         buttonDisabled={buttonDisabled}
+                        isPackageDealEnabled={isPackageDealEnabled}
+                        setIsOneTimeDiscountEnabled={setIsOneTimeDiscountEnabled}
+                        isOneTimeDiscountEnabled={isOneTimeDiscountEnabled}
                       />
                     </div>
                     <div>
@@ -164,6 +170,12 @@ const OfferEvaluationForm: React.FC<propsType> = ({
                         isPackageDealEnabled={isPackageDealEnabled}
                         isNewOffer={isNewOffer}
                       />
+                      <div className="mt-8">
+                        <OneTimeDiscountForm
+                          isOneTimeDiscountEnabled={isOneTimeDiscountEnabled}
+                          isNewOffer={isNewOffer}
+                        />
+                      </div>
                     </div>
                   </div>
 

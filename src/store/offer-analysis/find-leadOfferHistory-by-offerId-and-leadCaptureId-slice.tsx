@@ -46,6 +46,7 @@ export interface LeadFeeDetails {
   coreScholarshipSchemeId: number;
   coreScholarshipSlabId: number;
   packageDealAmount: number;
+  
 }
 
 interface leadOfferHistoryByOfferIdType {

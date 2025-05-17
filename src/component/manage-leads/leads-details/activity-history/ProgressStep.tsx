@@ -127,13 +127,10 @@ const ProgressStep: React.FC<ProgressStepType> = ({
       } else if (title === "Leads Notes") {
         await store.dispatch(getLeadNotesDetailsById(id));
       } else if (title === "Task") {
-        // console.log("task");
         await store.dispatch(getLeadTaskDetailsById(id));
       } else if (title === "New Enquiry") {
-        // console.log("New Enquiry");
         await store.dispatch(getLeadEnquiryDetailsByTrackId(id));
       } else if (title === "Application Fee" || title === "Registration Fee" || title === "Course Fee") {
-        // console.log("New Enquiry");
         await store.dispatch(getLeadPaymentsDetailsById(id));
       } else if (title === "Lead Captured") {
         await store.dispatch(getLeadCaptureDetailsByActionTrackId(id));
@@ -172,7 +169,6 @@ const ProgressStep: React.FC<ProgressStepType> = ({
         await store.dispatch(getLeadGeneralInfoDetails(leadCaptureId));
       }
       else {
-        // console.log("ELSE= ", id);
         await store.dispatch(getLeadActivityByTrackingId(id));
       }
     }
@@ -194,7 +190,6 @@ const ProgressStep: React.FC<ProgressStepType> = ({
       setTimeout(() => setIsButtonDisabled(false), 2000); // Adjust the delay as needed
     }
   };
-  // // console.log("resNotes= ", resNotes);
   return (
     <div className="relative flex group hover:bg-slate-50 items-stretch px-4 ">
       <div className="flex flex-col mr-[8px] mt-[10px]">

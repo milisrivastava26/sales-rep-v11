@@ -105,8 +105,6 @@ const MergeLeads: React.FC = React.memo(() => {
     }
   }, [error]);
 
-  console.log("selectedFields", selectedFields);
-
 
   useEffect(() => {
     if (!formikRef.current) return;
@@ -117,7 +115,6 @@ const MergeLeads: React.FC = React.memo(() => {
     const updatedValues = { ...currentValues };   
 
     const values = getCombinedValues(updatedValues, mergedValues);
-    console.log(values)
     formikRef.current.setValues(values);
 
   }, [selectedFields]);
@@ -182,7 +179,6 @@ const MergeLeads: React.FC = React.memo(() => {
       values,
       selectedLeads
     );
-    // console.log("mergeLeadData", mergeLeadData);
     if (!error) {
       store.dispatch(mergeLeadsByCaptureIds(mergeLeadData));
     }

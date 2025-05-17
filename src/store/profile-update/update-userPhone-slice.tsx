@@ -28,7 +28,6 @@ export const updateUserPhone = createAsyncThunk<any, { newPhone: string | number
       return res.data;
     })
     .catch((e: any) => {
-      // console.log("error while updating the User Phone: ", e.message);
       return rejectWithValue(e.message);
     });
 });

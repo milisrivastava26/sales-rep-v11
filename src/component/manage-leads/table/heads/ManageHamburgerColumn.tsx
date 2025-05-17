@@ -60,11 +60,12 @@ const ManageHamburgerColumn: React.FC = () => {
               type="checkbox"
               value={item.name}
               name={item.name}
+              id = {item.id}
               disabled={item.isReadOnly}
               onChange={(e) => handleCheckboxChange(e, item)}
               checked={selectedColumn.some((col: any) => col.name === item.name)}
             />
-            <p>{item.label}</p>
+            <label htmlFor={item.id}>{item.label}</label>
           </div>
         ))}
       </div>

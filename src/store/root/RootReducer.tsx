@@ -226,6 +226,8 @@ import { getFaisalAliLeadsReducer } from "../third-party-slices/get-faisalAli-le
 import { getAdarshYadavLeadsReducer } from "../third-party-slices/get-adarshYadav-leads-slice";
 import { getWakarConsultancyLeadReducer } from "../third-party-slices/get-wakar-consultancy-leads-slice";
 import { sendWhatsappByTemplateIdReducer } from "../whatsapp -messenger/send-whatsapp-slice";
+import { collegeConnectLeadsReducer } from "../third-party-slices/get-collegeConnect-leads-slice";
+import { meritAdmissionsLeadsReducer } from "../third-party-slices/get-meritAdmissions-lead-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -517,6 +519,8 @@ const RootReducer = {
   getFaisalAliLeads: getFaisalAliLeadsReducer,
   getAdarshYadavLeads: getAdarshYadavLeadsReducer,
   getWakarConsultancyLeads: getWakarConsultancyLeadReducer,
+  getCollegeConnectLeads: collegeConnectLeadsReducer,
+  getMeritAdmissionsLeads: meritAdmissionsLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,

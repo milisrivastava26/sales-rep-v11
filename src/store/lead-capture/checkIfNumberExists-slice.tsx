@@ -33,7 +33,6 @@ const isNumberExistsSlice = createSlice({
   initialState,
   reducers: {
     resetIsNumberExistsState: (state) => {
-        // console.log("insde reset func")
       state.isNumberExists = null;
       state.isError = null;
     },
