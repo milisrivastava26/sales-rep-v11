@@ -9,10 +9,8 @@ const StudentDocumentsPage: React.FC = () => {
   const { isRun: isRunForVerify } = useSelector(
     (state: RootState) => state.verifyStudentDocsResponse
   );
-  console.log("helloooo")
   const { leadCaptureId } = useParams();
   useEffect(() => {
-    console.log("inside effect")
     store.dispatch(getStudentDocsByLeadCaptureId(leadCaptureId));
   }, [leadCaptureId, isRunForVerify]);
 

@@ -46,7 +46,6 @@ const ManageLeadsDetails: React.FC = () => {
   const apiCalledRef = useRef(false);
 
   useEffect(() => {
-    console.log("inisde 1")
     if (apiCalledRef.current === false) {
       store.dispatch(getAcademicCareerValuesForQuickadd());
       store.dispatch(getStateValues());

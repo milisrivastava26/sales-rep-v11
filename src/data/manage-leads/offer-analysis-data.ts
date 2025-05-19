@@ -18,7 +18,7 @@ export const transformScholarshipInitialValues = (leadHistoryData: any) => {
     scholarshipCategory: leadHistoryData.coreScholarshipCategoryId,
     scholarshipScheme: leadHistoryData.coreScholarshipSchemeId,
     scholarshipSlab: leadHistoryData.coreScholarshipSlabId,
-    additionalDiscount: "",
+    additionalDiscount: leadHistoryData.coreScholarshipCategoryId !==9 ? leadHistoryData.additionalDiscount : 0,
     discountReason: "",
     adjustedPercentage: leadHistoryData.adjustedPercentage,
     adjustedAmount: leadHistoryData.adjustedAmount,
@@ -46,6 +46,12 @@ export const validationSchemaForScholarship = () => {
       .min(0, "Adjusted Percentage cannot be less than 0")
       .max(100, "Adjusted Percentage cannot be greater than 100")
       .required("Adjusted Percentage is required."),
+    additionalDiscount: Yup.number()
+      .typeError("Additional Discount must be a number")
+      .integer("Additional Discount must be a whole number")
+      .min(0, "Additional Discount cannot be less than 0")
+      .max(5000, "Additional Discount cannot be greater than 5000")
+      .required("Additional Discount is required."),
   };
 
   return Yup.object(schema);

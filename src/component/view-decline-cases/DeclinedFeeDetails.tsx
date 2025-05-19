@@ -59,12 +59,6 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
     );
     setNewFeeData(transformedData);
   }, [FeeDetailsV2Response]);
-
-  console.log(
-    "FeeDetailsV2Response",
-    FeeDetailsV2Response,
-    Object.keys(FeeDetailsV2Response).length
-  );
   useEffect(() => {
     const data = transformLeadHistoryFeeData(
       leadOfferHistoryByOfferIdResponse
@@ -87,7 +81,6 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
 
     setPackageDeal(values.packageDeal);
 
-    console.log("payload", payload);
     store.dispatch(getFeeDetailsV2(payload));
   };
 

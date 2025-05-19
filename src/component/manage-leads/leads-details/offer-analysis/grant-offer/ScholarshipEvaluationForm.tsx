@@ -6,7 +6,7 @@ import { getScholarSchemeByCategId } from "../../../../../store/scholarship-get/
 import { getScholarSlabBySchemeId } from "../../../../../store/scholarship-get/get-all-scholarshipSlab-by-schemeId-slice";
 import { getScholarshipPercentageDiscountBySlabId, resetResponseForScholarshipPercentageDiscount } from "../../../../../store/scholarship-get/get-scholarshipPercentageDiscount-by-slabId-slice";
 import LoadingSpinner from "../../../../../util/custom/ui/LoadingSpinner";
-import { setPackageDeal } from "../../../../../store/ui/ui-slice";
+import { setOneTimeDiscount, setPackageDeal } from "../../../../../store/ui/ui-slice";
 import { resetResponseForGetFeeDetailsV2 } from "../../../../../store/leadFeeDetailsV2/get-lead-feeDetailsV2-slice";
 import { resetResponseForNewInstallmentDetails } from "../../../../../store/leadFeeDetailsV2/get-newInstallmentDetails-slice";
 
@@ -16,6 +16,9 @@ interface propsType {
   setIsPackageDealEnabled: (e: any) => void;
   isNewOffer: boolean;
   buttonDisabled: boolean;
+  isPackageDealEnabled: boolean;
+  setIsOneTimeDiscountEnabled: (e: any) => void;
+  isOneTimeDiscountEnabled: boolean;
 }
 
 const ScholarshipEvaluationForm: React.FC<propsType> = ({
@@ -24,6 +27,9 @@ const ScholarshipEvaluationForm: React.FC<propsType> = ({
   setIsPackageDealEnabled,
   isNewOffer,
   buttonDisabled,
+  isPackageDealEnabled,
+  setIsOneTimeDiscountEnabled,
+  isOneTimeDiscountEnabled,
 }) => {
   const { responseForAllScholarshipCateg } = useSelector(
     (state: RootState) => state.getAllActiveScholarCategory
@@ -60,6 +66,16 @@ const ScholarshipEvaluationForm: React.FC<propsType> = ({
     store.dispatch(getScholarshipPercentageDiscountBySlabId(slabId));
   };
 
+  const { userDetails } = useSelector(
+    (state: RootState) => state.getLoggedInUserData
+  );
+
+  const roles = ["ROLE_MANAGER", "ROLE_ADMIN"];
+
+  const isManagerOrAdmin = userDetails?.authority?.some((role: string) =>
+    roles.includes(role)
+  );
+
   return (
     <div className="rounded-md w-full">
       <div>
@@ -81,19 +97,49 @@ const ScholarshipEvaluationForm: React.FC<propsType> = ({
                   store.dispatch(resetResponseForScholarshipPercentageDiscount())
                   const value = e.target.value;
                   if (value == 8) {
+                    setFieldValue("scholarshipCategory", value);
+                    setFieldValue("scholarshipScheme", 25);
+                    setFieldValue("scholarshipSlab", 75);
                     store.dispatch(resetResponseForGetFeeDetailsV2());
                     store.dispatch(resetResponseForNewInstallmentDetails());
                     onScholershipCategory(value);
                     onScholershipScheme(25);
                     setIsPackageDealEnabled(true);
+                    setFieldValue("additionalDiscount", 0);
+                    store.dispatch(setOneTimeDiscount(0));
+                    setIsOneTimeDiscountEnabled(false);
+                  }
+                  else if (value == 7) {
+                    onScholershipCategory(value);
+                    onScholershipScheme(24);
                     setFieldValue("scholarshipCategory", value);
-                    setFieldValue("scholarshipScheme", 25);
-                    setFieldValue("scholarshipSlab", 75);
+                    setFieldValue("scholarshipScheme", 24);
+                    setFieldValue("scholarshipSlab", 74);
+                    store.dispatch(setPackageDeal(0));
+                    setIsPackageDealEnabled(false);
+                    store.dispatch(setOneTimeDiscount(0));
+                    setIsOneTimeDiscountEnabled(false);
+                  }
+                  else if (value == 9) {
+                    store.dispatch(resetResponseForGetFeeDetailsV2());
+                    store.dispatch(resetResponseForNewInstallmentDetails());
+                    onScholershipCategory(value);
+                    onScholershipScheme(26);
+                    setIsOneTimeDiscountEnabled(true);
+                    setFieldValue("scholarshipCategory", value);
+                    setFieldValue("scholarshipScheme", 26);
+                    setFieldValue("scholarshipSlab", 76);
+                    setFieldValue("additionalDiscount", 0);
+                    store.dispatch(setPackageDeal(0));
+                    setIsPackageDealEnabled(false);
                   } else {
+                    store.dispatch(setPackageDeal(0));
+                    setIsPackageDealEnabled(false);
+                    store.dispatch(setOneTimeDiscount(0));
+                    setIsOneTimeDiscountEnabled(false);
                     store.dispatch(resetResponseForGetFeeDetailsV2());
                     store.dispatch(resetResponseForNewInstallmentDetails());
                     store.dispatch(setPackageDeal(0));
-                    setIsPackageDealEnabled(false);
                     onScholershipCategory(value);
                     setFieldValue("scholarshipCategory", value);
                     setFieldValue("scholarshipScheme", "");
@@ -171,6 +217,25 @@ const ScholarshipEvaluationForm: React.FC<propsType> = ({
               </Field>
               <ErrorMessage
                 name="scholarshipSlab"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
+
+            <div className="w-full mt-2 flex flex-col">
+              <label className="mb-1">Additional Discount</label>
+              <Field
+                name="additionalDiscount"
+                className="w-full border rounded-md px-2 py-1"
+                disabled={!isNewOffer || buttonDisabled || isPackageDealEnabled || !isManagerOrAdmin || isOneTimeDiscountEnabled}
+                onChange={(e: any) => {
+                  const value = e.target.value;
+                  setFieldValue("additionalDiscount", value);
+                }}
+              >
+              </Field>
+              <ErrorMessage
+                name="additionalDiscount"
                 component="div"
                 className="text-red-500 text-sm mt-1"
               />

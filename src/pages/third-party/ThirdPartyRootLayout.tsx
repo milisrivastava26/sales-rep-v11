@@ -12,8 +12,6 @@ import useNetworkStatus from "../../hooks/useNetworkStatus";
 import NavbarThirdParty from "../../component/third-party-components/NavbarThirdParty";
 
 const ThirdPartyRootLayout: React.FC = () => {
-  // // console.log("3rd party ")
-//  const dispatch = store.dispatch;
   const { currentURL } = useForLocation();
   const { isConnectionRefused } = useNetworkStatus();
   const { isAuthenticated, accessToken: token } = useSelector((state: RootState) => state.auth);
@@ -21,10 +19,6 @@ const ThirdPartyRootLayout: React.FC = () => {
     if (!isAuthenticated) {
       window.location.replace(url);
     }
-    // if (token) {
-    //   // console.log("3rd party get user")
-    //   dispatch(fetchUserDetails(token));
-    // }
   }, [isAuthenticated, currentURL, token]);
   return (
     <Fragment>

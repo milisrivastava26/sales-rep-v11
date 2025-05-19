@@ -18,7 +18,6 @@ const InboundWpMessage: React.FC<typeFor> = ({ data }) => {
     dispatch(updateStatusThunk({ id, silent: false }))
   }
   function handleCreateLead(allRowsData: InboundWhatsappMessage) {
-    // // console.log("All rows data:", allRowsData);
     const {leadCaptureClientR2nId, name, phone } = allRowsData;
 
     const wpActionAval={
@@ -38,13 +37,11 @@ const InboundWpMessage: React.FC<typeFor> = ({ data }) => {
         ],
       }
     }
-    // // console.log("wpActionAval= ", wpActionAval);
      dispatch(postWhatsAppAction(wpActionAval)as any);
     // Perform API call or action with the full dataset
   }
 
   const nameUpdateHandler=(id: string | number, newName: string)=>{
-    // console.log(`id= ${id}  newName = ${newName}`)
     dispatch(updateNameWpLead({ id, newName }))
   }
   return (

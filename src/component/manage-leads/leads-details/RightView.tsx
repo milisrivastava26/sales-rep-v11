@@ -37,8 +37,6 @@ const RightView: React.FC = () => {
 
     if (!isLoading && Array.isArray(leadApplicationStatusByLeadId) && leadApplicationStatusByLeadId.length !== 0) {
       registrationFeeObject = leadApplicationStatusByLeadId.find((item: any) => item.name === "Registration Fee");
-
-      console.log("registrationFeeObject", registrationFeeObject);
     }
 
     const shouldDisplayOfferAnalysis = registrationFeeObject?.status === true;
@@ -61,8 +59,6 @@ const RightView: React.FC = () => {
 
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById) ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE") : [];
   const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
-
-  console.log("getLeadEnquiryDetailsDataById==================", responseOfLeadEnquiryDetailsById);
 
   const handleRefresh = function () {
     if (rightSectionTabname === "Activity History") {
@@ -145,10 +141,8 @@ const RightView: React.FC = () => {
   ]);
 
   const MergedLeadData = mergedLeadDetailsData(responseOfLeadEnquiryDetailsById, responseOfLeadAddressById, responseofLeadAdditionalInfo, responseOfLeadAcademicDetailsById, srmusetOptionDetails);
-  console.log("general info data===", MergedLeadData);
 
   if (leadDetailsPrint && !isLoadingForAddress && !isLoadingForAdditionalDetails && !isLoadingForAcademicDetails && responseOfLeadAddressById && responseofLeadAdditionalInfo) {
-    console.log("my data will come of print");
   }
   return (
     <>

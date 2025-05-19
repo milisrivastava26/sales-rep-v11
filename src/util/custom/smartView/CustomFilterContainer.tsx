@@ -80,7 +80,6 @@ const CustomFilterContainer: React.FC<PropsType> = ({
       dispatch(getleadSubStagesById(selectedOption.value));
     }
     if (selectedOption && name === "academic_career_description") {
-      // console.log("click academic_career_description");
       dispatch(getApByCareerId(selectedOption.value));
     }
   };
@@ -107,8 +106,7 @@ const CustomFilterContainer: React.FC<PropsType> = ({
       const isSalesRepUser = !userDetails?.authority?.some(
         (role: string) => role === "ROLE_ADMIN" || role === "ROLE_MANAGER"
       );
-      // console.log("if 1", isSalesRepUser);
-      // // console.log("filterpayload= ", { fullName: "new", ...filterpayload });
+     
       dispatch(
         getLeadCaptureByFullName(
           isSalesRepUser

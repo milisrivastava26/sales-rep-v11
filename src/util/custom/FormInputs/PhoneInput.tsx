@@ -14,7 +14,6 @@ const PhoneInput: React.FC<typeForPhoneInput> = ({ name, response, onIsPhoneExis
   const handleBlur = () => {
     response = null;
     const phoneValue = field.value?.trim();
-    // console.log("response= ", response);
     //  Validation for 10-digit phone number
     if (!/^\d{10}$/.test(phoneValue)) {
       helpers.setError("Phone number must be exactly 10 digits");

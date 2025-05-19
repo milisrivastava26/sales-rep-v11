@@ -86,9 +86,7 @@ export function CustomDetailsTable<T extends object>({
     }
   }, [selectedRow]);
   const { paginatedProps } = useSelector((state: RootState) => state.ui);
-  console.log("paginatedProps", paginatedProps)
 
-  console.log("isMode", isMode)
   const {
     getTableBodyProps,
     headerGroups,
@@ -156,8 +154,6 @@ export function CustomDetailsTable<T extends object>({
 
   const { globalFilter, pageIndex, pageSize } =
     state as TableStateWithFiltersAndPagination<T>;
-
-  console.log("pageSize", pageSize)
 
 
   // Sync current data with the passed data prop

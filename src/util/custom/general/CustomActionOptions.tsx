@@ -27,13 +27,7 @@ const CustomActionOptions: React.FC<CustomActionType> = ({ pageFlag, leadId, isC
 
   useClickOutside([optRef], [closeSettingHandler]);
 
-  // const onNavClickHandler = () => {
-  //   closeSettingHandler();
-  //   dispatch(resetResponseForLeadPropertiesDataById());
-  // };
-
   const handleNavigation = (pageFlag: string | undefined, leadId: number) => {
-    // console.log("here clicked");
     const path = `${pageFlag}${leadId}`;
     navigate(path, { state: { viaButton: true } });
     closeSettingHandler();

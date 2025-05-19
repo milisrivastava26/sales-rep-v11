@@ -13,9 +13,7 @@ const ManageContractPage: React.FC = () => {
     (state: RootState) => state.getLeadEnquiryDetailsDataById
   );
 
-  console.log(leadCaptureId);
   useEffect(() => {
-    console.log("inside effect");
     store.dispatch(getLeadEnquiryDetailsById(leadCaptureId));
   }, [leadCaptureId]);
 

@@ -72,9 +72,7 @@
 //     newInstallmentDetailsResponse
 //   );
 
-//   console.log(installments);
 //   useEffect(() => {
-//     console.log("inside effect");
 //     setInstallments(newInstallmentDetailsResponse);
 //   }, [newInstallmentDetailsResponse]);
 
@@ -102,7 +100,6 @@
 //       (inst) => inst.installmentSequence === id
 //     );
 
-//     console.log(installment);
 
 //     if (installment) {
 //       setTempAmount(installment.installmentAmount);
@@ -136,7 +133,6 @@
 //       }
 //     );
 
-//     console.log("isValid", isValid);
 
 //     if (isValid === false) {
 //       return;
@@ -150,7 +146,6 @@
 //         installments
 //       );
 
-//       console.log("finalInstallmentPayload", finalInstallmentPayload);
 //       dispatch(lockLeadOffer(finalInstallmentPayload));
 //     }
 //   };
@@ -256,7 +251,6 @@
 //     const deletedInstallment = installments.find(
 //       (inst) => inst.installmentSequence === id
 //     );
-//     console.log(deletedInstallment);
 //     if (!deletedInstallment) return;
 
 //     const remainingAmount = deletedInstallment.installmentAmount;

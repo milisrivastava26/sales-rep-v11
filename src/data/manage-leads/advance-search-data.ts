@@ -321,10 +321,10 @@ type FieldType =
   | "program"
   | "city"
   | "state"
-  | "source"
+  | "lead_source"
   | "stage"
   | "subStage"
-  | "applicationStatus";
+  | "application_status" | "salesrep_name";
 
 interface FieldInput {
   type: FieldType;
@@ -337,15 +337,18 @@ interface FieldInput {
 type FilterPayload = Record<string, string[]>;
 
 export function buildFilterArrays(fields: FieldInput[] = []): FilterPayload {
+
   const typeMap: Record<FieldType, string> = {
     career: "AcademicCareerDescription",
     program: "AcademicProgramDescription",
     city: "CityName",
     state: "StateName",
-    source: "LeadSourceDescription",
+    lead_source: "LeadSourceDescription",
     stage: "CurrentLeadStageDisplayName",
     subStage: "CurrentLeadSubStageDisplayName",
-    applicationStatus: "ApplicationStatusName",
+    application_status: "ApplicationStatusName",
+    salesrep_name: "CurrentSalesrepFullName",
+
   };
 
   const result: FilterPayload = {};
@@ -362,6 +365,12 @@ export function buildFilterArrays(fields: FieldInput[] = []): FilterPayload {
   }
 
   return result;
+}
+
+export function getCurrentSalesReps(data: any) {
+  const filters  = data?.fields;
+  const salesRepFilter = filters.find((item: any) => item.type === "salesrep_name");
+  return salesRepFilter ? salesRepFilter.value : [];
 }
 
 

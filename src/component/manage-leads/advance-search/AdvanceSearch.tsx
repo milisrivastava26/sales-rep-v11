@@ -56,31 +56,46 @@ const AdvanceSearch: React.FC = () => {
     "advancedSearchFilterQuery",
     initialValues
   );
-  
-  const {paginatedPropsForAdvanceSearch} = useSelector((state:RootState) => state.ui);
+
+  const { paginatedPropsForAdvanceSearch } = useSelector((state: RootState) => state.ui);
 
   const getAdvanceSearchData = (data: any) => {
     store.dispatch(resetViewLeadResponse());
     const arraysOnly = buildFilterArrays(data?.fields);
-    console.log("arraysOnly", arraysOnly);
+    if (userDetails !== null && Object.keys(userDetails).length !== 0) {
+      const payload = {
+        loggedInUser: fullName,
+        pageNumber: paginatedPropsForAdvanceSearch.pageNumber,
+        pageSize: paginatedPropsForAdvanceSearch.pageSize,
+        ...arraysOnly,
+      };
 
-    const payload = {
-      currentSalesrepFullName: fullName,
-      pageNumber: paginatedPropsForAdvanceSearch.pageNumber,
-      pageSize: paginatedPropsForAdvanceSearch.pageSize,
-      ...arraysOnly
-    };
-
-    store.dispatch(fetchCoreViewLead(payload));
+      store.dispatch(fetchCoreViewLead(payload));
+    }
   };
 
+
   useEffect(() => {
-    console.log("initialValues", initialValues)
-    getAdvanceSearchData(initialValues);
-    if (initialValues.fields.length !== 0) {
-      store.dispatch(onOpenModalForAdvanceSearch())
-    }
+    // Fetch once on mount
+    const initialFetch = async () => {
+      if (initialValues.fields.length !== 0) {
+        store.dispatch(onOpenModalForAdvanceSearch());
+        getAdvanceSearchData(initialValues);
+      }
+    };
+    initialFetch();
+    // Empty array means this only runs once
   }, [paginatedPropsForAdvanceSearch]);
+
+  // useEffect(() => {
+  //   console.log("inside effect2")
+  //   // Run only when pagination props change
+  //   const paginationFetch = async () => {
+  //     await getAdvanceSearchData(filterQuery);
+  //   };
+  //   paginationFetch();
+  // }, [paginatedPropsForAdvanceSearch]);
+
   const handleColumnChange = (updatedColumns: any[]) => {
     setColumn(updatedColumns);
   };

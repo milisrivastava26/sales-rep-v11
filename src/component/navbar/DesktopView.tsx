@@ -142,7 +142,6 @@ const DesktopView: React.FC<Type> = ({ leadsItems, profileItems }) => {
                 {userDetails?.authority?.includes("ROLE_FINANCE") && (
                   <>
                     {leadsItems.slice(4, 5).map((item: any, index: number) => {
-                      // console.log("ROLE_FINANCE")
                       return (
                         <NavLink
                           to={item.href}

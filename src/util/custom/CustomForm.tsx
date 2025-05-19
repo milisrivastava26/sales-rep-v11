@@ -90,7 +90,6 @@ const CustomForm: React.FC<FormType> = ({
               }`}
           >
             {inputData.map((field: inputsType) => {
-              console.log(isMode === "personalDetails" && !isEditing)
               return (
                 <div key={field.id} className="w-full">
                   <label htmlFor={field.name} className="block mb-1 font-medium">

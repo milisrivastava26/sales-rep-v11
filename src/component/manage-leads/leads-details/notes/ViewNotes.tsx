@@ -22,8 +22,6 @@ const ViewNotes: React.FC<typeForViewNotes> = ({ loader, isModeForViewNotes,isMo
     dispatch(downloadDocForNotes({ leadCaptureId, docName, docTypeId }));
   };
 
-  // console.log("leadDocAttachmentDTO= ", leadDocAttachmentDTO)
-  // // console.log("isModeForViewNotes= ", isModeForViewNotes)
 
   const showContent = (
     <div className="text-gray-500 text-sm pt-2 ml-[15px]">

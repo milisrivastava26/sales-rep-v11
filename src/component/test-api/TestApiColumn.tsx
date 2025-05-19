@@ -24,8 +24,6 @@ const TestApiColumn = () => {
     }
   }, [dataFromRedux, key]); // Dependency array ensures this runs when data changes
 
-  // console.log(dataMap);
-
   const handleTest = (url: string, name: string) => {
     setKey(name);
     store.dispatch(

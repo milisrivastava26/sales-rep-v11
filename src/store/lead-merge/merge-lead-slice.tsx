@@ -32,7 +32,6 @@ export const mergeLeadsByCaptureIds = createAsyncThunk<any, any>(
     } catch (error: any) {
       let errorMessage = "Error occurred while submitting";
 
-      console.log(error)
       if (error?.response?.data) {
         errorMessage = getMessageAfterColon(error.response.data);
       }

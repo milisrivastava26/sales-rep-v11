@@ -84,7 +84,6 @@ const ActivityForm: React.FC<FormType> = ({
     isLoading: isLoadingForCreateCashPayment,
     responseOfFetchPaymentDetails,
   } = useSelector((state: RootState) => state.addCashPayment);
-  console.log(responseOfFetchPaymentDetails);
   const {
     isError,
     isLoading: isLoadingForCreateActivity,
@@ -140,12 +139,10 @@ const ActivityForm: React.FC<FormType> = ({
 
   useEffect(() => {
     if (!isLoadingForCreateCashPayment && responseOfFetchPaymentDetails) {
-      console.log(responseOfFetchPaymentDetails);
       const recepitData = mergePaymentAndLeadData(
         responseOfFetchPaymentDetails,
         leadPropertiesDataById
       );
-      console.log("recepitData", recepitData);
       store.dispatch(onSetPaymentRecepitData(recepitData));
     }
   }, [
@@ -154,7 +151,6 @@ const ActivityForm: React.FC<FormType> = ({
     leadPropertiesDataById,
   ]);
 
-  // // console.log("selectedOption= ", selectedOption);
   return (
     <>
       <label htmlFor="activityType" className="flex font-medium pb-1">
@@ -196,13 +192,11 @@ const ActivityForm: React.FC<FormType> = ({
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={async (values, actions) => {
-            // console.log("click");
             try {
               const updatedData = {
                 coreLeadActionsId: selectedOptiont?.value,
                 ...values,
               };
-              // console.log("updatedData= ", updatedData);
               await onAction(updatedData, actions); // Simulate API call
             } catch (error) {
               console.error("Error during submission:", error);
@@ -270,17 +264,12 @@ const ActivityForm: React.FC<FormType> = ({
                                     }
                                     value={selectedOption || ""}
                                     onChange={(selectedOption) => {
-                                      // console.log("name= ", d.name);
                                       setFieldValue(
                                         d.name,
                                         selectedOption?.value
                                       );
 
                                       if (d.name === "OutcomePhoneId") {
-                                        //  console.log(
-                                        //   "id= ",
-                                        //   selectedOption?.value
-                                        // );
                                         store.dispatch(
                                           getLeadStagesValuesByOutcomeId(
                                             selectedOption?.value

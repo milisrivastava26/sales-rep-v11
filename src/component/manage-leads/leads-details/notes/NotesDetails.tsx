@@ -25,7 +25,6 @@ const NotesDetails: React.FC = () => {
     docName: string | number | undefined,
     docTypeId: string | number | undefined
   ) => {
-    // console.log("click");
     store.dispatch(downloadDocForNotes({ leadCaptureId, docName, docTypeId }));
   };
 

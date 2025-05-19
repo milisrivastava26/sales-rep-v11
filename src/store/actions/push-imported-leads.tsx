@@ -72,7 +72,6 @@ const pushImportedLeadsSlice = createSlice({
         state.isRun = uuidv4();
         state.isLoading = false;
         state.responseOfPushLeads = action.payload.data;
-        // console.log(state.responseOfPushLeads);
         state.statusCode = action.payload.statusCode;
       })
       .addCase(pushImportedLeads.rejected, (state, action) => {

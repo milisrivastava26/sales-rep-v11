@@ -12,6 +12,8 @@ import { getCollegeSkyLeads } from "../../store/third-party-slices/get-collegeSk
 import { getFaisalAliLeads } from "../../store/third-party-slices/get-faisalAli-lead-slice";
 import { getWakarConsultancyLead } from "../../store/third-party-slices/get-wakar-consultancy-leads-slice";
 import { getAdarshYadavLeads } from "../../store/third-party-slices/get-adarshYadav-leads-slice";
+import { getCollegeConnectLeads } from "../../store/third-party-slices/get-collegeConnect-leads-slice";
+import { getMeritAdmissionsLeads } from "../../store/third-party-slices/get-meritAdmissions-lead-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -48,6 +50,12 @@ const ThirdpartyHomePage: React.FC = () => {
   );
   const wakarConsultancyLeads = useSelector(
     (state: RootState) => state.getWakarConsultancyLeads
+  );
+   const collegeConnectLeads = useSelector(
+    (state: RootState) => state.getCollegeConnectLeads
+  );
+   const meritAdmissionsLeads = useSelector(
+    (state: RootState) => state.getMeritAdmissionsLeads
   );
 
   // State object to store loader, response, and action
@@ -86,6 +94,12 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_WAKAR_CONSULTANCY") {
         dispatch(getWakarConsultancyLead({ startDate: currentDate }))
+      }
+      else if (role === "ROLE_COLLEGE_CONNECT") {
+        dispatch(getCollegeConnectLeads({ startDate: currentDate }))
+      }
+      else if (role === "ROLE_MERIT_ADMISSIONS") {
+        dispatch(getMeritAdmissionsLeads({ startDate: currentDate }))
       }
     }
   }, [userDetails, dispatch]);
@@ -159,7 +173,21 @@ const ThirdpartyHomePage: React.FC = () => {
         action: () => wakarConsultancyLeads, // Assign function (without calling dispatch)
       });
     }
-  }, [userDetails, collegeDkhoData, collegeDuniaData, shikshaData, twigzData, durgeshData, careerCoachData, collegeSkyData, faisalAliLeads, adarshYadavLeads, wakarConsultancyLeads]);
+    else if (role === "ROLE_COLLEGE_CONNECT") {
+      setApiState({
+        isLoading: collegeConnectLeads.isLoading,
+        response: collegeConnectLeads.responseOfCollegeConnectLeads,
+        action: () => collegeConnectLeads, // Assign function (without calling dispatch)
+      });
+    }
+    else if (role === "ROLE_MERIT_ADMISSIONS") {
+      setApiState({
+        isLoading: meritAdmissionsLeads.isLoading,
+        response: meritAdmissionsLeads.responseOfMeritAdmissionsLeads,
+        action: () => meritAdmissionsLeads, // Assign function (without calling dispatch)
+      });
+    }
+  }, [userDetails, collegeDkhoData, collegeDuniaData, shikshaData, twigzData, durgeshData, careerCoachData, collegeSkyData, faisalAliLeads, adarshYadavLeads, wakarConsultancyLeads, collegeConnectLeads, meritAdmissionsLeads]);
 
   return (
     <ThirdPartyHome

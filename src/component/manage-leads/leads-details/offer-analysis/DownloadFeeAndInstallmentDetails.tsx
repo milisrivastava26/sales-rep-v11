@@ -14,7 +14,6 @@ interface DownloadFeeAndInstallmentDetailsProps {
 }
  
 const DownloadFeeAndInstallmentDetails: React.FC<DownloadFeeAndInstallmentDetailsProps> = ({ data }) => {
-  console.log("data===", data);
   if (!data || data.length < 3) {
     return <p style={{ textAlign: "center", color: "#4B5563", fontWeight: "600" }}>No data available</p>;
   }
@@ -260,7 +259,7 @@ const DownloadFeeAndInstallmentDetails: React.FC<DownloadFeeAndInstallmentDetail
           color: "#2D3748",
           paddingBottom: "8px",
           marginBottom: "12px",
-          marginTop: "20px",
+          marginTop: "60px",
         }}
       >
         Installment Details

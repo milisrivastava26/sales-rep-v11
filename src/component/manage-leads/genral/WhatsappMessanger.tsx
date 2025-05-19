@@ -32,7 +32,6 @@ const WhatsAppMessenger: React.FC = () => {
         : [];
 
     const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
-    console.log("activeEnquiry", activeEnquiry)
     const { leadPropertiesDataById } = useSelector(
         (state: RootState) => state.getLeadPropertiesDataById
     );

@@ -87,7 +87,6 @@ const AcademicInfoForm: React.FC<FormType> = ({
 
   const handleChange = (fieldName: string, selectedOption: any, setFieldValue: any) => {
 
-    console.log(fieldName)
     if (fieldName === "tenth_plus_2_type" && selectedOption?.value === "TWELFTH") {
       store.dispatch(onSetEnableForTwefthInputFields());
     }
