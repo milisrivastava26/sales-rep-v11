@@ -5,10 +5,7 @@ import coreservicesApi from "../../interceptor/coreservicesApi";
 interface LeadFieldByNameState {
   isLoading: boolean;
   isError: null | string;
-  responseLeadFieldByNameData: Record<
-    string,
-    Array<{ id: string; label: string; value: string; }>
-  >;
+  responseLeadFieldByNameData: Record<string, Array<{ id: string; label: string; value: string }>>;
 }
 
 const initialState: LeadFieldByNameState = {
@@ -18,21 +15,15 @@ const initialState: LeadFieldByNameState = {
 };
 
 // Thunk to fetch all lead fields by name
-export const getAllLeadFieldByName = createAsyncThunk<any, any>(
-  "leadFieldByName/getAll",
-  async (dbFieldName, { rejectWithValue }) => {
-    try {
-      const response = await coreservicesApi.get(
-        `api/crm/core/advanceSearch/findAllViewLead360Field/${dbFieldName}`
-      );
-      return { key: dbFieldName, data: response.data };
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data.message || "An error occurred."
-      );
-    }
+export const getAllLeadFieldByName = createAsyncThunk<any, any>("leadFieldByName/getAll", async (dbFieldName, { rejectWithValue }) => {
+  console.log("dbFieldName", dbFieldName);
+  try {
+    const response = await coreservicesApi.get(`api/crm/core/advanceSearch/findAllViewLead360Field/${dbFieldName}`);
+    return { key: dbFieldName, data: response.data };
+  } catch (error: any) {
+    return rejectWithValue(error.response?.data.message || "An error occurred.");
   }
-);
+});
 
 const leadFieldByNameSlice = createSlice({
   name: "leadFieldByName",

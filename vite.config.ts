@@ -8,6 +8,6 @@ export default defineConfig({
   },
   server: {
     host: "10.8.20.38",
-    port: 4043, // here
+    port: 4047, // here
   },
 });

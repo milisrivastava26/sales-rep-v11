@@ -14,6 +14,9 @@ import { getWakarConsultancyLead } from "../../store/third-party-slices/get-waka
 import { getAdarshYadavLeads } from "../../store/third-party-slices/get-adarshYadav-leads-slice";
 import { getCollegeConnectLeads } from "../../store/third-party-slices/get-collegeConnect-leads-slice";
 import { getMeritAdmissionsLeads } from "../../store/third-party-slices/get-meritAdmissions-lead-slice";
+import { getEducationConsultancyLeads } from "../../store/third-party-slices/get-educationConsultancy-lead-slice";
+import { getDuniaNowLeads } from "../../store/third-party-slices/get-duniaNow-leads-slice";
+import { getCareerGuideLeads } from "../../store/third-party-slices/get-careerGuide-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -35,7 +38,9 @@ const ThirdpartyHomePage: React.FC = () => {
     (state: RootState) => state.getShikshaLeadsData
   );
   const twigzData = useSelector((state: RootState) => state.getTwigzLeads);
-  const durgeshData = useSelector((state: RootState) => state.getDurgeshLeadsData);
+  const durgeshData = useSelector(
+    (state: RootState) => state.getDurgeshLeadsData
+  );
   const careerCoachData = useSelector(
     (state: RootState) => state.getCareerCoachLeads
   );
@@ -51,18 +56,28 @@ const ThirdpartyHomePage: React.FC = () => {
   const wakarConsultancyLeads = useSelector(
     (state: RootState) => state.getWakarConsultancyLeads
   );
-   const collegeConnectLeads = useSelector(
+  const collegeConnectLeads = useSelector(
     (state: RootState) => state.getCollegeConnectLeads
   );
-   const meritAdmissionsLeads = useSelector(
+  const meritAdmissionsLeads = useSelector(
     (state: RootState) => state.getMeritAdmissionsLeads
+  );
+  const educationConsultancyLeads = useSelector(
+    (state: RootState) => state.getEducationConsultancyLeads
+  );
+  const duniaNowLeads = useSelector(
+    (state: RootState) => state.getDuniaNowLeads
+  );
+
+  const careerGuideLeads = useSelector(
+    (state: RootState) => state.getCareerGuideLeads
   );
 
   // State object to store loader, response, and action
   const [apiState, setApiState] = useState<ApiStateType>({
     isLoading: false,
     response: null,
-    action: () => { }, // Default empty function
+    action: () => {}, // Default empty function
   });
 
   useEffect(() => {
@@ -82,24 +97,24 @@ const ThirdpartyHomePage: React.FC = () => {
         dispatch(getDurgeshLeads({ startDate: currentDate }));
       } else if (role === "ROLE_CAREER_COACH") {
         dispatch(getCareerCoachLeads({ startDate: currentDate }));
-      }
-      else if (role === "ROLE_COLLEGE_SKY") {
-        dispatch(getCollegeSkyLeads({ startDate: currentDate }))
-      }
-      else if (role === "ROLE_FAISAL_ALI") {
-        dispatch(getFaisalAliLeads({ startDate: currentDate }))
-      }
-      else if (role === "ROLE_ADARSH_YADAV") {
-        dispatch(getAdarshYadavLeads({ startDate: currentDate }))
-      }
-      else if (role === "ROLE_WAKAR_CONSULTANCY") {
-        dispatch(getWakarConsultancyLead({ startDate: currentDate }))
-      }
-      else if (role === "ROLE_COLLEGE_CONNECT") {
-        dispatch(getCollegeConnectLeads({ startDate: currentDate }))
-      }
-      else if (role === "ROLE_MERIT_ADMISSIONS") {
-        dispatch(getMeritAdmissionsLeads({ startDate: currentDate }))
+      } else if (role === "ROLE_COLLEGE_SKY") {
+        dispatch(getCollegeSkyLeads({ startDate: currentDate }));
+      } else if (role === "ROLE_FAISAL_ALI") {
+        dispatch(getFaisalAliLeads({ startDate: currentDate }));
+      } else if (role === "ROLE_ADARSH_YADAV") {
+        dispatch(getAdarshYadavLeads({ startDate: currentDate }));
+      } else if (role === "ROLE_WAKAR_CONSULTANCY") {
+        dispatch(getWakarConsultancyLead({ startDate: currentDate }));
+      } else if (role === "ROLE_COLLEGE_CONNECT") {
+        dispatch(getCollegeConnectLeads({ startDate: currentDate }));
+      } else if (role === "ROLE_MERIT_ADMISSIONS") {
+        dispatch(getMeritAdmissionsLeads({ startDate: currentDate }));
+      } else if (role === "ROLE_Education_Consultancy") {
+        dispatch(getEducationConsultancyLeads({ startDate: currentDate }));
+      } else if (role === "ROLE_DUNIA_NOW") {
+        dispatch(getDuniaNowLeads({ startDate: currentDate }));
+      } else if (role === "ROLE_CAREER_GUIDE") {
+        dispatch(getCareerGuideLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -143,51 +158,79 @@ const ThirdpartyHomePage: React.FC = () => {
         response: careerCoachData.responseOfGetCareerCoachLeads,
         action: () => getCareerCoachLeads, // Assign function (without calling dispatch)
       });
-    }
-
-    else if (role === "ROLE_COLLEGE_SKY") {
+    } else if (role === "ROLE_COLLEGE_SKY") {
       setApiState({
         isLoading: collegeSkyData.isLoading,
         response: collegeSkyData.responseOfGetCollegeSkyLeads,
         action: () => getCollegeSkyLeads, // Assign function (without calling dispatch)
       });
-    }
-    else if (role === "ROLE_FAISAL_ALI") {
+    } else if (role === "ROLE_FAISAL_ALI") {
       setApiState({
         isLoading: faisalAliLeads.isLoading,
         response: faisalAliLeads.responseOfGetFaisalAliLeads,
         action: () => faisalAliLeads, // Assign function (without calling dispatch)
       });
-    }
-    else if (role === "ROLE_ADARSH_YADAV") {
+    } else if (role === "ROLE_ADARSH_YADAV") {
       setApiState({
         isLoading: adarshYadavLeads.isLoading,
         response: adarshYadavLeads.responseOfGetAdarshYadavLeads,
         action: () => adarshYadavLeads, // Assign function (without calling dispatch)
       });
-    }
-    else if (role === "ROLE_WAKAR_CONSULTANCY") {
+    } else if (role === "ROLE_WAKAR_CONSULTANCY") {
       setApiState({
         isLoading: wakarConsultancyLeads.isLoading,
         response: wakarConsultancyLeads.responseOfGetWakarConsultancyLead,
         action: () => wakarConsultancyLeads, // Assign function (without calling dispatch)
       });
-    }
-    else if (role === "ROLE_COLLEGE_CONNECT") {
+    } else if (role === "ROLE_COLLEGE_CONNECT") {
       setApiState({
         isLoading: collegeConnectLeads.isLoading,
         response: collegeConnectLeads.responseOfCollegeConnectLeads,
         action: () => collegeConnectLeads, // Assign function (without calling dispatch)
       });
-    }
-    else if (role === "ROLE_MERIT_ADMISSIONS") {
+    } else if (role === "ROLE_MERIT_ADMISSIONS") {
       setApiState({
         isLoading: meritAdmissionsLeads.isLoading,
         response: meritAdmissionsLeads.responseOfMeritAdmissionsLeads,
         action: () => meritAdmissionsLeads, // Assign function (without calling dispatch)
       });
+    } else if (role === "ROLE_Education_Consultancy") {
+      setApiState({
+        isLoading: educationConsultancyLeads.isLoading,
+        response: educationConsultancyLeads.responseOfEducationConsultancyLeads,
+        action: () => educationConsultancyLeads, // Assign function (without calling dispatch)
+      });
+    } else if (role === "ROLE_DUNIA_NOW") {
+      setApiState({
+        isLoading: duniaNowLeads.isLoading,
+        response: duniaNowLeads.responseOfDuniaNowLeads,
+        action: () => duniaNowLeads, // Assign function (without calling dispatch)
+      });
+    } else if (role === "ROLE_CAREER_GUIDE") {
+      setApiState({
+        isLoading: careerGuideLeads.isLoading,
+        response: careerGuideLeads.responseOfCareerGuideLeads,
+        action: () => careerGuideLeads, // Assign function (without calling dispatch)
+      });
     }
-  }, [userDetails, collegeDkhoData, collegeDuniaData, shikshaData, twigzData, durgeshData, careerCoachData, collegeSkyData, faisalAliLeads, adarshYadavLeads, wakarConsultancyLeads, collegeConnectLeads, meritAdmissionsLeads]);
+  }, [
+    userDetails,
+    collegeDkhoData,
+    collegeDuniaData,
+    shikshaData,
+    twigzData,
+    durgeshData,
+    careerCoachData,
+    collegeSkyData,
+    faisalAliLeads,
+    adarshYadavLeads,
+    wakarConsultancyLeads,
+    collegeConnectLeads,
+    meritAdmissionsLeads,
+    educationConsultancyLeads,
+    duniaNowLeads,
+    careerGuideLeads,
+  ]);
 
   return (
     <ThirdPartyHome

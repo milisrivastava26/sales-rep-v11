@@ -10,6 +10,7 @@ interface tyeoFor {
   actionVal: () => {}
 }
 const ThirdPartyHome: React.FC<tyeoFor> = ({ loaderVal, resValue, actionVal }) => {
+  console.log("inthirdparty home page")
   return (
     <div className="home__contianer">
       <div className="my-4 mx-3 sm:mx-5 px-3 py-3 sm:px-6 sm:py-6 shadow-md rounded-md bg-white">
