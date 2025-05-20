@@ -14,6 +14,9 @@ import { getAdarshYadavLeads } from "../../store/third-party-slices/get-adarshYa
 import { getWakarConsultancyLead } from "../../store/third-party-slices/get-wakar-consultancy-leads-slice";
 import { getCollegeConnectLeads } from "../../store/third-party-slices/get-collegeConnect-leads-slice";
 import { getMeritAdmissionsLeads } from "../../store/third-party-slices/get-meritAdmissions-lead-slice";
+import { getEducationConsultancyLeads } from "../../store/third-party-slices/get-educationConsultancy-lead-slice";
+import { getDuniaNowLeads } from "../../store/third-party-slices/get-duniaNow-leads-slice";
+import { getCareerGuideLeads } from "../../store/third-party-slices/get-careerGuide-leads-slice";
 
 interface TyepFor {
   actionVal: () => {};
@@ -50,24 +53,32 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
       dispatch(getDurgeshLeads({ startDate: fromDate, endDate: toDate }));
     } else if (role === "ROLE_CAREER_COACH") {
       dispatch(getCareerCoachLeads({ startDate: fromDate, endDate: toDate }));
-    }
-    else if (role === "ROLE_COLLEGE_SKY") {
+    } else if (role === "ROLE_COLLEGE_SKY") {
       dispatch(getCollegeSkyLeads({ startDate: fromDate, endDate: toDate }));
-    }
-    else if (role === "ROLE_FAISAL_ALI") {
-      dispatch(getFaisalAliLeads({ startDate: fromDate, endDate: toDate }))
-    }
-    else if (role === "ROLE_ADARSH_YADAV") {
-      dispatch(getAdarshYadavLeads({ startDate: fromDate, endDate: toDate }))
-    }
-    else if (role === "ROLE_WAKAR_CONSULTANCY") {
-      dispatch(getWakarConsultancyLead({ startDate: fromDate, endDate: toDate }))
-    }
-    else if (role === "ROLE_COLLEGE_CONNECT") {
-      dispatch(getCollegeConnectLeads({ startDate: fromDate, endDate: toDate }))
-    }
-    else if (role === "ROLE_MERIT_ADMISSIONS") {
-      dispatch(getMeritAdmissionsLeads({ startDate: fromDate, endDate: toDate }))
+    } else if (role === "ROLE_FAISAL_ALI") {
+      dispatch(getFaisalAliLeads({ startDate: fromDate, endDate: toDate }));
+    } else if (role === "ROLE_ADARSH_YADAV") {
+      dispatch(getAdarshYadavLeads({ startDate: fromDate, endDate: toDate }));
+    } else if (role === "ROLE_WAKAR_CONSULTANCY") {
+      dispatch(
+        getWakarConsultancyLead({ startDate: fromDate, endDate: toDate })
+      );
+    } else if (role === "ROLE_COLLEGE_CONNECT") {
+      dispatch(
+        getCollegeConnectLeads({ startDate: fromDate, endDate: toDate })
+      );
+    } else if (role === "ROLE_MERIT_ADMISSIONS") {
+      dispatch(
+        getMeritAdmissionsLeads({ startDate: fromDate, endDate: toDate })
+      );
+    } else if (role === "ROLE_Education_Consultancy") {
+      dispatch(
+        getEducationConsultancyLeads({ startDate: fromDate, endDate: toDate })
+      );
+    } else if (role === "ROLE_DUNIA_NOW") {
+      dispatch(getDuniaNowLeads({ startDate: fromDate, endDate: toDate }));
+    } else if (role === "ROLE_CAREER_GUIDE") {
+      dispatch(getCareerGuideLeads({ startDate: fromDate, endDate: toDate }));
     }
   };
 
@@ -93,24 +104,24 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
       dispatch(getDurgeshLeads());
     } else if (role === "ROLE_CAREER_COACH") {
       dispatch(getCareerCoachLeads());
-    }
-    else if (role === "ROLE_COLLEGE_SKY") {
+    } else if (role === "ROLE_COLLEGE_SKY") {
       dispatch(getCollegeSkyLeads());
-    }
-    else if (role === "ROLE_FAISAL_ALI") {
-      dispatch(getFaisalAliLeads())
-    }
-    else if (role === "ROLE_ADARSH_YADAV") {
-      dispatch(getAdarshYadavLeads())
-    }
-    else if (role === "ROLE_WAKAR_CONSULTANCY") {
-      dispatch(getWakarConsultancyLead())
-    }
-    else if (role === "ROLE_COLLEGE_CONNECT") {
-      dispatch(getCollegeConnectLeads())
-    }
-    else if (role === "ROLE_MERIT_ADMISSIONS") {
-      dispatch(getMeritAdmissionsLeads())
+    } else if (role === "ROLE_FAISAL_ALI") {
+      dispatch(getFaisalAliLeads());
+    } else if (role === "ROLE_ADARSH_YADAV") {
+      dispatch(getAdarshYadavLeads());
+    } else if (role === "ROLE_WAKAR_CONSULTANCY") {
+      dispatch(getWakarConsultancyLead());
+    } else if (role === "ROLE_COLLEGE_CONNECT") {
+      dispatch(getCollegeConnectLeads());
+    } else if (role === "ROLE_MERIT_ADMISSIONS") {
+      dispatch(getMeritAdmissionsLeads());
+    } else if (role === "ROLE_Education_Consultancy") {
+      dispatch(getEducationConsultancyLeads());
+    } else if (role === "ROLE_DUNIA_NOW") {
+      dispatch(getDuniaNowLeads());
+    } else if (role === "ROLE_CAREER_GUIDE") {
+      dispatch(getCareerGuideLeads());
     }
   };
 

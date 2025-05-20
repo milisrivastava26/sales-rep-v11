@@ -216,7 +216,7 @@ import { saveCampusInterestedReducer } from "../campus/save-campusInterestedInDe
 import { getCampusInterestedDetailsReducer } from "../campus/get-campusInterestedDetails-by-enquiryId-slice";
 import { getCollegeSkyLeadsReducer } from "../third-party-slices/get-collegeSkyLeads-slice";
 import { FilteredTaskReducer } from "../manage-task/get-filtered-task-slice";
-import notificationReducer from '../notifications/notification-slice';
+import notificationReducer from "../notifications/notification-slice";
 import { getWalkinDetailsReducer } from "../dashboard/get-walkin-details-slice";
 import { getCounsellingDetailsReducer } from "../dashboard/get-counselling-details-slice";
 import { searchedLeadsReducer } from "../pagination-v1/get-searched-leads-slice";
@@ -228,6 +228,19 @@ import { getWakarConsultancyLeadReducer } from "../third-party-slices/get-wakar-
 import { sendWhatsappByTemplateIdReducer } from "../whatsapp -messenger/send-whatsapp-slice";
 import { collegeConnectLeadsReducer } from "../third-party-slices/get-collegeConnect-leads-slice";
 import { meritAdmissionsLeadsReducer } from "../third-party-slices/get-meritAdmissions-lead-slice";
+import { educationConsultancyLeadsReducer } from "../third-party-slices/get-educationConsultancy-lead-slice";
+import { duniaNowLeadsReducer } from "../third-party-slices/get-duniaNow-leads-slice";
+import { leadNameReducer } from "../advance-search/get-all-leadName-slice";
+import { leadEmailReducer } from "../advance-search/get-all-leadEmail-slice";
+import { leadPhoneReducer } from "../advance-search/get-all-leadPhone-slice";
+import { leadCareerReducer } from "../advance-search/get-all-leadCareer-slice";
+import { leadProgramReducer } from "../advance-search/get-all-leadProgram-slice";
+import { CareerGuideLeadsReducer } from "../third-party-slices/get-careerGuide-leads-slice";
+import { leadSourseReducer } from "../advance-search/get-all-leadSourse-slice";
+import { leadStageReducer } from "../advance-search/get-all-leadStage-slice";
+import { leadSubStageReducer } from "../advance-search/get-all-leadSubStage-slice";
+import { leadStateReducer } from "../advance-search/get-all-leadState-slice";
+import { leadApplicationStatusReducer } from "../advance-search/get-all-leadApplicationStatus-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -510,6 +523,17 @@ const RootReducer = {
   getAllAdvanceSearchFilterFields: advanceSearchFieldsReducer,
   getAllLeadFieldByName: leadFieldByNameReducer,
   getCoreViewLead: ViewCoreViewLeadReducer,
+  getAllLeadNameData: leadNameReducer,
+  getAllLeadEmailsData: leadEmailReducer,
+  getAllLeadPhonesData: leadPhoneReducer,
+  getAllLeadCareersData: leadCareerReducer,
+  getAllLeadProgramsData: leadProgramReducer,
+  getAllLeadSoursesData : leadSourseReducer,
+  getAllLeadStagesData: leadStageReducer,
+  getAllLeadSubStagesData : leadSubStageReducer,
+  getAllLeadStatesData : leadStateReducer,
+  getAllLeadApplicationStatusData : leadApplicationStatusReducer,
+
 
   //third paty
   getTwigzLeads: getTwigzLeadsReducer,
@@ -521,6 +545,9 @@ const RootReducer = {
   getWakarConsultancyLeads: getWakarConsultancyLeadReducer,
   getCollegeConnectLeads: collegeConnectLeadsReducer,
   getMeritAdmissionsLeads: meritAdmissionsLeadsReducer,
+  getEducationConsultancyLeads: educationConsultancyLeadsReducer,
+  getDuniaNowLeads: duniaNowLeadsReducer,
+  getCareerGuideLeads: CareerGuideLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,

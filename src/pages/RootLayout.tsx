@@ -48,6 +48,9 @@ const RootLayout: React.FC = () => {
     "ROLE_ADARSH_YADAV",
     "ROLE_COLLEGE_CONNECT",
     "ROLE_MERIT_ADMISSIONS",
+    "ROLE_Education_Consultancy",
+    "ROLE_DUNIA_NOW",
+    "ROLE_CAREER_GUIDE",
   ];
 
   // Check if userDetails is available and determine if user is third-party
@@ -99,13 +102,13 @@ const RootLayout: React.FC = () => {
       {!isConnectionRefused && (
         <>
           {/* Show Navbar and Outlet only if the user is NOT a third-party user */}
-          {!isThirdPartyUser && <>
-            <Navbar />
-            <NotificationSocket />
-            <NotificationPopup />
-
-          </>
-          }
+          {!isThirdPartyUser && (
+            <>
+              <Navbar />
+              <NotificationSocket />
+              <NotificationPopup />
+            </>
+          )}
           {isAuthenticated && !isThirdPartyUser && (
             <main>
               <Outlet />
