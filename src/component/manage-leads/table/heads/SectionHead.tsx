@@ -15,10 +15,7 @@ import { exportLead } from "../../../../store/actions/export-lead-slice";
 import { bulkChangeOwnerData } from "../../../../data/bulk-changeOwner-data";
 import { resetResponseForImportLeads } from "../../../../store/actions/import-leads-slice";
 import { IoIosArrowBack } from "react-icons/io";
-import {
-  importLeadsData,
-  quickAddLeadFormData,
-} from "../../../../data/manage-leads/quick-add-form-data";
+import { importLeadsData, quickAddLeadFormData } from "../../../../data/manage-leads/quick-add-form-data";
 import { resetResposneforLeadCaptureByQuickAddForm } from "../../../../store/lead-capture/create-lead-capture-byQuickAddForm-slice";
 import {
   onDisableModalForChangeStage,
@@ -47,12 +44,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
   const subDataRef = useRef<HTMLDivElement | null>(null);
   const dropDownRef = useRef<HTMLDivElement | null>(null);
   const [selectedItem, setSelectedItem] = useState<SectionItem | null>(null);
-  const {
-    heading,
-    sectionHeadSelectData,
-    sectionHeadSettingData,
-    sectionHeadManageFilterData,
-  } = sectionHeadData[0];
+  const { heading, sectionHeadSelectData, sectionHeadSettingData, sectionHeadManageFilterData } = sectionHeadData[0];
   const {
     isSubData,
     isSettingData,
@@ -63,31 +55,18 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
     getAllCheckSelectedDataFormCustomTable,
   } = useSelector((state: RootState) => state.ui);
 
-  const [_, setSelectedLeads] = useLocalStorage(
-    "selectedLeadsForMerge",
-    getAllCheckSelectedDataFormCustomTable
-  );
-
+  const [_, setSelectedLeads] = useLocalStorage("selectedLeadsForMerge", getAllCheckSelectedDataFormCustomTable);
 
   // Define the callbacks to be executed
   const closeSubDataHandelr = () => dispatch(uiSliceAction.onDisabledSubData());
   const closeModalForTestAction = () => dispatch(onDisableModalForTestAction());
-  const closeModalForChangeStage = () =>
-    dispatch(onDisableModalForChangeStage());
-  const closeModal = () =>
-    dispatch(uiSliceAction.onDisableModalForQuickAddLeadForm());
-  const closeSettingDataHandler = () =>
-    dispatch(uiSliceAction.onDisabledSettingData());
-  const closeModalForLeadsImport = () =>
-    dispatch(uiSliceAction.onManageLeadsImportModal(false));
-  const { userDetails } = useSelector(
-    (state: RootState) => state.getLoggedInUserData
-  );
+  const closeModalForChangeStage = () => dispatch(onDisableModalForChangeStage());
+  const closeModal = () => dispatch(uiSliceAction.onDisableModalForQuickAddLeadForm());
+  const closeSettingDataHandler = () => dispatch(uiSliceAction.onDisabledSettingData());
+  const closeModalForLeadsImport = () => dispatch(uiSliceAction.onManageLeadsImportModal(false));
+  const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
 
-  useClickOutside(
-    [settingRef, subDataRef],
-    [closeSettingDataHandler, closeSubDataHandelr]
-  );
+  useClickOutside([settingRef, subDataRef], [closeSettingDataHandler, closeSubDataHandelr]);
 
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -121,9 +100,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
     getAllCheckSelectedDataFormCustomTable &&
       getAllCheckSelectedDataFormCustomTable.forEach((item: any) => {
         if (applicationStatus.includes(item.applicationStatusName)) {
-          toast.error(
-            `Merging not possible ${item.leadCaptureId} is at ${item.applicationStatusName} step`
-          );
+          toast.error(`Merging not possible ${item.leadCaptureId} is at ${item.applicationStatusName} step`);
         } else {
           selectedCaptureId.push(item.leadCaptureId);
         }
@@ -151,11 +128,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
         <a className="mt-1 text-gray-600 help-icon">
           <i className="fa fa-question-circle" aria-hidden="true"></i>
         </a>
-        <Tooltip
-          anchorSelect=".help-icon"
-          place="right-start"
-          className="custom-tooltip"
-        >
+        <Tooltip anchorSelect=".help-icon" place="right-start" className="custom-tooltip">
           <div className="tooltip-content">
             Access all the leads assigned to you through the Manage Leads page.
             <br />
@@ -166,14 +139,11 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
               <li>Sending WhatsApp messages</li>
               <li>Adding an activity</li>
             </ul>
-            You can filter your leads using the search textbox at the top of the
-            grid.
+            You can filter your leads using the search textbox at the top of the grid.
             <br />
-            Access lead details by clicking on their name or the view option
-            under the action button.
+            Access lead details by clicking on their name or the view option under the action button.
             <br />
-            <strong>Note:</strong> If you are a manager, you will get the list
-            of all leads assigned to you as well as to your subordinates.
+            <strong>Note:</strong> If you are a manager, you will get the list of all leads assigned to you as well as to your subordinates.
           </div>
         </Tooltip>
       </div>
@@ -196,8 +166,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
                   return (
                     <li
                       key={item.id}
-                      className={`py-2 cursor-pointer hover:bg-gray-100 relative group ${item.id === 1 ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
+                      className={`py-2 cursor-pointer hover:bg-gray-100 relative group ${item.id === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
                       onClick={() => handleItemClick(item)}
                     >
                       {item.path ? (
@@ -214,8 +183,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
                       ) : (
                         <div className="flex gap-2 items-center">
                           <IoIosArrowBack
-                            className={`text-xl opacity-0 invisible group-hover:opacity-100 ${item.subMenu ? "group-hover:visible" : ""
-                              }`}
+                            className={`text-xl opacity-0 invisible group-hover:opacity-100 ${item.subMenu ? "group-hover:visible" : ""}`}
                           />
                           <span>{item.icon}</span>
                           <span
@@ -226,21 +194,11 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
                               } else if (item.id === 6) {
                                 store.dispatch(onShowModalForTestAction());
                               } else if (item.id === 5) {
-                                if (
-                                  getAllCheckSelectedDataFormCustomTable &&
-                                  getAllCheckSelectedDataFormCustomTable.length ===
-                                  0
-                                ) {
-                                  toast.error(
-                                    "Please select at least one lead"
-                                  );
+                                if (getAllCheckSelectedDataFormCustomTable && getAllCheckSelectedDataFormCustomTable.length === 0) {
+                                  toast.error("Please select at least one lead");
                                   return; // Stop execution
                                 }
-                                store.dispatch(
-                                  exportLead(
-                                    getAllCheckSelectedDataFormCustomTable
-                                  )
-                                );
+                                store.dispatch(exportLead(getAllCheckSelectedDataFormCustomTable));
                               } else if (item.id === 7) {
                                 dispatch(onSetOpenModalForChangeStage());
                               }
@@ -259,10 +217,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
                               <div key={sub.id}>
                                 {sub.path ? (
                                   <Link to={sub.path}>
-                                    <li
-                                      key={sub.id}
-                                      className="flex items-center gap-x-2 px-3 py-2 hover:bg-gray-200 cursor-pointer"
-                                    >
+                                    <li key={sub.id} className="flex items-center gap-x-2 px-3 py-2 hover:bg-gray-200 cursor-pointer">
                                       <span>{sub.icon}</span>
                                       <span>{sub.name}</span>
                                     </li>
@@ -304,30 +259,17 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
             >
               <ul className="relative">
                 {sectionHeadSettingData.slice(0, 2).map((item: any) => (
-                  <li
-                    key={item.id}
-                    className="text-nowrap text-gray-500 cursor-pointer"
-                  >
+                  <li key={item.id} className="text-nowrap text-gray-500 cursor-pointer">
                     {item.name}
                   </li>
                 ))}
                 {sectionHeadSettingData.slice(2, 3).map((item: any) => (
-                  <li
-                    key={item.id}
-                    onClick={() => dispatch(uiSliceAction.onToggleSubData())}
-                    className="text-nowrap text-gray-500 cursor-pointer"
-                  >
+                  <li key={item.id} onClick={() => dispatch(uiSliceAction.onToggleSubData())} className="text-nowrap text-gray-500 cursor-pointer">
                     {item.name}
                     {isSubData ? (
-                      <i
-                        className="fa fa-chevron-down text-sm ml-2 w-4"
-                        aria-hidden="true"
-                      ></i>
+                      <i className="fa fa-chevron-down text-sm ml-2 w-4" aria-hidden="true"></i>
                     ) : (
-                      <i
-                        className="fa fa-chevron-right text-sm ml-2 w-4"
-                        aria-hidden="true"
-                      ></i>
+                      <i className="fa fa-chevron-right text-sm ml-2 w-4" aria-hidden="true"></i>
                     )}
                   </li>
                 ))}
@@ -353,48 +295,25 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
       </div>
 
       {isLeadsImportModalOpen && (
-        <CustomModal
-          isShowModal={isLeadsImportModalOpen}
-          onHideModal={closeModalForLeadsImport}
-          data={importLeadsData}
-          isMode="importLead"
-        >
+        <CustomModal isShowModal={isLeadsImportModalOpen} onHideModal={closeModalForLeadsImport} data={importLeadsData} isMode="importLead">
           <ImportLeadsForm />
         </CustomModal>
       )}
 
       {isQuickAddFormModalOpen && (
-        <CustomModal
-          isMode="quickAddForm"
-          isShowModal={isQuickAddFormModalOpen}
-          onHideModal={closeModal}
-          data={quickAddLeadFormData}
-        >
+        <CustomModal isMode="quickAddForm" isShowModal={isQuickAddFormModalOpen} onHideModal={closeModal} data={quickAddLeadFormData}>
           <QuickAddLeadForm />
         </CustomModal>
       )}
 
       {isShowModalForTestAction && (
-        <CustomModal
-          isMode="testAction"
-          isShowModal={isShowModalForTestAction}
-          onHideModal={closeModalForTestAction}
-          data={bulkChangeOwnerData}
-        >
+        <CustomModal isMode="testAction" isShowModal={isShowModalForTestAction} onHideModal={closeModalForTestAction} data={bulkChangeOwnerData}>
           <BulkChangeOwner onHideModal={closeModalForTestAction} isMode="bulkUpdate" />
         </CustomModal>
       )}
       {isShowModalForChangeStage && (
-        <CustomModal
-          isMode="testAction"
-          isShowModal={isShowModalForChangeStage}
-          onHideModal={closeModalForChangeStage}
-          data={changeStageData}
-        >
-          <ChangeStage
-            onHideModal={closeModalForChangeStage}
-            isMode="bulkUpdate"
-          />
+        <CustomModal isMode="testAction" isShowModal={isShowModalForChangeStage} onHideModal={closeModalForChangeStage} data={changeStageData}>
+          <ChangeStage onHideModal={closeModalForChangeStage} isMode="bulkUpdate" />
         </CustomModal>
       )}
     </div>

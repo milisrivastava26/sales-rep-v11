@@ -18,12 +18,12 @@ export const getAllLeadCitys = createAsyncThunk<any, void>(
   "LeadCity/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await manageLeadsApi.get("leadSource/getAll");
+      const response = await manageLeadsApi.get("cities/getAll");
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data.message ||
-          "An error occurred while fetching lead programs."
+          "An error occurred while fetching  city."
       );
     }
   }
@@ -42,8 +42,8 @@ const leadCitySlice = createSlice({
     builder.addCase(getAllLeadCitys.fulfilled, (state, action) => {
       state.isLoading = false;
       state.responseLeadCityData = action.payload.map((item: any) => ({
-        label: item.description, // Adjust to the correct field name from the API
-        value: item.description,
+        label: item.name, // Adjust to the correct field name from the API
+        value: item.name,
       }));
     });
 

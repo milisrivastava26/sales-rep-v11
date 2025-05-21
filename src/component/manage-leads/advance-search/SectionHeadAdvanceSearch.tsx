@@ -17,10 +17,7 @@ import useClickOutside from "../../../hooks/useClickOutside";
 import { resetResposneforLeadCaptureByQuickAddForm } from "../../../store/lead-capture/create-lead-capture-byQuickAddForm-slice";
 import { resetResponseForImportLeads } from "../../../store/actions/import-leads-slice";
 import CustomModal from "../../../util/custom/ui/CustomModal";
-import {
-  importLeadsData,
-  quickAddLeadFormData,
-} from "../../../data/manage-leads/quick-add-form-data";
+import { importLeadsData, quickAddLeadFormData } from "../../../data/manage-leads/quick-add-form-data";
 import ImportLeadsForm from "../genral/ImportLeads";
 import QuickAddLeadForm from "../genral/QuickAddLeadForm";
 import { bulkChangeOwnerData } from "../../../data/bulk-changeOwner-data";
@@ -51,19 +48,14 @@ const SectionHeadAdvanceSearch: React.FC = () => {
     getAllCheckSelectedDataFormCustomTable,
   } = useSelector((state: RootState) => state.ui);
 
-  const [selectedLeads, setSelectedLeads] = useLocalStorage(
-    "selectedLeadsForMerge",
-    getAllCheckSelectedDataFormCustomTable
-  );
+  const [selectedLeads, setSelectedLeads] = useLocalStorage("selectedLeadsForMerge", getAllCheckSelectedDataFormCustomTable);
 
   useEffect(() => {
     let selectedCaptureId: Array<number> = [];
     getAllCheckSelectedDataFormCustomTable &&
       getAllCheckSelectedDataFormCustomTable.forEach((item: any) => {
         if (item.applicationStatus === "Offer Analysis") {
-          toast.error(
-            `Merging not possible ${item.leadCaptureId} is at offer analysis step`
-          );
+          toast.error(`Merging not possible ${item.leadCaptureId} is at offer analysis step`);
         } else {
           selectedCaptureId.push(item.leadCaptureId);
         }
@@ -74,19 +66,12 @@ const SectionHeadAdvanceSearch: React.FC = () => {
   // Define the callbacks to be executed
   const closeSubDataHandelr = () => dispatch(uiSliceAction.onDisabledSubData());
   const closeModalForTestAction = () => dispatch(onDisableModalForTestAction());
-  const closeModalForChangeStage = () =>
-    dispatch(onDisableModalForChangeStage());
-  const closeModal = () =>
-    dispatch(uiSliceAction.onDisableModalForQuickAddLeadForm());
-  const closeSettingDataHandler = () =>
-    dispatch(uiSliceAction.onDisabledSettingData());
-  const closeModalForLeadsImport = () =>
-    dispatch(uiSliceAction.onManageLeadsImportModal(false));
+  const closeModalForChangeStage = () => dispatch(onDisableModalForChangeStage());
+  const closeModal = () => dispatch(uiSliceAction.onDisableModalForQuickAddLeadForm());
+  const closeSettingDataHandler = () => dispatch(uiSliceAction.onDisabledSettingData());
+  const closeModalForLeadsImport = () => dispatch(uiSliceAction.onManageLeadsImportModal(false));
 
-  useClickOutside(
-    [settingRef, subDataRef],
-    [closeSettingDataHandler, closeSubDataHandelr]
-  );
+  useClickOutside([settingRef, subDataRef], [closeSettingDataHandler, closeSubDataHandelr]);
 
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -133,22 +118,14 @@ const SectionHeadAdvanceSearch: React.FC = () => {
                   return (
                     <li
                       key={item.id}
-                      className={`py-2 cursor-pointer hover:bg-gray-100 relative group ${
-                        item.id === 1 ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
+                      className={`py-2 cursor-pointer hover:bg-gray-100 relative group ${item.id === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
                       onClick={() => handleItemClick(item)}
                     >
                       {item.path ? (
                         <div className="flex items-center gap-x-2 px-[25px]">
                           <div>{item.icon}</div>
                           <Link
-                            to={
-                              item.id === 9 &&
-                              (selectedLeads.length === 0 ||
-                                selectedLeads.length > 4)
-                                ? "#"
-                                : item.path
-                            }
+                            to={item.id === 9 && (selectedLeads.length === 0 || selectedLeads.length > 4) ? "#" : item.path}
                             onClick={(e) => {
                               if (item.id === 9) {
                                 if (selectedLeads.length < 2) {
@@ -156,9 +133,7 @@ const SectionHeadAdvanceSearch: React.FC = () => {
                                   toast.error("Please select minimum 2 leads");
                                 } else if (selectedLeads.length > 4) {
                                   e.preventDefault();
-                                  toast.error(
-                                    "You can select maximum of 4 leads"
-                                  );
+                                  toast.error("You can select maximum of 4 leads");
                                 }
                               }
                             }}
@@ -170,9 +145,7 @@ const SectionHeadAdvanceSearch: React.FC = () => {
                       ) : (
                         <div className="flex gap-2 items-center">
                           <IoIosArrowBack
-                            className={`text-xl opacity-0 invisible group-hover:opacity-100 ${
-                              item.subMenu ? "group-hover:visible" : ""
-                            }`}
+                            className={`text-xl opacity-0 invisible group-hover:opacity-100 ${item.subMenu ? "group-hover:visible" : ""}`}
                           />
                           <span>{item.icon}</span>
                           <span
@@ -182,21 +155,11 @@ const SectionHeadAdvanceSearch: React.FC = () => {
                               } else if (item.id === 6) {
                                 store.dispatch(onShowModalForTestAction());
                               } else if (item.id === 5) {
-                                if (
-                                  getAllCheckSelectedDataFormCustomTable &&
-                                  getAllCheckSelectedDataFormCustomTable.length ===
-                                    0
-                                ) {
-                                  toast.error(
-                                    "Please select at least one lead"
-                                  );
+                                if (getAllCheckSelectedDataFormCustomTable && getAllCheckSelectedDataFormCustomTable.length === 0) {
+                                  toast.error("Please select at least one lead");
                                   return; // Stop execution
                                 }
-                                store.dispatch(
-                                  exportAdvanceSearchLead(
-                                    getAllCheckSelectedDataFormCustomTable
-                                  )
-                                );
+                                store.dispatch(exportAdvanceSearchLead(getAllCheckSelectedDataFormCustomTable));
                               } else if (item.id === 7) {
                                 dispatch(onSetOpenModalForChangeStage());
                               }
@@ -215,10 +178,7 @@ const SectionHeadAdvanceSearch: React.FC = () => {
                               <div key={sub.id}>
                                 {sub.path ? (
                                   <Link to={sub.path}>
-                                    <li
-                                      key={sub.id}
-                                      className="flex items-center gap-x-2 px-3 py-2 hover:bg-gray-200 cursor-pointer"
-                                    >
+                                    <li key={sub.id} className="flex items-center gap-x-2 px-3 py-2 hover:bg-gray-200 cursor-pointer">
                                       <span>{sub.icon}</span>
                                       <span>{sub.name}</span>
                                     </li>
@@ -248,51 +208,25 @@ const SectionHeadAdvanceSearch: React.FC = () => {
       </div>
 
       {isLeadsImportModalOpen && (
-        <CustomModal
-          isShowModal={isLeadsImportModalOpen}
-          onHideModal={closeModalForLeadsImport}
-          data={importLeadsData}
-          isMode="importLead"
-        >
+        <CustomModal isShowModal={isLeadsImportModalOpen} onHideModal={closeModalForLeadsImport} data={importLeadsData} isMode="importLead">
           <ImportLeadsForm />
         </CustomModal>
       )}
 
       {isQuickAddFormModalOpen && (
-        <CustomModal
-          isMode="quickAddForm"
-          isShowModal={isQuickAddFormModalOpen}
-          onHideModal={closeModal}
-          data={quickAddLeadFormData}
-        >
+        <CustomModal isMode="quickAddForm" isShowModal={isQuickAddFormModalOpen} onHideModal={closeModal} data={quickAddLeadFormData}>
           <QuickAddLeadForm />
         </CustomModal>
       )}
 
       {isShowModalForTestAction && (
-        <CustomModal
-          isMode="testAction"
-          isShowModal={isShowModalForTestAction}
-          onHideModal={closeModalForTestAction}
-          data={bulkChangeOwnerData}
-        >
-          <BulkChangeOwner
-            onHideModal={closeModalForTestAction}
-            isMode="advanceSearch"
-          />
+        <CustomModal isMode="testAction" isShowModal={isShowModalForTestAction} onHideModal={closeModalForTestAction} data={bulkChangeOwnerData}>
+          <BulkChangeOwner onHideModal={closeModalForTestAction} isMode="advanceSearch" />
         </CustomModal>
       )}
       {isShowModalForChangeStage && (
-        <CustomModal
-          isMode="testAction"
-          isShowModal={isShowModalForChangeStage}
-          onHideModal={closeModalForChangeStage}
-          data={changeStageData}
-        >
-          <ChangeStage
-            onHideModal={closeModalForChangeStage}
-            isMode="advanceSearch"
-          />
+        <CustomModal isMode="testAction" isShowModal={isShowModalForChangeStage} onHideModal={closeModalForChangeStage} data={changeStageData}>
+          <ChangeStage onHideModal={closeModalForChangeStage} isMode="advanceSearch" />
         </CustomModal>
       )}
     </div>

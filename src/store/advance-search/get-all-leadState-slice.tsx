@@ -14,20 +14,14 @@ const initialState: LeadStateState = {
 };
 
 // Thunk to fetch all lead programs
-export const getAllLeadStates = createAsyncThunk<any, void>(
-  "LeadState/getAll",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await manageLeadsApi.get("leadSource/getAll");
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data.message ||
-          "An error occurred while fetching lead programs."
-      );
-    }
+export const getAllLeadStates = createAsyncThunk<any, void>("LeadState/getAll", async (_, { rejectWithValue }) => {
+  try {
+    const response = await manageLeadsApi.get("states/getAll");
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response?.data.message || "An error occurred while fetching lead states.");
   }
-);
+});
 
 const leadStateSlice = createSlice({
   name: "LeadState",
@@ -42,8 +36,8 @@ const leadStateSlice = createSlice({
     builder.addCase(getAllLeadStates.fulfilled, (state, action) => {
       state.isLoading = false;
       state.responseLeadStateData = action.payload.map((item: any) => ({
-        label: item.description, // Adjust to the correct field name from the API
-        value: item.description,
+        label: item.name, // Adjust to the correct field name from the API
+        value: item.name,
       }));
     });
 

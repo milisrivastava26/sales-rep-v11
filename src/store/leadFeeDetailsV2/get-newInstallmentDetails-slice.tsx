@@ -16,12 +16,12 @@ const initialState: NewInstallmentDetailsState = {
 };
 
 // Async thunk to fetch new installment details
-export const getNewInstallmentDetails = createAsyncThunk<any, { yearlyCourseFee: string; netFee: string; adjustedAmount: string }>(
+export const getNewInstallmentDetails = createAsyncThunk<any, { yearlyCourseFee: string; netFee: string; adjustedAmount: string; leadId: any }>(
   "get/getNewInstallmentDetails",
-  async ({ yearlyCourseFee, netFee, adjustedAmount }, { rejectWithValue }) => {
+  async ({ yearlyCourseFee, netFee, adjustedAmount, leadId }, { rejectWithValue }) => {
     try {
       const response = await coreLeadCaptureApi.get(
-        `api/crm/lead/calculateFeeInstallment/installmentDetails/${yearlyCourseFee}/${netFee}/${adjustedAmount}`
+        `api/crm/lead/calculateFeeInstallment/installmentDetails/${yearlyCourseFee}/${netFee}/${adjustedAmount}/${leadId}`
       );
       return response.data;
     } catch (e: any) {
@@ -35,9 +35,9 @@ const newInstallmentDetailsSlice = createSlice({
   name: "newInstallmentDetailsSlice",
   initialState,
   reducers: {
-    resetResponseForNewInstallmentDetails : (state) => {
+    resetResponseForNewInstallmentDetails: (state) => {
       state.newInstallmentDetailsResponse = [];
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -57,7 +57,7 @@ const newInstallmentDetailsSlice = createSlice({
 });
 
 // Export reducer
-export const {resetResponseForNewInstallmentDetails} = newInstallmentDetailsSlice.actions;
+export const { resetResponseForNewInstallmentDetails } = newInstallmentDetailsSlice.actions;
 export const newInstallmentDetailsReducer = newInstallmentDetailsSlice.reducer;
 
 //getInstallmentCalculation
