@@ -18,12 +18,12 @@ export const getAllLeadApplicationStatus = createAsyncThunk<any, void>(
   "LeadApplicationStatus/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await manageLeadsApi.get("leadSource/getAll");
+      const response = await manageLeadsApi.get("applicationStatus/getAll");
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data.message ||
-          "An error occurred while fetching lead programs."
+          "An error occurred while fetching lead application status."
       );
     }
   }
@@ -42,8 +42,8 @@ const leadApplicationStatusSlice = createSlice({
     builder.addCase(getAllLeadApplicationStatus.fulfilled, (state, action) => {
       state.isLoading = false;
       state.responseLeadApplicationStatusData = action.payload.map((item: any) => ({
-        label: item.description, // Adjust to the correct field name from the API
-        value: item.description,
+        label: item.displayName, // Adjust to the correct field name from the API
+        value: item.displayName,
       }));
     });
 

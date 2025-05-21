@@ -16,7 +16,6 @@ const initialState: LeadFieldByNameState = {
 
 // Thunk to fetch all lead fields by name
 export const getAllLeadFieldByName = createAsyncThunk<any, any>("leadFieldByName/getAll", async (dbFieldName, { rejectWithValue }) => {
-  console.log("dbFieldName", dbFieldName);
   try {
     const response = await coreservicesApi.get(`api/crm/core/advanceSearch/findAllViewLead360Field/${dbFieldName}`);
     return { key: dbFieldName, data: response.data };

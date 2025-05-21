@@ -241,6 +241,7 @@ import { leadStageReducer } from "../advance-search/get-all-leadStage-slice";
 import { leadSubStageReducer } from "../advance-search/get-all-leadSubStage-slice";
 import { leadStateReducer } from "../advance-search/get-all-leadState-slice";
 import { leadApplicationStatusReducer } from "../advance-search/get-all-leadApplicationStatus-slice";
+import { leadCityReducer } from "../advance-search/get-all-leadCity-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -388,16 +389,14 @@ const RootReducer = {
 
   getStudentDocsByLeadCaptureIdResponse: getStudentDocsByLeadCaptureIdReducer,
   verifyStudentDocsResponse: verifyStudentDocsReducer,
-  getConfirmationForAllDocsByLeadCaptureId:
-    getConfirmationForAllDocsByLeadCaptureIdReducer,
+  getConfirmationForAllDocsByLeadCaptureId: getConfirmationForAllDocsByLeadCaptureIdReducer,
   studentDocsStatus: studentDocsStatusReducer,
 
   //*******************************  scholarship details *********************************
   // updateLeadScholarshipDetails: updateLeadScholarshipDetailsReducer,
   // getLeadScholarshipDetails: getLeadScholarshipDetailsReducer,
   getMaxLeadScholarshipDetails: getMaxLeadScholarshipDetailsReducer,
-  updateLeadScholarshipDetailsByScholarId:
-    updateLeadScholarshipDetailsByScholarIdReducer,
+  updateLeadScholarshipDetailsByScholarId: updateLeadScholarshipDetailsByScholarIdReducer,
   findLeadScholarshipDetails: findLeadScholarshipDetailsReducer,
 
   getLeadApplicationStatusDataByLeadId: getLeadApplicationStatusByLeadIdReducer,
@@ -405,11 +404,9 @@ const RootReducer = {
   //*******************************  authority decline cases *********************************
   coreLeadWithDeclineOffer: getAllLeadWithDeclineOfferReducer,
   getFeeCalculationForDeclineById: getFeeCalculationForDeclineByIdReducer,
-  getLeadScholarshipDetailsForDeclineById:
-    getLeadScholarshipDetailsForDeclineByIdSliceReducer,
+  getLeadScholarshipDetailsForDeclineById: getLeadScholarshipDetailsForDeclineByIdSliceReducer,
   saveReissueContract: reissueContractByIdReducer,
-  getLeadOfferDeclineReasonByOfferId:
-    getLeadOfferDeclineReasonByOfferIdSliceReducer,
+  getLeadOfferDeclineReasonByOfferId: getLeadOfferDeclineReasonByOfferIdSliceReducer,
 
   //*******************************  Lead Attribute Update *********************************
 
@@ -433,8 +430,7 @@ const RootReducer = {
   getAllActiveScholarCategory: getAllActiveScholarCategoryReducer,
   getAllScholarshipSchemeByCategoryId: getScholarshipSchemeByCategIdReducer,
   getAllScholarshipSlabBySchemeId: getScholarshipSlabBySchemeIdReducer,
-  getScholarshipPercentageDiscountBySlabId:
-    getScholarshipPercentageDiscountBySlabIdReducer,
+  getScholarshipPercentageDiscountBySlabId: getScholarshipPercentageDiscountBySlabIdReducer,
   getAllDiscountReason: getAllDiscountReasonReducer,
   getAllScholarshipOption: getAllActiveScholarshipOptionReducer,
 
@@ -455,8 +451,7 @@ const RootReducer = {
   addPhoneConvoToActivityHistory: addPhoneConvoToActivityHistoryReducer,
   getActivityType: getAllActivityTypeReducer,
   addActivity: AddActivityReducer,
-  getActivityDetailsByActionTrackId:
-    getAllActivityDetailsByActionTrackIdReducer,
+  getActivityDetailsByActionTrackId: getAllActivityDetailsByActionTrackIdReducer,
   createManualCallOutbound: createManualCallOutboundReducer,
   getManualOutboundCallDetails: getManualOutboundCallDetailsReducer,
   exportLeadForAdvanceSearch: advanceSearchExportReducer,
@@ -470,10 +465,8 @@ const RootReducer = {
   addCashPayment: AddCashPaymentReducer,
   getPaymentType: getAllPaymentTypeReducer,
   submitCashPayments: submitCashPaymentsReducer,
-  getLeadInstallmentDetailsDataByLeadAndEnquiryId:
-    getLeadInstallmentDetailsByLeadAndEnquiryIdReducer,
-  addLeadInstallmentsByCaptureIdEnquiryIdOfferId:
-    addLeadInstallmentsByCaptureIdEnquiryIdOfferIdReducer,
+  getLeadInstallmentDetailsDataByLeadAndEnquiryId: getLeadInstallmentDetailsByLeadAndEnquiryIdReducer,
+  addLeadInstallmentsByCaptureIdEnquiryIdOfferId: addLeadInstallmentsByCaptureIdEnquiryIdOfferIdReducer,
 
   // *******************lead property ***********************
   checkForUpdateLeadProperty: getCheckForUpdateLeadPropertyReducer,
@@ -496,14 +489,10 @@ const RootReducer = {
   updateNameWpLeadsData: updateNameWpLeadsReducer,
   // *******************Smart view***********************
   getNewLeadFilterData: getNewLeadFilterDataReducer,
-  getAllInboundAnsweredCallDetailsByStatus:
-    getAllInboundAnsweredCallDetailsByStatusReducer,
-  getAllInboundMissedCallDetailsByStatus:
-    getAllInboundMissedCallDetailsByStatusReducer,
-  getInboundDisconnectedAtIVRCallDetails:
-    getAllInboundDisconnectedAtIVRCallDetailsByStatusReducer,
-  getInboundDisconnectedAfterIVRCallDetails:
-    getAllInboundDisconnectedAfterIVRCallDetailsByStatusReducer,
+  getAllInboundAnsweredCallDetailsByStatus: getAllInboundAnsweredCallDetailsByStatusReducer,
+  getAllInboundMissedCallDetailsByStatus: getAllInboundMissedCallDetailsByStatusReducer,
+  getInboundDisconnectedAtIVRCallDetails: getAllInboundDisconnectedAtIVRCallDetailsByStatusReducer,
+  getInboundDisconnectedAfterIVRCallDetails: getAllInboundDisconnectedAfterIVRCallDetailsByStatusReducer,
   getLeadPaymentDetailsDataForFinance: getLeadPaymentDetailsForFinanceReducer,
   getTodayOutboundCallbacks: getTodayOutboundCallbacksReducer,
   //view docs
@@ -514,8 +503,7 @@ const RootReducer = {
   deleteImportedLeads: deleteImportedLeadsReducer,
   pushImportedLead: pushImportedLeadsReducer,
 
-  getLeadCaptureDetailsByActionTrackId:
-    getLeadCaptureDetailsByActionTrackIdReducer,
+  getLeadCaptureDetailsByActionTrackId: getLeadCaptureDetailsByActionTrackIdReducer,
   getLeadBasicDetails: getLeadBasicDetailsReducer,
 
   testApi: testApiReducer,
@@ -528,12 +516,12 @@ const RootReducer = {
   getAllLeadPhonesData: leadPhoneReducer,
   getAllLeadCareersData: leadCareerReducer,
   getAllLeadProgramsData: leadProgramReducer,
-  getAllLeadSoursesData : leadSourseReducer,
+  getAllLeadSoursesData: leadSourseReducer,
   getAllLeadStagesData: leadStageReducer,
-  getAllLeadSubStagesData : leadSubStageReducer,
-  getAllLeadStatesData : leadStateReducer,
-  getAllLeadApplicationStatusData : leadApplicationStatusReducer,
-
+  getAllLeadSubStagesData: leadSubStageReducer,
+  getAllLeadStatesData: leadStateReducer,
+  getAllLeadApplicationStatusData: leadApplicationStatusReducer,
+  getAllLeadCitysData: leadCityReducer,
 
   //third paty
   getTwigzLeads: getTwigzLeadsReducer,

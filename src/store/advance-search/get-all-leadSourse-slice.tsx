@@ -23,7 +23,7 @@ export const getAllLeadSourses = createAsyncThunk<any, void>(
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data.message ||
-          "An error occurred while fetching lead programs."
+          "An error occurred while fetching lead source."
       );
     }
   }

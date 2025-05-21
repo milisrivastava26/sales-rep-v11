@@ -269,7 +269,7 @@ export const advanceSearchColumnData = [
     name: "applicableOn",
     label: "Applicable On",
     isReadOnly: false,
-  }
+  },
 ];
 
 export interface advanceSearchResponse {
@@ -307,13 +307,11 @@ export interface advanceSearchResponse {
   applicableOn: string;
 }
 
-
 export const advanceSearchHamburgerModalData = {
   title: "Manage Columns",
   cancelButton: "Save",
   saveButton: "Save",
 };
-
 
 type Mode = "include" | "exclude";
 type FieldType =
@@ -322,9 +320,12 @@ type FieldType =
   | "city"
   | "state"
   | "lead_source"
-  | "stage"
-  | "subStage"
-  | "application_status" | "salesrep_name";
+  | "lead_stage"
+  | "lead_sub_stage"
+  | "application_status"
+  | "name"
+  | "email"
+  | "phone";
 
 interface FieldInput {
   type: FieldType;
@@ -337,18 +338,18 @@ interface FieldInput {
 type FilterPayload = Record<string, string[]>;
 
 export function buildFilterArrays(fields: FieldInput[] = []): FilterPayload {
-
   const typeMap: Record<FieldType, string> = {
     career: "AcademicCareerDescription",
     program: "AcademicProgramDescription",
     city: "CityName",
     state: "StateName",
     lead_source: "LeadSourceDescription",
-    stage: "CurrentLeadStageDisplayName",
-    subStage: "CurrentLeadSubStageDisplayName",
+    lead_stage: "CurrentLeadStageDisplayName",
+    lead_sub_stage: "CurrentLeadSubStageDisplayName",
     application_status: "ApplicationStatusName",
-    salesrep_name: "CurrentSalesrepFullName",
-
+    name: "LeadName",
+    email: "LeadEmail",
+    phone: "LeadPhone",
   };
 
   const result: FilterPayload = {};
@@ -368,9 +369,7 @@ export function buildFilterArrays(fields: FieldInput[] = []): FilterPayload {
 }
 
 export function getCurrentSalesReps(data: any) {
-  const filters  = data?.fields;
+  const filters = data?.fields;
   const salesRepFilter = filters.find((item: any) => item.type === "salesrep_name");
   return salesRepFilter ? salesRepFilter.value : [];
 }
-
-

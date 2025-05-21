@@ -21,6 +21,8 @@ const ManageLeadsTable: React.FC<LeadsDataType> = ({ dataForTable }) => {
   const { data } = dataForTable;
   // const formRef = useRef<HTMLFormElement>(null);
 
+
+
   useEffect(() => {
     store.dispatch(getLeadStageValues());
     store.dispatch(getLeadSourceValues());
@@ -69,6 +71,7 @@ const ManageLeadsTable: React.FC<LeadsDataType> = ({ dataForTable }) => {
           </div>
         </div>
       </div>
+
     </div>
   );
 };

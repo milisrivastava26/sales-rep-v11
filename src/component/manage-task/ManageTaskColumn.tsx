@@ -5,26 +5,20 @@ export const ManageTaskColumn: Column<any>[] = [
   {
     Header: "Lead ID",
     accessor: "leadCaptureId",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.leadCaptureId}</span>
-    ),
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.leadCaptureId}</span>,
   },
   {
     Header: "Lead Name",
     accessor: "leadName",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.leadName}</span>
-    ),
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.leadName}</span>,
   },
   {
     Header: "Phone",
     accessor: "leadPhone",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.leadPhone}</span>
-    ),
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.leadPhone}</span>,
   },
   {
-    Header: "Date",
+    Header: "Lead Capture Date",
     accessor: (row) => {
       const { dateFormatted, timeFormatted } = extractDateTime(row.createdAt);
       return `${dateFormatted} ${timeFormatted}`;
@@ -40,19 +34,15 @@ export const ManageTaskColumn: Column<any>[] = [
       );
     },
   },
-  // {
-  //   Header: "Subject",
-  //   accessor: "subject",
-  //   Cell: ({ row }: { row: { original: any } }) => (
-  //     <span>{row.original.subject}</span>
-  //   ),
-  // },
+  {
+    Header: "Task Schedule Date",
+    accessor: "scheduledDate",
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.scheduledDate}</span>,
+  },
   {
     Header: "Task Type",
     accessor: "taskType",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.taskType}</span>
-    ),
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.taskType}</span>,
   },
   // {
   //   Header: "Details",
@@ -64,16 +54,12 @@ export const ManageTaskColumn: Column<any>[] = [
   {
     Header: "Status",
     accessor: "isCompleted",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.isCompleted ? "Completed" : "Pending"}</span>
-    ),
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.isCompleted ? "Completed" : "Pending"}</span>,
   },
   {
-    Header: "Owner",
+    Header: "Current Salesrep",
     accessor: "salesrepName",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.salesrepName}</span>
-    ),
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.salesrepName}</span>,
   },
   // {
   //   Header: "Phone",
@@ -92,22 +78,16 @@ export const ManageTaskColumn: Column<any>[] = [
   {
     Header: "Lead Stage",
     accessor: "currentLeadStage",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.currentLeadStage}</span>
-    ),
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.currentLeadStage}</span>,
   },
   {
     Header: "Sub Stage",
     accessor: "currentLeadSubStage",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.currentLeadSubStage}</span>
-    ),
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.currentLeadSubStage}</span>,
   },
   {
     Header: "Lead Source",
     accessor: "leadSource",
-    Cell: ({ row }: { row: { original: any } }) => (
-      <span>{row.original.leadSource}</span>
-    ),
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.leadSource}</span>,
   },
 ];

@@ -18,12 +18,12 @@ export const getAllLeadSubStages = createAsyncThunk<any, void>(
   "LeadSubStage/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await manageLeadsApi.get("leadSource/getAll");
+      const response = await manageLeadsApi.get("leadSubstage/getAll");
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data.message ||
-          "An error occurred while fetching lead programs."
+          "An error occurred while fetching lead sub stage"
       );
     }
   }
@@ -42,8 +42,8 @@ const leadSubStageSlice = createSlice({
     builder.addCase(getAllLeadSubStages.fulfilled, (state, action) => {
       state.isLoading = false;
       state.responseLeadSubStageData = action.payload.map((item: any) => ({
-        label: item.description, // Adjust to the correct field name from the API
-        value: item.description,
+        label: item.displayName, // Adjust to the correct field name from the API
+        value: item.displayName,
       }));
     });
 
