@@ -9,6 +9,7 @@ import { advanceSearchStyle } from "../../../data/manage-leads/advance-search-da
 import { getAllLeadFieldByName } from "../../../store/advance-search/get-allLeadField-byName-slice";
 import { resetViewLeadResponse } from "../../../store/advance-search/get-coreViewLead-byQuery-slice";
 import toast from "react-hot-toast";
+import { getAcademicCareerValues } from "../../../store/get/get-all-academic-career-slice";
 
 interface selectionCriteriaPropsType {
   setFilterQuery: (e: any) => void;
@@ -93,6 +94,8 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
     (role: string) => role === "ROLE_ADMIN" || role === "ROLE_MANAGER"
   );
 
+  const { responseForFilterHeadAcademicCareer } = useSelector((state: RootState) => state.getAllAcademicCareer);
+
 
   return (
     <div>
@@ -126,9 +129,14 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
                               `fields.${index}.type`,
                               selected?.value || ""
                             );
-                            store.dispatch(
-                              getAllLeadFieldByName(selected?.value || "")
-                            );
+                            if (selected?.value === "career") {
+                              store.dispatch(getAcademicCareerValues());
+                            }
+                            else {
+                              store.dispatch(
+                                getAllLeadFieldByName(selected?.value || "")
+                              );
+                            }
                             formik.setFieldValue(`fields.${index}.value`, "");
                             formik.setFieldValue(`fields.${index}.mode`, "");
                             formik.setFieldValue(`fields.${index}.to`, "");
@@ -167,9 +175,11 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({
                           </label>
                           <Select
                             options={
-                              getModeOptions(
-                              ) || []
+                              (field.value === "career"
+                                ? responseForFilterHeadAcademicCareer
+                                : getModeOptions()) || []
                             }
+
                             onChange={(selected) =>
                               formik.setFieldValue(
                                 `fields.${index}.mode`,
