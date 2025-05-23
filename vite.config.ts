@@ -4,10 +4,10 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   define: {
-    global: 'window', // 👈 Fixes the issue
+    global: 'window', 
   },
   server: {
     host: "10.8.20.38",
-    port: 4047, // here
+    port: 4047, 
   },
 });

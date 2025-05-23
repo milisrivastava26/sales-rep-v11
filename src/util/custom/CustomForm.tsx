@@ -1,9 +1,11 @@
-import { RootState } from "../../store";
+import store, { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import SelectInput from "./FormInputs/SelectInput";
 import ButtonInput from "./FormInputs/ButtonInput";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { inputsType } from "../../types/manage-leads/manage-leads-type";
+import PhoneInput from "./FormInputs/PhoneInput";
+import { checkIfNumberExists } from "../../store/lead-capture/checkIfNumberExists-slice";
 
 interface FormType {
   inputData: any;
@@ -64,6 +66,11 @@ const CustomForm: React.FC<FormType> = ({
   const {
     isLoading: isLoadingForUpdateLeadProperties,
   } = useSelector((state: RootState) => state.LeadPropertiesUpdate);
+
+  const onIsPhoneExist = (phone: any) => {
+    store.dispatch(checkIfNumberExists(phone));
+  }
+  const { responseForNumberExists } = useSelector((state: RootState) => state.isNumberExistsResponse)
 
   return (
     <Formik
@@ -144,33 +151,31 @@ const CustomForm: React.FC<FormType> = ({
                       }
                     />
                   )
-
-                    // : field.name === "phone" ? (
-                    //   //  Custom phone input with onBlur validation
-                    //   <PhoneInput
-                    //     name={field.name}
-                    //     onIsPhoneExist={onIsPhoneExist}
-                    //     response={isNumberExists}
-                    //     isMode={isMode}
-                    //   />
-                    // )
-
-                    : (
-                      <Field
+                    : field.name === "phone" ? (
+                      //  Custom phone input with onBlur validation
+                      <PhoneInput
                         name={field.name}
-                        type={field.type}
-                        as={field.type === "textarea" ? "textarea" : "input"}
-                        className={` ${(isMode === "personalDetails" && !isEditing) ||
-                          field.isReadOnly
-                          ? "bg-transparent py-0.5 text-gray-700"
-                          : "border border-gray-200 bg-gray-100 py-1"
-                          } w-full px-2 rounded-md focus:outline-none focus:border-gray-400`}
-                        disabled={
-                          (isMode === "personalDetails" && !isEditing) ||
-                          field.isReadOnly
-                        }
+                        onIsPhoneExist={onIsPhoneExist}
+                        response={responseForNumberExists?.isLeadExists}
+                        isMode={isMode}
                       />
-                    )}
+                    )
+                      : (
+                        <Field
+                          name={field.name}
+                          type={field.type}
+                          as={field.type === "textarea" ? "textarea" : "input"}
+                          className={` ${(isMode === "personalDetails" && !isEditing) ||
+                            field.isReadOnly
+                            ? "bg-transparent py-0.5 text-gray-700"
+                            : "border border-gray-200 bg-gray-100 py-1"
+                            } w-full px-2 rounded-md focus:outline-none focus:border-gray-400`}
+                          disabled={
+                            (isMode === "personalDetails" && !isEditing) ||
+                            field.isReadOnly
+                          }
+                        />
+                      )}
                   <ErrorMessage
                     name={field.name}
                     component="div"
@@ -195,7 +200,14 @@ const CustomForm: React.FC<FormType> = ({
                     ? isLoadingForquickAdd
                     : isMode === "personalDetails" ? isLoadingFoCampusSave || isLoadingForUpdateLeadProperties : false
                 }
-                style={`bg-blue-700 px-5 py-2 rounded text-white text-base font-medium`}
+                style={`bg-blue-700 px-5 py-2 rounded text-white text-base font-medium ${(isMode === "quckAdd"
+                  ? isLoadingForquickAdd
+                  : isMode === "personalDetails"
+                    ? isLoadingFoCampusSave || isLoadingForUpdateLeadProperties
+                    : false)
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+                  }`}
               />
             </div>
           )}

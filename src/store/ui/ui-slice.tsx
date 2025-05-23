@@ -92,6 +92,8 @@ interface typeUI {
   },
   searchQuery: string;
   whatsappMessengerModal : boolean;
+  quickAddLeadData: any;
+  leadExistModal: boolean;
 }
 
 const initialState: typeUI = {
@@ -210,7 +212,9 @@ const initialState: typeUI = {
     pageNumber: 0
   },
   searchQuery : "",
-  whatsappMessengerModal: false
+  whatsappMessengerModal: false,
+  quickAddLeadData: {},
+  leadExistModal: false,
 };
 
 const uiSlice = createSlice({
@@ -615,7 +619,16 @@ const uiSlice = createSlice({
     },
     closeWhatsappMessengerModal : (state) => {
       state.whatsappMessengerModal = false;
-    }
+    },
+    setQuickAddLeadData : (state, action) => {
+      state.quickAddLeadData = action.payload;
+    },
+    openLeadExistModal : (state) => {
+      state.leadExistModal = true;
+    },
+    closeLeadExistModal : (state) => {
+      state.leadExistModal = false;
+    },
   },
 });
 
@@ -703,7 +716,10 @@ export const {
   setPaginatedProps,
   getLeadsForManageTask,
   setSearchQuery,
-  setPaginatedPropsForAdvanceSearch
+  setPaginatedPropsForAdvanceSearch,
+  setQuickAddLeadData,
+  openLeadExistModal,
+  closeLeadExistModal
 } = uiSlice.actions;
 
 export const uiSliceAction = uiSlice.actions;

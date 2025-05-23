@@ -19,50 +19,32 @@ interface propsType {
   setPackageDeal: (e: any) => void;
   packageDeal: string;
 }
-const DeclinedFeeDetails: React.FC<propsType> = ({
-  setPackageDeal,
-  packageDeal,
-}) => {
+const DeclinedFeeDetails: React.FC<propsType> = ({ setPackageDeal, packageDeal }) => {
   const { leadCaptureId } = useParams();
 
-  const { responseOfLeadEnquiryDetailsById } = useSelector(
-    (state: RootState) => state.getLeadEnquiryDetailsDataById
-  );
+  const { responseOfLeadEnquiryDetailsById } = useSelector((state: RootState) => state.getLeadEnquiryDetailsDataById);
 
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
-    ? responseOfLeadEnquiryDetailsById.filter(
-        (item: any) => item.status === "ACTIVE"
-      )
+    ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE")
     : [];
   const programId = activeEnquiry[0].academicProgramId;
   const validationSchema = Yup.object({
-    packageDeal: Yup.number()
-      .typeError("Must be a number")
-      .required("Package deal is required")
-      .positive("Must be greater than 0"),
+    packageDeal: Yup.number().typeError("Must be a number").required("Package deal is required").positive("Must be greater than 0"),
   });
-  const {
-    isLoading: isLoadingForOfferHistory,
-    leadOfferHistoryByOfferIdResponse,
-  } = useSelector((state: RootState) => state.leadOfferHistoryByOfferId);
+  const { isLoading: isLoadingForOfferHistory, leadOfferHistoryByOfferIdResponse } = useSelector(
+    (state: RootState) => state.leadOfferHistoryByOfferId
+  );
 
   const [feeDetailsdata, setFeeDetailsData] = useState<FeeDetail[]>([]);
   const [newFeeData, setNewFeeData] = useState<FeeDetail[]>([]);
-  const { FeeDetailsV2Response } = useSelector(
-    (state: RootState) => state.getFeeDetailsV2
-  );
+  const { FeeDetailsV2Response } = useSelector((state: RootState) => state.getFeeDetailsV2);
 
   useEffect(() => {
-    const transformedData = transformDeclinedFeeResponse(
-      FeeDetailsV2Response,
-      packageDeal
-    );
+    const transformedData = transformDeclinedFeeResponse(FeeDetailsV2Response, packageDeal);
     setNewFeeData(transformedData);
   }, [FeeDetailsV2Response]);
   useEffect(() => {
-    const data = transformLeadHistoryFeeData(
-      leadOfferHistoryByOfferIdResponse
-    ) as FeeDetail[];
+    const data = transformLeadHistoryFeeData(leadOfferHistoryByOfferIdResponse) as FeeDetail[];
 
     setFeeDetailsData(data);
   }, [leadOfferHistoryByOfferIdResponse]);
@@ -89,12 +71,12 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
       yearlyCourseFee: string;
       netFee: string;
       adjustedAmount: string;
+      leadId: any;
     } = {
       yearlyCourseFee: FeeDetailsV2Response.programTuitionFee,
-      netFee: String(
-        FeeDetailsV2Response.courseFeeAfterDiscount - Number(packageDeal)
-      ),
+      netFee: String(FeeDetailsV2Response.courseFeeAfterDiscount - Number(packageDeal)),
       adjustedAmount: FeeDetailsV2Response.adjustedAmount,
+      leadId: leadCaptureId,
     };
 
     store.dispatch(getNewInstallmentDetails(payload));
@@ -102,39 +84,18 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
 
   return (
     <div className="w-full">
-      {isLoadingForOfferHistory && (
-        <LoadingSpinner
-          centered={false}
-          mainLoading={false}
-          message="Loading"
-          size={25}
-        />
-      )}
+      {isLoadingForOfferHistory && <LoadingSpinner centered={false} mainLoading={false} message="Loading" size={25} />}
       {!isLoadingForOfferHistory && (
         <div className="flex items-start gap-20 w-full">
           <div className="w-[50%]">
-            <h2 className="text-[20px] font-semibold text-[#3b82f6] mb-2">
-              Previous Fee Details
-            </h2>
+            <h2 className="text-[20px] font-semibold text-[#3b82f6] mb-2">Previous Fee Details</h2>
             <div className="border w-full">
               <div>
                 {feeDetailsdata.slice(0, 3).map((ele) => (
                   <div className="flex items-start" key={ele.id}>
-                    <p
-                      className={`w-1/2 px-4 py-1 text-right ${
-                        ele.title === "Total Course Fee" ? "font-semibold" : ""
-                      }`}
-                    >
-                      {ele.title} :
-                    </p>
+                    <p className={`w-1/2 px-4 py-1 text-right ${ele.title === "Total Course Fee" ? "font-semibold" : ""}`}>{ele.title} :</p>
                     <div className="px-4 py-1 w-1/2 flex justify-end">
-                      <div
-                        className={`flex justify-between w-full max-w-[110px] ${
-                          ele.title === "Total Course Fee"
-                            ? "font-semibold"
-                            : ""
-                        }`}
-                      >
+                      <div className={`flex justify-between w-full max-w-[110px] ${ele.title === "Total Course Fee" ? "font-semibold" : ""}`}>
                         <span>₹</span>
                         <p>{ele.value}</p>
                       </div>
@@ -145,43 +106,15 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
               <div className="mt-4">
                 {feeDetailsdata.slice(3, 8).map((ele) => (
                   <div className="flex items-start" key={ele.id}>
-                    <p
-                      className={`w-1/2 px-4 py-1 text-right ${
-                        ele.title === "Total Discount" ? "font-semibold" : ""
-                      }`}
-                    >
-                      {ele.title}:
-                    </p>
+                    <p className={`w-1/2 px-4 py-1 text-right ${ele.title === "Total Discount" ? "font-semibold" : ""}`}>{ele.title}:</p>
                     <div className="px-4 py-1 w-1/2 flex justify-end">
                       <div
-                        className={`flex  ${
-                          ele.id !== 4
-                            ? "justify-between"
-                            : " justify-end gap-x-2"
-                        }  w-full  ${ele.id !== 4 ? "max-w-[110px]" : ""} `}
+                        className={`flex  ${ele.id !== 4 ? "justify-between" : " justify-end gap-x-2"}  w-full  ${
+                          ele.id !== 4 ? "max-w-[110px]" : ""
+                        } `}
                       >
-                        {ele.id !== 4 && (
-                          <span
-                            className={` ${
-                              ele.title === "Total Discount"
-                                ? "font-semibold"
-                                : ""
-                            }`}
-                          >
-                            ₹
-                          </span>
-                        )}
-                        {
-                          <p
-                            className={` ${
-                              ele.title === "Total Discount"
-                                ? "font-semibold"
-                                : ""
-                            }`}
-                          >
-                            {ele.value}
-                          </p>
-                        }
+                        {ele.id !== 4 && <span className={` ${ele.title === "Total Discount" ? "font-semibold" : ""}`}>₹</span>}
+                        {<p className={` ${ele.title === "Total Discount" ? "font-semibold" : ""}`}>{ele.value}</p>}
                         {/* {ele.id === 7 && <mark>{ele.value}</mark>} */}
                       </div>
                     </div>
@@ -191,9 +124,7 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
               <div className="mt-4">
                 {feeDetailsdata.slice(8).map((ele) => (
                   <div className="flex items-start" key={ele.id}>
-                    <p className="font-semibold w-1/2 px-4 py-1 text-right">
-                      {ele.title} :
-                    </p>
+                    <p className="font-semibold w-1/2 px-4 py-1 text-right">{ele.title} :</p>
                     <div className="px-4 py-1 w-1/2 flex justify-end">
                       <div className="flex justify-between w-full max-w-[110px] font-semibold">
                         <span>₹</span>
@@ -207,9 +138,7 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
           </div>
 
           <div className="w-[50%]">
-            <h1 className="text-[20px] font-semibold text-[#3b82f6] mb-2">
-              Grant Package Deal
-            </h1>
+            <h1 className="text-[20px] font-semibold text-[#3b82f6] mb-2">Grant Package Deal</h1>
 
             <div>
               <Formik
@@ -231,17 +160,10 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
                         className="border border-gray-300 rounded px-3 py-1.5"
                         placeholder="Enter discount amount"
                       />
-                      <ErrorMessage
-                        name="packageDeal"
-                        component="div"
-                        className="text-red-500 text-sm mt-1"
-                      />
+                      <ErrorMessage name="packageDeal" component="div" className="text-red-500 text-sm mt-1" />
                     </div>
 
-                    <button
-                      type="submit"
-                      className="bg-blue-600 text-white px-4 py-1.5 rounded hover:bg-blue-700"
-                    >
+                    <button type="submit" className="bg-blue-600 text-white px-4 py-1.5 rounded hover:bg-blue-700">
                       Calculate Fee
                     </button>
                   </Form>
@@ -255,28 +177,14 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
       <div className="my-5 w-full">
         {Object.keys(FeeDetailsV2Response).length !== 0 && (
           <>
-            <h2 className="text-[20px] font-semibold text-[#3b82f6] mb-2">
-              New Fee Details
-            </h2>
+            <h2 className="text-[20px] font-semibold text-[#3b82f6] mb-2">New Fee Details</h2>
             <div className="border mx-auto">
               <div>
                 {newFeeData.slice(0, 3).map((ele) => (
                   <div className="flex items-start mt-2" key={ele.id}>
-                    <p
-                      className={`w-1/2 px-4 py-1 text-right ${
-                        ele.title === "Total Course Fee" ? "font-semibold" : ""
-                      }`}
-                    >
-                      {ele.title} :
-                    </p>
+                    <p className={`w-1/2 px-4 py-1 text-right ${ele.title === "Total Course Fee" ? "font-semibold" : ""}`}>{ele.title} :</p>
                     <div className="px-4 py-1 w-1/2 flex justify-end">
-                      <div
-                        className={`flex justify-between w-full max-w-[110px] ${
-                          ele.title === "Total Course Fee"
-                            ? "font-semibold"
-                            : ""
-                        }`}
-                      >
+                      <div className={`flex justify-between w-full max-w-[110px] ${ele.title === "Total Course Fee" ? "font-semibold" : ""}`}>
                         <span>₹</span>
                         <p>{ele.value}</p>
                       </div>
@@ -287,43 +195,15 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
               <div className="mt-4">
                 {newFeeData.slice(3, 8).map((ele) => (
                   <div className="flex items-start" key={ele.id}>
-                    <p
-                      className={`w-1/2 px-4 py-1 text-right ${
-                        ele.title === "Total Discount" ? "font-semibold" : ""
-                      }`}
-                    >
-                      {ele.title}:
-                    </p>
+                    <p className={`w-1/2 px-4 py-1 text-right ${ele.title === "Total Discount" ? "font-semibold" : ""}`}>{ele.title}:</p>
                     <div className="px-4 py-1 w-1/2 flex justify-end">
                       <div
-                        className={`flex  ${
-                          ele.id !== 4
-                            ? "justify-between"
-                            : " justify-end gap-x-2"
-                        }  w-full  ${ele.id !== 4 ? "max-w-[110px]" : ""} `}
+                        className={`flex  ${ele.id !== 4 ? "justify-between" : " justify-end gap-x-2"}  w-full  ${
+                          ele.id !== 4 ? "max-w-[110px]" : ""
+                        } `}
                       >
-                        {ele.id !== 4 && (
-                          <span
-                            className={` ${
-                              ele.title === "Total Discount"
-                                ? "font-semibold"
-                                : ""
-                            }`}
-                          >
-                            ₹
-                          </span>
-                        )}
-                        {
-                          <p
-                            className={` ${
-                              ele.title === "Total Discount"
-                                ? "font-semibold"
-                                : ""
-                            }`}
-                          >
-                            {ele.value}
-                          </p>
-                        }
+                        {ele.id !== 4 && <span className={` ${ele.title === "Total Discount" ? "font-semibold" : ""}`}>₹</span>}
+                        {<p className={` ${ele.title === "Total Discount" ? "font-semibold" : ""}`}>{ele.value}</p>}
                         {/* {ele.id === 7 && <mark>{ele.value}</mark>} */}
                       </div>
                     </div>
@@ -333,9 +213,7 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
               <div className="mt-4">
                 {newFeeData.slice(8).map((ele) => (
                   <div className="flex items-start" key={ele.id}>
-                    <p className="font-semibold w-1/2 px-4 py-1 text-right">
-                      {ele.title} :
-                    </p>
+                    <p className="font-semibold w-1/2 px-4 py-1 text-right">{ele.title} :</p>
                     <div className="px-4 py-1 w-1/2 flex justify-end">
                       <div className="flex justify-between w-full max-w-[110px] font-semibold">
                         <span>₹</span>
@@ -352,10 +230,7 @@ const DeclinedFeeDetails: React.FC<propsType> = ({
 
       {Object.keys(FeeDetailsV2Response).length !== 0 && (
         <div className="flex justify-end mt-5">
-          <button
-            className="bg-blue-500 text-white rounded-md font-medium px-4 py-1.5"
-            onClick={handleInstallmentCalculation}
-          >
+          <button className="bg-blue-500 text-white rounded-md font-medium px-4 py-1.5" onClick={handleInstallmentCalculation}>
             Calculate Installment
           </button>
         </div>

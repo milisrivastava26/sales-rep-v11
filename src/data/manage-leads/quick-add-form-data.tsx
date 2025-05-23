@@ -117,3 +117,9 @@ export const testActionData = {
   cancelButton: "Cancel",
   saveButton: "Save",
 };
+
+export const leadExistdata = {
+    title: "Lead already Exists",
+    cancelButton: "Cancel",
+    saveButton: "Save",
+  };

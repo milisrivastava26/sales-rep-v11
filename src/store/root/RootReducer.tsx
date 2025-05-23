@@ -216,7 +216,7 @@ import { saveCampusInterestedReducer } from "../campus/save-campusInterestedInDe
 import { getCampusInterestedDetailsReducer } from "../campus/get-campusInterestedDetails-by-enquiryId-slice";
 import { getCollegeSkyLeadsReducer } from "../third-party-slices/get-collegeSkyLeads-slice";
 import { FilteredTaskReducer } from "../manage-task/get-filtered-task-slice";
-import notificationReducer from '../notifications/notification-slice';
+import notificationReducer from "../notifications/notification-slice";
 import { getWalkinDetailsReducer } from "../dashboard/get-walkin-details-slice";
 import { getCounsellingDetailsReducer } from "../dashboard/get-counselling-details-slice";
 import { searchedLeadsReducer } from "../pagination-v1/get-searched-leads-slice";
@@ -228,6 +228,21 @@ import { getWakarConsultancyLeadReducer } from "../third-party-slices/get-wakar-
 import { sendWhatsappByTemplateIdReducer } from "../whatsapp -messenger/send-whatsapp-slice";
 import { collegeConnectLeadsReducer } from "../third-party-slices/get-collegeConnect-leads-slice";
 import { meritAdmissionsLeadsReducer } from "../third-party-slices/get-meritAdmissions-lead-slice";
+import { educationConsultancyLeadsReducer } from "../third-party-slices/get-educationConsultancy-lead-slice";
+import { duniaNowLeadsReducer } from "../third-party-slices/get-duniaNow-leads-slice";
+import { leadNameReducer } from "../advance-search/get-all-leadName-slice";
+import { leadEmailReducer } from "../advance-search/get-all-leadEmail-slice";
+import { leadPhoneReducer } from "../advance-search/get-all-leadPhone-slice";
+import { leadCareerReducer } from "../advance-search/get-all-leadCareer-slice";
+import { leadProgramReducer } from "../advance-search/get-all-leadProgram-slice";
+import { CareerGuideLeadsReducer } from "../third-party-slices/get-careerGuide-leads-slice";
+import { leadSourseReducer } from "../advance-search/get-all-leadSourse-slice";
+import { leadStageReducer } from "../advance-search/get-all-leadStage-slice";
+import { leadSubStageReducer } from "../advance-search/get-all-leadSubStage-slice";
+import { leadStateReducer } from "../advance-search/get-all-leadState-slice";
+import { leadApplicationStatusReducer } from "../advance-search/get-all-leadApplicationStatus-slice";
+import { leadCityReducer } from "../advance-search/get-all-leadCity-slice";
+import { getPrideInfotechLeadsReducer } from "../third-party-slices/get-prideInfotech-leads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -375,16 +390,14 @@ const RootReducer = {
 
   getStudentDocsByLeadCaptureIdResponse: getStudentDocsByLeadCaptureIdReducer,
   verifyStudentDocsResponse: verifyStudentDocsReducer,
-  getConfirmationForAllDocsByLeadCaptureId:
-    getConfirmationForAllDocsByLeadCaptureIdReducer,
+  getConfirmationForAllDocsByLeadCaptureId: getConfirmationForAllDocsByLeadCaptureIdReducer,
   studentDocsStatus: studentDocsStatusReducer,
 
   //*******************************  scholarship details *********************************
   // updateLeadScholarshipDetails: updateLeadScholarshipDetailsReducer,
   // getLeadScholarshipDetails: getLeadScholarshipDetailsReducer,
   getMaxLeadScholarshipDetails: getMaxLeadScholarshipDetailsReducer,
-  updateLeadScholarshipDetailsByScholarId:
-    updateLeadScholarshipDetailsByScholarIdReducer,
+  updateLeadScholarshipDetailsByScholarId: updateLeadScholarshipDetailsByScholarIdReducer,
   findLeadScholarshipDetails: findLeadScholarshipDetailsReducer,
 
   getLeadApplicationStatusDataByLeadId: getLeadApplicationStatusByLeadIdReducer,
@@ -392,11 +405,9 @@ const RootReducer = {
   //*******************************  authority decline cases *********************************
   coreLeadWithDeclineOffer: getAllLeadWithDeclineOfferReducer,
   getFeeCalculationForDeclineById: getFeeCalculationForDeclineByIdReducer,
-  getLeadScholarshipDetailsForDeclineById:
-    getLeadScholarshipDetailsForDeclineByIdSliceReducer,
+  getLeadScholarshipDetailsForDeclineById: getLeadScholarshipDetailsForDeclineByIdSliceReducer,
   saveReissueContract: reissueContractByIdReducer,
-  getLeadOfferDeclineReasonByOfferId:
-    getLeadOfferDeclineReasonByOfferIdSliceReducer,
+  getLeadOfferDeclineReasonByOfferId: getLeadOfferDeclineReasonByOfferIdSliceReducer,
 
   //*******************************  Lead Attribute Update *********************************
 
@@ -420,8 +431,7 @@ const RootReducer = {
   getAllActiveScholarCategory: getAllActiveScholarCategoryReducer,
   getAllScholarshipSchemeByCategoryId: getScholarshipSchemeByCategIdReducer,
   getAllScholarshipSlabBySchemeId: getScholarshipSlabBySchemeIdReducer,
-  getScholarshipPercentageDiscountBySlabId:
-    getScholarshipPercentageDiscountBySlabIdReducer,
+  getScholarshipPercentageDiscountBySlabId: getScholarshipPercentageDiscountBySlabIdReducer,
   getAllDiscountReason: getAllDiscountReasonReducer,
   getAllScholarshipOption: getAllActiveScholarshipOptionReducer,
 
@@ -442,8 +452,7 @@ const RootReducer = {
   addPhoneConvoToActivityHistory: addPhoneConvoToActivityHistoryReducer,
   getActivityType: getAllActivityTypeReducer,
   addActivity: AddActivityReducer,
-  getActivityDetailsByActionTrackId:
-    getAllActivityDetailsByActionTrackIdReducer,
+  getActivityDetailsByActionTrackId: getAllActivityDetailsByActionTrackIdReducer,
   createManualCallOutbound: createManualCallOutboundReducer,
   getManualOutboundCallDetails: getManualOutboundCallDetailsReducer,
   exportLeadForAdvanceSearch: advanceSearchExportReducer,
@@ -457,10 +466,8 @@ const RootReducer = {
   addCashPayment: AddCashPaymentReducer,
   getPaymentType: getAllPaymentTypeReducer,
   submitCashPayments: submitCashPaymentsReducer,
-  getLeadInstallmentDetailsDataByLeadAndEnquiryId:
-    getLeadInstallmentDetailsByLeadAndEnquiryIdReducer,
-  addLeadInstallmentsByCaptureIdEnquiryIdOfferId:
-    addLeadInstallmentsByCaptureIdEnquiryIdOfferIdReducer,
+  getLeadInstallmentDetailsDataByLeadAndEnquiryId: getLeadInstallmentDetailsByLeadAndEnquiryIdReducer,
+  addLeadInstallmentsByCaptureIdEnquiryIdOfferId: addLeadInstallmentsByCaptureIdEnquiryIdOfferIdReducer,
 
   // *******************lead property ***********************
   checkForUpdateLeadProperty: getCheckForUpdateLeadPropertyReducer,
@@ -483,14 +490,10 @@ const RootReducer = {
   updateNameWpLeadsData: updateNameWpLeadsReducer,
   // *******************Smart view***********************
   getNewLeadFilterData: getNewLeadFilterDataReducer,
-  getAllInboundAnsweredCallDetailsByStatus:
-    getAllInboundAnsweredCallDetailsByStatusReducer,
-  getAllInboundMissedCallDetailsByStatus:
-    getAllInboundMissedCallDetailsByStatusReducer,
-  getInboundDisconnectedAtIVRCallDetails:
-    getAllInboundDisconnectedAtIVRCallDetailsByStatusReducer,
-  getInboundDisconnectedAfterIVRCallDetails:
-    getAllInboundDisconnectedAfterIVRCallDetailsByStatusReducer,
+  getAllInboundAnsweredCallDetailsByStatus: getAllInboundAnsweredCallDetailsByStatusReducer,
+  getAllInboundMissedCallDetailsByStatus: getAllInboundMissedCallDetailsByStatusReducer,
+  getInboundDisconnectedAtIVRCallDetails: getAllInboundDisconnectedAtIVRCallDetailsByStatusReducer,
+  getInboundDisconnectedAfterIVRCallDetails: getAllInboundDisconnectedAfterIVRCallDetailsByStatusReducer,
   getLeadPaymentDetailsDataForFinance: getLeadPaymentDetailsForFinanceReducer,
   getTodayOutboundCallbacks: getTodayOutboundCallbacksReducer,
   //view docs
@@ -501,8 +504,7 @@ const RootReducer = {
   deleteImportedLeads: deleteImportedLeadsReducer,
   pushImportedLead: pushImportedLeadsReducer,
 
-  getLeadCaptureDetailsByActionTrackId:
-    getLeadCaptureDetailsByActionTrackIdReducer,
+  getLeadCaptureDetailsByActionTrackId: getLeadCaptureDetailsByActionTrackIdReducer,
   getLeadBasicDetails: getLeadBasicDetailsReducer,
 
   testApi: testApiReducer,
@@ -510,6 +512,17 @@ const RootReducer = {
   getAllAdvanceSearchFilterFields: advanceSearchFieldsReducer,
   getAllLeadFieldByName: leadFieldByNameReducer,
   getCoreViewLead: ViewCoreViewLeadReducer,
+  getAllLeadNameData: leadNameReducer,
+  getAllLeadEmailsData: leadEmailReducer,
+  getAllLeadPhonesData: leadPhoneReducer,
+  getAllLeadCareersData: leadCareerReducer,
+  getAllLeadProgramsData: leadProgramReducer,
+  getAllLeadSoursesData: leadSourseReducer,
+  getAllLeadStagesData: leadStageReducer,
+  getAllLeadSubStagesData: leadSubStageReducer,
+  getAllLeadStatesData: leadStateReducer,
+  getAllLeadApplicationStatusData: leadApplicationStatusReducer,
+  getAllLeadCitysData: leadCityReducer,
 
   //third paty
   getTwigzLeads: getTwigzLeadsReducer,
@@ -521,6 +534,10 @@ const RootReducer = {
   getWakarConsultancyLeads: getWakarConsultancyLeadReducer,
   getCollegeConnectLeads: collegeConnectLeadsReducer,
   getMeritAdmissionsLeads: meritAdmissionsLeadsReducer,
+  getEducationConsultancyLeads: educationConsultancyLeadsReducer,
+  getDuniaNowLeads: duniaNowLeadsReducer,
+  getCareerGuideLeads: CareerGuideLeadsReducer,
+  getPrideInfotechLeads: getPrideInfotechLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,

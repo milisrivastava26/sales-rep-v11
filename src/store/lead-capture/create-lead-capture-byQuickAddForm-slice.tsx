@@ -1,7 +1,6 @@
-// import { v4 as uuidv4 } from "uuid";
-import { v4 as uuidv4 } from "uuid";
-import toast from "react-hot-toast";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
+import { v4 as uuidv4 } from "uuid";
 import coreLeadCaptureApi from "../../interceptor/coreLeadCaptureApi";
 
 interface NewLeadCaptureByQuickAddFormType {
@@ -20,33 +19,26 @@ const initialState: NewLeadCaptureByQuickAddFormType = {
   responseOfLeadsCaptureByQuickAddForm: "",
 };
 
-// Create Thunk to CREATE Lead Capture
-export const AddLeadCaptureByQuickAddForm = createAsyncThunk<any | NewLeadCaptureByQuickAddFormType, any>(
+
+
+// ✅ Lead Capture
+export const AddLeadCaptureByQuickAddForm = createAsyncThunk<any, any>(
   "create-new/lead-captureByQuickAddForm",
-  async (newLeadCaptureByQuickAddFormData, { rejectWithValue }) => {
-    const response = coreLeadCaptureApi.post("api/crm/lead/leadcapture", newLeadCaptureByQuickAddFormData);
+  async (formData, { rejectWithValue }) => {
+    const response = coreLeadCaptureApi.post("api/crm/lead/leadcapture", formData);
 
     toast.promise(response, {
-      loading: "Loading",
-      success: "Lead captured successfully Successfully Added",
-      error: (e: any) => {
-        // Extract the error message dynamically from response
-        const errorMessage = e.response?.data?.error || "Error occurred while submitting";
-        return errorMessage;
-      },
+      loading: "Capturing lead...",
+      success: "Lead captured successfully",
+      error: (e: any) => e.response?.data?.error || "Error submitting form",
     });
 
-    return response
-      .then((res) => {
-        return res.data;
-      })
-      .catch((e: any) => {
-        console.error(e.message);
-        return rejectWithValue(e.message);
-      });
+    return response.then((res) => res.data).catch((e) => rejectWithValue(e.message));
   }
 );
 
+
+// ✅ Slice
 const AddLeadCaptureByQuickAddFormSlice = createSlice({
   name: "AddNewLeadCaptureByQuickAddForm",
   initialState,
@@ -58,7 +50,6 @@ const AddLeadCaptureByQuickAddFormSlice = createSlice({
       state.resetActions = action.payload;
     },
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(AddLeadCaptureByQuickAddForm.pending, (state) => {
@@ -70,15 +61,13 @@ const AddLeadCaptureByQuickAddFormSlice = createSlice({
         state.responseOfLeadsCaptureByQuickAddForm = action.payload;
         state.isRun = uuidv4();
       })
-      .addCase(AddLeadCaptureByQuickAddForm.rejected, (state, action) => {
+      .addCase(AddLeadCaptureByQuickAddForm.rejected, (state) => {
         state.isLoading = false;
-        state.isError = action.error.message || "Error occured!";
-      });
+        state.isError = "Error occurred!";
+      })
   },
 });
 
-export const { resetResposneforLeadCaptureByQuickAddForm, takeActionForLeadCaptureByQuickAddForm } =
-  AddLeadCaptureByQuickAddFormSlice.actions;
-export const AddLeadCaptureByQuickAddFormReducer = AddLeadCaptureByQuickAddFormSlice.reducer;
+export const { resetResposneforLeadCaptureByQuickAddForm, takeActionForLeadCaptureByQuickAddForm } = AddLeadCaptureByQuickAddFormSlice.actions;
 
-// addLeadCaptureByQuickAddForm
+export const AddLeadCaptureByQuickAddFormReducer = AddLeadCaptureByQuickAddFormSlice.reducer;
