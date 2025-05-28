@@ -18,6 +18,7 @@ import { getEducationConsultancyLeads } from "../../store/third-party-slices/get
 import { getDuniaNowLeads } from "../../store/third-party-slices/get-duniaNow-leads-slice";
 import { getCareerGuideLeads } from "../../store/third-party-slices/get-careerGuide-leads-slice";
 import { getPrideInfotechLeads } from "../../store/third-party-slices/get-prideInfotech-leads-slice";
+import { getRudraCareerGuidanceLeads } from "../../store/third-party-slices/get-rudraCareerGuidance-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -75,6 +76,7 @@ const ThirdpartyHomePage: React.FC = () => {
   );
 
   const prideInfotechLeads = useSelector((state: RootState) => state.getPrideInfotechLeads);
+   const rudraCareerGuidanceLeads = useSelector((state: RootState) => state.getRudraCaeerGuidanceLeads);
 
   // State object to store loader, response, and action
   const [apiState, setApiState] = useState<ApiStateType>({
@@ -121,6 +123,9 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_PRIDE_INFOTECH") {
         dispatch(getPrideInfotechLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_RUDRA_CAREER_GUIDANCE") {
+        dispatch(getRudraCareerGuidanceLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -226,6 +231,13 @@ const ThirdpartyHomePage: React.FC = () => {
         action: () => prideInfotechLeads, // Assign function (without calling dispatch)
       });
     }
+    else if (role === "ROLE_RUDRA_CAREER_GUIDANCE") {
+      setApiState({
+        isLoading: rudraCareerGuidanceLeads.isLoading,
+        response: rudraCareerGuidanceLeads.responseOfGetRudraCareerGuidanceLeads,
+        action: () => rudraCareerGuidanceLeads, // Assign function (without calling dispatch)
+      });
+    }
 
   }, [
     userDetails,
@@ -245,6 +257,7 @@ const ThirdpartyHomePage: React.FC = () => {
     duniaNowLeads,
     careerGuideLeads,
     prideInfotechLeads,
+    rudraCareerGuidanceLeads,
   ]);
 
   return (

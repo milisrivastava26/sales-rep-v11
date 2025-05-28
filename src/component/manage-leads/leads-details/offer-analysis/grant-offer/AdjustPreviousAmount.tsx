@@ -40,6 +40,7 @@ const AdjustPreviousAmount: React.FC<propsType> = ({
               <Field
                 type="text"
                 name="adjustedAmount"
+                id="adjustedAmount"
                 value={getLeadPreviousPaymentByLeadIdResponse ?? ""}
                 disabled={true}
                 className="border-b cursor-not-allowed border-gray-400"
@@ -50,6 +51,7 @@ const AdjustPreviousAmount: React.FC<propsType> = ({
               <input
                 type="checkbox"
                 name="previousEnquiry"
+                id="previousEnquiry"
                 checked={isPreviousEnquiryChecked}
                 disabled={!isNewOffer}
                 onChange={handleCheckboxChange}
@@ -64,6 +66,7 @@ const AdjustPreviousAmount: React.FC<propsType> = ({
               <Field
                 type="text"
                 name="adjustedPercentage"
+                id="adjustedPercentage"
                 disabled={!isNewOffer}
                 className={`border border-gray-400 px-2 rounded `}
                 onChange={(e: any) =>

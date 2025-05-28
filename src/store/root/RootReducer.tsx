@@ -243,6 +243,7 @@ import { leadStateReducer } from "../advance-search/get-all-leadState-slice";
 import { leadApplicationStatusReducer } from "../advance-search/get-all-leadApplicationStatus-slice";
 import { leadCityReducer } from "../advance-search/get-all-leadCity-slice";
 import { getPrideInfotechLeadsReducer } from "../third-party-slices/get-prideInfotech-leads-slice";
+import { getRudraCareerGuidanceLeadsReducer } from "../third-party-slices/get-rudraCareerGuidance-leads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -538,6 +539,7 @@ const RootReducer = {
   getDuniaNowLeads: duniaNowLeadsReducer,
   getCareerGuideLeads: CareerGuideLeadsReducer,
   getPrideInfotechLeads: getPrideInfotechLeadsReducer,
+  getRudraCaeerGuidanceLeads: getRudraCareerGuidanceLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,

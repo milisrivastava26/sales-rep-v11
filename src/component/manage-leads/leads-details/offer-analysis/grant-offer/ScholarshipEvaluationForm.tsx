@@ -90,6 +90,7 @@ const ScholarshipEvaluationForm: React.FC<propsType> = ({
               <label className="text-gray-700 mb-1">Scholarship Category</label>
               <Field
                 as="select"
+                id="scholarshipCategory"
                 name="scholarshipCategory"
                 className="w-full border rounded-md px-2 py-1"
                 disabled={!isNewOffer}
@@ -166,6 +167,7 @@ const ScholarshipEvaluationForm: React.FC<propsType> = ({
               <label className="text-gray-800 mb-1">Scholarship Scheme</label>
               <Field
                 as="select"
+                id="scholarshipScheme"
                 name="scholarshipScheme"
                 className="w-full border rounded-md px-2 py-1"
                 disabled={!isNewOffer || buttonDisabled}
@@ -198,6 +200,7 @@ const ScholarshipEvaluationForm: React.FC<propsType> = ({
               <Field
                 as="select"
                 name="scholarshipSlab"
+                id="scholarshipSlab"
                 className="w-full border rounded-md px-2 py-1"
                 disabled={!isNewOffer || buttonDisabled}
                 onChange={(e: any) => {
@@ -226,6 +229,7 @@ const ScholarshipEvaluationForm: React.FC<propsType> = ({
               <label className="mb-1">Additional Discount</label>
               <Field
                 name="additionalDiscount"
+                id="additionalDiscount"
                 className="w-full border rounded-md px-2 py-1"
                 disabled={!isNewOffer || buttonDisabled || isPackageDealEnabled || !isManagerOrAdmin || isOneTimeDiscountEnabled}
                 onChange={(e: any) => {

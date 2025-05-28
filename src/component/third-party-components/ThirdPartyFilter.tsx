@@ -18,6 +18,7 @@ import { getEducationConsultancyLeads } from "../../store/third-party-slices/get
 import { getDuniaNowLeads } from "../../store/third-party-slices/get-duniaNow-leads-slice";
 import { getCareerGuideLeads } from "../../store/third-party-slices/get-careerGuide-leads-slice";
 import { getPrideInfotechLeads } from "../../store/third-party-slices/get-prideInfotech-leads-slice";
+import { getRudraCareerGuidanceLeads } from "../../store/third-party-slices/get-rudraCareerGuidance-leads-slice";
 
 interface TyepFor {
   actionVal: () => {};
@@ -84,6 +85,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     else if (role === "ROLE_PRIDE_INFOTECH") {
       dispatch(getPrideInfotechLeads({ startDate: fromDate, endDate: toDate }));
     }
+    else if (role === "ROLE_RUDRA_CAREER_GUIDANCE") {
+      dispatch(getRudraCareerGuidanceLeads({ startDate: fromDate, endDate: toDate }));
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,6 +133,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     }
     else if (role === "ROLE_PRIDE_INFOTECH") {
       dispatch(getPrideInfotechLeads());
+    }
+    else if (role === "ROLE_RUDRA_CAREER_GUIDANCE") {
+      dispatch(getRudraCareerGuidanceLeads());
     }
   };
 

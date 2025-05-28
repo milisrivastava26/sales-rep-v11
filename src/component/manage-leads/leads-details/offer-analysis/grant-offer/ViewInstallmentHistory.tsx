@@ -87,38 +87,44 @@ const ViewInstallmentHistory: React.FC = () => {
 
   return (
     <>
-      <div className="bg-white rounded-md">
-        <div className=" w-full handle-table-box px-5">
-          {/* Installment Section */}
-          <div className="w-full mt-5 lg:mt-0 ">
+      <div className="bg-white rounded-md" id="installment-history-container">
+        <div className="w-full handle-table-box px-5" id="table-wrapper">
+          <div className="w-full mt-5 lg:mt-0" id="installment-section">
             <div className="h-[calc(100%-40px)]">
               <div className="w-full px-3">
-                <div className="w-full overflow-x-auto ">
+                <div className="w-full overflow-x-auto" id="installment-table-container">
                   {leadOfferHistoryByOfferIdResponse?.leadFeeInstallmentDetails &&
                     leadOfferHistoryByOfferIdResponse !== null &&
                     leadOfferHistoryByOfferIdResponse?.status !== "submitted" && (
-                      <h2 className="text-[20px] font-semibold text-[#3b82f6] mb-2">Installment Details</h2>
+                      <h2
+                        className="text-[20px] font-semibold text-[#3b82f6] mb-2"
+                        id="installment-section-title"
+                      >
+                        Installment Details
+                      </h2>
                     )}
-                  <table className="text-sm" border={1} style={{ width: "100%", textAlign: "left" }}>
-                    {/* <thead>
-                    {/* show the existing installment in case of status re-issues, accept and declined */}
+                  <table
+                    className="text-sm"
+                    border={1}
+                    style={{ width: "100%", textAlign: "left" }}
+                    id="installment-table"
+                  >
                     {leadOfferHistoryByOfferIdResponse?.leadFeeInstallmentDetails &&
                       leadOfferHistoryByOfferIdResponse?.leadFeeInstallmentDetails.length !== 0 &&
                       leadOfferHistoryByOfferIdResponse?.status !== "submitted" && (
                         <>
-                          <thead>
+                          <thead id="installment-table-head">
                             <tr className="w-full">
                               <th className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">Installment Number</th>
                               <th className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">Due Date</th>
                               <th className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">Amount(Rs)</th>
                               <th className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">Balance(Rs)</th>
                               <th className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">Status</th>
-                              {/* {leadOfferHistoryByOfferIdResponse.status === "submitted" && <th className="w-[25%] min-w-[135px]    border px-1 py-1.5 text-nowrap">Actions</th>} */}
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody id="installment-table-body">
                             {leadOfferHistoryByOfferIdResponse.leadFeeInstallmentDetails.map((item: any) => (
-                              <tr key={item.leadFeeInstallmentDetailsId}>
+                              <tr key={item.leadFeeInstallmentDetailsId} id={`installment-row-${item.leadFeeInstallmentDetailsId}`}>
                                 <td className="px-1 py-1 text-nowrap border">{item.installmentSeq}</td>
                                 <td className="px-1 py-1 text-nowrap border">{dayjs(item.dueDate).format("YYYY-MM-DD")}</td>
                                 <td className="px-1 py-1 text-nowrap border">{item.installmentAmount.toFixed(2)}</td>
@@ -135,26 +141,33 @@ const ViewInstallmentHistory: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-end pb-5 mt-5 px-5">
+
+        <div className="flex justify-end pb-5 mt-5 px-5" id="action-buttons-container">
           {(leadOfferHistoryByOfferIdResponse?.status === "validated" ||
             leadOfferHistoryByOfferIdResponse?.status === "accept" ||
             leadOfferHistoryByOfferIdResponse?.status === "declined") && (
-            <button className={` bg-blue-600 text-white px-4 py-2 mr-2 rounded bottom-[16px] right-[16px] `} onClick={PrintOfferHandler}>
-              Print Offer
-            </button>
-          )}
+              <button
+                className="bg-blue-600 text-white px-4 py-2 mr-2 rounded bottom-[16px] right-[16px]"
+                onClick={PrintOfferHandler}
+                id="print-offer-button"
+              >
+                Print Offer
+              </button>
+            )}
 
-          {(leadOfferHistoryByOfferIdResponse?.status === "validated" || leadOfferHistoryByOfferIdResponse?.status === "accept") && (
-            <button
-              className={` bg-gray-500 text-white ml-2 px-6 py-2 rounded bottom-[16px] right-[16px]`}
-              // disabled={}
-              onClick={() => setOpenVoidModal(true)}
-            >
-              Void
-            </button>
-          )}
+          {(leadOfferHistoryByOfferIdResponse?.status === "validated" ||
+            leadOfferHistoryByOfferIdResponse?.status === "accept") && (
+              <button
+                className="bg-gray-500 text-white ml-2 px-6 py-2 rounded bottom-[16px] right-[16px]"
+                onClick={() => setOpenVoidModal(true)}
+                id="void-offer-button"
+              >
+                Void
+              </button>
+            )}
         </div>
       </div>
+
       <div id="print-contenttt" style={{ display: "none" }}>
         {receiptData && <DownloadFeeAndInstallmentDetails data={scholarshipAndInstallmentData} />}
       </div>
@@ -164,10 +177,12 @@ const ViewInstallmentHistory: React.FC = () => {
         open={openVoidModal}
         onOk={handleOk}
         onCancel={() => setOpenVoidModal(false)}
-        confirmLoading={isLoadingForVoidOffer} // disables OK button and shows loading spinner
+        confirmLoading={isLoadingForVoidOffer}
         centered
+        okButtonProps={{ id: "confirm-void-offer-button" }}
+        cancelButtonProps={{ id: "cancel-void-offer-button" }}
       >
-        <p>Are you sure you want to void the offer?</p>
+        <p id="void-offer-confirmation-text">Are you sure you want to void the offer?</p>
       </Modal>
     </>
   );

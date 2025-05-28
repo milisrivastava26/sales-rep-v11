@@ -27,17 +27,16 @@ export const mergeLeadsByCaptureIds = createAsyncThunk<any, any>(
         mergeLeadData
       );
 
-      toast.success("Leads merged successfully!", { id: toastId });
+      toast.success("Leads merged successfully!", { id: toastId }); // replaces loading
       return response.data;
     } catch (error: any) {
       let errorMessage = "Error occurred while submitting";
 
-      if (error?.response?.data) {
-        errorMessage = getMessageAfterColon(error.response.data);
+      if (error?.response?.data?.message) {
+        errorMessage = getMessageAfterColon(error.response.data.message);
       }
 
-      toast.error(errorMessage || "Something went wrong", { id: toastId });
-
+      toast.error(errorMessage, { id: toastId }); // replaces loading
       return rejectWithValue(
         error?.response?.data?.message || "Failed to merge leads."
       );
