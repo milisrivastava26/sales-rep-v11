@@ -23,7 +23,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
         maxWidth: "100%",
         marginLeft: "auto",
         marginRight: "auto",
-        border: "1px solid #cbd5e0",
+        // border: "1px solid #cbd5e0",
         padding: "0rem 0.5rem",
       }}
     >
@@ -201,7 +201,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             </div>
           </div>
 
-          <div style={{ border: "1px solid #ccc", padding: "0.25rem", boxShadow: "0 1px 3px rgba(0,0,0,0.2)", width: "7rem", minWidth: "7rem", height: "9rem" }}>
+          <div style={{ border: "1px solid #ccc", padding: "0.25rem", width: "7rem", minWidth: "7rem", height: "9rem" }}>
             {/* <img
               alt="Photo"
               src="https://storage.googleapis.com/a1aa/image/7f626238-f9b9-46e7-75e9-766e2f59e6e9.jpg"
@@ -673,6 +673,153 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
         </div>
 
       </form>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div
+        style={{
+          fontFamily: "'Times New Roman', serif",
+          color: "black",
+          margin: 0,
+          padding: "32px 24px",
+          maxWidth: "768px",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <div
+          style={{
+            textAlign: "center",
+            fontWeight: 700,
+            fontSize: "13px",
+            marginBottom: "16px",
+            lineHeight: 1.3,
+          }}
+        >
+          Undertaking
+        </div>
+
+        <div style={{ fontSize: "13px", lineHeight: 1.3 }}>
+          <p style={{ fontWeight: 700, marginBottom: "4px" }}>Non Liability</p>
+          <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
+            <li style={{ marginBottom: "4px" }}>
+              Shri Ramswaroop Memorial University (SRMU) has not authorized any admission consultants, agents, counseling centers or any such persons promising, confirming or giving admissions. All such peoples indulging in these activities are unauthorized, fake &amp; fraudulent and immediately be reported at{" "}
+              admissions@srmcu.ac.in
+              or 1800-102-6004
+            </li>
+          </ul>
+
+          <p style={{ fontWeight: 700, marginBottom: "4px" }}>Cancellation of Admission</p>
+          <p style={{ fontWeight: 700, marginBottom: "4px" }}>
+            SRMU reserves its right to cancel the admission of selected candidate under any of the following circumstances:
+          </p>
+          <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
+            <li style={{ marginBottom: "4px" }}>
+              If fee is not deposited as per the timelines provided in the declaration form
+            </li>
+            <li style={{ marginBottom: "4px" }}>
+              If the candidate does not join the particular program by the stipulated date even though the fee has been deposited
+            </li>
+            <li style={{ marginBottom: "4px" }}>
+              If any document submitted by the candidate is found false, fabricated or forged during period of study, admission shall be cancelled immediately and fee shall be forfeited
+            </li>
+            <li style={{ marginBottom: "4px" }}>
+              If student is found practicing any unfair means after admission
+            </li>
+            <li style={{ marginBottom: "4px" }}>
+              If the student is found indulged in any act of indiscipline, damage/ breakage of any property belonging to university, admission will be cancelled along with appropriate legal action for recovery of the damages
+            </li>
+          </ul>
+
+          <p style={{ fontWeight: 700, marginBottom: "4px" }}>Imposition of Fine</p>
+          <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
+            <li style={{ marginBottom: "4px" }}>
+              If program fee is not paid as per the timelines provided in the declaration form at the time of admission, suitable fine as per university policy will be imposed along with waiver of concession provided, if any
+            </li>
+            <li style={{ marginBottom: "4px" }}>
+              Absence from scheduled classes without prior information and without a valid reason will lead to name getting struck off and readmission at discretion of university after paying the due fine/ fees
+            </li>
+            <li style={{ marginBottom: "4px" }}>
+              If a student is found in unauthorized use of transportation or residing in hostel without approval of authorities, he will be liable to pay fee for the facility used for the entire year
+            </li>
+          </ul>
+
+          <p style={{ fontWeight: 700, marginBottom: "4px" }}>Refund of Fee</p>
+          <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
+            <li style={{ marginBottom: "4px" }}>
+              Fee refund will be governed by the University Refund Policy
+            </li>
+          </ul>
+
+          <p style={{ fontWeight: 700, marginBottom: "4px" }}>Jurisdiction</p>
+          <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
+            <li style={{ marginBottom: "4px" }}>
+              Any dispute pertaining to admission or any matter as a student of SRMU shall be subjected to the exclusive jurisdiction of courts in Barabanki, Uttar Pradesh
+            </li>
+          </ul>
+
+          <p style={{ fontWeight: 700, marginBottom: "4px" }}>Student Agreement Clause</p>
+          <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
+            <li style={{ marginBottom: "4px" }}>
+              All the successful candidates shall be bound by the rules &amp; regulations of the university and student declaration form
+            </li>
+          </ul>
+
+          <p
+            style={{
+              fontWeight: 700,
+              textAlign: "center",
+              marginBottom: "16px",
+              lineHeight: 1.3,
+            }}
+          >
+            Declaration by the Candidate
+          </p>
+          <p style={{ textAlign: "center", marginBottom: "32px", lineHeight: 1.3 }}>
+            I hereby solemnly affirm that the entries in the application form are true to the best of my knowledge and belief.
+          </p>
+
+          <div style={{ marginBottom: "48px" }}>
+            <p style={{ fontWeight: 700, marginBottom: "24px" }}>
+              Date: ..............................................
+            </p>
+            <p style={{ fontWeight: 700 }}>
+              Place: ..............................................
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              fontSize: "13px",
+              marginBottom: "80px",
+              columnGap: "70px",
+            }}
+          >
+            <span>Signature of the Parent/Guardian</span>
+            <span>Signature of Student</span>
+          </div>
+        </div>
+
+        <hr style={{ border: "none", borderTop: "1px solid black", margin: 0 }} />
+
+        <footer
+          style={{
+            fontSize: "11px",
+            padding: "8px 0",
+            textAlign: "center",
+            fontFamily: "'Times New Roman', serif",
+          }}
+        >
+          Toll Free: 1800-102-6004 | Website: www.srmu.ac.in
+        </footer>
+      </div>
     </div>
   );
 };

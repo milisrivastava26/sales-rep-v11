@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "/logo.png";
+import logo from "../../../../assets/srmu_logo.jpg";
 
 interface PropsType {
   receiptData: any;
@@ -15,10 +15,6 @@ const DownloadReceipt: React.FC<PropsType> = ({ receiptData }) => {
     });
   };
 
-  const formatDateTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleString("en-GB");
-  };
 
   const numberToWords = (num: number) => {
     const a = [
@@ -124,7 +120,7 @@ const DownloadReceipt: React.FC<PropsType> = ({ receiptData }) => {
               justifyContent: "center",
             }}
           >
-            <img src={logo} alt="Logo" style={{ maxWidth: "170px" }} />
+            <img src={logo} alt="Logo" style={{ maxWidth: "115px" }} />
           </div>
           <div
             style={{
@@ -210,7 +206,7 @@ const DownloadReceipt: React.FC<PropsType> = ({ receiptData }) => {
                 borderRight: "1px solid #000",
               }}
             >
-              <strong>Dated:</strong> {formatDateTime(receiptData.createdAt)}
+              <strong>Dated:</strong> {receiptData.createdAt}, {receiptData.createdTime}
             </div>
             <div style={{ padding: "12px", minWidth: "300px" }}>
               <strong>Drawn on:</strong>{" "}

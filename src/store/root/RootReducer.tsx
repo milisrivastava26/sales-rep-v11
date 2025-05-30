@@ -244,6 +244,7 @@ import { leadApplicationStatusReducer } from "../advance-search/get-all-leadAppl
 import { leadCityReducer } from "../advance-search/get-all-leadCity-slice";
 import { getPrideInfotechLeadsReducer } from "../third-party-slices/get-prideInfotech-leads-slice";
 import { getRudraCareerGuidanceLeadsReducer } from "../third-party-slices/get-rudraCareerGuidance-leads-slice";
+import { paymentInfoReducer } from "../paymentInfo/get-paymentInfo-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -585,6 +586,9 @@ const RootReducer = {
   getAllWhatsappTemplate: getAllWhatsappTemplateReducer,
   getWhatsappTemplateByTemplateId: getWhatsapptemplateByTemplateIdReducer,
   sendWhatsapp: sendWhatsappByTemplateIdReducer,
+
+  //payment info
+  getPaymentInfo: paymentInfoReducer,
 };
 
 export default RootReducer;

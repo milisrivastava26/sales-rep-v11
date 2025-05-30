@@ -92,6 +92,7 @@ const Payment: React.FC = () => {
     id: any;
     paymentAmount: any;
     paymentDate: any;
+    paymentInitiateTime: any;
     leadName: any;
     leadCaptureId: any;
     mode: any;
@@ -102,6 +103,7 @@ const Payment: React.FC = () => {
       id,
       paymentAmount,
       paymentDate,
+      paymentInitiateTime,
       leadName,
       leadCaptureId,
       mode,
@@ -113,6 +115,7 @@ const Payment: React.FC = () => {
       id,
       paymentAmount,
       paymentDate,
+      paymentInitiateTime,
       leadName,
       leadCaptureId,
       mode,
@@ -123,8 +126,6 @@ const Payment: React.FC = () => {
     setReceiptData(receiptData);
     handleDownload();
   };
-
-
 
   return (
     <>

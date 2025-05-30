@@ -13,9 +13,8 @@ import { CreateActivity, resetResposneforActivity, takeActionForActivity } from 
 import {
   ActivityDetailsResponseType,
   formInputsForActivity,
-  formInputsForActivityPhoneBound,
+  getFormInputsForActivityPhoneBound,
   formInputsForWalkin,
-  // formInputsForActivityPhoneBound,
   getValidationSchemaForActivity,
   initialValuesForActivity,
 } from "../../../../data/manage-leads/activity/activity-data";
@@ -28,10 +27,11 @@ type SelectedOptionType = {
   label: string;
 };
 
-const  Activity: React.FC = () => {
+const Activity: React.FC = () => {
   const { leadCaptureId } = useParams();
 
   const [isTaskCreated, setIsTaskCreated] = useState(false);
+  const [isHotOrWarmLead, setIsHotOrWarmLead] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsTaskCreated(!isTaskCreated);
@@ -83,6 +83,21 @@ const  Activity: React.FC = () => {
             label: item.label,
           })) || []
         );
+
+      case "modeOfFormFilling":
+        const options = [
+          {
+            id: 1,
+            value: "online",
+            label: "Online"
+          },
+          {
+            id: 1,
+            value: "walkin",
+            label: "Walkin"
+          },
+        ]
+        return options
       default:
         return null;
     }
@@ -92,7 +107,7 @@ const  Activity: React.FC = () => {
     const newActivityData = { leadCaptureId: leadCaptureId, isTaskCreated: isTaskCreated, ...data };
     // Jai
     store.dispatch(CreateActivity(newActivityData));
-     store.dispatch(takeActionForActivity(actions));
+    store.dispatch(takeActionForActivity(actions));
   };
 
   useEffect(() => {
@@ -104,7 +119,7 @@ const  Activity: React.FC = () => {
     }
   }, [isError, responseOfCreateActivity, isLoadingForCreateActivity]);
 
-  
+
 
   const onSubmitPaymentHandler = (values: any) => {
     const payload = {
@@ -130,14 +145,13 @@ const  Activity: React.FC = () => {
             setSelectedOption={setSelectedOption}
             selectedOptiont={selectedOption}
             initialValues={getHeaderTabIconsName === "ActivityEdit" ? initialValuesForView : initialValuesForActivity}
-            validationSchema={selectedOption?.id === 32 ? getValidationSchemaForActivity(isTaskCreated, false): getValidationSchemaForActivity(isTaskCreated, true)}
-            formInputForcreate={selectedOption?.id === 31 ? formInputsForActivityPhoneBound :selectedOption?.id === 32 ? formInputsForWalkin:   formInputsForActivity}
-            // formInputForcreate={formInputsForActivity}
+            validationSchema={selectedOption?.id === 32 ? getValidationSchemaForActivity(isTaskCreated, false, false) : getValidationSchemaForActivity(isTaskCreated, true, isHotOrWarmLead)}
+            formInputForcreate={selectedOption?.id === 31 ? getFormInputsForActivityPhoneBound(isHotOrWarmLead, isTaskCreated) : selectedOption?.id === 32 ? formInputsForWalkin : formInputsForActivity}
             onAction={onGetActivityValues}
             getOptionsForSelect={getOptionsForSelect}
             onSubmitActionForCreatePayment={onSubmitPaymentHandler}
             handleCheckboxChange={handleCheckboxChange}
-            isTaskCreated={isTaskCreated}
+            setIsHotOrWarmLead={setIsHotOrWarmLead}
           />
         )}
       </div>

@@ -205,9 +205,8 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
                 <th
                   {...column.getHeaderProps()}
                   key={id}
-                  className={`border p-2 text-left text-black text-sm text-nowrap ${
-                    column.render("Header") === "Action" ? " w-[150px] min-w-[150px] max-w-[130px]" : " "
-                  }`}
+                  className={`border p-2 text-left text-black text-sm text-nowrap ${column.render("Header") === "Action" ? " w-[150px] min-w-[150px] max-w-[130px]" : " "
+                    }`}
                 >
                   {column.render("Header")}
                 </th>
@@ -241,67 +240,46 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
                       className={`${leadId === settingId && i % 2 === 0 ? "bg-gray-200" : ""}  
               ${leadId === settingId && i % 2 !== 0 ? "bg-gray-100" : ""}  
               ${leadId === settingId ? "border border-gray-300 " : "border "}  
-            ${
-              isMode !== "viewDecline" &&
-              isMode !== "advanceSearch" &&
-              isMode !== "testApi" &&
-              isMode !== "importedLead" &&
-              isMode !== "newLeadFilter" &&
-              isMode !== "followUp" &&
-              isMode !== "manageLeads" &&
-              isMode !== "documents" &&
-              isMode !== "cashPayment" &&
-              isMode !== "inboundCalls" &&
-              isMode !== "payment_success" &&
-              isMode !== "payment_failed" &&
-              isMode !== "overdueTask" &&
-              isMode !== "manageTask" &&
-              row.original.leadOfferId === selectedRow.offerId
-                ? "bg-blue-100 cursor-pointer"
-                : "cursor-pointer"
-            }
+            ${isMode === "offerAnalysis" &&
+                          row.original.leadOfferId === selectedRow.offerId
+                          ? "bg-blue-100 cursor-pointer"
+                          : "cursor-pointer"
+                        }
  p-2 text-left text-sm text-nowrap`}
                     >
                       {
-                        // cell.column.Header === "Created By" ? (
-                        //   <div className="flex items-center justify-between">
-                        //     {/* Render the cell content with text highlighting */}
-                        //     <span>{typeof cellValue === "string" ? highlightText(cellValue, globalFilter || "") : cell.render("Cell")}</span>
-                        //     {/* Render icons */}
-                        //     <div className="flex items-center gap-1 text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity text-lg cursor-pointer">
-                        //       <MdFileDownload onClick={() => handleDownload(row.original.name, row.original.leadCaptureId, row.original.coreDocAttachmentTypeId)} />
-                        //       <MdDelete />
-                        //     </div>FFFFFFFFFFFFFFF
-                        //   </div>
-                        // ) :
 
                         cell.column.Header === "Recording" ? (
-                          // <a
-                          //   href={cellValue}
-                          //   target="_blank"
-                          //   className="text-[14px] hover:underline cursor-pointer"
-                          // >
-                          //   {highlightText(cellValue, globalFilter || "")}
-                          // </a>
                           <div className="flex items-center ">
                             <audio controls className="w-52 h-8">
                               <source src={cellValue} type="audio/wav" />
                               Your browser does not support the audio element.
                             </audio>
                           </div>
-                        ) : cell.column.Header === "Name" || cell.column.Header === "Lead ID" ? (
-                          <span
-                            onClick={() => handleNavigation(leadId)}
-                            className="text-blue-500 text-[14px] font-semibold hover:underline cursor-pointer"
-                          >
-                            {highlightText(cellValue, globalFilter || "")}
-                          </span>
-                        ) : /* Render cell content normally for other columns */
-                        typeof cellValue === "string" ? (
-                          highlightText(cellValue, globalFilter || "")
-                        ) : (
-                          cell.render("Cell")
+                        ) : cell.column.Header === "Status" && isMode === "paymentDetails" ? (
+                          <p className={`px-2 rounded-full w-20 flex justify-center font-medium py-1 text-white text-sm ${row.original.status === "captured"
+                            ? "bg-green-600"
+                            : row.original.status === "failed"
+                              ? "bg-red-600"
+                              : "bg-yellow-600"
+                            }`}>{cell.render("Cell")}</p>
+                        ) : cell.column.Header === "Amount" && isMode === "paymentDetails" ? (
+                          <p className="flex justify-end">{cell.render("Cell")}</p>
                         )
+
+                          : cell.column.Header === "Name" || cell.column.Header === "Lead ID" ? (
+                            <span
+                              onClick={() => handleNavigation(leadId)}
+                              className="text-blue-500 text-[14px] font-semibold hover:underline cursor-pointer"
+                            >
+                              {highlightText(cellValue, globalFilter || "")}
+                            </span>
+                          ) :
+                            typeof cellValue === "string" ? (
+                              highlightText(cellValue, globalFilter || "")
+                            ) : (
+                              cell.render("Cell")
+                            )
                       }
                     </td>
                   );

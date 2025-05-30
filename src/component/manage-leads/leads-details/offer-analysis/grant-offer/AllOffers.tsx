@@ -63,6 +63,7 @@ const AllOffers: React.FC<propsType> = ({ setIsNewOffer }) => {
               columns={OfferAnalysisColumn}
               data={getLeadOfferByLeadIdResponse}
               onRowClick={ongetLeadOfferHistory}
+              isMode="offerAnalysis"
             />
           </div>
         </div>

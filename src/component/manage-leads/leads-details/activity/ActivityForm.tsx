@@ -23,11 +23,6 @@ interface SelectedOptionType {
   label: string;
 }
 
-// interface Option {
-//   value: string;
-//   label: string;
-// }
-
 interface FormInputType {
   name: string;
   label: string;
@@ -49,7 +44,7 @@ interface FormType {
   onAction: any;
   onSubmitActionForCreatePayment?: any;
   handleCheckboxChange: () => void;
-  isTaskCreated: boolean;
+  setIsHotOrWarmLead: (e: any) => void;
 }
 
 const ActivityForm: React.FC<FormType> = ({
@@ -57,14 +52,12 @@ const ActivityForm: React.FC<FormType> = ({
   validationSchema,
   formInputForcreate,
   getOptionsForSelect,
-
-  // here
   setSelectedOption,
   selectedOptiont,
   onAction,
   onSubmitActionForCreatePayment,
   handleCheckboxChange,
-  isTaskCreated,
+  setIsHotOrWarmLead,
 }) => {
   const { leadCaptureId } = useParams();
 
@@ -95,8 +88,8 @@ const ActivityForm: React.FC<FormType> = ({
   );
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
     ? responseOfLeadEnquiryDetailsById.filter(
-        (item: any) => item.status === "ACTIVE"
-      )
+      (item: any) => item.status === "ACTIVE"
+    )
     : [];
   const {
     isLoading: isLoadingForLeadInstallment,
@@ -154,7 +147,7 @@ const ActivityForm: React.FC<FormType> = ({
   return (
     <>
       <label htmlFor="activityType" className="flex font-medium pb-1">
-        Activity Type
+        Activity Type:
         <span className="text-red-500 font-semibold text-xl ml-1">*</span>
       </label>
       <Select
@@ -222,14 +215,12 @@ const ActivityForm: React.FC<FormType> = ({
                         key={index}
                         className={
                           selectedOptiont.value !== 31
-                            ? `${
-                                index == 0 || index == 1 || index == 2
-                                  ? "col-span-2"
-                                  : ""
-                              } `
-                            : `${
-                                index == 0 || index == 1 ? "col-span-2" : ""
-                              } ${d.type === "checkbox" ? "col-span-2" : ""} `
+                            ? `${index == 0 || index == 1 || index == 2
+                              ? "col-span-2 "
+                              : ""
+                            } `
+                            : `${index == 0 || index == 1 ? "col-span-2" : ""
+                            } ${d.type === "checkbox" ? "col-span-2" : ""} `
                         }
                       >
                         {d.type === "select" ? (
@@ -264,6 +255,20 @@ const ActivityForm: React.FC<FormType> = ({
                                     }
                                     value={selectedOption || ""}
                                     onChange={(selectedOption) => {
+                                      if (d.name === "coreActivityOutcomeId" && (selectedOption?.value === 10 || selectedOption?.value === 11 || selectedOption?.value === 15 || selectedOption?.value === 16)) {
+                                        setIsHotOrWarmLead(true)
+                                      }
+                                      else if (d.name === "coreActivityOutcomeId" && (selectedOption?.value !== 10 || selectedOption?.value !== 11 || selectedOption?.value !== 15 || selectedOption?.value !== 16)) {
+                                        setIsHotOrWarmLead(false)
+                                        setFieldValue(
+                                          "modeOfFormFilling",
+                                          ""
+                                        );
+                                        setFieldValue(
+                                          "expectedDate",
+                                          ""
+                                        );
+                                      }
                                       setFieldValue(
                                         d.name,
                                         selectedOption?.value
@@ -294,8 +299,8 @@ const ActivityForm: React.FC<FormType> = ({
                                         backgroundColor: state.isSelected
                                           ? "#4a90e2"
                                           : state.isFocused
-                                          ? "#eaf4fe"
-                                          : "white",
+                                            ? "#eaf4fe"
+                                            : "white",
                                         color: state.isSelected
                                           ? "white"
                                           : "black",
@@ -364,40 +369,39 @@ const ActivityForm: React.FC<FormType> = ({
                             </label>
                           </div>
                         ) : d.type === "date" || d.type === "time" ? (
-                          <div className="grid  gap-4">
-                            {isTaskCreated && (
-                              <div>
-                                <label
-                                  htmlFor={d.name}
-                                  className="flex font-medium pb-1"
-                                >
-                                  {d.label}
-                                  {d.isrequired ? (
-                                    <span className="text-red-500 font-semibold text-xl ml-1">
-                                      *
-                                    </span>
-                                  ) : (
-                                    ""
-                                  )}
-                                  :
-                                </label>
-                                <Field
-                                  name={d.name}
-                                  type={d.type}
-                                  value={values[d.name] || ""} // Fallback to an empty string
-                                  className="w-full border border-gray-200 px-2 py-1 outline-none focus:border-gray-400 focus:bg-gray-100 rounded-md"
-                                />
-                                <ErrorMessage
-                                  name={d.name}
-                                  component="div"
-                                  render={(msg) => (
-                                    <div className="text-red-500 text-sm font-medium">
-                                      {msg}
-                                    </div>
-                                  )}
-                                />
-                              </div>
-                            )}
+                          <div className="grid mt-2  gap-4">
+                            <div>
+                              <label
+                                htmlFor={d.name}
+                                className="flex font-medium pb-1"
+                              >
+                                {d.label}
+                                {d.isrequired ? (
+                                  <span className="text-red-500 font-semibold text-xl ml-1">
+                                    *
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                                :
+                              </label>
+                              <Field
+                                name={d.name}
+                                type={d.type}
+                                value={values[d.name] || ""} // Fallback to an empty string
+                                className="w-full border border-gray-200 px-2 py-2 outline-none focus:border-gray-400 focus:bg-gray-100 rounded-md"
+                              />
+                              <ErrorMessage
+                                name={d.name}
+                                component="div"
+                                render={(msg) => (
+                                  <div className="text-red-500 text-sm font-medium">
+                                    {msg}
+                                  </div>
+                                )}
+                              />
+                            </div>
+
                           </div>
                         ) : (
                           <div className="mt-2">
@@ -438,11 +442,10 @@ const ActivityForm: React.FC<FormType> = ({
                 <div className="flex justify-end mt-5">
                   {selectedOptiont && (
                     <button
-                      className={`bg-blue-500 px-4 py-2 text-white rounded-md ${
-                        isLoadingForCreateActivity
-                          ? "bg-opacity-50 cursor-not-allowed"
-                          : ""
-                      }`}
+                      className={`bg-blue-500 px-4 py-2 text-white rounded-md ${isLoadingForCreateActivity
+                        ? "bg-opacity-50 cursor-not-allowed"
+                        : ""
+                        }`}
                       type="submit"
                       disabled={isLoadingForCreateActivity}
                     >

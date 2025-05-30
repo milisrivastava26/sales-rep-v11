@@ -334,6 +334,7 @@ const ProgressStep: React.FC<ProgressStepType> = ({
                       id,
                       paymentAmount,
                       paymentDate,
+                      paymentInitiateTime,
                       leadName: activeEnquiry[0].leadName,
                       leadCaptureId,
                       mode,

@@ -19,6 +19,7 @@ import AdvanceSearchPage from "../pages/advance-search/AdvanceSearchPage";
 import MergeLeadsPage from "../pages/merge-leads/MergeLeadsPage";
 import ManageLeadsV2Page from "../pages/manage-leads-v2/ManageLeadsV2Page";
 import ManageTaskPage from "../pages/manage-task/ManageTaskPage";
+import PaymentInfoPage from "../pages/payment-info/PaymentInfoPage";
 
 // Helper function that builds routes based on user details
 export const getRoutes = (userDetails: any) => {
@@ -41,7 +42,7 @@ export const getRoutes = (userDetails: any) => {
     "ROLE_CAREER_GUIDE",
     "ROLE_PRIDE_INFOTECH",
     "ROLE_RUDRA_CAREER_GUIDANCE"
-    ];
+  ];
   const isThirdPartyUser = userDetails?.authority?.some((role: any) =>
     thirdPartyRoles.includes(role)
   );
@@ -119,6 +120,10 @@ export const getRoutes = (userDetails: any) => {
           {
             path: "manage-leads-v2",
             element: <ManageLeadsV2Page />
+          },
+          {
+            path: "/payment-info",
+            element: <PaymentInfoPage />
           },
           {
             path: "view-decline-cases",

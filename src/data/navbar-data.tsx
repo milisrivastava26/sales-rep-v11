@@ -16,6 +16,7 @@ export const leadsItems: DropdownItem[] = [
   { label: "Smart View", href: "/smart-view" },
   { label: "View Declined Cases", href: "/view-decline-cases" },
   { label: "View Cash Payments", href: "/view-cash-payments" },
+  { label: "View Payment Info", href: "/payment-info" },
 ];
 export const leadAuthorityItems = [{ label: "View Declined Cases", href: "/view-decline-cases" }];
 

@@ -184,6 +184,30 @@ const DesktopView: React.FC<Type> = ({ leadsItems, profileItems }) => {
                     })}
                   </>
                 )}
+
+                {userDetails?.authority?.includes("ROLE_ADMIN") && (
+                  <>
+                    {leadsItems.slice(5, 6).map((item: any, index: number) => {
+                      return (
+                        <NavLink
+                          to={item.href}
+                          key={index}
+                          onClick={() => store.dispatch(onLeadsCloseHandler())}
+                          className={({ isActive }) =>
+                            `block text-sm px-4 py-2 text-gray-700 font-medium border-b text-nowrap cursor-pointer ${isActive ? "underline underline-offset-2" : ""
+                            } ${index % 2 === 0
+                              ? "bg-gray-100 hover:bg-white"
+                              : "bg-gray-100 hover:bg-white"
+                            }`
+                          }
+                        >
+                          {item.label}
+                        </NavLink>
+                      );
+                    })}
+                  </>
+                )}
+
                 {(userDetails?.authority?.includes("ROLE_MANAGER") || userDetails?.authority?.includes("ROLE_ADMIN")) && (
                   <p
                     onClick={handleManageTask}

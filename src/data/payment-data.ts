@@ -9,6 +9,7 @@ interface LeadAddress {
 
 interface ReceiptData {
   createdAt: string;
+  createdTime: string;
   receiptNumber: string | number;
   name: string;
   leadCaptureId: string | number;
@@ -28,6 +29,7 @@ export const getReceiptData = (
   id: string | any,
   paymentAmount: number | any,
   paymentDate: string | any,
+  paymentInitiateTime: any,
   name: string | any,
   leadCaptureId: string | number | any,
   mode: string | any,
@@ -38,6 +40,7 @@ export const getReceiptData = (
 
   const receiptData: ReceiptData = {
     createdAt: paymentDate,
+    createdTime: paymentInitiateTime,
     receiptNumber: receiptNumber,
     name,
     leadCaptureId,
