@@ -2,27 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { formatIndianNumber } from '../../data/payment-info-data';
+import { LuRefreshCcw } from "react-icons/lu";
 
 interface FilterProps {
     payload: any;
     setPayload: (e: any) => void;
+    setIsRefreshed: (e: any) => void;
 }
 
-const PaymentFilter: React.FC<FilterProps> = ({ payload, setPayload }) => {
-    const [fromDate, setFromDate] = useState('');
-    const [toDate, setToDate] = useState('');
+const PaymentFilter: React.FC<FilterProps> = ({ payload, setPayload, setIsRefreshed }) => {
+    const [fromDate, setFromDate] = useState(payload.fromDate);
+    const [toDate, setToDate] = useState(payload.toDate);
     const [error, setError] = useState('');
     const [totalCapturedPayment, settotalCapturedPayment] = useState(0);
     const [totalFailedPayment, setTotalFailedPayment] = useState(0);
     const [totalCapturedAmount, settotalCapturedAmount] = useState(0);
     const { paymentInfoList } = useSelector((state: RootState) => state.getPaymentInfo);
 
-
-    // Initialize from payload on mount
-    useEffect(() => {
-        setFromDate(payload.fromDate || '');
-        setToDate(payload.toDate || '');
-    }, [payload.fromDate, payload.toDate]);
 
     useEffect(() => {
         const createdPayments = paymentInfoList.filter((item: any) => item.status === "captured");
@@ -57,11 +53,15 @@ const PaymentFilter: React.FC<FilterProps> = ({ payload, setPayload }) => {
         }));
     };
 
+    const handleRefresh = () => {
+        setIsRefreshed(true);
+    }
+
 
     return (
         <div className="flex flex-col gap-4 md:flex-row justify-between md:items-center px-4 py-4 bg-gray-100 my-5 rounded-lg">
             {/* Filters Section */}
-            <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto items-start md:items-end">
+            <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto items-start md:items-center">
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="text-nowrap">
                         <label htmlFor="from_date">From Date:</label>
@@ -101,6 +101,9 @@ const PaymentFilter: React.FC<FilterProps> = ({ payload, setPayload }) => {
                 >
                     Search
                 </button>
+                <div onClick={handleRefresh}>
+                    <LuRefreshCcw className='font-bold text-xl cursor-pointer' />
+                </div>
             </div>
 
             {/* Summary Section */}

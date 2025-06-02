@@ -245,6 +245,10 @@ import { leadCityReducer } from "../advance-search/get-all-leadCity-slice";
 import { getPrideInfotechLeadsReducer } from "../third-party-slices/get-prideInfotech-leads-slice";
 import { getRudraCareerGuidanceLeadsReducer } from "../third-party-slices/get-rudraCareerGuidance-leads-slice";
 import { paymentInfoReducer } from "../paymentInfo/get-paymentInfo-slice";
+import { getNeelanshiConsultancyLeadsReducer } from "../third-party-slices/get-neelanshiConsultancy-leads-slice";
+import { leadPaymentDetailsReducer } from "../paymentInfo/get-leadPaymentDetails-byOrderId-slice";
+import { crmLeadPaymentDetailsReducer } from "../paymentInfo/get-crmLeadPaymentDetails-slice";
+import { updateReconcilePaymentStatusReducer } from "../paymentInfo/reconcile-payment-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -541,6 +545,7 @@ const RootReducer = {
   getCareerGuideLeads: CareerGuideLeadsReducer,
   getPrideInfotechLeads: getPrideInfotechLeadsReducer,
   getRudraCaeerGuidanceLeads: getRudraCareerGuidanceLeadsReducer,
+  getNeelanshiConsultancyLeads: getNeelanshiConsultancyLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,
@@ -589,6 +594,9 @@ const RootReducer = {
 
   //payment info
   getPaymentInfo: paymentInfoReducer,
+  getLeadPaymentDetailsByOrderId: leadPaymentDetailsReducer,
+  getCrmLeadPaymentDetails: crmLeadPaymentDetailsReducer,
+  reconcilePayment: updateReconcilePaymentStatusReducer,
 };
 
 export default RootReducer;

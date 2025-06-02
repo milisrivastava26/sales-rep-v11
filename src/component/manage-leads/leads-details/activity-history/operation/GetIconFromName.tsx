@@ -1,7 +1,7 @@
 import { PiUsersThreeFill } from "react-icons/pi";
 import { RiAdminLine } from "react-icons/ri";
 import { PiPhoneCallFill } from "react-icons/pi";
-import { MdMessage, MdPayment } from "react-icons/md";
+import { MdMessage, MdOutlinePayment, MdPayment } from "react-icons/md";
 import { GrNotes } from "react-icons/gr";
 import { BiTask } from "react-icons/bi";
 import { TbMessages, TbUserEdit } from "react-icons/tb";
@@ -36,6 +36,7 @@ export const renderIcon = (iconName: string) => {
     FaWalking: <FaWalking />,
     BiTask: <BiTask />,
     TbUserEdit: <TbUserEdit />,
+    MdOutlinePayment: <MdOutlinePayment />,
     GeneralInfo: (
       <img
         src={detailsIcon}

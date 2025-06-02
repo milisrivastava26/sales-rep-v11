@@ -389,3 +389,11 @@ li.active::after {
     transform: translateY(0);
   }
 }
+
+.custom-adjust-fee-modal .ant-modal-header {
+  background-color: #f3f4f6; /* Tailwind bg-gray-100 */
+}
+
+.custom-adjust-fee-modal .ant-modal-content {
+  background-color: #f3f4f6;
+}

@@ -19,6 +19,7 @@ import { getDuniaNowLeads } from "../../store/third-party-slices/get-duniaNow-le
 import { getCareerGuideLeads } from "../../store/third-party-slices/get-careerGuide-leads-slice";
 import { getPrideInfotechLeads } from "../../store/third-party-slices/get-prideInfotech-leads-slice";
 import { getRudraCareerGuidanceLeads } from "../../store/third-party-slices/get-rudraCareerGuidance-leads-slice";
+import { getNeelanshiConsultancyLeads } from "../../store/third-party-slices/get-neelanshiConsultancy-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -75,6 +76,8 @@ const ThirdpartyHomePage: React.FC = () => {
     (state: RootState) => state.getCareerGuideLeads
   );
 
+  const neelanshiLeads = useSelector((state:RootState) => state.getNeelanshiConsultancyLeads);
+
   const prideInfotechLeads = useSelector((state: RootState) => state.getPrideInfotechLeads);
    const rudraCareerGuidanceLeads = useSelector((state: RootState) => state.getRudraCaeerGuidanceLeads);
 
@@ -126,6 +129,9 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_RUDRA_CAREER_GUIDANCE") {
         dispatch(getRudraCareerGuidanceLeads({ startDate: currentDate }));
+      }
+      else if(role === "ROLE_NEELANSHI_CONSULTANCY") {
+        dispatch(getNeelanshiConsultancyLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -238,6 +244,13 @@ const ThirdpartyHomePage: React.FC = () => {
         action: () => rudraCareerGuidanceLeads, // Assign function (without calling dispatch)
       });
     }
+    else if (role === "ROLE_NEELANSHI_CONSULTANCY") {
+      setApiState({
+        isLoading: neelanshiLeads.isLoading,
+        response: neelanshiLeads.responseOfGetNeelanshiConsultancyLeads,
+        action: () => neelanshiLeads, // Assign function (without calling dispatch)
+      });
+    }
 
   }, [
     userDetails,
@@ -258,6 +271,7 @@ const ThirdpartyHomePage: React.FC = () => {
     careerGuideLeads,
     prideInfotechLeads,
     rudraCareerGuidanceLeads,
+    neelanshiLeads
   ]);
 
   return (

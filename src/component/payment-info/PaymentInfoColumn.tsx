@@ -28,6 +28,20 @@ export const PaymentInfoColumn: Column<any>[] = [
         Cell: ({ row }: { row: { original: any } }) => <span>{row.original.mobileNumber}</span>,
     },
     {
+        Header: "Status",
+        accessor: "status",
+        Cell: ({ row }: { row: { original: any } }) => <span>{row.original.status}</span>,
+    },
+    {
+        Header: "Order ID",
+        accessor: "orderId",
+        Cell: ({ row }: { row: { original: any } }) => {
+            return (
+                <span>{row.original.orderId}</span>
+            )
+        },
+    },
+    {
         Header: "Payment ID",
         accessor: "id",
         Cell: ({ row }: { row: { original: any } }) => <span>{row.original.id}</span>,
@@ -41,16 +55,6 @@ export const PaymentInfoColumn: Column<any>[] = [
         Header: "Currency",
         accessor: "currency",
         Cell: ({ row }: { row: { original: any } }) => <span>{row.original.currency}</span>,
-    },
-    {
-        Header: "Status",
-        accessor: "status",
-        Cell: ({ row }: { row: { original: any } }) => <span>{row.original.status}</span>,
-    },
-    {
-        Header: "Order ID",
-        accessor: "orderId",
-        Cell: ({ row }: { row: { original: any } }) => <span>{row.original.orderId}</span>,
     },
     {
         Header: "Payment Method",

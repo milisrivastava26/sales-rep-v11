@@ -91,9 +91,11 @@ interface typeUI {
     pageNumber: number,
   },
   searchQuery: string;
-  whatsappMessengerModal : boolean;
+  whatsappMessengerModal: boolean;
   quickAddLeadData: any;
   leadExistModal: boolean;
+  paymentInfoModal: boolean;
+  razorPayPaymentId: null | string;
 }
 
 const initialState: typeUI = {
@@ -211,10 +213,12 @@ const initialState: typeUI = {
     pageSize: 50,
     pageNumber: 0
   },
-  searchQuery : "",
+  searchQuery: "",
   whatsappMessengerModal: false,
   quickAddLeadData: {},
   leadExistModal: false,
+  paymentInfoModal: false,
+  razorPayPaymentId: null
 };
 
 const uiSlice = createSlice({
@@ -611,28 +615,44 @@ const uiSlice = createSlice({
     setPaginatedPropsForAdvanceSearch: (state, action) => {
       state.paginatedPropsForAdvanceSearch = action.payload;
     },
-    setSearchQuery : (state, action) => {
+    setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
     openWhatsappMessengerModal: (state) => {
       state.whatsappMessengerModal = true;
     },
-    closeWhatsappMessengerModal : (state) => {
+    closeWhatsappMessengerModal: (state) => {
       state.whatsappMessengerModal = false;
     },
-    setQuickAddLeadData : (state, action) => {
+    setQuickAddLeadData: (state, action) => {
       state.quickAddLeadData = action.payload;
     },
-    openLeadExistModal : (state) => {
+    openLeadExistModal: (state) => {
       state.leadExistModal = true;
     },
-    closeLeadExistModal : (state) => {
+    closeLeadExistModal: (state) => {
       state.leadExistModal = false;
+    },
+    openPaymentInfoModal: (state) => {
+      state.paymentInfoModal = true;
+    },
+    closePaymentInfoModal: (state) => {
+      state.paymentInfoModal = false;
+    },
+    setRazorPayPaymentId: (state, action) => {
+      state.razorPayPaymentId = action.payload;
+    },
+    deleteRazorPayPaymentId: (state) => {
+      state.razorPayPaymentId = null;
     },
   },
 });
 
 export const {
+  setRazorPayPaymentId,
+  deleteRazorPayPaymentId,
+  openPaymentInfoModal,
+  closePaymentInfoModal,
   openWhatsappMessengerModal,
   closeWhatsappMessengerModal,
   onDashboardOpenHandler,

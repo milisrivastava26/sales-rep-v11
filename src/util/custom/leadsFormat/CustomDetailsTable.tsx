@@ -3,9 +3,11 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import store, { RootState } from "../../../store";
 import { highlightText } from "../general/genral-action";
-import { getLeadsForManageTask, getLeadsForOverdueTask, onGetAllCheckSelectedDataFormCustomTable } from "../../../store/ui/ui-slice";
+import { deleteRazorPayPaymentId, getLeadsForManageTask, getLeadsForOverdueTask, onGetAllCheckSelectedDataFormCustomTable, openPaymentInfoModal, setRazorPayPaymentId } from "../../../store/ui/ui-slice";
 import { getFilterProps, getPaginationProps, onGetOnlyDataLength } from "../../../store/ui/table-slice";
 import { useTable, usePagination, useFilters, useGlobalFilter, Column, TableInstance, TableState, useRowSelect } from "react-table";
+import { getLeadPaymentDetailsByOrderId, resetLeadPaymentDetails } from "../../../store/paymentInfo/get-leadPaymentDetails-byOrderId-slice";
+import { getCrmLeadPaymentDetailsByOrderId, resetCrmLeadPaymentDetails } from "../../../store/paymentInfo/get-crmLeadPaymentDetails-slice";
 
 interface TableInstanceWithPlugins<T extends object> extends TableInstance<T> {
   setGlobalFilter: (filterValue: any) => void;
@@ -265,8 +267,20 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
                             }`}>{cell.render("Cell")}</p>
                         ) : cell.column.Header === "Amount" && isMode === "paymentDetails" ? (
                           <p className="flex justify-end">{cell.render("Cell")}</p>
-                        )
+                        ) : cell.column.Header === "Order ID" && isMode === "paymentDetails" ? (
+                          <p className={`${row.original.status === "captured" ? "text-blue-600 font-medium underline underline-offset-2" : ""}`} onClick={() => {
+                            if (row.original.status === "captured") {
+                              store.dispatch(deleteRazorPayPaymentId());
+                              store.dispatch(resetCrmLeadPaymentDetails());
+                              store.dispatch(resetLeadPaymentDetails());
+                              store.dispatch(openPaymentInfoModal());
+                              store.dispatch(setRazorPayPaymentId(row.original.id))
+                              store.dispatch(getCrmLeadPaymentDetailsByOrderId(row.original.orderId))
+                              store.dispatch(getLeadPaymentDetailsByOrderId(row.original.orderId))
+                            }
 
+                          }}>{cell.render("Cell")}</p>
+                        )
                           : cell.column.Header === "Name" || cell.column.Header === "Lead ID" ? (
                             <span
                               onClick={() => handleNavigation(leadId)}

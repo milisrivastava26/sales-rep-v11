@@ -30,6 +30,7 @@ const InstallmentDetails: React.FC<propsType> = ({
 }) => {
   const { leadCaptureId } = useParams();
   const { packageDeal } = useSelector((state: RootState) => state.ui);
+  console.log("packageDeal", packageDeal);
   const dispatch = store.dispatch;
   const { FeeDetailsV2Response } = useSelector(
     (state: RootState) => state.getFeeDetailsV2
@@ -63,7 +64,9 @@ const InstallmentDetails: React.FC<propsType> = ({
     newInstallmentDetailsResponse
   );
 
+  console.log(installments);
   useEffect(() => {
+    console.log("inside effect");
     setInstallments(newInstallmentDetailsResponse);
   }, [newInstallmentDetailsResponse]);
 
@@ -91,13 +94,13 @@ const InstallmentDetails: React.FC<propsType> = ({
       (inst) => inst.installmentSequence === id
     );
 
+    console.log(installment);
+
     if (installment) {
       setTempAmount(installment.installmentAmount);
       setTempDate(installment.dueDate); // Ensure this is a valid date string
     }
   };
-
-
 
   const handleCancel = () => {
     setEditingId(null);
@@ -124,6 +127,7 @@ const InstallmentDetails: React.FC<propsType> = ({
       }
     );
 
+    console.log("isValid", isValid);
 
     if (isValid === false) {
       return;
@@ -138,6 +142,7 @@ const InstallmentDetails: React.FC<propsType> = ({
         packageDeal
       );
 
+      console.log("finalInstallmentPayload", finalInstallmentPayload);
       dispatch(lockLeadOffer(finalInstallmentPayload));
     }
   };
@@ -243,6 +248,7 @@ const InstallmentDetails: React.FC<propsType> = ({
     const deletedInstallment = installments.find(
       (inst) => inst.installmentSequence === id
     );
+    console.log(deletedInstallment);
     if (!deletedInstallment) return;
 
     const remainingAmount = deletedInstallment.installmentAmount;
@@ -311,104 +317,99 @@ const InstallmentDetails: React.FC<propsType> = ({
                   style={{ width: "100%", textAlign: "left" }}
                 >
                   <thead>
-                    <tr id="installment_table_header">
-                      <th id="installment_number" className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">
+                    <tr className="w-full">
+                      <th className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">
                         Installment Number
                       </th>
-                      <th id="due_date_header" className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">
+                      <th className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">
                         Due Date
                       </th>
-                      <th id="amount_header" className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">
-                        Amount (₹)
+                      <th className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">
+                        Amount(Rs)
                       </th>
-                      <th id="actions_header" className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">
+                      <th className="w-[25%] min-w-[135px] border px-1 py-1.5 text-nowrap">
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody id="installment_table_body">
-                    {installments.map((installment, index) => {
-                      const isEditing = editingId === installment.installmentSequence;
-                      return (
-                        <tr
-                          key={installment.installmentSequence}
-                          id={`installment_row_${installment.installmentSequence}`}
-                          className="border"
-                        >
-                          <td id={`installment_number_${installment.installmentSequence}`} className="border px-1 py-2">
-                            {installment.installmentSequence}
-                          </td>
-                          <td id={`due_date_cell_${installment.installmentSequence}`} className="border px-1 py-2">
-                            {isEditing ? (
-                              <DatePicker
-                                id={`datepicker_${installment.installmentSequence}`}
-                                value={dayjs(tempDate)}
-                                disabledDate={disabledDate}
-                                onChange={(date) =>
-                                  setTempDate(date ? date.format("YYYY-MM-DD") : null)
-                                }
-                              />
-                            ) : (
-                              dayjs(installment.dueDate).format("DD/MM/YYYY")
-                            )}
-                          </td>
-                          <td id={`amount_cell_${installment.installmentSequence}`} className="border px-1 py-2">
-                            {isEditing ? (
-                              <input
-                                id={`input_amount_${installment.installmentSequence}`}
-                                type="number"
-                                value={tempAmount ?? ""}
-                                onChange={(e) => setTempAmount(Number(e.target.value))}
-                                className="border rounded px-1 py-1 w-[90px]"
-                              />
-                            ) : (
-                              `₹ ${installment.installmentAmount}`
-                            )}
-                          </td>
-                          <td id={`actions_cell_${installment.installmentSequence}`} className="border px-1 py-2">
-                            {isEditing ? (
-                              <div id={`edit_actions_${installment.installmentSequence}`} className="flex gap-2 items-center">
-                                <button
-                                  id={`ok_button_${installment.installmentSequence}`}
-                                  onClick={handleOk}
-                                  className="text-green-600"
-                                >
-                                  <FaCheck />
-                                </button>
-                                <button
-                                  id={`cancel_button_${installment.installmentSequence}`}
-                                  onClick={handleCancel}
-                                  className="text-red-500"
-                                >
-                                  <RxCross2 />
-                                </button>
-                              </div>
-                            ) : (
-                              <div id={`view_actions_${installment.installmentSequence}`} className="flex gap-2 items-center">
-                                <button
-                                  id={`edit_button_${installment.installmentSequence}`}
-                                  onClick={() => handleEditClick(installment.installmentSequence)}
-                                  className="text-blue-500"
-                                >
-                                  <MdModeEditOutline />
-                                </button>
-                                {index !== 0 && (
-                                  <button
-                                    id={`delete_button_${installment.installmentSequence}`}
-                                    onClick={() => handleDelete(installment.installmentSequence)}
-                                    className="text-red-500"
-                                  >
-                                    <MdDelete />
-                                  </button>
-                                )}
-                              </div>
-                            )}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
+                  <tbody>
+                    {installments.map((installment, index) => (
+                      <tr key={installment.installmentSequence}>
+                        <td className="px-1 py-1 text-nowrap border h-[29px]">
+                          {installment.installmentSequence}
+                        </td>
+                        <td className="px-1 py-1 text-nowrap border h-[29px]">
+                          {editingId === installment.installmentSequence ? (
+                            <DatePicker
+                              value={tempDate ? dayjs(tempDate) : null}
+                              onChange={(_, dateString) =>
+                                setTempDate(dateString)
+                              }
+                              disabledDate={disabledDate}
+                              style={{ width: "100%" }}
+                              className="border-remove-date-picker"
+                            />
+                          ) : (
+                            dayjs(installment.dueDate).format("YYYY-MM-DD")
+                          )}
+                        </td>
 
+                        <td className="px-1 py-1 text-nowrap border h-[29px]">
+                          {editingId === installment.installmentSequence ? (
+                            <input
+                              type="text"
+                              className="w-full max-w-[95%] focus:outline-none"
+                              value={tempAmount || ""}
+                              onChange={(e) =>
+                                setTempAmount(parseInt(e.target.value) || 0)
+                              }
+                            />
+                          ) : (
+                            installment.installmentAmount
+                          )}
+                        </td>
+                        <td className="px-1 py-1 text-nowrap border h-[29px]">
+                          {editingId === installment.installmentSequence ? (
+                            <div className="flex">
+                              <button
+                                className="px-2 py-0.5   text-green-600 border-green-600"
+                                onClick={handleOk}
+                              >
+                                <FaCheck size={18} />
+                              </button>
+                              <button
+                                className="px-2 py-0.5    text-red-500 border-red-500"
+                                onClick={handleCancel}
+                              >
+                                <RxCross2 size={18} />
+                              </button>
+                            </div>
+                          ) : index === installments.length - 1 ? (
+                            <div className="flex">
+                              <button
+                                className="px-2 py-0.5    text-blue-500 border-blue-500"
+                                onClick={() =>
+                                  handleEditClick(
+                                    installment.installmentSequence
+                                  )
+                                }
+                              >
+                                <MdModeEditOutline size={18} />
+                              </button>
+                              <button
+                                className="px-2 py-0.5   text-red-500 border-red-500"
+                                onClick={() =>
+                                  handleDelete(installment.installmentSequence)
+                                }
+                              >
+                                <MdDelete size={18} />
+                              </button>
+                            </div>
+                          ) : null}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -417,14 +418,13 @@ const InstallmentDetails: React.FC<propsType> = ({
       </div>
 
       {((isAllOfferStatusVoid || isNewOffer) && newInstallmentDetailsResponse.length !== 0) && (
-        <div id="installment_lock_button_wrapper" className="flex justify-end px-5 py-3">
+        <div className="mt-5 flex justify-end">
           <button
-            id="lock_offer_button"
+            className={` bg-blue-600  text-white px-4 py-2 rounded `}
             onClick={handleLockOffer}
             disabled={isLoadingForLockOffer}
-            className={`rounded bg-blue-500 text-white px-3 py-2 hover:bg-blue-600 disabled:bg-gray-300`}
           >
-            {isLoadingForLockOffer ? "Locking..." : "Lock Offer"}
+            Lock Offer
           </button>
         </div>
       )}
