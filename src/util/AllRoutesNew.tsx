@@ -42,7 +42,8 @@ export const getRoutes = (userDetails: any) => {
     "ROLE_CAREER_GUIDE",
     "ROLE_PRIDE_INFOTECH",
     "ROLE_RUDRA_CAREER_GUIDANCE",
-    "ROLE_NEELANSHI_CONSULTANCY"
+    "ROLE_NEELANSHI_CONSULTANCY",
+    "ROLE_AMIT_CONSULTANCY"
   ];
   const isThirdPartyUser = userDetails?.authority?.some((role: any) =>
     thirdPartyRoles.includes(role)

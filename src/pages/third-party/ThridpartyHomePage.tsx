@@ -20,6 +20,7 @@ import { getCareerGuideLeads } from "../../store/third-party-slices/get-careerGu
 import { getPrideInfotechLeads } from "../../store/third-party-slices/get-prideInfotech-leads-slice";
 import { getRudraCareerGuidanceLeads } from "../../store/third-party-slices/get-rudraCareerGuidance-leads-slice";
 import { getNeelanshiConsultancyLeads } from "../../store/third-party-slices/get-neelanshiConsultancy-leads-slice";
+import { getAmitConsultancyLeads } from "../../store/third-party-slices/get-amitConsultancy-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -77,6 +78,7 @@ const ThirdpartyHomePage: React.FC = () => {
   );
 
   const neelanshiLeads = useSelector((state:RootState) => state.getNeelanshiConsultancyLeads);
+  const amitLeads = useSelector((state:RootState) => state.getAmitconsultancyLeads);
 
   const prideInfotechLeads = useSelector((state: RootState) => state.getPrideInfotechLeads);
    const rudraCareerGuidanceLeads = useSelector((state: RootState) => state.getRudraCaeerGuidanceLeads);
@@ -132,6 +134,9 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if(role === "ROLE_NEELANSHI_CONSULTANCY") {
         dispatch(getNeelanshiConsultancyLeads({ startDate: currentDate }));
+      }
+      else if(role === "ROLE_AMIT_CONSULTANCY") {
+        dispatch(getAmitConsultancyLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -250,6 +255,15 @@ const ThirdpartyHomePage: React.FC = () => {
         response: neelanshiLeads.responseOfGetNeelanshiConsultancyLeads,
         action: () => neelanshiLeads, // Assign function (without calling dispatch)
       });
+      
+    }
+    else if (role === "ROLE_AMIT_CONSULTANCY") {
+      setApiState({
+        isLoading: amitLeads.isLoading,
+        response: amitLeads.responseOfAmitConsultancyLeads,
+        action: () => amitLeads, // Assign function (without calling dispatch)
+      });
+      
     }
 
   }, [
@@ -271,7 +285,8 @@ const ThirdpartyHomePage: React.FC = () => {
     careerGuideLeads,
     prideInfotechLeads,
     rudraCareerGuidanceLeads,
-    neelanshiLeads
+    neelanshiLeads,
+    amitLeads
   ]);
 
   return (

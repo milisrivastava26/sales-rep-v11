@@ -249,6 +249,7 @@ import { getNeelanshiConsultancyLeadsReducer } from "../third-party-slices/get-n
 import { leadPaymentDetailsReducer } from "../paymentInfo/get-leadPaymentDetails-byOrderId-slice";
 import { crmLeadPaymentDetailsReducer } from "../paymentInfo/get-crmLeadPaymentDetails-slice";
 import { updateReconcilePaymentStatusReducer } from "../paymentInfo/reconcile-payment-slice";
+import { amitConsultancyLeadsReducer } from "../third-party-slices/get-amitConsultancy-leads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -546,6 +547,7 @@ const RootReducer = {
   getPrideInfotechLeads: getPrideInfotechLeadsReducer,
   getRudraCaeerGuidanceLeads: getRudraCareerGuidanceLeadsReducer,
   getNeelanshiConsultancyLeads: getNeelanshiConsultancyLeadsReducer,
+  getAmitconsultancyLeads: amitConsultancyLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,
