@@ -18,11 +18,14 @@ import {
 } from "../../../../store/lead-merge/change-leadEnquiryStatus-by-captureId-existingEnquiryId-newActiveEnquiryId-slice";
 import { resetgetEnquiryChangeWarningResponse } from "../../../../store/lead-merge/get-enquiryChangeWarning-by-captureId-and-EnquiryId-slice";
 import { getAcademicCareerValues } from "../../../../store/get/get-all-academic-career-slice";
+import AdjustFee from "./AdjustFee";
+import { Modal } from "antd";
 
 const InterestShownInfo: React.FC = () => {
   const { leadCaptureId } = useParams();
   const [isEditing, setEditing] = useState(false);
   const [isRowAdded, setIsRowAdded] = useState(false);
+  const [voidFeeModal, setVoidFeeModal] = useState(false);
   const { isLoading, responseOfLeadEnquiryDetailsById } = useSelector(
     (state: RootState) => state.getLeadEnquiryDetailsDataById
   );
@@ -31,9 +34,10 @@ const InterestShownInfo: React.FC = () => {
   );
   const currentActiveEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
     ? responseOfLeadEnquiryDetailsById.filter(
-        (item: any) => item.status === "ACTIVE"
-      )
+      (item: any) => item.status === "ACTIVE"
+    )
     : [];
+
 
   const previousActiveEnquiry = {
     academicCareerId: currentActiveEnquiry[0].academicCareerId,
@@ -93,15 +97,16 @@ const InterestShownInfo: React.FC = () => {
     } else {
       const payload = {
         leadCaptureId: leadCaptureId,
-        currentLeadEnquiryId: currentActiveEnquiry[0].leadEnquiryId,
-        newLeadEnquiryId: newActiveEnquiry[0].leadEnquiryId,
+        existingLeadEnquiryId: currentActiveEnquiry[0].leadEnquiryId,
+        newEnquiryId: newActiveEnquiry[0].leadEnquiryId,
       };
+
       store.dispatch(ChangeLeadEnquiryStatus(payload));
     }
   };
 
   useEffect(() => {
-    if (!isError && ChangeLeadEnquiryStatusResponse!=="") {
+    if (!isError && ChangeLeadEnquiryStatusResponse !== "") {
       setIsRowAdded(false);
       setEditing(false);
       store.dispatch(resetChangeLeadEnquiryStatusResponse());
@@ -113,20 +118,27 @@ const InterestShownInfo: React.FC = () => {
     setEditing(true);
   };
 
+  const closeModal = () => {
+    setVoidFeeModal(false);
+  }
+
   return (
     <>
       {responseOfLeadEnquiryDetailsById !== null && !isLoading && (
         <div className="bg-white relative  mt-5  pb-1">
           <div className="flex justify-between items-center  h-[50px] relative px-4 bg-blue-100 ">
             <h1 className="text-lg font-semibold">Course Interested</h1>
-            {!isEditing && (
-              <button
-                className=" px-3 py-1.5  font-medium rounded-lg"
-                onClick={handleEditClick}
-              >
-                <MdOutlineEdit size={20} />
-              </button>
-            )}
+            <div className="flex items-center gap-4">
+              <button className={`${isEditing? "mr-20" : ""} bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-1 rounded-md`} onClick={() => setVoidFeeModal(true)}>Void Fee</button>
+              {!isEditing && (
+                <button
+                  className={`px-3 py-1.5  font-medium rounded-lg`}
+                  onClick={handleEditClick}
+                >
+                  <MdOutlineEdit size={20} />
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="">
@@ -145,6 +157,16 @@ const InterestShownInfo: React.FC = () => {
           </div>
         </div>
       )}
+
+      <Modal
+        title="Void Fee"
+        open={voidFeeModal}
+        onCancel={closeModal}
+        footer={null}
+        centered
+      >
+        <AdjustFee setVoidFeeModal={setVoidFeeModal}/>
+      </Modal>
     </>
   );
 };

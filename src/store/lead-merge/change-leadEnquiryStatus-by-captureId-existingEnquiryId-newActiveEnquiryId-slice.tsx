@@ -19,8 +19,8 @@ const initialState: ChangeLeadEnquiryStatusType = {
 export const ChangeLeadEnquiryStatus = createAsyncThunk<any, any>(
   "leadcontact/Add",
 
-  async ({ leadCaptureId, currentLeadEnquiryId, newLeadEnquiryId }, { rejectWithValue }) => {
-    const response = coreLeadCaptureApi.get(`/api/crm/lead/leadMerge/${leadCaptureId}/${currentLeadEnquiryId}/${newLeadEnquiryId}`);
+  async (payload, { rejectWithValue }) => {
+    const response = coreLeadCaptureApi.post(`/api/crm/lead/leadMerge/changeEnquiry`, payload);
 
     toast.promise(response, {
       loading: "Loading",

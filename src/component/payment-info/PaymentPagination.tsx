@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import store, { RootState } from '../../store';
 import { getCurrentDateFormatted, pageSize } from '../../data/payment-info-data';
+import { setPaymentDetailsPageSize } from '../../store/ui/ui-slice';
 
 interface payload {
     payload: any;
@@ -19,6 +20,7 @@ const PaymentPagination: React.FC<payload> = ({ payload, setPayload }) => {
     const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newSize = parseInt(e.target.value);
         setPageSize(newSize);
+        store.dispatch(setPaymentDetailsPageSize(newSize));
         setPayload({
             toDate: getCurrentDateFormatted(),
             fromDate: getCurrentDateFormatted(),

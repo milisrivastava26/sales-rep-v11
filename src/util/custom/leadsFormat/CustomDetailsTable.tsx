@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import store, { RootState } from "../../../store";
 import { highlightText } from "../general/genral-action";
-import { deleteRazorPayPaymentId, getLeadsForManageTask, getLeadsForOverdueTask, onGetAllCheckSelectedDataFormCustomTable, openPaymentInfoModal, setRazorPayPaymentId } from "../../../store/ui/ui-slice";
+import { deleteRazorPayPaymentId, getLeadsForManageTask, getLeadsForOverdueTask, onGetAllCheckSelectedDataFormCustomTable, openFailedCaseModalModal, openPaymentInfoModal, setRazorPayPaymentId } from "../../../store/ui/ui-slice";
 import { getFilterProps, getPaginationProps, onGetOnlyDataLength } from "../../../store/ui/table-slice";
 import { useTable, usePagination, useFilters, useGlobalFilter, Column, TableInstance, TableState, useRowSelect } from "react-table";
 import { getLeadPaymentDetailsByOrderId, resetLeadPaymentDetails } from "../../../store/paymentInfo/get-leadPaymentDetails-byOrderId-slice";
 import { getCrmLeadPaymentDetailsByOrderId, resetCrmLeadPaymentDetails } from "../../../store/paymentInfo/get-crmLeadPaymentDetails-slice";
+import { getLeadFailedPaymentDetailsByPaymentId, resetFailedPaymentDetails } from "../../../store/paymentInfo/get-leadFailedPaymentDetails-slice";
 
 interface TableInstanceWithPlugins<T extends object> extends TableInstance<T> {
   setGlobalFilter: (filterValue: any) => void;
@@ -63,7 +64,7 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
       onRowClick(selectedRow);
     }
   }, [selectedRow]);
-  const { paginatedProps } = useSelector((state: RootState) => state.ui);
+  const { paginatedProps, paymentDetailsPageSize } = useSelector((state: RootState) => state.ui);
 
   const {
     getTableBodyProps,
@@ -86,7 +87,7 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
     {
       columns,
       data: currentData, // Use the local state for data
-      initialState: { pageIndex: 0, pageSize: isMode === "manageLeads" ? paginatedProps.pageSize : 50 } as Partial<
+      initialState: { pageIndex: 0, pageSize: isMode === "manageLeads" ? paginatedProps.pageSize : isMode === "paymentDetails" ? paymentDetailsPageSize : 50 } as Partial<
         TableStateWithFiltersAndPagination<T>
       >,
     },
@@ -280,6 +281,14 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
                             }
 
                           }}>{cell.render("Cell")}</p>
+                        ) : cell.column.Header === "Payment ID" && isMode === "paymentDetails" ? (
+                          <p className={`${row.original.status === "failed" ? "text-blue-600 font-medium underline underline-offset-2" : ""}`} onClick={() => {
+                            if (row.original.status === "failed") {
+                              store.dispatch(resetFailedPaymentDetails());
+                              store.dispatch(getLeadFailedPaymentDetailsByPaymentId(row.original.id));
+                              store.dispatch(openFailedCaseModalModal());
+                            }
+                          }}>{cell.render("Cell")} </p>
                         )
                           : cell.column.Header === "Name" || cell.column.Header === "Lead ID" ? (
                             <span

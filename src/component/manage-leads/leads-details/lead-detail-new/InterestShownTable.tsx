@@ -225,50 +225,6 @@ const InterestShownTable: React.FC<TypeFor> = ({ values, isEditing }) => {
                           <GrFormView size={22} />
                         </button>
                       </td>
-                      {/* {isEditing && (
-                      <td className="px-2 border text-center">
-                        {idx === 0 ? (
-                          <button
-                            type="button"
-                            disabled={!isEditing}
-                            onClick={() => {
-                              if (!isRowAdded) {
-                                arrayHelpers.push({
-                                  leadCaptureId: leadCaptureId,
-                                  academicCareerId: "",
-                                  academicProgramId: "",
-                                  currentCoreStateId: "",
-                                  currentCoreCityId: "",
-                                  leadSourceId: "",
-                                  active: false,
-                                });
-                                setIsRowAdded(true);
-                              }
-                            }}
-                            className={`${
-                              isRowAdded ? "bg-opacity-50 cursor-not-allowed" : "cursor-pointer"
-                            } bg-blue-500 text-white px-3 py-[6px] text-sm font-semibold rounded-md`}
-                          >
-                            +
-                          </button>
-                        ) : (
-                          isRowAdded &&
-                          idx >= sizeOfInterest && (
-                            <button
-                              // disabled={}
-                              type="button"
-                              onClick={() => {
-                                arrayHelpers.remove(idx);
-                                setIsRowAdded(false);
-                              }}
-                              className={` text-white px-3 py-[6px] text-sm font-semibold rounded-md bg-red-500`}
-                            >
-                              -
-                            </button>
-                          )
-                        )}
-                      </td>
-                    )} */}
                     </tr>
                   );
                 })}

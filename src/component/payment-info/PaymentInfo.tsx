@@ -8,14 +8,18 @@ import Fallback from '../../util/custom/ui/Fallback';
 import { emptyDataIcon } from '../../data/savgIcons';
 import { Modal } from 'antd';
 import ViewPaymentDetails from './ViewPaymentDetails';
-import { closePaymentInfoModal } from '../../store/ui/ui-slice';
+import { closeFailedCaseModalModal, closePaymentInfoModal } from '../../store/ui/ui-slice';
+import ViewFailedPaymentDetails from './ViewFailedPaymentDetails';
 
 const PaymentInfo: React.FC = () => {
   const { paymentInfoList, isLoading } = useSelector((state: RootState) => state.getPaymentInfo);
-  const { paymentInfoModal } = useSelector((state: RootState) => state.ui);
+  const { paymentInfoModal, failedCaseModal } = useSelector((state: RootState) => state.ui);
 
   const closeModal = () => {
     store.dispatch(closePaymentInfoModal());
+  }
+  const closeModalForFailedcases = () => {
+    store.dispatch(closeFailedCaseModalModal());
   }
 
   return (
@@ -45,6 +49,16 @@ const PaymentInfo: React.FC = () => {
         width={1080} 
       >
         <ViewPaymentDetails />
+      </Modal>
+      <Modal
+        title="Payment Failed Details"
+        open={failedCaseModal}
+        onCancel={closeModalForFailedcases}
+        footer={null}
+        centered 
+        width={680}
+      >
+        <ViewFailedPaymentDetails />
       </Modal>
     </>
   )

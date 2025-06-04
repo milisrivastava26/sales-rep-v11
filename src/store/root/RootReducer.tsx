@@ -250,6 +250,8 @@ import { leadPaymentDetailsReducer } from "../paymentInfo/get-leadPaymentDetails
 import { crmLeadPaymentDetailsReducer } from "../paymentInfo/get-crmLeadPaymentDetails-slice";
 import { updateReconcilePaymentStatusReducer } from "../paymentInfo/reconcile-payment-slice";
 import { amitConsultancyLeadsReducer } from "../third-party-slices/get-amitConsultancy-leads-slice";
+import { voidFeeStatusReducer } from "../lead-merge/void-feeStatus-slice";
+import { failedPaymentDetailsReducer } from "../paymentInfo/get-leadFailedPaymentDetails-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -467,6 +469,7 @@ const RootReducer = {
   // ********************lead merge ************************************
   changeLeadEnquiryStatus: changeLeadEnquiryStatusReducer,
   getEnquiryChangeWarning: getEnquiryChangeWarningReducer,
+  voidFeeStatus: voidFeeStatusReducer,
 
   // ******************* lead cash payment **************
   getLeadForCashPayments: getLeadForCashPaymentsReducer,
@@ -599,6 +602,7 @@ const RootReducer = {
   getLeadPaymentDetailsByOrderId: leadPaymentDetailsReducer,
   getCrmLeadPaymentDetails: crmLeadPaymentDetailsReducer,
   reconcilePayment: updateReconcilePaymentStatusReducer,
+  getLeadFailedPaymentDetails: failedPaymentDetailsReducer,
 };
 
 export default RootReducer;

@@ -16,11 +16,11 @@ import { RiSecurePaymentLine } from 'react-icons/ri';
 import { TbDatabaseSearch } from 'react-icons/tb';
 import { useSelector } from 'react-redux';
 import store, { RootState } from '../../store';
-import LoadingSpinner from '../../util/custom/ui/LoadingSpinner';
 import Fallback from '../../util/custom/ui/Fallback';
 import { emptyDataIcon } from '../../data/savgIcons';
 import { formatIndianNumber } from '../../data/payment-info-data';
 import { updateReconcilePaymentStatus } from '../../store/paymentInfo/reconcile-payment-slice';
+import { Spin } from 'antd';
 
 const Field = ({
     label,
@@ -76,7 +76,9 @@ const ViewPaymentDetails: React.FC = () => {
 
     if (isLoading || isLoadingForCrmLead) {
         return (
-            <LoadingSpinner size={35} mainLoading={true} message={"Loading Details..."} centered={true} />
+            <div className="flex justify-center items-center h-40">
+                <Spin tip="Loading payment details..." />
+            </div>
         )
     }
 

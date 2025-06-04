@@ -680,7 +680,6 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
       <br />
       <br />
       <br />
-      <br />
       <div
         style={{
           fontFamily: "'Times New Roman', serif",

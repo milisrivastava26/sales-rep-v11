@@ -96,6 +96,8 @@ interface typeUI {
   leadExistModal: boolean;
   paymentInfoModal: boolean;
   razorPayPaymentId: null | string;
+  paymentDetailsPageSize: number;
+  failedCaseModal: boolean;
 }
 
 const initialState: typeUI = {
@@ -218,7 +220,9 @@ const initialState: typeUI = {
   quickAddLeadData: {},
   leadExistModal: false,
   paymentInfoModal: false,
-  razorPayPaymentId: null
+  razorPayPaymentId: null,
+  paymentDetailsPageSize: 100,
+  failedCaseModal: false,
 };
 
 const uiSlice = createSlice({
@@ -645,10 +649,22 @@ const uiSlice = createSlice({
     deleteRazorPayPaymentId: (state) => {
       state.razorPayPaymentId = null;
     },
+    setPaymentDetailsPageSize : (state, action) => {
+      state.paymentDetailsPageSize = action.payload;
+    },
+    openFailedCaseModalModal: (state) => {
+      state.failedCaseModal = true;
+    },
+    closeFailedCaseModalModal: (state) => {
+      state.failedCaseModal = false;
+    },
   },
 });
 
 export const {
+  openFailedCaseModalModal,
+  closeFailedCaseModalModal,
+  setPaymentDetailsPageSize,
   setRazorPayPaymentId,
   deleteRazorPayPaymentId,
   openPaymentInfoModal,

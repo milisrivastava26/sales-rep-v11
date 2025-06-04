@@ -18,6 +18,11 @@ const PaymentFilter: React.FC<FilterProps> = ({ payload, setPayload, setIsRefres
     const [totalFailedPayment, setTotalFailedPayment] = useState(0);
     const [totalCapturedAmount, settotalCapturedAmount] = useState(0);
     const { paymentInfoList } = useSelector((state: RootState) => state.getPaymentInfo);
+    
+    useEffect(() => {
+        setFromDate(payload.fromDate);
+        setToDate(payload.toDate);
+    }, [payload.fromDate, payload.toDate]);
 
 
     useEffect(() => {
