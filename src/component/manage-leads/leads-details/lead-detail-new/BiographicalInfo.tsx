@@ -6,6 +6,7 @@ import { getApByCareerId } from "../../../../store/get/get-all-academic-program-
 import {
   biographicalFormInput,
   getInitialValuesForBiographicalInfo,
+  transformBiographicalPayload,
   validationSchemaForBiographicalInfo,
 } from "../../../../data/lead-details-data-new/leadBiographical-data";
 import { useParams } from "react-router-dom";
@@ -71,11 +72,8 @@ const BiographicalInfo: React.FC = () => {
   const onUpdateLeadHandler = (data: any) => {
     const { values, actions } = data;
 
-    const updatedData = { ...values };
-    const payloadForAddAdditionalDetails = {
-      ...values,
-      leadEnquiryId: leadEnquiryId,
-    };
+    const payloadForAddAdditionalDetails = transformBiographicalPayload(values, leadEnquiryId, leadCaptureId)
+
 
     if (
       Object.values(responseofLeadAdditionalInfo).every((item) => item === null)
@@ -84,7 +82,7 @@ const BiographicalInfo: React.FC = () => {
 
     } else {
       store.dispatch(
-        updateLeadAdditionalInfo({ additionalDetailsId, updatedData })
+        updateLeadAdditionalInfo({ additionalDetailsId, payloadForAddAdditionalDetails })
       );
     }
     store.dispatch(takeActionsForUpdateLeadAdditionalInfo(actions));

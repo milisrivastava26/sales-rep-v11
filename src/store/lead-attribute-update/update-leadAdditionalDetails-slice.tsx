@@ -19,8 +19,8 @@ const initialState: UpdateLeadAdditionalInfoType = {
   resetActions: "",
 };
 
-export const updateLeadAdditionalInfo = createAsyncThunk<any, any, any>("update/updateLeadAdditionalInfo", async ({ additionalDetailsId, updatedData }, { rejectWithValue }) => {
-  const response = coreLeadCaptureApi.put(`api/crm/lead/leadadditionaldetails/update/${additionalDetailsId}`, updatedData);
+export const updateLeadAdditionalInfo = createAsyncThunk<any, any, any>("update/updateLeadAdditionalInfo", async ({ additionalDetailsId, payloadForAddAdditionalDetails }, { rejectWithValue }) => {
+  const response = coreLeadCaptureApi.put(`api/crm/lead/leadadditionaldetails/update/${additionalDetailsId}`, payloadForAddAdditionalDetails);
 
   toast.promise(response, {
     loading: "Loading",

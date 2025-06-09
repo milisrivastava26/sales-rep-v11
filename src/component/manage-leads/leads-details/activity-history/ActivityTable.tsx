@@ -38,7 +38,9 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
   const { getLeadOwnerAssignedDetailsResponse, isLoading: isLoadingForLeadOwnerAssigned } = useSelector((state: RootState) => state.getLeadOwnerAssignedDetails);
   const { isLoading: isLoadingForCounselling, responseForRecordCounsellingOutcome } = useSelector((state: RootState) => state.getRecordCounsellingOutcomeDetails);
   const { isLoading: isLoadingForGeneralInfo, responseForLeadGeneralInfo } = useSelector((state: RootState) => state.getLeadGeneralInfoDetails);
-  const {isLoading:isLoadingForOfferDetails, leadOfferAnalysisDetailsDataById} = useSelector((state:RootState) => state.getLeadOfferDetails);
+  const { isLoading: isLoadingForOfferDetails, leadOfferAnalysisDetailsDataById } = useSelector((state: RootState) => state.getLeadOfferDetails);
+  const { responseForSuperBotCallback, isLoading: isLoadingForSuperBotDetails } = useSelector((state: RootState) => state.getSuperBotCallbackDetails);
+
   if (title === "Had a Phone Conversation : Inbound") {
     activityData = getInboundCallDetailsResponse;
     isLoading = inBLoading;
@@ -84,6 +86,10 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
   } else if (title === "Offer Analysis") {
     activityData = leadOfferAnalysisDetailsDataById;
     isLoading = isLoadingForOfferDetails;
+  }
+  else if (title === "SuperBot Callback") {
+    activityData = responseForSuperBotCallback;
+    isLoading = isLoadingForSuperBotDetails;
   }
   else {
     activityData = leadActivityDataByTrackingId;
@@ -140,9 +146,8 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
                       <>
                         <td className="px-4 py-2 border">{capitalizeName(key)}</td>
                         <td
-                          className={`px-4 py-2 max-w-[300px] border break-words whitespace-normal overflow-hidden text-ellipsis ${
-                            key === "name" && title === "Leads Notes" ? "text-blue-500 cursor-pointer" : ""
-                          }`}
+                          className={`px-4 py-2 max-w-[300px] border break-words whitespace-normal overflow-hidden text-ellipsis ${key === "name" && title === "Leads Notes" ? "text-blue-500 cursor-pointer" : ""
+                            }`}
                           onClick={() => {
                             if (key === "name" && title === "Leads Notes" && value !== null) {
                               downloadDoc();
@@ -152,8 +157,8 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
                           {key === "description"
                             ? notesDescription
                             : key === "New Owner Assigned Date" || key === "Assigned Date"
-                            ? String(value)?.split("T")[0]
-                            : value}
+                              ? String(value)?.split("T")[0]
+                              : value}
                         </td>
                       </>
                     )}

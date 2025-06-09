@@ -252,6 +252,7 @@ import { updateReconcilePaymentStatusReducer } from "../paymentInfo/reconcile-pa
 import { amitConsultancyLeadsReducer } from "../third-party-slices/get-amitConsultancy-leads-slice";
 import { voidFeeStatusReducer } from "../lead-merge/void-feeStatus-slice";
 import { failedPaymentDetailsReducer } from "../paymentInfo/get-leadFailedPaymentDetails-slice";
+import { getSuperBotcallbackReducer } from "../activity/get-superBotCallbackDetails-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -465,6 +466,7 @@ const RootReducer = {
   createManualCallOutbound: createManualCallOutboundReducer,
   getManualOutboundCallDetails: getManualOutboundCallDetailsReducer,
   exportLeadForAdvanceSearch: advanceSearchExportReducer,
+  getSuperBotCallbackDetails: getSuperBotcallbackReducer,
 
   // ********************lead merge ************************************
   changeLeadEnquiryStatus: changeLeadEnquiryStatusReducer,

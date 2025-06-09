@@ -9,28 +9,34 @@ import store, { RootState } from "../../../../store";
 import CustomModal from "../../../../util/custom/ui/CustomModal";
 import { changeStageData } from "../../../../data/change-stage-data";
 import CustomSideDrawer from "../../../../util/custom/ui/CustomSideDrawer";
-import { onDisableModalForChangeStage } from "../../../../store/ui/ui-slice";
+import { onDisableModalForChangeStage, uiSliceAction } from "../../../../store/ui/ui-slice";
 import { getLeadOwnerValues } from "../../../../store/sales-rep-details(changeOwner)/get-all-lead-owner-slice";
 import { getTaskTypeValues } from "../../../../store/task/get-taskType-slice";
 import { getAttachmentTypeValues } from "../../../../store/notes/get-all-coreDocAttachmentType-slice";
 import { useParams } from "react-router-dom";
 import { getLeadNameValues } from "../../../../store/task/get-allLeadName-slice";
+import { changeOwnerData } from "../../../../data/manage-leads/ManageLeadsData";
+import ChangeOwner from "../../genral/ChangeOwner";
 
 const TopHeaderTabsActions: React.FC = () => {
   let childrenContent: any = "";
   const { leadCaptureId } = useParams();
-  // const formikRef = useRef<any>(null);
-  const { isDrawerOpen, getHeaderTabIconsName, isShowModalForChangeStage } =
+
+  const { isDrawerOpen, getHeaderTabIconsName, isShowModalForChangeStage, isActionOwnerModalShow } =
     useSelector(
       (state: RootState) =>
         state.ui as {
           isDrawerOpen: boolean;
           getHeaderTabIconsName: string;
           isShowModalForChangeStage: boolean;
+          isActionOwnerModalShow: boolean
         }
     );
   const closeModalForChangeStage = () =>
     store.dispatch(onDisableModalForChangeStage());
+
+  const closeModal = () => store.dispatch(uiSliceAction.onDisabledModalForActionHandler());
+
 
   if (
     getHeaderTabIconsName === "Note" ||
@@ -87,8 +93,8 @@ const TopHeaderTabsActions: React.FC = () => {
         getHeaderTabIconsName === "Upload Docs" ||
         getHeaderTabIconsName === "Activity" ||
         getHeaderTabIconsName === "ActivityEdit") && (
-        <CustomSideDrawer>{childrenContent}</CustomSideDrawer>
-      )}
+          <CustomSideDrawer>{childrenContent}</CustomSideDrawer>
+        )}
 
       {isShowModalForChangeStage && (
         <CustomModal
@@ -100,6 +106,10 @@ const TopHeaderTabsActions: React.FC = () => {
           <ChangeStage onHideModal={closeModalForChangeStage} />
         </CustomModal>
       )}
+
+      {isActionOwnerModalShow && <CustomModal isShowModal={isActionOwnerModalShow} onHideModal={closeModal} data={changeOwnerData}>
+        <ChangeOwner leadCaptureId={leadCaptureId} onHideModal={closeModal} />
+      </CustomModal>}
     </>
   );
 };

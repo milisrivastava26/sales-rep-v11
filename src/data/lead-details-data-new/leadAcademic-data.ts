@@ -22,19 +22,40 @@ export const academicDetailsFormInput = [
       {
         id: 3,
         type: "select",
-        name: "coreTenthMarkingSchemeId", //tenth_marketing_scheme
-        label: "10th Marking Scheme",
+        name: "tenthMainSubject", //tenth_marks_grade
+        label: "10th Main Subject/Stream",
         isrequired: true,
       },
       {
         id: 4,
         type: "text",
-        name: "tenthMarksOrGrade", //tenth_marks_grade
-        label: "10th Marks or  Grade",
+        name: "tenthYearOfPassing", //tenth_marks_grade
+        label: "10th Year of Passing",
         isrequired: true,
       },
       {
         id: 5,
+        type: "select",
+        name: "coreTenthMarkingSchemeId", //tenth_marketing_scheme
+        label: "10th Marking Scheme",
+        isrequired: true,
+      },
+      {
+        id: 6,
+        type: "text",
+        name: "tenthMarksOrGrade",
+        label: "10th Percentage/CGPA",
+        isrequired: true,
+      },
+      {
+        id: 7,
+        type: "text",
+        name: "tenthMarksScored",
+        label: "10th Marks Scored",
+        isrequired: true,
+      },
+      {
+        id: 8,
         type: "select",
         name: "tenth_plus_2_type",
         label: "10 plus 2 type",
@@ -70,15 +91,36 @@ export const academicDetailsFormInput = [
       {
         id: 4,
         type: "select",
-        name: "coreTwelfthMarkingSchemeId",
-        label: "12th Marking Scheme",
+        name: "twelfthMainSubject",
+        label: "12th Main Subject/Stream",
         isrequired: true,
       },
       {
         id: 5,
         type: "text",
+        name: "twelfthYearOfPassing",
+        label: "12th Year of Passing",
+        isrequired: true,
+      },
+      {
+        id: 6,
+        type: "select",
+        name: "coreTwelfthMarkingSchemeId",
+        label: "12th Marking Scheme",
+        isrequired: true,
+      },
+      {
+        id: 7,
+        type: "text",
         name: "TwelfthMarksOrGrade",
-        label: "12th Marks Or Grade",
+        label: "12th Percentage/CGPA",
+        isrequired: true,
+      },
+      {
+        id: 8,
+        type: "text",
+        name: "twelfthMarksScored",
+        label: "12th Marks Scored",
         isrequired: true,
       },
     ],
@@ -112,7 +154,28 @@ export const academicDetailsFormInput = [
         id: 4,
         type: "text",
         name: "coreDiplomaMarks",
-        label: "Diploma Marks",
+        label: "Diploma Percentage/CGPA",
+        isrequired: true,
+      },
+      {
+        id: 4,
+        type: "text",
+        name: "diplomaProgram",
+        label: "Diploma Program",
+        isrequired: true,
+      },
+      {
+        id: 6,
+        type: "text",
+        name: "diplomaYearOfPassing",
+        label: "Diploma Year of Passing",
+        isrequired: true,
+      },
+      {
+        id: 7,
+        type: "text",
+        name: "diplomaMarksScored",
+        label: "Diploma Marks Scored",
         isrequired: true,
       },
     ],
@@ -125,7 +188,7 @@ export const academicDetailsFormInput = [
         id: 1,
         type: "text",
         name: "ugSchool",
-        label: "UG School",
+        label: "UG College/University",
         isrequired: true,
       },
       {
@@ -139,7 +202,28 @@ export const academicDetailsFormInput = [
         id: 3,
         type: "text",
         name: "coreUgMarks",
-        label: "UG Marks",
+        label: "UG Percentage/CGPA",
+        isrequired: true,
+      },
+      {
+        id: 4,
+        type: "text",
+        name: "ugProgram",
+        label: "UG Program",
+        isrequired: true,
+      },
+      {
+        id: 6,
+        type: "text",
+        name: "ugYearOfPassing",
+        label: "UG Year of Passing",
+        isrequired: true,
+      },
+      {
+        id: 7,
+        type: "text",
+        name: "ugMarksScored",
+        label: "UG Marks Scored",
         isrequired: true,
       },
     ],
@@ -162,6 +246,9 @@ export const getInitialValuesForAcademicDetails = (data: any) => {
         : data?.leadAcademicDetailsDiplomaDTO !== null
         ? "DIPLOMA"
         : "",
+    tenthMainSubject: data?.detailsForTenthDTO?.stream || "",
+    tenthMarksScored: data?.detailsForTenthDTO?.marksScored || "",
+    tenthYearOfPassing: data?.detailsForTenthDTO?.yearOfPassing || "",
     // Twelfth Details
     academicDetailsTwelfthId:
       data?.leadAcademicDetailsTwelfthDTO?.academicDetailsTwelfthId || "",
@@ -174,6 +261,12 @@ export const getInitialValuesForAcademicDetails = (data: any) => {
       data?.leadAcademicDetailsTwelfthDTO?.twelveMarkingSchemeId || "",
     TwelfthMarksOrGrade:
       data?.leadAcademicDetailsTwelfthDTO?.twelveMarksOrGrade || "",
+    twelfthMainSubject:
+      data?.leadAcademicDetailsTwelfthDTO?.stream || "",
+    twelfthMarksScored:
+      data?.leadAcademicDetailsTwelfthDTO?.marksScored || "",
+    twelfthYearOfPassing:
+      data?.leadAcademicDetailsTwelfthDTO?.yearOfPassing || "",
 
     // Diploma Details
     academicDetailsDiplomaId:
@@ -183,6 +276,10 @@ export const getInitialValuesForAcademicDetails = (data: any) => {
     coreDiplomaResultStatus:
       data?.leadAcademicDetailsDiplomaDTO?.resultStatus || "",
     coreDiplomaMarks: data?.leadAcademicDetailsDiplomaDTO?.marks || "",
+    diplomaProgram: data?.leadAcademicDetailsDiplomaDTO?.program || "",
+    diplomaYearOfPassing:
+      data?.leadAcademicDetailsDiplomaDTO?.yearOfPassing || "",
+    diplomaMarksScored: data?.leadAcademicDetailsDiplomaDTO?.marksScored || "",
 
     // UG Details
     academicDetailsUGId:
@@ -190,6 +287,9 @@ export const getInitialValuesForAcademicDetails = (data: any) => {
     ugSchool: data?.leadAcademicDetailsUGDTO?.degree || "",
     coreUgResultStatus: data?.leadAcademicDetailsUGDTO?.resultStatus || "",
     coreUgMarks: data?.leadAcademicDetailsUGDTO?.marks || "",
+    ugProgram: data?.leadAcademicDetailsUGDTO?.program || "",
+    ugYearOfPassing: data?.leadAcademicDetailsUGDTO?.yearOfPassing || "",
+    ugMarksScored: data?.leadAcademicDetailsUGDTO?.marksScored || "",
   };
 
   return initialValues;
@@ -207,6 +307,13 @@ export const getValidationSchemaForAcademicDetails = (
     coreTenthMarkingSchemeId: Yup.string().required("10th Marking is required"), // Not required
     tenthMarksOrGrade: Yup.string().required("10th Marks or Grade is required"),
     tenth_plus_2_type: Yup.string().required("10 plus 2 type is required"),
+    tenthMainSubject: Yup.string().required(
+      "10th main subject/stream is required"
+    ),
+    tenthMarksScored: Yup.string().required("10th marks is required"),
+    tenthYearOfPassing: Yup.string().required(
+      "10th year of passing is required"
+    ),
 
     // Twelfth Details (conditionally required)
     ...(isEnableForTwelfth && {
@@ -215,9 +322,18 @@ export const getValidationSchemaForAcademicDetails = (
       coreTwelfthResultStatus: Yup.string().required(
         "12th Result Status is required"
       ),
-      coreTwelfthMarkingSchemeId: Yup.string().required("12th marking scheme is required"), // Not required
+      coreTwelfthMarkingSchemeId: Yup.string().required(
+        "12th marking scheme is required"
+      ), // Not required
       TwelfthMarksOrGrade: Yup.string().required(
         "12th Marks or Grade is required"
+      ),
+      twelfthMainSubject: Yup.string().required(
+        "12th main subject/stream is required"
+      ),
+      twelfthMarksScored: Yup.string().required("12th marks is required"),
+      twelfthYearOfPassing: Yup.string().required(
+        "12th year of passing is required"
       ),
     }),
 
@@ -229,6 +345,13 @@ export const getValidationSchemaForAcademicDetails = (
         "Diploma Result Status is required"
       ),
       coreDiplomaMarks: Yup.string().required("Diploma Marks are required"),
+      diplomaProgram: Yup.string().required("Diploma Program is required"),
+      diplomaYearOfPassing: Yup.string().required(
+        "Diploma Year of Passing is required"
+      ),
+      diplomaMarksScored: Yup.string().required(
+        "Diploma Marks Scored is required"
+      ),
     }),
 
     // UG Details (conditionally required)
@@ -236,6 +359,9 @@ export const getValidationSchemaForAcademicDetails = (
       ugSchool: Yup.string().required("UG School is required"),
       coreUgResultStatus: Yup.string().required("UG Result Status is required"),
       coreUgMarks: Yup.string().required("UG Marks are required"),
+      ugProgram: Yup.string().required("UG Program is required"),
+      ugYearOfPassing: Yup.string().required("UG Year of Passing is required"),
+      ugMarksScored: Yup.string().required("UG Marks Scored is required"),
     }),
   };
 

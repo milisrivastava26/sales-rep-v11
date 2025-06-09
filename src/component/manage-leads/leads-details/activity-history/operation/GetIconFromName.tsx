@@ -16,6 +16,7 @@ import documentReviewIcon from "../../../../../assets/activity-history-icons/bus
 import { FaUserFriends, FaWalking } from "react-icons/fa";
 import { TiFlowMerge } from "react-icons/ti";
 import srmusetImg from "../../../../../assets/activity-history-icons/scholarship_evaluation.png";
+import { FaRobot } from "react-icons/fa6";
 
 type IconName =
   | "PiUsersThreeFill"
@@ -117,6 +118,7 @@ export const renderIcon = (iconName: string) => {
       />
     ),
     TbMessages: <TbMessages />,
+    FaRobot: <FaRobot />
     // Add more icon mappings as needed
   };
 

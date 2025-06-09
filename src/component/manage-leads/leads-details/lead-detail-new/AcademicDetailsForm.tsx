@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { resultStatusOptions, typesForSectionOptions } from "../../../../data/manage-leads/create-leads-data";
+import { mainSubjectOptionForTenth, mainSubjectOptionForTwelfth, resultStatusOptions, typesForSectionOptions } from "../../../../data/manage-leads/create-leads-data";
 import { useSelector } from "react-redux";
 import store, { RootState } from "../../../../store";
 import ButtonInput from "../../../../util/custom/FormInputs/ButtonInput";
@@ -61,12 +61,6 @@ const AcademicInfoForm: React.FC<FormType> = ({
   const { isLoading: isLoadingForTenthBoard, responseForTenthBoard: tenthBoardOptions } = useSelector((state: RootState) => state.getAllTenthBoardData);
   const { isLoading: isLoadingForTenthScheme, responseForTenthMarkingScheme: tenthSchemeOptions } = useSelector((state: RootState) => state.getAllTenthMarkingSchemeData);
 
-  // const { responseOfLeadAcademicDetailsById } = useSelector((state: RootState) => state.getLeadAcademicDetailsDataById);
-
-  // const isModeUpdate = (responseOfLeadAcademicDetailsById: Record<string, any>): boolean => {
-  //   return Object.values(responseOfLeadAcademicDetailsById).every((value) => value !== "" && value !== null && value !== undefined);
-  // };
-
   const { responseOfLeadEnquiryDetailsById } = useSelector(
     (state: RootState) => state.getLeadEnquiryDetailsDataById
   );
@@ -96,28 +90,34 @@ const AcademicInfoForm: React.FC<FormType> = ({
     }
 
     if (fieldName === "coreTwelfthResultStatus" && selectedOption?.value === "AWAITED") {
-      setFieldValue("TwelfthMarksOrGrade", "N/A")
+      setFieldValue("TwelfthMarksOrGrade", "N/A");
+      setFieldValue("twelfthMarksScored", "N/A")
       setIsDisabledForTwelfthMarks(true)
     }
-    else if(fieldName === "coreTwelfthResultStatus" && selectedOption?.value === "DECLARED") {
+    else if (fieldName === "coreTwelfthResultStatus" && selectedOption?.value === "DECLARED") {
       setIsDisabledForTwelfthMarks(false);
       setFieldValue("TwelfthMarksOrGrade", "");
+      setFieldValue("twelfthMarksScored", "");
     }
 
     if (fieldName === "coreDiplomaResultStatus" && selectedOption?.value === "AWAITED") {
       setFieldValue("coreDiplomaMarks", "N/A");
+      setFieldValue("diplomaMarksScored", "N/A");
       setIsDisabledForDiplomaMarks(true)
     }
-    else if(fieldName === "coreDiplomaResultStatus" && selectedOption?.value === "DECLARED") {
+    else if (fieldName === "coreDiplomaResultStatus" && selectedOption?.value === "DECLARED") {
       setIsDisabledForDiplomaMarks(false);
+      setFieldValue("diplomaMarksScored", "");
       setFieldValue("coreDiplomaMarks", "");
     }
     if (fieldName === "coreUgResultStatus" && selectedOption?.value === "AWAITED") {
       setFieldValue("coreUgMarks", "N/A");
+      setFieldValue("ugMarksScored", "N/A");
       setIsDisabledForUgMarks(true)
     }
     else if (fieldName === "coreUgResultStatus" && selectedOption?.value === "DECLARED") {
       setIsDisabledForUgMarks(false);
+      setFieldValue("ugMarksScored", "");
       setFieldValue("coreUgMarks", "");
     }
     setFieldValue(fieldName, selectedOption?.value)
@@ -196,7 +196,11 @@ const AcademicInfoForm: React.FC<FormType> = ({
                                               ? TwelfthMarketingSchemeOptions
                                               : field.label === "12th Result Status" || field.label === "UG Result Status" || field.label === "Diploma Result Status"
                                                 ? resultStatusOptions
-                                                : []
+                                                : field.name === "tenthMainSubject" ?
+                                                  mainSubjectOptionForTenth :
+                                                  field.name === "twelfthMainSubject" ?
+                                                    mainSubjectOptionForTwelfth :
+                                                    []
                                   }
                                   isDisabled={!isEditing}
                                   isLoading={
@@ -224,7 +228,11 @@ const AcademicInfoForm: React.FC<FormType> = ({
                                                 ? TwelfthMarketingSchemeOptions
                                                 : field.label === "12th Result Status" || field.label === "UG Result Status" || field.label === "Diploma Result Status"
                                                   ? resultStatusOptions
-                                                  : []
+                                                  : field.name === "tenthMainSubject" ?
+                                                    mainSubjectOptionForTenth :
+                                                    field.name === "twelfthMainSubject" ?
+                                                      mainSubjectOptionForTwelfth :
+                                                      []
                                     ).find((opt: any) => opt.value === values[field.name])
                                   }
                                   onChange={(selectedOption: any) => handleChange(field.name, selectedOption, setFieldValue)}
@@ -248,7 +256,7 @@ const AcademicInfoForm: React.FC<FormType> = ({
                                 </label>
                                 <Field
                                   name={field.name}
-                                  disabled={!isEditing || (field.name === "TwelfthMarksOrGrade" && isDisabledForTwelfthMarks) || (field.name === "coreDiplomaMarks" && isDisabledForDiplomaMarks) || (field.name === "coreUgMarks" && isDisabledForUgMarks)}
+                                  disabled={!isEditing || ((field.name === "TwelfthMarksOrGrade" || field.name === "twelfthMarksScored") && isDisabledForTwelfthMarks) || ((field.name === "coreDiplomaMarks" || field.name === "diplomaMarksScored") && isDisabledForDiplomaMarks) || ((field.name === "coreUgMarks" || field.name === "ugMarksScored") && isDisabledForUgMarks)}
                                   type={field.type}
                                   as={field.type === "textarea" ? "textarea" : "input"}
                                   className={`w-full ${isEditing ? "border border-gray-200" : "border border-gray-200 bg-gray-100"

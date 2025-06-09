@@ -64,6 +64,9 @@ export const transformPayloadForAcademicData = (
       coreTenthBoardId: data.coreTenthBoardId,
       coreTenthMarkingSchemeId: data.coreTenthMarkingSchemeId,
       tenthMarksOrGrade: data.tenthMarksOrGrade,
+      stream: data.tenthMainSubject,
+      marksScored: data.tenthMarksScored,
+      yearOfPassing: data.tenthYearOfPassing,
     },
     ...(isEnableForTwelfthInputFields === true && {
       twelfthBoard: {
@@ -74,6 +77,9 @@ export const transformPayloadForAcademicData = (
         twelveMarkingSchemeId: data.coreTwelfthMarkingSchemeId,
         twelveMarksOrGrade: data.TwelfthMarksOrGrade,
         twelveResultStatus: data.coreTwelfthResultStatus,
+        stream: data.twelfthMainSubject,
+        marksScored: data.twelfthMarksScored,
+        yearOfPassing: data.twelfthYearOfPassing,
       },
     }),
     ...(isEnableForDiplomaInputFields === true && {
@@ -84,6 +90,9 @@ export const transformPayloadForAcademicData = (
         diplomaBoard: data.coreDiplomaBoardId,
         resultStatus: data.coreDiplomaResultStatus,
         marks: data.coreDiplomaMarks,
+        program: data.diplomaProgram,
+        yearOfPassing: data.diplomaYearOfPassing,
+        marksScored: data.diplomaMarksScored
       },
     }),
     ...(isEnableForUGInputFields === true && {
@@ -93,6 +102,9 @@ export const transformPayloadForAcademicData = (
         degree: data.ugSchool,
         resultStatus: data.coreUgResultStatus,
         marks: data.coreUgMarks,
+        program: data.ugProgram,
+        yearOfPassing: data.ugYearOfPassing,
+        marksScored: data.ugMarksScored
       },
     }),
   };

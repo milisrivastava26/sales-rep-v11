@@ -1,7 +1,7 @@
 import React from "react";
 import store from "../../../../store";
 import { TopIconHeaderData } from "../../../../data/manage-leads/leadDetails-data";
-import { onDrawrOpenHandler, onGetHeaderTabIconsName, onSetOpenModalForChangeStage } from "../../../../store/ui/ui-slice";
+import { onDrawrOpenHandler, onGetHeaderTabIconsName, onSetOpenModalForChangeStage, uiSliceAction } from "../../../../store/ui/ui-slice";
 
 const TopIconHeader: React.FC = () => {
   const dispatch = store.dispatch;
@@ -18,12 +18,18 @@ const TopIconHeader: React.FC = () => {
             className="border border-gray-300 px-2 py-1 rounded text-sm"
             key={element.id}
             onClick={
-              element?.name === "Note" || element?.name === "Tasks" || element?.name === "Upload Docs" || element?.name === "Activity"
+              element?.name === "Note" ||
+                element?.name === "Tasks" ||
+                element?.name === "Upload Docs" ||
+                element?.name === "Activity"
                 ? onIconHandler.bind({}, element.name)
                 : element?.name === "Change Stage"
-                ? () => store.dispatch(onSetOpenModalForChangeStage())
-                : undefined
+                  ? () => store.dispatch(onSetOpenModalForChangeStage())
+                  : element?.name === "Change Owner"
+                    ? () => store.dispatch(uiSliceAction.onShowOwnerModalForActionHandler())
+                    : undefined
             }
+
           >
             <div className="flex items-center gap-x-1">
               {element?.icon}
@@ -31,7 +37,7 @@ const TopIconHeader: React.FC = () => {
             </div>
           </button>
         ))}
-      </div>
+      </div >
       {/* <TopHeaderTabsActions /> */}
     </>
   );

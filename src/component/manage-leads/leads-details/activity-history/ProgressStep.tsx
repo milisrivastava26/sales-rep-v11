@@ -34,6 +34,7 @@ import { getRecordCounsellingOutcomeDetails } from "../../../../store/activity/g
 import { getLeadGeneralInfoDetails } from "../../../../store/activity/get-leadGeneralInfoDetails-slice";
 import { getLeadOfferAnalysisDetailsByEnquiryId } from "../../../../store/view-leads-details/get-leadOfferDetails-slice";
 import { IoMdDownload } from "react-icons/io";
+import { getSuperBotcallbackDetails } from "../../../../store/activity/get-superBotCallbackDetails-slice";
 
 interface LeadDocAttachmentDTO {
   path: string;
@@ -164,6 +165,9 @@ const ProgressStep: React.FC<ProgressStepType> = ({
         await store.dispatch(getRecordWalkinOutcomeDetails(id));
       } else if (title === "Record Counselling Outcome") {
         await store.dispatch(getRecordCounsellingOutcomeDetails(id));
+      }
+      else if (title === "SuperBot Callback") {
+        await store.dispatch(getSuperBotcallbackDetails(id));
       }
       // else if (title === "Initiate Payment") {
       //   await store.dispatch(

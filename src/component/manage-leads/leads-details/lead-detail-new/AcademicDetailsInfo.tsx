@@ -103,7 +103,7 @@ const AcademicInfo: React.FC = () => {
       {initialValuesForAcademicInfo !== null && !isLoading && (
         <div className="bg-white  mt-5 pb-20 relative">
           <div className="flex justify-between items-center h-[50px]  mb-5 px-4 bg-blue-100">
-            <h1 className="text-lg font-semibold">Academic Details</h1>
+            <h1 className="text-lg font-semibold">Other Details</h1>
             {!isEditing && (
               <button className=" px-6 py-1.5  font-medium rounded-lg" onClick={handleEditClick}>
                 <MdOutlineEdit size={20} />

@@ -46,6 +46,11 @@ const tabData: LeadsDetailsTypes[] = [
 
 export const TopIconHeaderData: ProfileIcon[] = [
   {
+    id: 0,
+    icon: <SlGraph />,
+    name: "Change Owner",
+  },
+  {
     id: 1,
     icon: <SlGraph />,
     name: "Change Stage",

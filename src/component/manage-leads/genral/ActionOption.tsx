@@ -74,7 +74,6 @@ const ActionOptions: React.FC<Type> = ({ leadId, pageFlag, rowIndex, leadNum, le
     WhatsApp: onWhatsAppHandler,
     ChangeOwner: onChangeOwnerHandler,
     PhoneConvo: onHadPhoneConvoHandler,
-    // Add more actions here if needed
   };
 
   return (

@@ -258,6 +258,26 @@ export const resultStatusOptions = [
   },
 ];
 
+export const mainSubjectOptionForTenth = [
+  { id: 1, value: 'science', label: 'Science' },
+  { id: 2, value: 'arts', label: 'Arts' },
+  { id: 3, value: 'vocational', label: 'Vocational' },
+  { id: 4, value: 'commerce', label: 'Commerce' },
+  { id: 5, value: 'others', label: 'Others' },
+];
+
+export const mainSubjectOptionForTwelfth = [
+  { id: 1, value: 'pcm', label: 'PCM' },
+  { id: 2, value: 'pcb', label: 'PCB' },
+  { id: 3, value: 'pcmb', label: 'PCMB' },
+  { id: 4, value: 'commerce', label: 'Commerce' },
+  { id: 5, value: 'arts', label: 'Arts' },
+  { id: 6, value: 'agriculture', label: 'Agriculture' },
+  { id: 7, value: 'vocational', label: 'Vocational' },
+  { id: 8, value: 'others', label: 'Others' },
+];
+
+
 export const typesForSectionOptions = [
   {
     id: 1,

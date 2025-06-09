@@ -11,7 +11,7 @@ import {
 import { getLeadCaptureByFullName } from "../../../store/lead-capture/get-allLeadCapture-By-fullName-slice";
 
 interface changeOwnerProps {
-  leadCaptureId: number;
+  leadCaptureId: any;
   onHideModal: () => void;
 }
 

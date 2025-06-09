@@ -7,6 +7,7 @@ import ButtonInput from "../../../../util/custom/FormInputs/ButtonInput";
 import { RxCheck, RxCross2 } from "react-icons/rx";
 import { getAdditionalInfoById } from "../../../../store/lead-attribute-update/get-leadAdditionalDetails-slice";
 import { useParams } from "react-router-dom";
+import { bloodGroupOptions } from "../../../../data/lead-details-data-new/leadBiographical-data";
 
 interface FormType {
   btnText: string;
@@ -115,6 +116,8 @@ const BiographicalInfoForm: React.FC<FormType> = ({
                         ? responseForAdmitType
                         : field.label === "Gender"
                         ? genderOptions
+                        : field.name === "bloodGroup"
+                        ? bloodGroupOptions
                         : []
                     }
                     isLoading={field.label === "Academic Career" ? isLoadingForCareer : field.name === "academicProgramId" ? isLoadingForProgram : false}
