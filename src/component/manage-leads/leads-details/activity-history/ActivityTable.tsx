@@ -140,30 +140,68 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
                       </Link>
                     </td>
                   </>
-                ) : (
+                ) : key === "Conversation" ? (
                   <>
-                    {key !== "leadCaptureId" && key !== "coreDocAttachmentTypeId" && (
-                      <>
-                        <td className="px-4 py-2 border">{capitalizeName(key)}</td>
-                        <td
-                          className={`px-4 py-2 max-w-[300px] border break-words whitespace-normal overflow-hidden text-ellipsis ${key === "name" && title === "Leads Notes" ? "text-blue-500 cursor-pointer" : ""
-                            }`}
-                          onClick={() => {
-                            if (key === "name" && title === "Leads Notes" && value !== null) {
-                              downloadDoc();
-                            }
-                          }}
-                        >
-                          {key === "description"
-                            ? notesDescription
-                            : key === "New Owner Assigned Date" || key === "Assigned Date"
-                              ? String(value)?.split("T")[0]
-                              : value}
-                        </td>
-                      </>
-                    )}
+                    <td className="px-4 py-2 border">{key}</td>
+                    <td className="px-4 py-2 border align-top">
+                      {Array.isArray(value) ? (
+                        <div className="space-y-1">
+                          {value.map((line: string, index: number) => {
+                            const match = line.match(/^(superbot:|user:)(.*)$/i);
+                            const speaker = match ? match[1] : '';
+                            const message = match ? match[2] : line;
+
+                            return (
+                              <div key={index} className="text-sm whitespace-pre-line text-gray-800">
+                                {speaker && (
+                                  <span className={speaker.toLowerCase() === 'superbot:' ? 'text-blue-700 font-medium' : 'text-red-600 font-semibold'}>
+                                    {capitalizeName(speaker)}
+                                  </span>
+                                )}
+                                {message}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <textarea
+                          value={value}
+                          readOnly
+                          rows={8}
+                          className="w-full rounded-md px-4 py-2 text-sm bg-blue-50 resize-none"
+                        />
+                      )}
+                    </td>
+
+
+
                   </>
-                )}
+                ) :
+
+                  (
+                    <>
+                      {key !== "leadCaptureId" && key !== "coreDocAttachmentTypeId" && (
+                        <>
+                          <td className="px-4 py-2 border">{capitalizeName(key)}</td>
+                          <td
+                            className={`px-4 py-2 max-w-[300px] border break-words whitespace-normal overflow-hidden text-ellipsis ${key === "name" && title === "Leads Notes" ? "text-blue-500 cursor-pointer" : ""
+                              }`}
+                            onClick={() => {
+                              if (key === "name" && title === "Leads Notes" && value !== null) {
+                                downloadDoc();
+                              }
+                            }}
+                          >
+                            {key === "description"
+                              ? notesDescription
+                              : key === "New Owner Assigned Date" || key === "Assigned Date"
+                                ? String(value)?.split("T")[0]
+                                : value}
+                          </td>
+                        </>
+                      )}
+                    </>
+                  )}
               </tr>
             );
           })}

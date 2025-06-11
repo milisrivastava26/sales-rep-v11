@@ -21,6 +21,8 @@ import { getPrideInfotechLeads } from "../../store/third-party-slices/get-prideI
 import { getRudraCareerGuidanceLeads } from "../../store/third-party-slices/get-rudraCareerGuidance-leads-slice";
 import { getNeelanshiConsultancyLeads } from "../../store/third-party-slices/get-neelanshiConsultancy-leads-slice";
 import { getAmitConsultancyLeads } from "../../store/third-party-slices/get-amitConsultancy-leads-slice";
+import { getAtreekConsultancyLeads } from "../../store/third-party-slices/get-atreekConsultancy-leads-slice";
+import { getAjayConsultancyLeads } from "../../store/third-party-slices/get-ajayConsultancy-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -77,11 +79,14 @@ const ThirdpartyHomePage: React.FC = () => {
     (state: RootState) => state.getCareerGuideLeads
   );
 
-  const neelanshiLeads = useSelector((state:RootState) => state.getNeelanshiConsultancyLeads);
-  const amitLeads = useSelector((state:RootState) => state.getAmitconsultancyLeads);
+  const neelanshiLeads = useSelector((state: RootState) => state.getNeelanshiConsultancyLeads);
+  const amitLeads = useSelector((state: RootState) => state.getAmitconsultancyLeads);
 
   const prideInfotechLeads = useSelector((state: RootState) => state.getPrideInfotechLeads);
-   const rudraCareerGuidanceLeads = useSelector((state: RootState) => state.getRudraCaeerGuidanceLeads);
+  const rudraCareerGuidanceLeads = useSelector((state: RootState) => state.getRudraCaeerGuidanceLeads);
+  const atreekConsultancyLeads = useSelector((state: RootState) => state.getAtreekConsultancyLeads);
+  const ajayConsultancyLeads = useSelector((state: RootState) => state.getAjayConsultancyLeads);
+
 
   // State object to store loader, response, and action
   const [apiState, setApiState] = useState<ApiStateType>({
@@ -132,11 +137,17 @@ const ThirdpartyHomePage: React.FC = () => {
       else if (role === "ROLE_RUDRA_CAREER_GUIDANCE") {
         dispatch(getRudraCareerGuidanceLeads({ startDate: currentDate }));
       }
-      else if(role === "ROLE_NEELANSHI_CONSULTANCY") {
+      else if (role === "ROLE_NEELANSHI_CONSULTANCY") {
         dispatch(getNeelanshiConsultancyLeads({ startDate: currentDate }));
       }
-      else if(role === "ROLE_AMIT_CONSULTANCY") {
+      else if (role === "ROLE_AMIT_CONSULTANCY") {
         dispatch(getAmitConsultancyLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_ATREEK_CONSULTANCY") {
+        dispatch(getAtreekConsultancyLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_AJAY_CONSULTANCY") {
+        dispatch(getAjayConsultancyLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -255,7 +266,7 @@ const ThirdpartyHomePage: React.FC = () => {
         response: neelanshiLeads.responseOfGetNeelanshiConsultancyLeads,
         action: () => neelanshiLeads, // Assign function (without calling dispatch)
       });
-      
+
     }
     else if (role === "ROLE_AMIT_CONSULTANCY") {
       setApiState({
@@ -263,7 +274,23 @@ const ThirdpartyHomePage: React.FC = () => {
         response: amitLeads.responseOfAmitConsultancyLeads,
         action: () => amitLeads, // Assign function (without calling dispatch)
       });
-      
+
+    }
+    else if (role === "ROLE_ATREEK_CONSULTANCY") {
+      setApiState({
+        isLoading: atreekConsultancyLeads.isLoading,
+        response: atreekConsultancyLeads.responseOfGetAtreekConsultancyLeads,
+        action: () => atreekConsultancyLeads, // Assign function (without calling dispatch)
+      });
+
+    }
+    else if (role === "ROLE_AJAY_CONSULTANCY") {
+      setApiState({
+        isLoading: ajayConsultancyLeads.isLoading,
+        response: ajayConsultancyLeads.responseOfGetAjayConsultancyLeads,
+        action: () => ajayConsultancyLeads,
+      });
+
     }
 
   }, [
@@ -286,7 +313,9 @@ const ThirdpartyHomePage: React.FC = () => {
     prideInfotechLeads,
     rudraCareerGuidanceLeads,
     neelanshiLeads,
-    amitLeads
+    amitLeads,
+    atreekConsultancyLeads,
+    ajayConsultancyLeads
   ]);
 
   return (

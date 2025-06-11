@@ -253,6 +253,8 @@ import { amitConsultancyLeadsReducer } from "../third-party-slices/get-amitConsu
 import { voidFeeStatusReducer } from "../lead-merge/void-feeStatus-slice";
 import { failedPaymentDetailsReducer } from "../paymentInfo/get-leadFailedPaymentDetails-slice";
 import { getSuperBotcallbackReducer } from "../activity/get-superBotCallbackDetails-slice";
+import { getAtreekConsultancyLeadsReducer } from "../third-party-slices/get-atreekConsultancy-leads-slice";
+import { getAjayConsultancyLeadsReducer } from "../third-party-slices/get-ajayConsultancy-leads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -553,6 +555,8 @@ const RootReducer = {
   getRudraCaeerGuidanceLeads: getRudraCareerGuidanceLeadsReducer,
   getNeelanshiConsultancyLeads: getNeelanshiConsultancyLeadsReducer,
   getAmitconsultancyLeads: amitConsultancyLeadsReducer,
+  getAtreekConsultancyLeads: getAtreekConsultancyLeadsReducer,
+  getAjayConsultancyLeads: getAjayConsultancyLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,
