@@ -45,7 +45,8 @@ export const getRoutes = (userDetails: any) => {
     "ROLE_NEELANSHI_CONSULTANCY",
     "ROLE_AMIT_CONSULTANCY",
     "ROLE_ATREEK_CONSULTANCY",
-    "ROLE_AJAY_CONSULTANCY"
+    "ROLE_AJAY_CONSULTANCY",
+    "ROLE_COURSE_YARD_SOLUTIONS"
   ];
   const isThirdPartyUser = userDetails?.authority?.some((role: any) =>
     thirdPartyRoles.includes(role)

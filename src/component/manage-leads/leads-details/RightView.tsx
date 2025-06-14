@@ -84,6 +84,8 @@ const RightView: React.FC = () => {
     dispatch(getLeadAcademicDetailsById(leadCaptureId));
     setLeadDetailsPrint(true);
   };
+
+  
   useEffect(() => {
     if (
       leadDetailsPrint &&

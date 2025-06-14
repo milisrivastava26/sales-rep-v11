@@ -12,15 +12,6 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { currentURL } = useForLocation();
   const { isMobileMenu } = useSelector((state: RootState) => state.ui);
-  // const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
-
-  // const handlebackClick = () => {
-  //   if (userDetails?.authority?.includes("ROLE_AUTHORITY")) {
-  //     navigate("/");
-  //   } else {
-  //     navigate(-1);
-  //   }
-  // };
 
   const handlebackClick = () => {
     navigate(-1);

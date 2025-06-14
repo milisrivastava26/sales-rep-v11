@@ -23,6 +23,7 @@ import { getNeelanshiConsultancyLeads } from "../../store/third-party-slices/get
 import { getAmitConsultancyLeads } from "../../store/third-party-slices/get-amitConsultancy-leads-slice";
 import { getAtreekConsultancyLeads } from "../../store/third-party-slices/get-atreekConsultancy-leads-slice";
 import { getAjayConsultancyLeads } from "../../store/third-party-slices/get-ajayConsultancy-leads-slice";
+import { getCourseYardSolutionLeads } from "../../store/third-party-slices/get-courseYardSolution-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -86,6 +87,7 @@ const ThirdpartyHomePage: React.FC = () => {
   const rudraCareerGuidanceLeads = useSelector((state: RootState) => state.getRudraCaeerGuidanceLeads);
   const atreekConsultancyLeads = useSelector((state: RootState) => state.getAtreekConsultancyLeads);
   const ajayConsultancyLeads = useSelector((state: RootState) => state.getAjayConsultancyLeads);
+  const courseYardSolutionLeads = useSelector((state:RootState) => state.getCourseYardSolutionLeads);
 
 
   // State object to store loader, response, and action
@@ -148,6 +150,9 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_AJAY_CONSULTANCY") {
         dispatch(getAjayConsultancyLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_COURSE_YARD_SOLUTIONS") {
+        dispatch(getCourseYardSolutionLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -292,6 +297,14 @@ const ThirdpartyHomePage: React.FC = () => {
       });
 
     }
+    else if (role === "ROLE_COURSE_YARD_SOLUTIONS") {
+      setApiState({
+        isLoading: courseYardSolutionLeads.isLoading,
+        response: courseYardSolutionLeads.responseOfGetCourseYardSolutionLeads,
+        action: () => courseYardSolutionLeads,
+      });
+
+    }
 
   }, [
     userDetails,
@@ -315,7 +328,8 @@ const ThirdpartyHomePage: React.FC = () => {
     neelanshiLeads,
     amitLeads,
     atreekConsultancyLeads,
-    ajayConsultancyLeads
+    ajayConsultancyLeads,
+    courseYardSolutionLeads
   ]);
 
   return (

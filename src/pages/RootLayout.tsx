@@ -56,7 +56,8 @@ const RootLayout: React.FC = () => {
     "ROLE_NEELANSHI_CONSULTANCY",
     "ROLE_AMIT_CONSULTANCY",
     "ROLE_ATREEK_CONSULTANCY",
-    "ROLE_AJAY_CONSULTANCY"
+    "ROLE_AJAY_CONSULTANCY",
+    "ROLE_COURSE_YARD_SOLUTIONS"
   ];
 
   // Check if userDetails is available and determine if user is third-party

@@ -255,6 +255,7 @@ import { failedPaymentDetailsReducer } from "../paymentInfo/get-leadFailedPaymen
 import { getSuperBotcallbackReducer } from "../activity/get-superBotCallbackDetails-slice";
 import { getAtreekConsultancyLeadsReducer } from "../third-party-slices/get-atreekConsultancy-leads-slice";
 import { getAjayConsultancyLeadsReducer } from "../third-party-slices/get-ajayConsultancy-leads-slice";
+import { getCourseYardSolutionLeadsReducer } from "../third-party-slices/get-courseYardSolution-leads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -557,6 +558,7 @@ const RootReducer = {
   getAmitconsultancyLeads: amitConsultancyLeadsReducer,
   getAtreekConsultancyLeads: getAtreekConsultancyLeadsReducer,
   getAjayConsultancyLeads: getAjayConsultancyLeadsReducer,
+  getCourseYardSolutionLeads: getCourseYardSolutionLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,

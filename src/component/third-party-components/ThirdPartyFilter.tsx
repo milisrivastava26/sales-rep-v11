@@ -23,6 +23,7 @@ import { getNeelanshiConsultancyLeads } from "../../store/third-party-slices/get
 import { getAmitConsultancyLeads } from "../../store/third-party-slices/get-amitConsultancy-leads-slice";
 import { getAtreekConsultancyLeads } from "../../store/third-party-slices/get-atreekConsultancy-leads-slice";
 import { getAjayConsultancyLeads } from "../../store/third-party-slices/get-ajayConsultancy-leads-slice";
+import { getCourseYardSolutionLeads } from "../../store/third-party-slices/get-courseYardSolution-leads-slice";
 
 interface TyepFor {
   actionVal: () => {};
@@ -104,6 +105,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     else if (role === "ROLE_AJAY_CONSULTANCY") {
       dispatch(getAjayConsultancyLeads({ startDate: fromDate, endDate: toDate }));
     }
+    else if (role === "ROLE_COURSE_YARD_SOLUTIONS") {
+      dispatch(getCourseYardSolutionLeads({ startDate: fromDate, endDate: toDate }));
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,6 +168,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     }
     else if (role === "ROLE_AJAY_CONSULTANCY") {
       dispatch(getAjayConsultancyLeads());
+    }
+    else if (role === "ROLE_COURSE_YARD_SOLUTIONS") {
+      dispatch(getCourseYardSolutionLeads());
     }
   };
 

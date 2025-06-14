@@ -216,7 +216,8 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Nationality:</label>
             <input
-              defaultValue={addressPermanent?.country === "India" ? "Indian" : ""}
+              defaultValue={bioInfo.leadDemographicDetailsDTO
+                .nationality}
               style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }}
               readOnly
             />
@@ -237,7 +238,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Blood Group:</label>
-            <input defaultValue="" style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
+            <input defaultValue={bioInfo.leadDemographicDetailsDTO.bloodGroup} style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
           </div>
           <div style={{ display: "flex", width: "100%", alignItems: "center" }}>
             <label style={{ width: "10%", textAlign: "center", marginRight: "1rem" }}>Category:</label>
@@ -302,7 +303,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Occupation:</label>
             <input
-              defaultValue=""
+              defaultValue={bioInfo.leadDemographicDetailsDTO.fatherOccupation}
               readOnly
               style={{
                 display: "inline-block",
@@ -319,7 +320,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Designation, If any:</label>
             <input
-              defaultValue=""
+              defaultValue={bioInfo.leadDemographicDetailsDTO.fatherDesignation}
               readOnly
               style={{
                 display: "inline-block",
@@ -333,7 +334,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Gross Annual Salary/Income:</label>
             <input
-              defaultValue=""
+              defaultValue={bioInfo.leadDemographicDetailsDTO.fatherAnnualIncome}
               readOnly
               style={{
                 display: "inline-block",
@@ -379,7 +380,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Occupation:</label>
             <input
-              defaultValue=""
+              defaultValue={bioInfo.leadDemographicDetailsDTO.motherOccupation}
               readOnly
               style={{
                 display: "inline-block",
@@ -396,7 +397,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Designation, If any:</label>
             <input
-              defaultValue=""
+              defaultValue={bioInfo.leadDemographicDetailsDTO.motherDesignation}
               readOnly
               style={{
                 display: "inline-block",
@@ -410,7 +411,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Gross Annual Salary/Income:</label>
             <input
-              defaultValue=""
+              defaultValue={bioInfo.leadDemographicDetailsDTO.motherAnnualIncome}
               readOnly
               style={{
                 display: "inline-block",
