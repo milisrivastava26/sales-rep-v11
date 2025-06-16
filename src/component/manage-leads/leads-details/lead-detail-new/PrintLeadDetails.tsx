@@ -121,19 +121,19 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
                 <span style={{ fontWeight: "600" }}>Admit Term:</span>
               </label>
               <label style={{ display: "inline-flex", alignItems: "center", marginRight: "1rem" }}>
-                <input type="checkbox" checked={bioInfo.admitTypeName === "First Year Student"} readOnly />
+                <input type="checkbox" checked={bioInfo?.admitTypeName === "First Year Student"} readOnly />
                 <span style={{ marginLeft: "0.25rem" }}>First year</span>
               </label>
               <label style={{ display: "inline-flex", alignItems: "center", marginRight: "1rem" }}>
-                <input type="checkbox" checked={bioInfo.admitTypeName === "Lateral"} readOnly />
+                <input type="checkbox" checked={bioInfo?.admitTypeName === "Lateral"} readOnly />
                 <span style={{ marginLeft: "0.25rem" }}>Lateral Entry</span>
               </label>
               <label style={{ display: "inline-flex", alignItems: "center", marginRight: "1rem" }}>
-                <input type="checkbox" checked={bioInfo.admitTypeName === "Readmitted"} readOnly />
+                <input type="checkbox" checked={bioInfo?.admitTypeName === "Readmitted"} readOnly />
                 <span style={{ marginLeft: "0.25rem" }}>Re-admission</span>
               </label>
               <label style={{ display: "inline-flex", alignItems: "center" }}>
-                <input type="checkbox" checked={bioInfo.admitTypeName === "Transfer"} readOnly />
+                <input type="checkbox" checked={bioInfo?.admitTypeName === "Transfer"} readOnly />
                 <span style={{ marginLeft: "0.25rem" }}>Transfer</span>
               </label>
             </div>
@@ -144,19 +144,19 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               </label>
 
               <label style={{ display: "inline-flex", alignItems: "center", marginRight: "1rem" }}>
-                <input type="checkbox" readOnly checked={generalInfo.careerName === "Undergraduate"} />
+                <input type="checkbox" readOnly checked={generalInfo?.careerName === "Undergraduate"} />
                 <span style={{ marginLeft: "0.25rem" }}>UG</span>
               </label>
               <label style={{ display: "inline-flex", alignItems: "center", marginRight: "1rem" }}>
-                <input type="checkbox" readOnly checked={generalInfo.careerName === "Postgraduate"} />
+                <input type="checkbox" readOnly checked={generalInfo?.careerName === "Postgraduate"} />
                 <span style={{ marginLeft: "0.25rem" }}>PG</span>
               </label>
               <label style={{ display: "inline-flex", alignItems: "center", marginRight: "1rem" }}>
-                <input type="checkbox" readOnly checked={generalInfo.careerName === "Integrated"} />
+                <input type="checkbox" readOnly checked={generalInfo?.careerName === "Integrated"} />
                 <span style={{ marginLeft: "0.25rem" }}>IG</span>
               </label>
               <label style={{ display: "inline-flex", alignItems: "center", marginRight: "1rem" }}>
-                <input type="checkbox" readOnly checked={generalInfo.careerName === "Diploma"} />
+                <input type="checkbox" readOnly checked={generalInfo?.careerName === "Diploma"} />
                 <span style={{ marginLeft: "0.25rem" }}>DP</span>
               </label>
             </div>
@@ -164,7 +164,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             <div style={{ marginBottom: "0.5rem", display: "flex", columnGap: "1rem", alignItems: "center" }}>
               <label style={{ whiteSpace: "nowrap" }}>Course Applied For:</label>
               <input
-                defaultValue={generalInfo.programName}
+                defaultValue={generalInfo?.programName}
                 style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }}
                 readOnly
               />
@@ -175,7 +175,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             <div style={{ marginBottom: "0.5rem", display: "flex", columnGap: "1rem", alignItems: "center" }}>
               <label style={{ whiteSpace: "nowrap" }}>Name:</label>
               <input
-                defaultValue={generalInfo.leadName}
+                defaultValue={generalInfo?.leadName || ""}
                 style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }}
                 readOnly
               />
@@ -185,7 +185,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               <div style={{ width: "100%", display: "flex", columnGap: "1rem", alignItems: "center" }}>
                 <label style={{ whiteSpace: "nowrap" }}>Date of Birth:</label>
                 <input
-                  defaultValue={bioInfo.dob ? new Date(bioInfo.dob).toISOString().split("T")[0] : ""}
+                  defaultValue={bioInfo?.dob ? new Date(bioInfo.dob).toISOString().split("T")[0] : ""}
                   style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }}
                   readOnly
                 />
@@ -193,7 +193,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               <div style={{ width: "100%", display: "flex", columnGap: "1rem", alignItems: "center" }}>
                 <label style={{ whiteSpace: "nowrap" }}>E-mail:</label>
                 <input
-                  defaultValue={generalInfo.email}
+                  defaultValue={generalInfo?.email || ""}
                   style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }}
                   readOnly
                 />
@@ -216,8 +216,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Nationality:</label>
             <input
-              defaultValue={bioInfo.leadDemographicDetailsDTO
-                .nationality}
+              defaultValue={bioInfo?.leadDemographicDetailsDTO?.nationality || ""}
               style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }}
               readOnly
             />
@@ -229,7 +228,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               <span style={{ marginLeft: "0.25rem" }}>Male</span>
             </label>
             <label style={{ display: "inline-flex", alignItems: "center" }}>
-              <input type="checkbox" checked={bioInfo.gender === "FEMALE"} readOnly />
+              <input type="checkbox" checked={bioInfo?.gender === "FEMALE"} readOnly />
               <span style={{ marginLeft: "0.25rem" }}>Female</span>
             </label>
           </div>
@@ -238,13 +237,13 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Blood Group:</label>
-            <input defaultValue={bioInfo.leadDemographicDetailsDTO.bloodGroup} style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
+            <input defaultValue={bioInfo?.leadDemographicDetailsDTO?.bloodGroup || ""} style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
           </div>
           <div style={{ display: "flex", width: "100%", alignItems: "center" }}>
             <label style={{ width: "10%", textAlign: "center", marginRight: "1rem" }}>Category:</label>
             {["General", "SC", "ST", "OBC"].map((cat) => (
               <label key={cat} style={{ display: "inline-flex", alignItems: "center", marginRight: "0.5rem" }}>
-                <input type="checkbox" checked={bioInfo.categoryName === cat} readOnly />
+                <input type="checkbox" checked={bioInfo?.categoryName === cat} readOnly />
                 <span style={{ marginLeft: "0.25rem" }}>{cat}</span>
               </label>
             ))}
@@ -264,7 +263,6 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
                 width: "100%",
                 border: "none",
                 borderBottom: "1px solid black",
-
                 outline: "none",
               }}
             />
@@ -272,7 +270,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Mobile:</label>
             <input
-              defaultValue={generalInfo.phone}
+              defaultValue={generalInfo?.phone ||""}
               readOnly
               style={{
                 display: "inline-block",
@@ -289,7 +287,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Father's Name:</label>
             <input
-              defaultValue={bioInfo.fatherName}
+              defaultValue={bioInfo?.fatherName || ""}
               readOnly
               style={{
                 display: "inline-block",
@@ -303,7 +301,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Occupation:</label>
             <input
-              defaultValue={bioInfo.leadDemographicDetailsDTO.fatherOccupation}
+              defaultValue={bioInfo?.leadDemographicDetailsDTO?.fatherOccupation || ""}
               readOnly
               style={{
                 display: "inline-block",
@@ -320,7 +318,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Designation, If any:</label>
             <input
-              defaultValue={bioInfo.leadDemographicDetailsDTO.fatherDesignation}
+              defaultValue={bioInfo?.leadDemographicDetailsDTO?.fatherDesignation || ""}
               readOnly
               style={{
                 display: "inline-block",
@@ -334,7 +332,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Gross Annual Salary/Income:</label>
             <input
-              defaultValue={bioInfo.leadDemographicDetailsDTO.fatherAnnualIncome}
+              defaultValue={bioInfo?.leadDemographicDetailsDTO?.fatherAnnualIncome || ""}
               readOnly
               style={{
                 display: "inline-block",
@@ -366,7 +364,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Mother's Name:</label>
             <input
-              defaultValue={bioInfo.motherName}
+              defaultValue={bioInfo?.motherName || ""}
               readOnly
               style={{
                 display: "inline-block",
@@ -380,7 +378,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Occupation:</label>
             <input
-              defaultValue={bioInfo.leadDemographicDetailsDTO.motherOccupation}
+              defaultValue={bioInfo?.leadDemographicDetailsDTO?.motherOccupation || ""}
               readOnly
               style={{
                 display: "inline-block",
@@ -397,7 +395,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Designation, If any:</label>
             <input
-              defaultValue={bioInfo.leadDemographicDetailsDTO.motherDesignation}
+              defaultValue={bioInfo?.leadDemographicDetailsDTO?.motherDesignation || ""}
               readOnly
               style={{
                 display: "inline-block",
@@ -411,7 +409,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Gross Annual Salary/Income:</label>
             <input
-              defaultValue={bioInfo.leadDemographicDetailsDTO.motherAnnualIncome}
+              defaultValue={bioInfo?.leadDemographicDetailsDTO?.motherAnnualIncome || ""}
               readOnly
               style={{
                 display: "inline-block",

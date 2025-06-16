@@ -179,37 +179,39 @@ export const validationSchemaForBiographicalInfo = Yup.object({
     .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
     .required("Father's Name is required"),
 
-  fatherOccupation: Yup.string().matches(
-    /^[A-Za-z\s]+$/,
-    "Only characters are allowed"
-  ),
+  fatherOccupation: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
+    .nullable(),
 
-  fatherDesignation: Yup.string().matches(
-    /^[A-Za-z\s]+$/,
-    "Only characters are allowed"
-  ),
+  fatherDesignation: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
+    .nullable(),
 
   fatherAnnualIncome: Yup.number()
     .typeError("Father's Annual Income must be a number")
-    .min(0, "Income cannot be negative"),
+    .min(0, "Income cannot be negative")
+    .nullable(),
 
   motherName: Yup.string()
     .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
     .required("Mother's Name is required"),
 
-  motherOccupation: Yup.string().matches(
-    /^[A-Za-z\s]+$/,
-    "Only characters are allowed"
-  ),
+  motherOccupation: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
+    .nullable(),
 
-  motherDesignation: Yup.string().matches(
-    /^[A-Za-z\s]+$/,
-    "Only characters are allowed"
-  ),
+  motherDesignation: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
+    .nullable(),
 
   motherAnnualIncome: Yup.number()
     .typeError("Mother's Annual Income must be a number")
-    .min(0, "Income cannot be negative"),
+    .min(0, "Income cannot be negative")
+    .nullable(),
+
+  bloodGroup: Yup.string()
+    .matches(/^(A|B|AB|O)[+-]$/, "Invalid blood group")
+    .nullable(),
 });
 
 export const transformBiographicalPayload = (

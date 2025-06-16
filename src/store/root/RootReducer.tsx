@@ -256,6 +256,8 @@ import { getSuperBotcallbackReducer } from "../activity/get-superBotCallbackDeta
 import { getAtreekConsultancyLeadsReducer } from "../third-party-slices/get-atreekConsultancy-leads-slice";
 import { getAjayConsultancyLeadsReducer } from "../third-party-slices/get-ajayConsultancy-leads-slice";
 import { getCourseYardSolutionLeadsReducer } from "../third-party-slices/get-courseYardSolution-leads-slice";
+import { getAkshatEducationalServicesLeadsReducer } from "../third-party-slices/get-akshatEducationconsultancyLeads-slice";
+import { getPiyushShuklaLeadsReducer } from "../third-party-slices/get-piyushShuklaLeads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -559,6 +561,8 @@ const RootReducer = {
   getAtreekConsultancyLeads: getAtreekConsultancyLeadsReducer,
   getAjayConsultancyLeads: getAjayConsultancyLeadsReducer,
   getCourseYardSolutionLeads: getCourseYardSolutionLeadsReducer,
+  getAkshatEducationalServicesLeads: getAkshatEducationalServicesLeadsReducer,
+  getPiyushShuklaLeads: getPiyushShuklaLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,

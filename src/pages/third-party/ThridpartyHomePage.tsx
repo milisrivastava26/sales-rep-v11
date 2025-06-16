@@ -24,6 +24,8 @@ import { getAmitConsultancyLeads } from "../../store/third-party-slices/get-amit
 import { getAtreekConsultancyLeads } from "../../store/third-party-slices/get-atreekConsultancy-leads-slice";
 import { getAjayConsultancyLeads } from "../../store/third-party-slices/get-ajayConsultancy-leads-slice";
 import { getCourseYardSolutionLeads } from "../../store/third-party-slices/get-courseYardSolution-leads-slice";
+import { getAkshatEducationalServicesLeads } from "../../store/third-party-slices/get-akshatEducationconsultancyLeads-slice";
+import { getPiyushShuklaLeads } from "../../store/third-party-slices/get-piyushShuklaLeads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -87,7 +89,9 @@ const ThirdpartyHomePage: React.FC = () => {
   const rudraCareerGuidanceLeads = useSelector((state: RootState) => state.getRudraCaeerGuidanceLeads);
   const atreekConsultancyLeads = useSelector((state: RootState) => state.getAtreekConsultancyLeads);
   const ajayConsultancyLeads = useSelector((state: RootState) => state.getAjayConsultancyLeads);
-  const courseYardSolutionLeads = useSelector((state:RootState) => state.getCourseYardSolutionLeads);
+  const courseYardSolutionLeads = useSelector((state: RootState) => state.getCourseYardSolutionLeads);
+  const akshatConsultancyLeads = useSelector((state: RootState) => state.getAkshatEducationalServicesLeads);
+  const piyushShuklaLeads = useSelector((state: RootState) => state.getPiyushShuklaLeads);
 
 
   // State object to store loader, response, and action
@@ -153,6 +157,12 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_COURSE_YARD_SOLUTIONS") {
         dispatch(getCourseYardSolutionLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_AKSHAT_EDUCATIONAL_SERVICES") {
+        dispatch(getAkshatEducationalServicesLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_PIYUSH_SHUKLA") {
+        dispatch(getPiyushShuklaLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -303,7 +313,20 @@ const ThirdpartyHomePage: React.FC = () => {
         response: courseYardSolutionLeads.responseOfGetCourseYardSolutionLeads,
         action: () => courseYardSolutionLeads,
       });
-
+    }
+    else if (role === "ROLE_AKSHAT_EDUCATIONAL_SERVICES") {
+      setApiState({
+        isLoading: akshatConsultancyLeads.isLoading,
+        response: akshatConsultancyLeads.responseOfGetAkshatEducationalServicesLeads,
+        action: () => akshatConsultancyLeads,
+      });
+    }
+    else if (role === "ROLE_PIYUSH_SHUKLA") {
+      setApiState({
+        isLoading: piyushShuklaLeads.isLoading,
+        response: piyushShuklaLeads.responseOfGetPiyushShuklaLeads,
+        action: () => piyushShuklaLeads,
+      });
     }
 
   }, [
@@ -329,7 +352,9 @@ const ThirdpartyHomePage: React.FC = () => {
     amitLeads,
     atreekConsultancyLeads,
     ajayConsultancyLeads,
-    courseYardSolutionLeads
+    courseYardSolutionLeads,
+    akshatConsultancyLeads,
+    piyushShuklaLeads
   ]);
 
   return (
