@@ -258,6 +258,9 @@ import { getAjayConsultancyLeadsReducer } from "../third-party-slices/get-ajayCo
 import { getCourseYardSolutionLeadsReducer } from "../third-party-slices/get-courseYardSolution-leads-slice";
 import { getAkshatEducationalServicesLeadsReducer } from "../third-party-slices/get-akshatEducationconsultancyLeads-slice";
 import { getPiyushShuklaLeadsReducer } from "../third-party-slices/get-piyushShuklaLeads-slice";
+import { psIntegrationLeadDetailsReducer } from "../crm-to-ps-integration/get-psIntegration-leadDetails-slice";
+import { assignPsIdReducer } from "../crm-to-ps-integration/assign-ps-id-slice";
+import { syncDataToPsReducer } from "../crm-to-ps-integration/sync-data-to-ps-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -615,6 +618,11 @@ const RootReducer = {
   getCrmLeadPaymentDetails: crmLeadPaymentDetailsReducer,
   reconcilePayment: updateReconcilePaymentStatusReducer,
   getLeadFailedPaymentDetails: failedPaymentDetailsReducer,
+
+  //ps imtegration
+  getPsIntegrationLeadDetails: psIntegrationLeadDetailsReducer,
+  assignPsId: assignPsIdReducer,
+  syncDataToPs: syncDataToPsReducer,
 };
 
 export default RootReducer;

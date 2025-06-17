@@ -20,6 +20,7 @@ import MergeLeadsPage from "../pages/merge-leads/MergeLeadsPage";
 import ManageLeadsV2Page from "../pages/manage-leads-v2/ManageLeadsV2Page";
 import ManageTaskPage from "../pages/manage-task/ManageTaskPage";
 import PaymentInfoPage from "../pages/payment-info/PaymentInfoPage";
+import CrmToPsIntegrationPage from "../pages/crm-to-ps-integration/CrmToPsIntegrationPage";
 
 // Helper function that builds routes based on user details
 export const getRoutes = (userDetails: any) => {
@@ -132,10 +133,10 @@ export const getRoutes = (userDetails: any) => {
             path: "/payment-info",
             element: <PaymentInfoPage />
           },
-          // {
-          //   path: "/ps-integration",
-          //   element: <CrmToPsIntegrationPage />
-          // },
+          {
+            path: "/ps-integration",
+            element: <CrmToPsIntegrationPage />
+          },
           {
             path: "view-decline-cases",
             element: <ViewDeclineCasesPage />,

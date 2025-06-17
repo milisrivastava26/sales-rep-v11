@@ -70,7 +70,6 @@ const ViewPaymentDetails: React.FC = () => {
             orderId: leadPaymentDetails.id,
             corePaymentTypeId: crmLeadPaymentDetails.paymentTypeId,
             leadEnquiryId: crmLeadPaymentDetails.leadEnquiryId,
-            leadCaptureId: crmLeadPaymentDetails.leadCaptureId,
         }
         store.dispatch(updateReconcilePaymentStatus(payload))
     }
