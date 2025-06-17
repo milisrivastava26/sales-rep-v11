@@ -10,11 +10,7 @@ import { renderIcon } from "./operation/GetIconFromName";
 import { onToggleActiveStepHandler } from "../../../../store/ui/ui-slice";
 import { formatTime } from "../../../../util/actions/extractDateAndTime";
 import { extractDateTime } from "../../../../util/actions/extractDateAndTime";
-import {
-  FaChevronDown,
-  FaChevronRight,
-  FaRegCheckCircle,
-} from "react-icons/fa";
+import { FaChevronDown, FaChevronRight, FaRegCheckCircle } from "react-icons/fa";
 import { updateLeadCompletionStatus } from "../../../../store/task/update-leadscheduleTaskCompletionStatus-slice";
 import { getLeadActivityByTrackingId } from "../../../../store/view-leads-details/get-leadActivity-byTrackingId-slice";
 import { getInboundCallDetails } from "../../../../store/lead-properties/get-inboundCall-details-by-actionTrackId-slice";
@@ -65,11 +61,7 @@ interface ProgressStepType {
   paymentAmount?: number;
   PaymentInitiationDate?: string;
   paymentStatus?: string;
-  onDownloadDocForNotesHandler?: (
-    leadCaptureId: string | number | undefined,
-    docName: string | number | undefined,
-    docTypeId: string | number | undefined
-  ) => void;
+  onDownloadDocForNotesHandler?: (leadCaptureId: string | number | undefined, docName: string | number | undefined, docTypeId: string | number | undefined) => void;
   mode?: string;
   receiptNumber?: string;
   getPaymentReceiptData?: (data: any) => void;
@@ -99,15 +91,11 @@ const ProgressStep: React.FC<ProgressStepType> = ({
   paymentStatus,
   getPaymentReceiptData,
   mode,
-  receiptNumber
+  receiptNumber,
 }) => {
   const { activeStep } = useSelector((state: RootState) => state.ui);
-  const { userDetails } = useSelector(
-    (state: RootState) => state.getLoggedInUserData
-  );
-  const { leadPropertiesDataById } = useSelector(
-    (state: RootState) => state.getLeadPropertiesDataById
-  );
+  const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
+  const { leadPropertiesDataById } = useSelector((state: RootState) => state.getLeadPropertiesDataById);
   const { responseOfLeadEnquiryDetailsById } = useSelector((state: RootState) => state.getLeadEnquiryDetailsDataById);
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById) ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE") : [];
   const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
@@ -116,13 +104,9 @@ const ProgressStep: React.FC<ProgressStepType> = ({
   const { leadCaptureId } = useParams();
 
   const { dateFormatted, timeFormatted } = extractDateTime(timestamp);
-  const { dateFormatted: createdDate, timeFormatted: createdTime } =
-    extractDateTime(createdAt);
-  const { dateFormatted: paymentDate, timeFormatted: paymentInitiateTime } =
-    extractDateTime(PaymentInitiationDate);
-  const { responseOfLeadAddressById } = useSelector(
-    (state: RootState) => state.getLeadAddressDataById
-  );
+  const { dateFormatted: createdDate, timeFormatted: createdTime } = extractDateTime(createdAt);
+  const { dateFormatted: paymentDate, timeFormatted: paymentInitiateTime } = extractDateTime(PaymentInitiationDate);
+  const { responseOfLeadAddressById } = useSelector((state: RootState) => state.getLeadAddressDataById);
 
   const Hour_12_Time = formatTime(timestamp);
   const handleActiveStep = async (id: number | undefined, title: string) => {
@@ -165,25 +149,16 @@ const ProgressStep: React.FC<ProgressStepType> = ({
         await store.dispatch(getRecordWalkinOutcomeDetails(id));
       } else if (title === "Record Counselling Outcome") {
         await store.dispatch(getRecordCounsellingOutcomeDetails(id));
-      }
-      else if (title === "SuperBot Callback") {
+      } else if (title === "SuperBot Callback") {
         await store.dispatch(getSuperBotcallbackDetails(id));
-      }
-      // else if (title === "Initiate Payment") {
-      //   await store.dispatch(
-      //     getLeadInitiatePaymentDetails({ leadCaptureId, leadEnquiryId })
-      //   );
-      // } 
-
-      else if (title === "Offer Analysis") {
+      } else if (title === "Offer Analysis") {
         await store.dispatch(getLeadOfferAnalysisDetailsByEnquiryId(leadEnquiryId));
-      }
-
-      else if (title === "General Information") {
+      } else if (title === "General Information") {
         await store.dispatch(getLeadGeneralInfoDetails(leadCaptureId));
-      }
-      else {
-        await store.dispatch(getLeadActivityByTrackingId(id));
+      } else {
+        if (title !== "Sent Email" && title !== "Declaration") {
+          await store.dispatch(getLeadActivityByTrackingId(id));
+        }
       }
     }
   };
@@ -205,47 +180,35 @@ const ProgressStep: React.FC<ProgressStepType> = ({
     }
   };
 
-
   return (
     <div className="relative flex group hover:bg-slate-50 items-stretch px-4 ">
       <div className="flex flex-col mr-[8px] mt-[10px]">
-        <p className="text-sm text-gray-500 max-w-[70px] min-w-[80px] mt-1">
-          {isMode === "task" ? date : dateFormatted}
-        </p>
-        <p className="text-sm text-gray-500 max-w-[70px] min-w-[80px] mt-1">
-          {isMode === "task" ? Hour_12_Time : timeFormatted}
-        </p>
+        <p className="text-sm text-gray-500 max-w-[70px] min-w-[80px] mt-1">{isMode === "task" ? date : dateFormatted}</p>
+        <p className="text-sm text-gray-500 max-w-[70px] min-w-[80px] mt-1">{isMode === "task" ? Hour_12_Time : timeFormatted}</p>
       </div>
       <div className="flex flex-col items-center h-auto">
         {!isLast && <div className="h-5 w-[3px] bg-[#E0E3E8]"></div>}
         <div
-          className={`w-8 h-8 min-w-8 min-h-8 rounded-full ${isMode === "task"
-            ? "bg-[#919EAB]"
-            : isMode === "Notes"
+          className={`w-8 h-8 min-w-8 min-h-8 rounded-full ${
+            isMode === "task"
+              ? "bg-[#919EAB]"
+              : isMode === "Notes"
               ? "bg-yellow-500"
               : isMode === "Payment"
-                ? paymentStatus === "PAYMENT DONE" ? "bg-green-500" : "bg-red-400"
-                : "bg-blue-500"
-            } flex items-center justify-center`}
+              ? paymentStatus === "PAYMENT DONE"
+                ? "bg-green-500"
+                : "bg-red-400"
+              : "bg-blue-500"
+          } flex items-center justify-center`}
         >
           <span
             className="
           text-white text-xl"
           >
-            {isMode === "task" ? (
-              <BiTask />
-            ) : isMode === "Notes" ? (
-              <GrNotes className="text-[17px]" />
-            ) : isMode === "Payment" ? (
-              <MdPayment />
-            ) : (
-              icon && renderIcon(icon)
-            )}
+            {isMode === "task" ? <BiTask /> : isMode === "Notes" ? <GrNotes className="text-[17px]" /> : isMode === "Payment" ? <MdPayment /> : icon && renderIcon(icon)}
           </span>
         </div>
-        {!isLast && (
-          <div className="h-full min-h-20 w-[3px] bg-[#E0E3E8] "></div>
-        )}
+        {!isLast && <div className="h-full min-h-20 w-[3px] bg-[#E0E3E8] "></div>}
       </div>
 
       <div className="w-full ml-1 sm:ml-3 mt-[16px]">
@@ -255,26 +218,20 @@ const ProgressStep: React.FC<ProgressStepType> = ({
               {isMode !== "task" && isMode !== "Payment" && (
                 <div className=" text-blue-500 ">
                   {isActive ? (
-                    <FaChevronDown
-                      className="cursor-pointer"
-                      onClick={() => handleActiveStep(id, title)}
-                    />
+                    <FaChevronDown className="cursor-pointer" onClick={() => handleActiveStep(id, title)} />
                   ) : (
-                    <FaChevronRight
-                      className="cursor-pointer"
-                      onClick={() => handleActiveStep(id, title)}
-                    />
+                    <FaChevronRight className="cursor-pointer" onClick={() => handleActiveStep(id, title)} />
                   )}
                 </div>
               )}
               <p
-                className={`font-medium ${isMode === "task"
-                  ? `ml-[13px] text-[13px] text-[rgb(69,79,91)] ${status ? "line-through" : ""
-                  }`
-                  : isMode === "Payment"
+                className={`font-medium ${
+                  isMode === "task"
+                    ? `ml-[13px] text-[13px] text-[rgb(69,79,91)] ${status ? "line-through" : ""}`
+                    : isMode === "Payment"
                     ? "ml-[13px] text-[rgb(69,79,91)]"
                     : "text-blue-500"
-                  }`}
+                }`}
               >
                 {isMode === "Payment" ? `Payment Type: ${title}` : title}
               </p>
@@ -289,8 +246,7 @@ const ProgressStep: React.FC<ProgressStepType> = ({
               </div>
               <div>
                 <span className="font-semibold">Action Date </span>
-                {isMode === "task" ? date : dateFormatted} at{" "}
-                {isMode === "task" ? Hour_12_Time : timeFormatted}{" "}
+                {isMode === "task" ? date : dateFormatted} at {isMode === "task" ? Hour_12_Time : timeFormatted}{" "}
               </div>
             </div>
           )}
@@ -317,9 +273,7 @@ const ProgressStep: React.FC<ProgressStepType> = ({
                   </div>
                   <div className="flex gap-1">
                     <p className="font-normal">By:</p>
-                    <span className="font-semibold">
-                      {createdBy}
-                    </span>
+                    <span className="font-semibold">{createdBy}</span>
                   </div>
                 </div>
               </div>
@@ -329,23 +283,26 @@ const ProgressStep: React.FC<ProgressStepType> = ({
           {isMode === "Payment" && (
             <div className="ml-4 mt-2 max-w-md rounded-xl border border-gray-200 bg-white px-5 py-3 shadow-md">
               <h3 className="mb-2 text-lg font-semibold text-gray-800 flex gap-2 items-center justify-between">
-                <span>💳 Payment Summary</span>  {paymentStatus === "PAYMENT DONE" && <IoMdDownload
-                  className="cursor-pointer hover:text-green-600 text-lg"
-                  onClick={() =>
-                    getPaymentReceiptData &&
-                    getPaymentReceiptData({
-                      responseOfLeadAddressById,
-                      id,
-                      paymentAmount,
-                      paymentDate,
-                      paymentInitiateTime,
-                      leadName: activeEnquiry[0].leadName,
-                      leadCaptureId,
-                      mode,
-                      receiptNumber,
-                    })
-                  }
-                />}
+                <span>💳 Payment Summary</span>{" "}
+                {paymentStatus === "PAYMENT DONE" && (
+                  <IoMdDownload
+                    className="cursor-pointer hover:text-green-600 text-lg"
+                    onClick={() =>
+                      getPaymentReceiptData &&
+                      getPaymentReceiptData({
+                        responseOfLeadAddressById,
+                        id,
+                        paymentAmount,
+                        paymentDate,
+                        paymentInitiateTime,
+                        leadName: activeEnquiry[0].leadName,
+                        leadCaptureId,
+                        mode,
+                        receiptNumber,
+                      })
+                    }
+                  />
+                )}
               </h3>
               <div className="space-y-2 text-sm text-gray-700">
                 <div className="flex items-center justify-between border-b pb-1">
@@ -374,10 +331,7 @@ const ProgressStep: React.FC<ProgressStepType> = ({
 
           {isMode === "Notes" && (
             <div className="text-gray-500 text-sm pt-2 ml-[15px]">
-              <div
-                className="break-all"
-                dangerouslySetInnerHTML={{ __html: description ?? "" }}
-              ></div>
+              <div className="break-all" dangerouslySetInnerHTML={{ __html: description ?? "" }}></div>
               {/* <div>
                 <img src={leadDocAttachmentDTO?.path} height="40" width="40" />
                 <a href={leadDocAttachmentDTO?.path} target="_blank">
@@ -388,12 +342,7 @@ const ProgressStep: React.FC<ProgressStepType> = ({
                 <div
                   className="text-blue-400 font-semibold cursor-pointer"
                   title="download your file"
-                  onClick={onDownloadDocForNotesHandler?.bind(
-                    {},
-                    leadDocAttachmentDTO?.leadCaptureId,
-                    leadDocAttachmentDTO?.name,
-                    leadDocAttachmentDTO?.coreDocAttachmentTypeId
-                  )}
+                  onClick={onDownloadDocForNotesHandler?.bind({}, leadDocAttachmentDTO?.leadCaptureId, leadDocAttachmentDTO?.name, leadDocAttachmentDTO?.coreDocAttachmentTypeId)}
                 >
                   {leadDocAttachmentDTO?.name}
                 </div>
@@ -420,26 +369,16 @@ const ProgressStep: React.FC<ProgressStepType> = ({
           <div className="flex items-center">
             {isMode === "task" && (
               <button
-                className={`mr-2 rounded-sm px-1.5 py-1 ${!status
-                  ? "bg-blue-600 border border-blue-600 text-white gap-1"
-                  : "bg-transparent border border-gray-400 text-black gap-1"
-                  } ${isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""
-                  } flex items-center`}
+                className={`mr-2 rounded-sm px-1.5 py-1 ${
+                  !status ? "bg-blue-600 border border-blue-600 text-white gap-1" : "bg-transparent border border-gray-400 text-black gap-1"
+                } ${isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""} flex items-center`}
                 type="button"
                 onClick={() => id !== undefined && handleComplete(id)}
                 disabled={isButtonDisabled}
               >
                 <div className="flex items-center justify-center gap-x-[4px]">
-                  <div>
-                    {!status ? (
-                      <FaRegCheckCircle className="text-[15px] mt-[1.2px]" />
-                    ) : (
-                      <BiTask className="text-[15px]" />
-                    )}
-                  </div>
-                  <div className="text-[13px]">
-                    {!status ? "Mark Complete" : "Mark Open"}
-                  </div>
+                  <div>{!status ? <FaRegCheckCircle className="text-[15px] mt-[1.2px]" /> : <BiTask className="text-[15px]" />}</div>
+                  <div className="text-[13px]">{!status ? "Mark Complete" : "Mark Open"}</div>
                 </div>
               </button>
             )}
@@ -449,9 +388,7 @@ const ProgressStep: React.FC<ProgressStepType> = ({
                 type="button"
                 onClick={() => {
                   if (isMode === "task") {
-                    id !== undefined &&
-                      coreTaskTypeId !== undefined &&
-                      onHandleEditClick(id, coreTaskTypeId);
+                    id !== undefined && coreTaskTypeId !== undefined && onHandleEditClick(id, coreTaskTypeId);
                   } else if (isMode === "Notes") {
                     leadNotesId !== undefined && onHandleEditClick(leadNotesId);
                   }

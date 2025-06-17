@@ -132,6 +132,10 @@ export const getRoutes = (userDetails: any) => {
             path: "/payment-info",
             element: <PaymentInfoPage />
           },
+          // {
+          //   path: "/ps-integration",
+          //   element: <CrmToPsIntegrationPage />
+          // },
           {
             path: "view-decline-cases",
             element: <ViewDeclineCasesPage />,

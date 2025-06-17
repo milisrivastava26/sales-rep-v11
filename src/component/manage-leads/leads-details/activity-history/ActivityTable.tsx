@@ -21,9 +21,7 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
   const { isLoading: ldPayLoading, leadPaymentsDetailsDataById } = useSelector((state: RootState) => state.getLeadPaymentsDetailsDataById);
   const { isLoading: isLoadingForLeadCaptureDetails, leadCaptureDetailsByActionTrackId } = useSelector((state: RootState) => state.getLeadCaptureDetailsByActionTrackId);
   const { leadTaskDetailsDataById, isLoading: isLoadingForTaskDetails } = useSelector((state: RootState) => state.getLeadTaskDetailsDataById);
-  const { isLoading: isLoadingForNotesDetails, leadNotesDetailsDataById } = useSelector(
-    (state: RootState) => state.getLeadNotesDetailsDataById
-  ) as unknown as {
+  const { isLoading: isLoadingForNotesDetails, leadNotesDetailsDataById } = useSelector((state: RootState) => state.getLeadNotesDetailsDataById) as unknown as {
     isLoading: boolean;
     leadNotesDetailsDataById: {
       leadCaptureId: string;
@@ -86,12 +84,10 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
   } else if (title === "Offer Analysis") {
     activityData = leadOfferAnalysisDetailsDataById;
     isLoading = isLoadingForOfferDetails;
-  }
-  else if (title === "SuperBot Callback") {
+  } else if (title === "SuperBot Callback") {
     activityData = responseForSuperBotCallback;
     isLoading = isLoadingForSuperBotDetails;
-  }
-  else {
+  } else {
     activityData = leadActivityDataByTrackingId;
   }
 
@@ -113,7 +109,7 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
     return <p className="ml-5 mt-2 text-gray-700">For more details please switch to payment tab</p>;
   }
 
-  if (!activityData || Object.keys(activityData).length === 0) {
+  if (!activityData || (Object.keys(activityData).length === 0 && title !== "Sent Email" && title !== "Declaration")) {
     return <p className="ml-5 text-gray-700">No data found for activity table</p>;
   }
 
@@ -148,13 +144,13 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
                         <div className="space-y-1">
                           {value.map((line: string, index: number) => {
                             const match = line.match(/^(superbot:|user:)(.*)$/i);
-                            const speaker = match ? match[1] : '';
+                            const speaker = match ? match[1] : "";
                             const message = match ? match[2] : line;
 
                             return (
                               <div key={index} className="text-sm whitespace-pre-line text-gray-800">
                                 {speaker && (
-                                  <span className={speaker.toLowerCase() === 'superbot:' ? 'text-blue-700 font-medium' : 'text-red-600 font-semibold'}>
+                                  <span className={speaker.toLowerCase() === "superbot:" ? "text-blue-700 font-medium" : "text-red-600 font-semibold"}>
                                     {capitalizeName(speaker)}
                                   </span>
                                 )}
@@ -164,44 +160,31 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
                           })}
                         </div>
                       ) : (
-                        <textarea
-                          value={value}
-                          readOnly
-                          rows={8}
-                          className="w-full rounded-md px-4 py-2 text-sm bg-blue-50 resize-none"
-                        />
+                        <textarea value={value} readOnly rows={8} className="w-full rounded-md px-4 py-2 text-sm bg-blue-50 resize-none" />
                       )}
                     </td>
-
-
-
                   </>
-                ) :
-
-                  (
-                    <>
-                      {key !== "leadCaptureId" && key !== "coreDocAttachmentTypeId" && (
-                        <>
-                          <td className="px-4 py-2 border">{capitalizeName(key)}</td>
-                          <td
-                            className={`px-4 py-2 max-w-[300px] border break-words whitespace-normal overflow-hidden text-ellipsis ${key === "name" && title === "Leads Notes" ? "text-blue-500 cursor-pointer" : ""
-                              }`}
-                            onClick={() => {
-                              if (key === "name" && title === "Leads Notes" && value !== null) {
-                                downloadDoc();
-                              }
-                            }}
-                          >
-                            {key === "description"
-                              ? notesDescription
-                              : key === "New Owner Assigned Date" || key === "Assigned Date"
-                                ? String(value)?.split("T")[0]
-                                : value}
-                          </td>
-                        </>
-                      )}
-                    </>
-                  )}
+                ) : (
+                  <>
+                    {key !== "leadCaptureId" && key !== "coreDocAttachmentTypeId" && (
+                      <>
+                        <td className="px-4 py-2 border">{capitalizeName(key)}</td>
+                        <td
+                          className={`px-4 py-2 max-w-[300px] border break-words whitespace-normal overflow-hidden text-ellipsis ${
+                            key === "name" && title === "Leads Notes" ? "text-blue-500 cursor-pointer" : ""
+                          }`}
+                          onClick={() => {
+                            if (key === "name" && title === "Leads Notes" && value !== null) {
+                              downloadDoc();
+                            }
+                          }}
+                        >
+                          {key === "description" ? notesDescription : key === "New Owner Assigned Date" || key === "Assigned Date" ? String(value)?.split("T")[0] : value}
+                        </td>
+                      </>
+                    )}
+                  </>
+                )}
               </tr>
             );
           })}
@@ -209,6 +192,32 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
       </table>
     </div>
   );
+
+  if (title === "Declaration") {
+    return (
+      <div className="rounded-2xl px-6 pt-2">
+        <div className="flex items-start space-x-4">
+          <div className="flex-1 bg-blue-50 p-4 rounded-md max-w-[50%]">
+            <h3 className="text-lg font-semibold text-gray-800 mb-1">✅ Declaration Accepted</h3>
+            <p className="text-gray-600 flex-wrap">The applicant has successfully reviewed and accepted the declaration terms and conditions.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (title === "Sent Email") {
+    return (
+      <div className="rounded-2xl px-6 pt-2">
+        <div className="flex items-start space-x-4">
+          <div className="flex-1 bg-blue-50 p-4 rounded-md max-w-[50%]">
+            <h3 className="text-lg font-semibold text-gray-800 mb-1">✅ Offer Email Sent</h3>
+            <p className="text-gray-600 flex-wrap">Offer details email has been successfully sent to the lead’s registered email address.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (title === "General Information") {
     const firstHalf = activityData[0] || {};
