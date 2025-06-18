@@ -4,48 +4,48 @@ export const transformAcademicDetails = (academicDetials: any) => {
   if (academicDetials?.detailsForTenthDTO) {
     result.push({
       exam: "High School",
-      subject: "", // You can replace with real subject if available
+      subject: academicDetials.detailsForTenthDTO.stream, 
       board: academicDetials.detailsForTenthDTO.tenthBoardName || "",
       school: academicDetials.detailsForTenthDTO.school || "",
-      year: "", // Add year if available
-      marks: academicDetials.detailsForTenthDTO.tenthMarksOrGrade || "",
-      percentage: "", // Add calculated percentage if available
+      year: academicDetials.detailsForTenthDTO.yearOfPassing, // Add year if available
+      marks: academicDetials.detailsForTenthDTO.marksScored || "",
+      percentage: academicDetials.detailsForTenthDTO.tenthMarksOrGrade, // Add calculated percentage if available
     });
   }
  
   if (academicDetials?.leadAcademicDetailsTwelfthDTO) {
     result.push({
       exam: "Intermediate",
-      subject: "", // Replace with actual subject if available
+      subject: academicDetials.leadAcademicDetailsTwelfthDTO.stream, 
       board: academicDetials.leadAcademicDetailsTwelfthDTO.twelveBoardName || "",
       school: academicDetials.leadAcademicDetailsTwelfthDTO.school || "",
-      year: "", // Add year if available
-      marks: academicDetials.leadAcademicDetailsTwelfthDTO.twelveMarksOrGrade || "",
-      percentage: "", // Add calculated percentage if available
+      year: academicDetials.leadAcademicDetailsTwelfthDTO.yearOfPassing,
+      marks: academicDetials.leadAcademicDetailsTwelfthDTO.marksScored || "",
+      percentage: academicDetials.leadAcademicDetailsTwelfthDTO.twelveMarksOrGrade, // Add calculated percentage if available
     });
   }
  
   if (academicDetials?.leadAcademicDetailsUGDTO) {
     result.push({
       exam: "Graduation",
-      subject: "", // Replace if available
-      board: academicDetials.leadAcademicDetailsUGDTO.universityName || "",
-      school: academicDetials.leadAcademicDetailsUGDTO.collegeName || "",
-      year: "", // Add year if available
-      marks: academicDetials.leadAcademicDetailsUGDTO.totalMarks || "",
-      percentage: academicDetials.leadAcademicDetailsUGDTO.percentage || "",
+      subject: academicDetials.leadAcademicDetailsUGDTO.program, // Replace if available
+      board: academicDetials.leadAcademicDetailsUGDTO.program || "",
+      school: academicDetials.leadAcademicDetailsUGDTO.degree || "",
+      year: academicDetials.leadAcademicDetailsUGDTO.yearOfPassing, // Add year if available
+      marks: academicDetials.leadAcademicDetailsUGDTO.marksScored || "",
+      percentage: academicDetials.leadAcademicDetailsUGDTO.marks || "",
     });
   }
  
   if (academicDetials?.leadAcademicDetailsDiplomaDTO) {
     result.push({
       exam: "Diploma",
-      subject: "", // Replace if available
-      board: academicDetials.leadAcademicDetailsDiplomaDTO.boardName || "",
-      school: academicDetials.leadAcademicDetailsDiplomaDTO.schoolName || "",
-      year: "", // Add year if available
-      marks: academicDetials.leadAcademicDetailsDiplomaDTO.marks || "",
-      percentage: academicDetials.leadAcademicDetailsDiplomaDTO.percentage || "",
+      subject: academicDetials.leadAcademicDetailsDiplomaDTO.program, 
+      board: academicDetials.leadAcademicDetailsDiplomaDTO.diplomaBoard || "",
+      school: academicDetials.leadAcademicDetailsDiplomaDTO.school || "",
+      year: academicDetials.leadAcademicDetailsDiplomaDTO.yearOfPassing , 
+      marks: academicDetials.leadAcademicDetailsDiplomaDTO.marksScored || "",
+      percentage: academicDetials.leadAcademicDetailsDiplomaDTO.marks || "",
     });
   }
  

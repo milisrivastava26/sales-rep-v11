@@ -94,10 +94,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           >
             <label style={{ width: "48%" }}>
               ERP ID:
-              <input
-                style={{ display: "inline-block", width: "103px", border: "none", borderBottom: "1px solid black", outline: "none" }}
-                readOnly
-              />
+              <input style={{ display: "inline-block", width: "103px", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
             </label>
             <label style={{ width: "48%", textAlign: "right" }}>
               No.
@@ -237,7 +234,11 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Blood Group:</label>
-            <input defaultValue={bioInfo?.leadDemographicDetailsDTO?.bloodGroup || ""} style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
+            <input
+              defaultValue={bioInfo?.leadDemographicDetailsDTO?.bloodGroup || ""}
+              style={{ display: "inline-block", width: "100%", border: "none", borderBottom: "1px solid black", outline: "none" }}
+              readOnly
+            />
           </div>
           <div style={{ display: "flex", width: "100%", alignItems: "center" }}>
             <label style={{ width: "10%", textAlign: "center", marginRight: "1rem" }}>Category:</label>
@@ -270,7 +271,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <div style={{ width: "100%", display: "flex", gap: "1rem" }}>
             <label style={{ whiteSpace: "nowrap" }}>Mobile:</label>
             <input
-              defaultValue={generalInfo?.phone ||""}
+              defaultValue={generalInfo?.phone || ""}
               readOnly
               style={{
                 display: "inline-block",
@@ -330,7 +331,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             />
           </div>
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
-            <label style={{ whiteSpace: "nowrap" }}>Gross Annual Salary/Income:</label>
+            <label style={{ whiteSpace: "nowrap" }}>Father's Gross Annual Salary/Income:</label>
             <input
               defaultValue={bioInfo?.leadDemographicDetailsDTO?.fatherAnnualIncome || ""}
               readOnly
@@ -407,7 +408,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             />
           </div>
           <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "1rem" }}>
-            <label style={{ whiteSpace: "nowrap" }}>Gross Annual Salary/Income:</label>
+            <label style={{ whiteSpace: "nowrap" }}>Mother's Gross Annual Salary/Income:</label>
             <input
               defaultValue={bioInfo?.leadDemographicDetailsDTO?.motherAnnualIncome || ""}
               readOnly
@@ -443,8 +444,8 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             defaultValue={
               addressPermanent
                 ? [addressPermanent.addressLine1, addressPermanent.addressLine2, addressPermanent.cityName, addressPermanent.stateName, addressPermanent.pin]
-                  .filter(Boolean)
-                  .join(", ")
+                    .filter(Boolean)
+                    .join(", ")
                 : ""
             }
             readOnly
@@ -495,14 +496,14 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             defaultValue={
               addressCorrespondence
                 ? [
-                  addressCorrespondence.addressLine1,
-                  addressCorrespondence.addressLine2,
-                  addressCorrespondence.cityName,
-                  addressCorrespondence.stateName,
-                  addressCorrespondence.pin,
-                ]
-                  .filter(Boolean)
-                  .join(", ")
+                    addressCorrespondence.addressLine1,
+                    addressCorrespondence.addressLine2,
+                    addressCorrespondence.cityName,
+                    addressCorrespondence.stateName,
+                    addressCorrespondence.pin,
+                  ]
+                    .filter(Boolean)
+                    .join(", ")
                 : ""
             }
             readOnly
@@ -582,52 +583,52 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <tbody>
             {academicDetails.length > 0
               ? academicDetails.map((item: any, index: any) => (
-                <tr key={index}>
-                  <td style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
-                    <div
-                      style={{
-                        display: "inline-block",
-                        width: "100%",
-                        border: "none",
-                        textAlign: "center",
-                        outline: "none",
-                      }}
-                    >
-                      {`${index + 1}.`}
-                    </div>
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.exam}</div>
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.subject}</div>
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.board}</div>
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.school}</div>
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.year}</div>
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.marks}</div>
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.percentage}</div>
-                  </td>
-                </tr>
-              ))
-              : [...Array(1)].map((_, rowIndex) => (
-                <tr key={`empty-${rowIndex}`}>
-                  {[...Array(8)].map((_, colIndex) => (
-                    <td key={colIndex} style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
-                      <div style={{ display: "inline-block", width: "100%", height: "30px" }}></div>
+                  <tr key={index}>
+                    <td style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
+                      <div
+                        style={{
+                          display: "inline-block",
+                          width: "100%",
+                          border: "none",
+                          textAlign: "center",
+                          outline: "none",
+                        }}
+                      >
+                        {`${index + 1}.`}
+                      </div>
                     </td>
-                  ))}
-                </tr>
-              ))}
+                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.exam}</div>
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.subject}</div>
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.board}</div>
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.school}</div>
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.year}</div>
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.marks}</div>
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.percentage}</div>
+                    </td>
+                  </tr>
+                ))
+              : [...Array(1)].map((_, rowIndex) => (
+                  <tr key={`empty-${rowIndex}`}>
+                    {[...Array(8)].map((_, colIndex) => (
+                      <td key={colIndex} style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
+                        <div style={{ display: "inline-block", width: "100%", height: "30px" }}></div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
           </tbody>
         </table>
 
@@ -638,19 +639,11 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
         <div style={{ marginBottom: "0.5rem" }}>
           Are you interested in SRMUSET:
           <label style={{ display: "inline-flex", alignItems: "center", marginLeft: "0.5rem", marginRight: "1rem" }}>
-            <input
-              type="checkbox"
-              readOnly
-              checked={srmusetInfo?.isSrmuSetOpted === true}
-            />
+            <input type="checkbox" readOnly checked={srmusetInfo?.isSrmuSetOpted === true} />
             <span style={{ marginLeft: "0.25rem" }}>Yes</span>
           </label>
           <label style={{ display: "inline-flex", alignItems: "center" }}>
-            <input
-              type="checkbox"
-              readOnly
-              checked={srmusetInfo?.isSrmuSetOpted === false}
-            />
+            <input type="checkbox" readOnly checked={srmusetInfo?.isSrmuSetOpted === false} />
             <span style={{ marginLeft: "0.25rem" }}>No</span>
           </label>
         </div>
@@ -662,15 +655,12 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               display: "inline-block",
               borderBottom: "1px solid black",
               width: "12rem",
-              marginLeft: "0.25rem"
+              marginLeft: "0.25rem",
             }}
           >
-            {srmusetInfo?.isSrmuSetOpted === true
-              ? dayjs(srmusetInfo?.preferedDate || "").format("YYYY-MM-DD")
-              : ""}
+            {srmusetInfo?.isSrmuSetOpted === true ? dayjs(srmusetInfo?.preferedDate || "").format("YYYY-MM-DD") : ""}
           </span>
         </div>
-
       </form>
       <br />
       <br />
@@ -706,52 +696,47 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <p style={{ fontWeight: 700, marginBottom: "4px" }}>Non Liability</p>
           <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
             <li style={{ marginBottom: "4px" }}>
-              Shri Ramswaroop Memorial University (SRMU) has not authorized any admission consultants, agents, counseling centers or any such persons promising, confirming or giving admissions. All such peoples indulging in these activities are unauthorized, fake &amp; fraudulent and immediately be reported at{" "}
-              admissions@srmcu.ac.in
-              or 1800-102-6004
+              Shri Ramswaroop Memorial University (SRMU) has not authorized any admission consultants, agents, counseling centers or any such persons promising, confirming or
+              giving admissions. All such peoples indulging in these activities are unauthorized, fake &amp; fraudulent and immediately be reported at admissions@srmcu.ac.in or
+              1800-102-6004
             </li>
           </ul>
 
           <p style={{ fontWeight: 700, marginBottom: "4px" }}>Cancellation of Admission</p>
-          <p style={{ fontWeight: 700, marginBottom: "4px" }}>
-            SRMU reserves its right to cancel the admission of selected candidate under any of the following circumstances:
-          </p>
+          <p style={{ fontWeight: 700, marginBottom: "4px" }}>SRMU reserves its right to cancel the admission of selected candidate under any of the following circumstances:</p>
           <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
+            <li style={{ marginBottom: "4px" }}>If fee is not deposited as per the timelines provided in the declaration form</li>
+            <li style={{ marginBottom: "4px" }}>If the candidate does not join the particular program by the stipulated date even though the fee has been deposited</li>
             <li style={{ marginBottom: "4px" }}>
-              If fee is not deposited as per the timelines provided in the declaration form
+              If any document submitted by the candidate is found false, fabricated or forged during period of study, admission shall be cancelled immediately and fee shall be
+              forfeited
             </li>
+            <li style={{ marginBottom: "4px" }}>If student is found practicing any unfair means after admission</li>
             <li style={{ marginBottom: "4px" }}>
-              If the candidate does not join the particular program by the stipulated date even though the fee has been deposited
-            </li>
-            <li style={{ marginBottom: "4px" }}>
-              If any document submitted by the candidate is found false, fabricated or forged during period of study, admission shall be cancelled immediately and fee shall be forfeited
-            </li>
-            <li style={{ marginBottom: "4px" }}>
-              If student is found practicing any unfair means after admission
-            </li>
-            <li style={{ marginBottom: "4px" }}>
-              If the student is found indulged in any act of indiscipline, damage/ breakage of any property belonging to university, admission will be cancelled along with appropriate legal action for recovery of the damages
+              If the student is found indulged in any act of indiscipline, damage/ breakage of any property belonging to university, admission will be cancelled along with
+              appropriate legal action for recovery of the damages
             </li>
           </ul>
 
           <p style={{ fontWeight: 700, marginBottom: "4px" }}>Imposition of Fine</p>
           <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
             <li style={{ marginBottom: "4px" }}>
-              If program fee is not paid as per the timelines provided in the declaration form at the time of admission, suitable fine as per university policy will be imposed along with waiver of concession provided, if any
+              If program fee is not paid as per the timelines provided in the declaration form at the time of admission, suitable fine as per university policy will be imposed
+              along with waiver of concession provided, if any
             </li>
             <li style={{ marginBottom: "4px" }}>
-              Absence from scheduled classes without prior information and without a valid reason will lead to name getting struck off and readmission at discretion of university after paying the due fine/ fees
+              Absence from scheduled classes without prior information and without a valid reason will lead to name getting struck off and readmission at discretion of university
+              after paying the due fine/ fees
             </li>
             <li style={{ marginBottom: "4px" }}>
-              If a student is found in unauthorized use of transportation or residing in hostel without approval of authorities, he will be liable to pay fee for the facility used for the entire year
+              If a student is found in unauthorized use of transportation or residing in hostel without approval of authorities, he will be liable to pay fee for the facility used
+              for the entire year
             </li>
           </ul>
 
           <p style={{ fontWeight: 700, marginBottom: "4px" }}>Refund of Fee</p>
           <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
-            <li style={{ marginBottom: "4px" }}>
-              Fee refund will be governed by the University Refund Policy
-            </li>
+            <li style={{ marginBottom: "4px" }}>Fee refund will be governed by the University Refund Policy</li>
           </ul>
 
           <p style={{ fontWeight: 700, marginBottom: "4px" }}>Jurisdiction</p>
@@ -763,9 +748,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
 
           <p style={{ fontWeight: 700, marginBottom: "4px" }}>Student Agreement Clause</p>
           <ul style={{ paddingLeft: "20px", marginTop: 0, marginBottom: "16px" }}>
-            <li style={{ marginBottom: "4px" }}>
-              All the successful candidates shall be bound by the rules &amp; regulations of the university and student declaration form
-            </li>
+            <li style={{ marginBottom: "4px" }}>All the successful candidates shall be bound by the rules &amp; regulations of the university and student declaration form</li>
           </ul>
 
           <p
@@ -783,12 +766,8 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           </p>
 
           <div style={{ marginBottom: "48px" }}>
-            <p style={{ fontWeight: 700, marginBottom: "24px" }}>
-              Date: ..............................................
-            </p>
-            <p style={{ fontWeight: 700 }}>
-              Place: ..............................................
-            </p>
+            <p style={{ fontWeight: 700, marginBottom: "24px" }}>Date: ..............................................</p>
+            <p style={{ fontWeight: 700 }}>Place: ..............................................</p>
           </div>
 
           <div
@@ -823,4 +802,3 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
 };
 
 export default PrintLeadDetails;
-
