@@ -662,13 +662,17 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           </span>
         </div>
       </form>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      {academicDetails.length === 0 && (
+        <>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+        </>
+      )}
       <div
         style={{
           fontFamily: "'Times New Roman', serif",
@@ -765,7 +769,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             I hereby solemnly affirm that the entries in the application form are true to the best of my knowledge and belief.
           </p>
 
-          <div style={{ marginBottom: "48px" }}>
+          <div style={{ marginBottom: "30px" }}>
             <p style={{ fontWeight: 700, marginBottom: "24px" }}>Date: ..............................................</p>
             <p style={{ fontWeight: 700 }}>Place: ..............................................</p>
           </div>
@@ -775,7 +779,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               display: "flex",
               justifyContent: "end",
               fontSize: "13px",
-              marginBottom: "80px",
+              marginBottom: "30px",
               columnGap: "70px",
             }}
           >
@@ -783,9 +787,6 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             <span>Signature of Student</span>
           </div>
         </div>
-
-        <hr style={{ border: "none", borderTop: "1px solid black", margin: 0 }} />
-
         <footer
           style={{
             fontSize: "11px",
