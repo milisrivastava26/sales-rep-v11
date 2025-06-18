@@ -668,9 +668,6 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <br />
           <br />
           <br />
-          <br />
-          <br />
-          <br />
         </>
       )}
       <div
