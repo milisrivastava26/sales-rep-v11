@@ -41,7 +41,7 @@ const GenerateErpId: React.FC = () => {
             </div>
 
             <div className="px-4 flex items-center mt-5 gap-2">
-                <input type="text" value={typeof getPsEmplIdResponse !== "number" ? "" : getPsEmplIdResponse} disabled className="px-4 rounded-md border py-1.5 w-[40%]" />
+                <input type="text" value={getPsEmplIdResponse} disabled className="px-4 rounded-md border py-1.5 w-[45%]" />
                  <button className={`${!generalInfoStatus || !basicDetailsStatus || isLoadingSyncData || typeof getPsEmplIdResponse === "number" ? "bg-opacity-50" : "hover:bg-blue-700"} bg-blue-600 px-2 py-1.5 cursor-pointer text-sm rounded-md text-white font-medium`} disabled={!generalInfoStatus || !basicDetailsStatus || isLoadingSyncData || typeof getPsEmplIdResponse === "number"} onClick={handleGenerateErpId}>Generate</button>
             </div>
         </div >

@@ -58,6 +58,10 @@ const LeadDetailsNew: React.FC = () => {
       (item: any) => item.status === "ACTIVE"
     )
     : [];
+
+  const { isLoading: isLoadingForEmplId } = useSelector((state: RootState) => state.getEmplId);
+
+
   const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
   useEffect(() => {
     store.dispatch(getLeadAcademicDetailsById(leadCaptureId));
@@ -88,7 +92,7 @@ const LeadDetailsNew: React.FC = () => {
     isLoadingForBiographical ||
     isLoadingForContact ||
     isLoadingForAddress ||
-    isLoadingForAcademic ||
+    isLoadingForAcademic || isLoadingForEmplId ||
     isLoadingForInterestShown;
 
   return (
