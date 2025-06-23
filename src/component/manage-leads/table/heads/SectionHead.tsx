@@ -107,10 +107,10 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
 
     if (selectedCaptureId.length < 2) {
       e.preventDefault();
-      toast.error("Please select minimum 2 leads");
-    } else if (selectedCaptureId.length > 4) {
+      toast.error("Please select atleast 2 leads");
+    } else if (selectedCaptureId.length > 2) {
       e.preventDefault();
-      toast.error("You can select maximum of 4 leads");
+      toast.error("You can select maximum of 2 leads");
     } else {
       setSelectedLeads(selectedCaptureId);
       navigate("/manage-leads-v1/merge-leads");

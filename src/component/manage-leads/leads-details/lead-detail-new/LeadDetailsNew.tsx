@@ -14,6 +14,8 @@ import { getAdditionalInfoById } from "../../../../store/lead-attribute-update/g
 import SrmuSetInfo from "./SrmuSetInfo";
 import { getSrmusetOptionDetails } from "../../../../store/srmuset/get-srmuSetOption-detail-slice";
 import AcademicInfo from "./AcademicDetailsInfo";
+import GenerateErpId from "./GenerateErpId";
+import { getPsEmplId } from "../../../../store/crm-to-ps-integration/get-PsEmplId-slice";
 
 const LeadDetailsNew: React.FC = () => {
   const { leadCaptureId } = useParams();
@@ -50,6 +52,7 @@ const LeadDetailsNew: React.FC = () => {
   const { responseOfLeadEnquiryDetailsById } = useSelector(
     (state: RootState) => state.getLeadEnquiryDetailsDataById
   );
+  const { isRun: isRunGetEmplId } = useSelector((state: RootState) => state.syncDataToPs);
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
     ? responseOfLeadEnquiryDetailsById.filter(
       (item: any) => item.status === "ACTIVE"
@@ -76,6 +79,10 @@ const LeadDetailsNew: React.FC = () => {
     store.dispatch(getSrmusetOptionDetails(leadEnquiryId));
   }, [leadEnquiryId]);
 
+  useEffect(() => {
+    store.dispatch(getPsEmplId(leadCaptureId));
+  }, [leadCaptureId, isRunGetEmplId])
+
 
   const isLoading =
     isLoadingForBiographical ||
@@ -99,6 +106,7 @@ const LeadDetailsNew: React.FC = () => {
           <InterestShownInfo />
           <AddressInfo />
           <BiographicalInfo />
+          <GenerateErpId />
           <ContactDetailsInfo />
           <SrmuSetInfo />
           <AcademicInfo />

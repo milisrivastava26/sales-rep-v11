@@ -261,6 +261,7 @@ import { getPiyushShuklaLeadsReducer } from "../third-party-slices/get-piyushShu
 import { psIntegrationLeadDetailsReducer } from "../crm-to-ps-integration/get-psIntegration-leadDetails-slice";
 import { assignPsIdReducer } from "../crm-to-ps-integration/assign-ps-id-slice";
 import { syncDataToPsReducer } from "../crm-to-ps-integration/sync-data-to-ps-slice";
+import { getPsEmplIdReducer } from "../crm-to-ps-integration/get-PsEmplId-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -623,6 +624,7 @@ const RootReducer = {
   getPsIntegrationLeadDetails: psIntegrationLeadDetailsReducer,
   assignPsId: assignPsIdReducer,
   syncDataToPs: syncDataToPsReducer,
+  getEmplId: getPsEmplIdReducer,
 };
 
 export default RootReducer;

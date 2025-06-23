@@ -17,7 +17,6 @@ export const leadsItems: DropdownItem[] = [
   { label: "View Declined Cases", href: "/view-decline-cases" },
   { label: "View Cash Payments", href: "/view-cash-payments" },
   { label: "View Payment Info", href: "/payment-info" },
-  { label: "CRM To PS Integration", href: "/ps-integration" },
 ];
 export const leadAuthorityItems = [{ label: "View Declined Cases", href: "/view-decline-cases" }];
 

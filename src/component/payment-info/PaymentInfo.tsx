@@ -21,7 +21,6 @@ const PaymentInfo: React.FC = () => {
   const closeModalForFailedcases = () => {
     store.dispatch(closeFailedCaseModalModal());
   }
-
   return (
     <>
       <div className='mt-5 overflow-x-auto'>

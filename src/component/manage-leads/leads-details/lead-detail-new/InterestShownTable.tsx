@@ -14,15 +14,15 @@ import { getEnquiryChangeWarning } from "../../../../store/lead-merge/get-enquir
 interface TypeFor {
   values: {
     interest:
-      | Array<{
-          academicCareerId: string;
-          academicProgramId: string;
-          currentCoreStateId: string;
-          currentCoreCityId: string;
-          leadSourceId: string;
-          active: boolean;
-        }>
-      | any;
+    | Array<{
+      academicCareerId: string;
+      academicProgramId: string;
+      currentCoreStateId: string;
+      currentCoreCityId: string;
+      leadSourceId: string;
+      active: boolean;
+    }>
+    | any;
   };
   isEditing?: boolean;
   setIsRowAdded: (e: any) => void;
@@ -69,9 +69,8 @@ const InterestField: React.FC<InterestFieldProps> = ({ name, idx, type, options,
             {...field}
             type={type}
             isReadOnly={true}
-            className={`w-full border px-2 outline-none focus:bg-gray-100 ${idx === 0 ? "cursor-not-allowed" : ""} ${
-              meta.error && meta.touched ? "border-red-500" : "border-gray-200"
-            }`}
+            className={`w-full border px-2 outline-none focus:bg-gray-100 ${idx === 0 ? "cursor-not-allowed" : ""} ${meta.error && meta.touched ? "border-red-500" : "border-gray-200"
+              }`}
           />
         )
       )}
@@ -154,14 +153,14 @@ const InterestShownTable: React.FC<TypeFor> = ({ values, isEditing }) => {
             <table className="w-full" border={2}>
               <thead>
                 <tr>
-                  <th className="border min-w-[150px]">Enq ID</th>
+                  <th className="border min-w-[80px] w-[80px]">Enq ID</th>
                   <th className="border min-w-[150px]">Career</th>
-                  <th className="border min-w-[150px]">Program</th>
+                  <th className="border min-w-[200px]">Program</th>
                   <th className="border min-w-[150px]">State</th>
                   <th className="border min-w-[150px]">City</th>
                   <th className="border min-w-[150px]">Source</th>
-                  <th className="border min-w-[150px]">Active</th>
-                  <th className="border min-w-[150px]">View</th>
+                  <th className="border min-w-[100px]">Active</th>
+                  <th className="border min-w-[100px]">View</th>
                   {/* {isEditing && <th className="border">Action</th>} */}
                 </tr>
               </thead>
@@ -169,9 +168,10 @@ const InterestShownTable: React.FC<TypeFor> = ({ values, isEditing }) => {
                 {interest.map((_: any, idx: number) => {
                   return (
                     <tr key={idx}>
-                      <td className="px-2 border text-center">
-                        <Field name={`interest[${idx}].leadEnquiryId`} disabled={true} type="text" />
+                      <td className="px-1 border text-center w-[80px]">
+                        <Field name={`interest[${idx}].leadEnquiryId`} disabled={true} type="text" className="w-full text-sm truncate text-center" />
                       </td>
+
                       <td className="px-2 border">
                         <InterestField
                           name={`interest[${idx}].academicCareerId`}
@@ -182,7 +182,7 @@ const InterestShownTable: React.FC<TypeFor> = ({ values, isEditing }) => {
                           isReadOnly={true}
                         />
                       </td>
-                      <td className="px-2 border">
+                      <td className="px-2 border w-[200px]">
                         <InterestField
                           name={`interest[${idx}].academicProgramId`}
                           type="select"
@@ -210,7 +210,7 @@ const InterestShownTable: React.FC<TypeFor> = ({ values, isEditing }) => {
                       {/* <td className="px-2 border text-center cursor-pointer">
                       <BsInfoCircleFill className="text-green-600 text-xl" />
                     </td> */}
-                      <td className="px-2 border text-center">
+                      <td className="px-2 border text-center w-[100px]">
                         <Field
                           name={`interest[${idx}].active`}
                           type="radio"
@@ -220,7 +220,7 @@ const InterestShownTable: React.FC<TypeFor> = ({ values, isEditing }) => {
                           disabled={!isEditing}
                         />
                       </td>
-                      <td className="px-2 border text-center">
+                      <td className="px-2 border text-center w-[100px]">
                         <button type="button" className="text-blue-500" onClick={() => onViewhandler(interest[idx].leadEnquiryId)}>
                           <GrFormView size={22} />
                         </button>
@@ -239,7 +239,7 @@ const InterestShownTable: React.FC<TypeFor> = ({ values, isEditing }) => {
             {/* <ChangeStage onHideModal={closeModalForCalling} /> */}
 
             {isLoadingForApplicaitonStatus && <LoadingSpinner size={35} mainLoading={false} message={"Fetching Application Progress"} centered={false} />}
-            {!isLoadingForApplicaitonStatus && <ViewLeadStepStatusAndFee leadEnquiryId={enquiryid}/>}
+            {!isLoadingForApplicaitonStatus && <ViewLeadStepStatusAndFee leadEnquiryId={enquiryid} />}
           </CustomModal>
         )}
       </div>
