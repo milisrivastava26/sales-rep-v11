@@ -26,6 +26,7 @@ import { getAjayConsultancyLeads } from "../../store/third-party-slices/get-ajay
 import { getCourseYardSolutionLeads } from "../../store/third-party-slices/get-courseYardSolution-leads-slice";
 import { getAkshatEducationalServicesLeads } from "../../store/third-party-slices/get-akshatEducationconsultancyLeads-slice";
 import { getPiyushShuklaLeads } from "../../store/third-party-slices/get-piyushShuklaLeads-slice";
+import { getChandraCollegeLeads } from "../../store/third-party-slices/get-chandraCollege-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -92,6 +93,7 @@ const ThirdpartyHomePage: React.FC = () => {
   const courseYardSolutionLeads = useSelector((state: RootState) => state.getCourseYardSolutionLeads);
   const akshatConsultancyLeads = useSelector((state: RootState) => state.getAkshatEducationalServicesLeads);
   const piyushShuklaLeads = useSelector((state: RootState) => state.getPiyushShuklaLeads);
+  const chandraCollegeLeads = useSelector((state:RootState) => state.getChandraCollegeLeads);
 
 
   // State object to store loader, response, and action
@@ -163,6 +165,9 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_PIYUSH_SHUKLA") {
         dispatch(getPiyushShuklaLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_CHANDRA_COLLEGE") {
+        dispatch(getChandraCollegeLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -328,6 +333,13 @@ const ThirdpartyHomePage: React.FC = () => {
         action: () => piyushShuklaLeads,
       });
     }
+    else if (role === "ROLE_CHANDRA_COLLEGE") {
+      setApiState({
+        isLoading: chandraCollegeLeads.isLoading,
+        response: chandraCollegeLeads.responseOfGetChandraCollegeLeads,
+        action: () => chandraCollegeLeads,
+      });
+    }
 
   }, [
     userDetails,
@@ -354,7 +366,8 @@ const ThirdpartyHomePage: React.FC = () => {
     ajayConsultancyLeads,
     courseYardSolutionLeads,
     akshatConsultancyLeads,
-    piyushShuklaLeads
+    piyushShuklaLeads,
+    chandraCollegeLeads
   ]);
 
   return (

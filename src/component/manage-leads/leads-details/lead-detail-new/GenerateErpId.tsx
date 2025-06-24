@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom';
 import { syncDataToPs } from '../../../../store/crm-to-ps-integration/sync-data-to-ps-slice';
 
 const GenerateErpId: React.FC = () => {
-    const {leadCaptureId} = useParams(); 
+    const { leadCaptureId } = useParams();
     const { isLoading: isLoadingSyncData } = useSelector((state: RootState) => state.syncDataToPs);
-    const {getPsEmplIdResponse} = useSelector((state:RootState) => state.getEmplId);
+    const { getPsEmplIdResponse, isError } = useSelector((state: RootState) => state.getEmplId);
     const { responseOfLeadEnquiryDetailsById } = useSelector(
         (state: RootState) => state.getLeadEnquiryDetailsDataById
     );
@@ -25,14 +25,9 @@ const GenerateErpId: React.FC = () => {
         (item: any) => item.name === "Basic Details"
     )?.status || null;
 
-
-    console.log(generalInfoStatus, basicDetailsStatus)
-
-
     const handleGenerateErpId = () => {
         store.dispatch(syncDataToPs(leadCaptureId));
     }
-
 
     return (
         <div>
@@ -42,7 +37,7 @@ const GenerateErpId: React.FC = () => {
 
             <div className="px-4 flex items-center mt-5 gap-2">
                 <input type="text" value={getPsEmplIdResponse} disabled className="px-4 rounded-md border py-1.5 w-[45%]" />
-                 <button className={`${!generalInfoStatus || !basicDetailsStatus || isLoadingSyncData || typeof getPsEmplIdResponse === "number" ? "bg-opacity-50" : "hover:bg-blue-700"} bg-blue-600 px-2 py-1.5 cursor-pointer text-sm rounded-md text-white font-medium`} disabled={!generalInfoStatus || !basicDetailsStatus || isLoadingSyncData || typeof getPsEmplIdResponse === "number"} onClick={handleGenerateErpId}>Generate</button>
+                <button className={`${!generalInfoStatus || !basicDetailsStatus || isLoadingSyncData || (getPsEmplIdResponse !== "" && isError !== "") ? "bg-opacity-50" : "hover:bg-blue-700"} bg-blue-600 px-2 py-1.5 cursor-pointer text-sm rounded-md text-white font-medium`} disabled={!generalInfoStatus || !basicDetailsStatus || isLoadingSyncData || (getPsEmplIdResponse !== "" && isError !== "")} onClick={handleGenerateErpId}>Generate</button>
             </div>
         </div >
     )

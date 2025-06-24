@@ -262,6 +262,7 @@ import { psIntegrationLeadDetailsReducer } from "../crm-to-ps-integration/get-ps
 import { assignPsIdReducer } from "../crm-to-ps-integration/assign-ps-id-slice";
 import { syncDataToPsReducer } from "../crm-to-ps-integration/sync-data-to-ps-slice";
 import { getPsEmplIdReducer } from "../crm-to-ps-integration/get-PsEmplId-slice";
+import { getChandraCollegeLeadsReducer } from "../third-party-slices/get-chandraCollege-leads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -567,6 +568,7 @@ const RootReducer = {
   getCourseYardSolutionLeads: getCourseYardSolutionLeadsReducer,
   getAkshatEducationalServicesLeads: getAkshatEducationalServicesLeadsReducer,
   getPiyushShuklaLeads: getPiyushShuklaLeadsReducer,
+  getChandraCollegeLeads: getChandraCollegeLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,

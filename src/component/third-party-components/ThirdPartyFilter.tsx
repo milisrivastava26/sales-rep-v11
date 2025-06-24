@@ -26,6 +26,7 @@ import { getAjayConsultancyLeads } from "../../store/third-party-slices/get-ajay
 import { getCourseYardSolutionLeads } from "../../store/third-party-slices/get-courseYardSolution-leads-slice";
 import { getAkshatEducationalServicesLeads } from "../../store/third-party-slices/get-akshatEducationconsultancyLeads-slice";
 import { getPiyushShuklaLeads } from "../../store/third-party-slices/get-piyushShuklaLeads-slice";
+import { getChandraCollegeLeads } from "../../store/third-party-slices/get-chandraCollege-leads-slice";
 
 interface TyepFor {
   actionVal: () => {};
@@ -116,6 +117,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
      else if (role === "ROLE_PIYUSH_SHUKLA") {
       dispatch(getPiyushShuklaLeads({ startDate: fromDate, endDate: toDate }));
     }
+    else if (role === "ROLE_CHANDRA_COLLEGE") {
+      dispatch(getChandraCollegeLeads({ startDate: fromDate, endDate: toDate }));
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -185,6 +189,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     }
     else if (role === "ROLE_PIYUSH_SHUKLA") {
       dispatch(getAkshatEducationalServicesLeads());
+    }
+    else if (role === "ROLE_CHANDRA_COLLEGE") {
+      dispatch(getChandraCollegeLeads());
     }
   };
 
