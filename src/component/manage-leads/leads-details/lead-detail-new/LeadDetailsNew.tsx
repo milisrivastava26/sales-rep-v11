@@ -15,7 +15,7 @@ import SrmuSetInfo from "./SrmuSetInfo";
 import { getSrmusetOptionDetails } from "../../../../store/srmuset/get-srmuSetOption-detail-slice";
 import AcademicInfo from "./AcademicDetailsInfo";
 import GenerateErpId from "./GenerateErpId";
-import { getPsEmplId } from "../../../../store/crm-to-ps-integration/get-PsEmplId-slice";
+import { getPsEmplId, resetGetPsEmplIdResponse } from "../../../../store/crm-to-ps-integration/get-PsEmplId-slice";
 
 const LeadDetailsNew: React.FC = () => {
   const { leadCaptureId } = useParams();
@@ -84,6 +84,7 @@ const LeadDetailsNew: React.FC = () => {
   }, [leadEnquiryId]);
 
   useEffect(() => {
+    store.dispatch(resetGetPsEmplIdResponse());
     store.dispatch(getPsEmplId(leadCaptureId));
   }, [leadCaptureId, isRunGetEmplId])
 
