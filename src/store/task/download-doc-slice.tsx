@@ -3,9 +3,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import coreLeadCaptureApi from "../../interceptor/coreLeadCaptureApi";
 
 interface DownloadDocPayload {
-  leadCaptureId: string | number | undefined;
-  docName: string | number | undefined;
-  docTypeId: string | number | undefined;
+  leadCaptureId: any;
+  docName: any;
+  docTypeId: any;
 }
 
 interface DownloadFileState {

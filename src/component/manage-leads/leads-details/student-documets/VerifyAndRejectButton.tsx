@@ -27,7 +27,7 @@ const VerifyAndRejectButton: React.FC<VerifyAndRejectButtonProps> = ({ row }) =>
         <>{recievedStatus === "verified" ? <p className="text-green-500 ">Verified</p> : <p className="text-red-600">Rejected</p>}</>
       ) : (
         <>
-          <span className="verify" onClick={() => handleVerifyAndReject(row.original.leadDocAttachmentId, "verified")}>
+          <span className="verify" onClick={() => handleVerifyAndReject(row.original.leadDocAttachmentIdV1, "verified")}>
             <IoCheckboxOutline color="green" size="22" />
             <Tooltip anchorSelect=".verify" place="top-start" className="custom-tooltip">
               <div className="tooltip-content">
@@ -36,7 +36,7 @@ const VerifyAndRejectButton: React.FC<VerifyAndRejectButtonProps> = ({ row }) =>
               </div>
             </Tooltip>
           </span>
-          <span className="reject" onClick={() => handleVerifyAndReject(row.original.leadDocAttachmentId, "rejected")}>
+          <span className="reject" onClick={() => handleVerifyAndReject(row.original.leadDocAttachmentIdV1, "rejected")}>
             <CgCloseR color="red" size="19" />
             <Tooltip anchorSelect=".reject" place="top-start" className="custom-tooltip">
               <div className="tooltip-content">

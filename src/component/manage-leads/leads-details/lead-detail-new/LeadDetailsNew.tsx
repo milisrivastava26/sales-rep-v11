@@ -16,6 +16,7 @@ import { getSrmusetOptionDetails } from "../../../../store/srmuset/get-srmuSetOp
 import AcademicInfo from "./AcademicDetailsInfo";
 import GenerateErpId from "./GenerateErpId";
 import { getPsEmplId, resetGetPsEmplIdResponse } from "../../../../store/crm-to-ps-integration/get-PsEmplId-slice";
+import { getUgAdditionalDetailsById } from "../../../../store/lead-academicDetailsForUG/get-ugAdditionalDetails-slice";
 
 const LeadDetailsNew: React.FC = () => {
   const { leadCaptureId } = useParams();
@@ -65,6 +66,7 @@ const LeadDetailsNew: React.FC = () => {
   const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
   useEffect(() => {
     store.dispatch(getLeadAcademicDetailsById(leadCaptureId));
+    store.dispatch(getUgAdditionalDetailsById(leadCaptureId));
   }, [leadCaptureId, isRunForAcademic]);
 
   useEffect(() => {

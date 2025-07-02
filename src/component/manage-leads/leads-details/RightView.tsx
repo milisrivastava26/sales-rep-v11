@@ -10,7 +10,6 @@ import { getleadAdditionalDetailsById } from "../../../store/lead-capturing/get-
 import { getDocumentsById } from "../../../store/notes/get-documents-by-CaptureId-slice";
 import TopIconHeader from "./manage-lead-details-head/TopIconHeader";
 import TopHeaderTabsActions from "./manage-lead-details-head/TopHeaderTabsActions";
-import { getStudentDocsByLeadCaptureId } from "../../../store/student-documets/get-studentDocs-byId-slice";
 import { resetLeadNotesDetailsDataById } from "../../../store/view-leads-details/get-lead-notesDetailsById-slice";
 import { getLeadInitiatePaymentDetails } from "../../../store/activity/get-leadInitiatePaymentDetails-slice";
 import { useParams } from "react-router-dom";
@@ -19,6 +18,11 @@ import { getLeadAddressById } from "../../../store/lead-attribute-update/get-lea
 import { getAdditionalInfoById } from "../../../store/lead-attribute-update/get-leadAdditionalDetails-slice";
 import { getLeadAcademicDetailsById } from "../../../store/lead-attribute-update/get-leadAcademicDetails-slice";
 import PrintLeadDetails from "./lead-detail-new/PrintLeadDetails";
+import { getStudentDocsByCareerId } from "../../../store/student-documets/get-studentDocs-byId-slice";
+import { getAllDocUploadStatusByleadCaptureId } from "../../../store/student-documets/get-all-doc-upload-status-by-leadCapture-id-slice";
+import { getPsEmplId } from "../../../store/crm-to-ps-integration/get-PsEmplId-slice";
+import { getLeadContactDetailsById } from "../../../store/lead-attribute-update/get-leadContactDetails-byId-slice";
+import { getSrmusetOptionDetails } from "../../../store/srmuset/get-srmuSetOption-detail-slice";
 
 const RightView: React.FC = () => {
   const dispatch = store.dispatch;
@@ -55,10 +59,15 @@ const RightView: React.FC = () => {
   const { srmusetOptionDetails } = useSelector(
     (state: RootState) => state.getSrmusetOptionDetails
   );
+  const { getPsEmplIdResponse } = useSelector((state: RootState) => state.getEmplId);
+  const { responseOfLeadContactDetailsById } = useSelector((state: RootState) => state.getLeadContactDetailsDataById);
+  
+
 
 
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById) ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE") : [];
   const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
+  const careerId = activeEnquiry[0]?.academicCareerId;
 
   const handleRefresh = function () {
     if (rightSectionTabname === "Activity History") {
@@ -72,7 +81,8 @@ const RightView: React.FC = () => {
     } else if (rightSectionTabname === "Documents") {
       dispatch(getDocumentsById(leadCaptureId));
     } else if (rightSectionTabname === "Student's Documents") {
-      dispatch(getStudentDocsByLeadCaptureId(leadCaptureId));
+      dispatch(getStudentDocsByCareerId(careerId));
+      dispatch(getAllDocUploadStatusByleadCaptureId(leadCaptureId));
     } else if (rightSectionTabname === "Payment") {
       dispatch(getLeadInitiatePaymentDetails({ leadCaptureId, leadEnquiryId }));
     }
@@ -82,10 +92,13 @@ const RightView: React.FC = () => {
     dispatch(getLeadAddressById(leadCaptureId));
     dispatch(getAdditionalInfoById(leadCaptureId));
     dispatch(getLeadAcademicDetailsById(leadCaptureId));
+    store.dispatch(getPsEmplId(leadCaptureId));
+    store.dispatch(getLeadContactDetailsById(leadCaptureId));
+    store.dispatch(getSrmusetOptionDetails(leadEnquiryId));
     setLeadDetailsPrint(true);
   };
 
-  
+
   useEffect(() => {
     if (
       leadDetailsPrint &&
@@ -142,7 +155,7 @@ const RightView: React.FC = () => {
     responseOfLeadAcademicDetailsById,
   ]);
 
-  const MergedLeadData = mergedLeadDetailsData(responseOfLeadEnquiryDetailsById, responseOfLeadAddressById, responseofLeadAdditionalInfo, responseOfLeadAcademicDetailsById, srmusetOptionDetails);
+  const MergedLeadData = mergedLeadDetailsData(responseOfLeadEnquiryDetailsById, responseOfLeadAddressById, responseofLeadAdditionalInfo, responseOfLeadAcademicDetailsById, srmusetOptionDetails, getPsEmplIdResponse, responseOfLeadContactDetailsById);
 
   if (leadDetailsPrint && !isLoadingForAddress && !isLoadingForAdditionalDetails && !isLoadingForAcademicDetails && responseOfLeadAddressById && responseofLeadAdditionalInfo) {
   }

@@ -6,7 +6,7 @@ import LoadingSpinner from "../../../../util/custom/ui/LoadingSpinner";
 import { academicDetailsFormInput, getInitialValuesForAcademicDetails, getValidationSchemaForAcademicDetails } from "../../../../data/lead-details-data-new/leadAcademic-data";
 import AcademicInfoForm from "./AcademicDetailsForm";
 import { onDisableAllInputFields, onSetEnableForDiplomaInputFields, onSetEnableForTwefthInputFields } from "../../../../store/ui/ui-slice";
-import { transformPayloadForAcademicData } from "../../../../util/actions/lead-attribute-transformation/transformLeadDetailsPayloadData";
+import { transformPayloadForAcademicData, transformPayloadForUgAdditionalDetails } from "../../../../util/actions/lead-attribute-transformation/transformLeadDetailsPayloadData";
 import { useParams } from "react-router-dom";
 import {
   resetResponseForUpdateLeadAcademicDetails,
@@ -17,6 +17,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { getTenthBoardValues } from "../../../../store/get/get-all10th-slice";
 import { getTenthMarkingSchemeValues } from "../../../../store/get/get-all10thScheme-slice";
 import { getTwelfthBoardValues } from "../../../../store/get/get-all-twelfth-board-slice";
+import { saveAdditionalUgDetails } from "../../../../store/lead-academicDetailsForUG/save-ugAdditionalDetails-slice";
 
 const AcademicInfo: React.FC = () => {
   const { leadCaptureId } = useParams();
@@ -24,15 +25,30 @@ const AcademicInfo: React.FC = () => {
   const [isDisabledForTwelfthMarks, setIsDisabledForTwelfthMarks] = useState(false);
   const [isDisabledForDiplomaMarks, setIsDisabledForDiplomaMarks] = useState(false);
   const [isDisabledForUgMarks, setIsDisabledForUgMarks] = useState(false);
+  const [isDisabledForUgAdditionalMarks, setIsDisabledForUgAdditionalMarks] = useState(false);
 
   const { isEnableForDiplomaInputFields, isEnableForTwelfthInputFields, isEnableForUGInputFields } = useSelector((state: RootState) => state.ui as any);
 
   const { isError, resetActions, responseOfLeadAcademicDetails } = useSelector((state: RootState) => state.LeadAcademicDetailsUpdate);
+  const { additionalUgDetailsById } = useSelector((state: RootState) => state.getUgAdditionalDetailsById);
   const [isEditing, setEditing] = useState(false);
+  const [showUGDetails, setShowUGDetails] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setShowUGDetails((prev) => !prev);
+  };
 
   const onUpdateLeadHandler = (data: any) => {
+
     const updatedData = transformPayloadForAcademicData(data.values, isEnableForTwelfthInputFields, isEnableForDiplomaInputFields, isEnableForUGInputFields, leadCaptureId);
 
+    const payloadForAditionalUgDetails = transformPayloadForUgAdditionalDetails(data.values, leadCaptureId);
+
+    console.log(payloadForAditionalUgDetails)
+
+    if (showUGDetails) {
+      store.dispatch(saveAdditionalUgDetails(payloadForAditionalUgDetails));
+    }
     store.dispatch(updateLeadAcademicDetails(updatedData));
     store.dispatch(takeActionsForUpdateLeadAcademicDetails(data.actions));
   };
@@ -47,7 +63,16 @@ const AcademicInfo: React.FC = () => {
     store.dispatch(getTwelfthBoardValues());
   }, [])
 
-  const initialValuesForAcademicInfo = responseOfLeadAcademicDetailsById !== null ? getInitialValuesForAcademicDetails(responseOfLeadAcademicDetailsById) : null;
+  useEffect(() => {
+    if (Object.keys(additionalUgDetailsById).length !== 0) {
+      setShowUGDetails(true);
+    }
+    else {
+       setShowUGDetails(false);
+    }
+  }, [additionalUgDetailsById])
+
+  const initialValuesForAcademicInfo = responseOfLeadAcademicDetailsById !== null ? getInitialValuesForAcademicDetails(responseOfLeadAcademicDetailsById, additionalUgDetailsById) : null;
 
   const Tenth_plus_2_type = initialValuesForAcademicInfo?.tenth_plus_2_type;
   const twelfthResultStatus = initialValuesForAcademicInfo?.coreTwelfthResultStatus;
@@ -115,7 +140,7 @@ const AcademicInfo: React.FC = () => {
               btnText={"Save"}
               btnType={"submit"}
               initialValues={initialValuesForAcademicInfo}
-              validationSchema={getValidationSchemaForAcademicDetails(isEnableForTwelfthInputFields, isEnableForDiplomaInputFields, isEnableForUGInputFields)}
+              validationSchema={getValidationSchemaForAcademicDetails(isEnableForTwelfthInputFields, isEnableForDiplomaInputFields, isEnableForUGInputFields, showUGDetails)}
               inputData={academicDetailsFormInput}
               isEnableForAction={true}
               onSaveAndAddHandler={onUpdateLeadHandler}
@@ -130,6 +155,10 @@ const AcademicInfo: React.FC = () => {
               isDisabledForDiplomaMarks={isDisabledForDiplomaMarks}
               setIsDisabledForUgMarks={setIsDisabledForUgMarks}
               isDisabledForUgMarks={isDisabledForUgMarks}
+              handleCheckboxChange={handleCheckboxChange}
+              showUGDetails={showUGDetails}
+              setIsDisabledForUgAdditionalMarks={setIsDisabledForUgAdditionalMarks}
+              isDisabledForUgAdditionalMarks={isDisabledForUgAdditionalMarks}
             />
           </div>
         </div>

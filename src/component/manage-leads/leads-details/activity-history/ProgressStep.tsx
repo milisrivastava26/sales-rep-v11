@@ -31,6 +31,7 @@ import { getLeadGeneralInfoDetails } from "../../../../store/activity/get-leadGe
 import { getLeadOfferAnalysisDetailsByEnquiryId } from "../../../../store/view-leads-details/get-leadOfferDetails-slice";
 import { IoMdDownload } from "react-icons/io";
 import { getSuperBotcallbackDetails } from "../../../../store/activity/get-superBotCallbackDetails-slice";
+import { getLeadWhatsappMessageDetails } from "../../../../store/activity/get-leadWhatsappMessage-details-slice";
 
 interface LeadDocAttachmentDTO {
   path: string;
@@ -155,7 +156,10 @@ const ProgressStep: React.FC<ProgressStepType> = ({
         await store.dispatch(getLeadOfferAnalysisDetailsByEnquiryId(leadEnquiryId));
       } else if (title === "General Information") {
         await store.dispatch(getLeadGeneralInfoDetails(leadCaptureId));
-      } else {
+      }  else if (title === "WhatsApp Message") {
+        await store.dispatch(getLeadWhatsappMessageDetails(id));
+      }
+       else {
         if (title !== "Sent Email" && title !== "Declaration") {
           await store.dispatch(getLeadActivityByTrackingId(id));
         }

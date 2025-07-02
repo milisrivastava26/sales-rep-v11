@@ -12,13 +12,13 @@ interface VerifyStudentDocsType {
 
 const initialState: VerifyStudentDocsType = {
   VerifyStudentDocsResponse: "",
-  isLoading: true,
+  isLoading: false,
   isError: null,
   isRun: uuidv4(),
 };
 
 export const verifyStudentDocs = createAsyncThunk<any, any>("getVerifyStudentDocsResponse", async ({ leadDocAttachmentId, status }, { rejectWithValue }) => {
-  const response = coreLeadCaptureApi.patch(`api/crm/lead/leadDocAttachment/updateStatus/${leadDocAttachmentId}/${status}`);
+  const response = coreLeadCaptureApi.patch(`api/crm/lead/leadDocAttachmentV1/updateStatus/${leadDocAttachmentId}/${status}`);
 
   toast.promise(response, {
     loading: "loading...",

@@ -27,6 +27,8 @@ import { getCourseYardSolutionLeads } from "../../store/third-party-slices/get-c
 import { getAkshatEducationalServicesLeads } from "../../store/third-party-slices/get-akshatEducationconsultancyLeads-slice";
 import { getPiyushShuklaLeads } from "../../store/third-party-slices/get-piyushShuklaLeads-slice";
 import { getChandraCollegeLeads } from "../../store/third-party-slices/get-chandraCollege-leads-slice";
+import { getPlpsLeads } from "../../store/third-party-slices/get-plpsLeads-slice";
+import { getVisionEducationLeads } from "../../store/third-party-slices/get-visionEducation-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -94,7 +96,8 @@ const ThirdpartyHomePage: React.FC = () => {
   const akshatConsultancyLeads = useSelector((state: RootState) => state.getAkshatEducationalServicesLeads);
   const piyushShuklaLeads = useSelector((state: RootState) => state.getPiyushShuklaLeads);
   const chandraCollegeLeads = useSelector((state:RootState) => state.getChandraCollegeLeads);
-
+  const plpsLeads = useSelector((state:RootState) => state.getPlpsLeads);
+  const visionEducationLeads = useSelector((state:RootState) => state.getVisionEducationLeads);
 
   // State object to store loader, response, and action
   const [apiState, setApiState] = useState<ApiStateType>({
@@ -168,6 +171,12 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_CHANDRA_COLLEGE") {
         dispatch(getChandraCollegeLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_PLPS") {
+        dispatch(getPlpsLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_VISION_EDUCATION") {
+        dispatch(getVisionEducationLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -340,6 +349,21 @@ const ThirdpartyHomePage: React.FC = () => {
         action: () => chandraCollegeLeads,
       });
     }
+    else if (role === "ROLE_PLPS") {
+      setApiState({
+        isLoading: plpsLeads.isLoading,
+        response: plpsLeads.responseOfGetPlpsLeads,
+        action: () => plpsLeads,
+      });
+    }
+    else if (role === "ROLE_VISION_EDUCATION") {
+      setApiState({
+        isLoading: visionEducationLeads.isLoading,
+        response: visionEducationLeads.responseOfGetVisionEducationLeads,
+        action: () => visionEducationLeads,
+      });
+    }
+
 
   }, [
     userDetails,
@@ -367,7 +391,9 @@ const ThirdpartyHomePage: React.FC = () => {
     courseYardSolutionLeads,
     akshatConsultancyLeads,
     piyushShuklaLeads,
-    chandraCollegeLeads
+    chandraCollegeLeads,
+    plpsLeads,
+    visionEducationLeads
   ]);
 
   return (

@@ -1,7 +1,7 @@
 export interface StudentDocsType {
-  leadDocAttachmentId: number;
-  coreDocAttachmentTypeId: number;
-  coreDocAttachmentTypeName: string;
+  leadDocAttachmentIdV1: number;
+  coreCareerDocumentsId: number;
+  coreCareerDocumentsName: string;
   name: string;
   leadCaptureId: number;
   modifiedBy: string;

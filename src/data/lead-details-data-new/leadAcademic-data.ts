@@ -228,9 +228,58 @@ export const academicDetailsFormInput = [
       },
     ],
   },
+
+  {
+    id: 4,
+    heading: "Additional UG Details",
+    inputFields: [
+      {
+        id: 1,
+        type: "text",
+        name: "additionalUgSchool",
+        label: "UG College/University",
+        isrequired: true,
+      },
+      {
+        id: 2,
+        type: "select",
+        name: "additionalUgResultStatus",
+        label: "UG Result Status",
+        isrequired: true,
+      },
+      {
+        id: 3,
+        type: "text",
+        name: "additionalUgMarks",
+        label: "UG Percentage/CGPA",
+        isrequired: true,
+      },
+      {
+        id: 4,
+        type: "text",
+        name: "additionalUgProgram",
+        label: "UG Program",
+        isrequired: true,
+      },
+      {
+        id: 6,
+        type: "text",
+        name: "additionalUgYearOfPassing",
+        label: "UG Year of Passing",
+        isrequired: true,
+      },
+      {
+        id: 7,
+        type: "text",
+        name: "additionalUgMarksScored",
+        label: "UG Marks Scored",
+        isrequired: true,
+      },
+    ],
+  },
 ];
 
-export const getInitialValuesForAcademicDetails = (data: any) => {
+export const getInitialValuesForAcademicDetails = (data: any, additionalUgDetailsById: any) => {
   let initialValues = {
     // Tenth Details
     academicDetailsTenthId:
@@ -261,10 +310,8 @@ export const getInitialValuesForAcademicDetails = (data: any) => {
       data?.leadAcademicDetailsTwelfthDTO?.twelveMarkingSchemeId || "",
     TwelfthMarksOrGrade:
       data?.leadAcademicDetailsTwelfthDTO?.twelveMarksOrGrade || "",
-    twelfthMainSubject:
-      data?.leadAcademicDetailsTwelfthDTO?.stream || "",
-    twelfthMarksScored:
-      data?.leadAcademicDetailsTwelfthDTO?.marksScored || "",
+    twelfthMainSubject: data?.leadAcademicDetailsTwelfthDTO?.stream || "",
+    twelfthMarksScored: data?.leadAcademicDetailsTwelfthDTO?.marksScored || "",
     twelfthYearOfPassing:
       data?.leadAcademicDetailsTwelfthDTO?.yearOfPassing || "",
 
@@ -290,6 +337,13 @@ export const getInitialValuesForAcademicDetails = (data: any) => {
     ugProgram: data?.leadAcademicDetailsUGDTO?.program || "",
     ugYearOfPassing: data?.leadAcademicDetailsUGDTO?.yearOfPassing || "",
     ugMarksScored: data?.leadAcademicDetailsUGDTO?.marksScored || "",
+
+    additionalUgSchool: additionalUgDetailsById?.degree || "",
+    additionalUgResultStatus: additionalUgDetailsById?.resultStatus || "",
+    additionalUgMarks: additionalUgDetailsById?.marks || "",
+    additionalUgProgram: additionalUgDetailsById?.program || "",
+    additionalUgYearOfPassing: additionalUgDetailsById?.yearOfPassing || "",
+    additionalUgMarksScored: additionalUgDetailsById?.marksScored || "",
   };
 
   return initialValues;
@@ -298,7 +352,8 @@ export const getInitialValuesForAcademicDetails = (data: any) => {
 export const getValidationSchemaForAcademicDetails = (
   isEnableForTwelfth: boolean,
   isEnableForDiploma: boolean,
-  isEnableForUg: boolean
+  isEnableForUg: boolean,
+  showUGDetails: boolean,
 ) => {
   let validationSchema = {
     // Tenth Details
@@ -362,6 +417,15 @@ export const getValidationSchemaForAcademicDetails = (
       ugProgram: Yup.string().required("UG Program is required"),
       ugYearOfPassing: Yup.string().required("UG Year of Passing is required"),
       ugMarksScored: Yup.string().required("UG Marks Scored is required"),
+    }),
+
+    ...(showUGDetails && {
+      additionalUgSchool: Yup.string().required("UG School is required"),
+      additionalUgResultStatus: Yup.string().required("UG Result Status is required"),
+      additionalUgMarks: Yup.string().required("UG Marks are required"),
+      additionalUgProgram: Yup.string().required("UG Program is required"),
+      additionalUgYearOfPassing: Yup.string().required("UG Year of Passing is required"),
+      additionalUgMarksScored: Yup.string().required("UG Marks Scored is required"),
     }),
   };
 

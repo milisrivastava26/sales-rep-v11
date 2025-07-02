@@ -35,9 +35,6 @@ const ViewManageLeadsPage: React.FC = () => {
   const { isRun: isRunForLeadOfferLock } = useSelector(
     (state: RootState) => state.lockLeadOffer
   );
-  const { isRun: isRunForAllDocsConfirmation } = useSelector(
-    (state: RootState) => state.getConfirmationForAllDocsByLeadCaptureId
-  );
   const { isRun: isRunForCreateActivity } = useSelector(
     (state: RootState) => state.addActivity
   );
@@ -103,7 +100,6 @@ const ViewManageLeadsPage: React.FC = () => {
     }
   }, [
     isRunForLeadOfferLock,
-    isRunForAllDocsConfirmation,
     responseOfLeadEnquiryDetailsById,
     leadCaptureId
   ]);

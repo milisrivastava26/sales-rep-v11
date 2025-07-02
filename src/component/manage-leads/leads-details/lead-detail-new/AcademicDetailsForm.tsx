@@ -10,6 +10,7 @@ import { onSetEnableForDiplomaInputFields, onSetEnableForTwefthInputFields, onSe
 import { useEffect } from "react";
 import { getLeadAcademicDetailsById } from "../../../../store/lead-attribute-update/get-leadAcademicDetails-slice";
 import { useParams } from "react-router-dom";
+import { getUgAdditionalDetailsById } from "../../../../store/lead-academicDetailsForUG/get-ugAdditionalDetails-slice";
 
 interface FormType {
   btnText: string;
@@ -32,6 +33,10 @@ interface FormType {
   isDisabledForDiplomaMarks: boolean;
   isDisabledForUgMarks: boolean;
   setIsDisabledForUgMarks: (e: any) => void;
+  handleCheckboxChange: (e: any) => void;
+  showUGDetails: boolean;
+  setIsDisabledForUgAdditionalMarks: (e: any) => void;
+  isDisabledForUgAdditionalMarks: boolean;
 }
 
 const AcademicInfoForm: React.FC<FormType> = ({
@@ -51,7 +56,11 @@ const AcademicInfoForm: React.FC<FormType> = ({
   isDisabledForDiplomaMarks,
   setIsDisabledForDiplomaMarks,
   setIsDisabledForUgMarks,
-  isDisabledForUgMarks
+  isDisabledForUgMarks,
+  showUGDetails,
+  handleCheckboxChange,
+  isDisabledForUgAdditionalMarks,
+  setIsDisabledForUgAdditionalMarks
 }) => {
   const { leadCaptureId } = useParams();
   const { responseForTwelfthBoard: TwelfthBoardOptions } = useSelector((state: RootState) => state.getAllTwelfthBoardData);
@@ -72,6 +81,9 @@ const AcademicInfoForm: React.FC<FormType> = ({
     : [];
 
   const academicCareerId = activeEnquiry[0]?.academicCareerId;
+  const academicProgramId = activeEnquiry[0]?.academicProgramId;
+
+  const llmProgramId = [95, 96, 97, 98];
 
   useEffect(() => {
     if (academicCareerId == 3) {
@@ -120,6 +132,17 @@ const AcademicInfoForm: React.FC<FormType> = ({
       setFieldValue("ugMarksScored", "");
       setFieldValue("coreUgMarks", "");
     }
+
+    if (fieldName === "additionalUgResultStatus" && selectedOption?.value === "AWAITED") {
+      setFieldValue("additionalUgMarks", "N/A");
+      setFieldValue("additionalUgMarksScored", "N/A");
+      setIsDisabledForUgAdditionalMarks(true)
+    }
+    else if (fieldName === "additionalUgResultStatus" && selectedOption?.value === "DECLARED") {
+      setIsDisabledForUgAdditionalMarks(false);
+      setFieldValue("additionalUgMarksScored", "");
+      setFieldValue("additionalUgMarks", "");
+    }
     setFieldValue(fieldName, selectedOption?.value)
   }
 
@@ -147,7 +170,9 @@ const AcademicInfoForm: React.FC<FormType> = ({
             <Form className="w-full" autoComplete="off">
               {isEditing && (
                 <div className="flex justify-end mb-10 gap-4 items-center absolute top-[8px] right-4">
-                  <button type="button" className=" py-1.5 font-medium rounded" onClick={() => { setEditing(false); store.dispatch(getLeadAcademicDetailsById(leadCaptureId)); }}>
+                  <button type="button" className=" py-1.5 font-medium rounded" onClick={() => {
+                    setEditing(false); store.dispatch(getLeadAcademicDetailsById(leadCaptureId)); store.dispatch(getUgAdditionalDetailsById(leadCaptureId));
+                  }}>
                     <RxCross2 size={22} color="red" />
                   </button>
                   <ButtonInput style=" py-1.5 font-medium rounded" icon={<RxCheck size={24} color="green" />} btnType={btnType} isEnableForAction={isEnableForAction} />
@@ -164,6 +189,9 @@ const AcademicInfoForm: React.FC<FormType> = ({
                 }
 
                 if (section.heading === "UG" && isEnableForUg === false) {
+                  return null;
+                }
+                if (section.heading === "Additional UG Details" && !showUGDetails) {
                   return null;
                 }
                 return (
@@ -256,7 +284,7 @@ const AcademicInfoForm: React.FC<FormType> = ({
                                 </label>
                                 <Field
                                   name={field.name}
-                                  disabled={!isEditing || ((field.name === "TwelfthMarksOrGrade" || field.name === "twelfthMarksScored") && isDisabledForTwelfthMarks) || ((field.name === "coreDiplomaMarks" || field.name === "diplomaMarksScored") && isDisabledForDiplomaMarks) || ((field.name === "coreUgMarks" || field.name === "ugMarksScored") && isDisabledForUgMarks)}
+                                  disabled={!isEditing || ((field.name === "TwelfthMarksOrGrade" || field.name === "twelfthMarksScored") && isDisabledForTwelfthMarks) || ((field.name === "coreDiplomaMarks" || field.name === "diplomaMarksScored") && isDisabledForDiplomaMarks) || ((field.name === "coreUgMarks" || field.name === "ugMarksScored") && isDisabledForUgMarks) || ((field.name === "additionalUgMarks" || field.name === "additionalUgMarksScored") && isDisabledForUgAdditionalMarks)}
                                   type={field.type}
                                   as={field.type === "textarea" ? "textarea" : "input"}
                                   className={`w-full ${isEditing ? "border border-gray-200" : "border border-gray-200 bg-gray-100"
@@ -272,6 +300,19 @@ const AcademicInfoForm: React.FC<FormType> = ({
                   </div>
                 );
               })}
+
+              {/* checkbox for addtional UG details */}
+              {llmProgramId.includes(academicProgramId) && <div className="mt-5">
+                <label className="flex items-center gap-2 mb-4">
+                  <input
+                    type="checkbox"
+                    disabled={!isEditing}
+                    checked={showUGDetails}
+                    onChange={handleCheckboxChange}
+                  />
+                  <span className="font-medium">Add Additional UG Details</span>
+                </label>
+              </div>}
             </Form>
           </>
         );

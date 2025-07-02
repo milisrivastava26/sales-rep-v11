@@ -9,6 +9,11 @@ const WpNameColumn = (onCreateLead: (rowData: InboundWhatsappMessage) => void, h
     Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{row.original.leadCaptureClientR2nId}</span>,
   },
   {
+    Header: "Lead#",
+    accessor: "leadCaptureId",
+    Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{row.original.leadCaptureId || "N/A"}</span>,
+  },
+  {
     Header: "Name",
     accessor: "name",
     Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{row.original.name}</span>,
@@ -27,6 +32,11 @@ const WpNameColumn = (onCreateLead: (rowData: InboundWhatsappMessage) => void, h
     Header: "Date / Time",
     accessor: "createdAt",
     Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{formatDate(row.original.createdAt)}</span>,
+  },
+   {
+    Header: "Owner",
+    accessor: "owner",
+    Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{row.original.owner || "N/A"}</span>,
   },
   {
     Header: "Action",

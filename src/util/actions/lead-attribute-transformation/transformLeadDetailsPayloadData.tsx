@@ -126,3 +126,18 @@ export const transformPayloadForInterestShown = (payload: any) => {
 
   return transformedPayload;
 };
+
+
+export const transformPayloadForUgAdditionalDetails = (data: any, leadCaptureId: any) => {
+  let transformedPayload = {
+    leadCaptureId: leadCaptureId,
+    degree: data.additionalUgSchool,
+    resultStatus: data.additionalUgResultStatus,
+    marks: data.additionalUgMarks,
+    program: data.additionalUgProgram,
+    yearOfPassing: data.additionalUgYearOfPassing,
+    marksScored: data.additionalUgMarksScored
+  }
+
+  return transformedPayload
+}

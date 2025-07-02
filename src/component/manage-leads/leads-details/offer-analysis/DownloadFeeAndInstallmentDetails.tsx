@@ -1,5 +1,7 @@
 import React from "react";
- 
+import { FaFileContract } from "react-icons/fa6";
+import FeeAndInstallmentDetailsPdf from "./FeeAndInstallmentDetailsPdf";
+
 // Define types for data structure
 interface InstallmentData {
   installmentSeq: number;
@@ -8,22 +10,22 @@ interface InstallmentData {
   balance: number;
   status: string;
 }
- 
+
 interface DownloadFeeAndInstallmentDetailsProps {
   data: any; // Update this type based on your data structure if possible
 }
- 
+
 const DownloadFeeAndInstallmentDetails: React.FC<DownloadFeeAndInstallmentDetailsProps> = ({ data }) => {
   if (!data || data.length < 3) {
     return <p style={{ textAlign: "center", color: "#4B5563", fontWeight: "600" }}>No data available</p>;
   }
- 
+
   const generalInfo = data[0];
   const scholarshipData = data[1];
   const feeData = data[2];
-  const installmentData: InstallmentData[] = data[3].installmentData || []; // Type the installmentData
+  const installmentData: InstallmentData[] = data[3].installmentData || [];
   const logo = "/srmulogo.png";
- 
+
   const termsAndConditions = [
     {
       id: "term-1",
@@ -74,299 +76,203 @@ const DownloadFeeAndInstallmentDetails: React.FC<DownloadFeeAndInstallmentDetail
       text: "Concession provided (if any), might be waived off in case of non adherence to Fee Payment Plan.",
     },
   ];
- 
+
   return (
-    <div style={{ padding: "0px 10px 10px 10px", marginTop: "-20px" }}>
-      {/* Logo */}
- 
-      <div style={{ display: "flex", justifyContent: "flex-start" }}>
-        <img src={logo} alt="SRMU Logo" style={{ height: "64px" }} />{" "}
-      </div>
- 
-      {/* General Info Details */}
-      <div style={{ marginTop: "5px", borderTop: "2px solid gray" }}>
-        <h2
+
+    <>
+
+      <div id="printable-content">
+        <div
           style={{
-            fontSize: "1.25rem",
-            fontWeight: "bold",
-            color: "#2D3748",
-            paddingBottom: "8px",
-            marginBottom: "6px",
+            display: "flex",
+            justifyContent: "start",
+            marginTop: "-13px",
+            marginLeft: "20px",
           }}
         >
-          General Information
-        </h2>
-        <table
-          style={{
-            width: "100%",
-            fontSize: "0.875rem",
-            backgroundColor: "#FFFFFF",
-            // border: "1px solid gray",
-            borderRadius: "8px",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-            overflow: "hidden",
-            borderCollapse: "collapse", // Add this line
-            borderSpacing: "0",
-          }}
-        >
-          <tbody>
-            {Object.entries(generalInfo).map(([key, value]: any, index) => (
-              <tr
-                key={index}
-                style={{
-                  borderBottom: "1px solid #E2E8F0",
-                  transition: "background-color 0.3s",
-                }}
-              >
-                <td
-                  style={{
-                    padding: "8px",
-                    fontWeight: "600",
-                    width: "50%",
-                    color: "#4A5568",
-                    backgroundColor: "#EDF2F7",
-                    textTransform: "capitalize",
-                    border: "1px solid #E2E8F0",
-                  }}
-                >
-                  {key.replace(/([A-Z])/g, " $1").trim()}
-                </td>
-                <td style={{ padding: "8px", color: "#2D3748", width: "50%" }}>{value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
- 
-      {/* Scholarship Details */}
-      <div style={{ marginTop: "5px" }}>
-        <h2
-          style={{
-            fontSize: "1.25rem",
-            fontWeight: "bold",
-            color: "#2D3748",
-            paddingBottom: "8px",
-            marginBottom: "6px",
-          }}
-        >
-          Scholarship Details
-        </h2>
-        <table
-          style={{
-            width: "100%",
-            fontSize: "0.875rem",
-            backgroundColor: "#FFFFFF",
-            border: "1px solid gray",
-            borderRadius: "8px",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-            overflow: "hidden",
-            borderCollapse: "collapse", // Add this line
-            borderSpacing: "0",
-          }}
-        >
-          <tbody>
-            {Object.entries(scholarshipData).map(([key, value]: any, index) => (
-              <tr
-                key={index}
-                style={{
-                  borderBottom: "1px solid #E2E8F0",
-                  transition: "background-color 0.3s",
-                }}
-              >
-                <td
-                  style={{
-                    padding: "8px",
-                    fontWeight: "600",
-                    color: "#4A5568",
-                    width: "50%",
- 
-                    backgroundColor: "#EDF2F7",
-                    textTransform: "capitalize",
-                    border: "1px solid #E2E8F0",
-                  }}
-                >
-                  {key.replace(/([A-Z])/g, " $1").trim()}
-                </td>
-                <td style={{ padding: "8px", color: "#2D3748", width: "50%" }}>{value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
- 
-      {/* Fee Details */}
-      <div style={{ marginTop: "8px" }}>
-        <h2
-          style={{
-            fontSize: "1.25rem",
-            fontWeight: "bold",
-            color: "#2D3748",
-            paddingBottom: "8px",
-            marginBottom: "6px",
-            marginTop: "20px",
-          }}
-        >
-          Fee Details
-        </h2>
-        <table
-          style={{
-            width: "100%",
-            fontSize: "0.875rem",
-            backgroundColor: "#FFFFFF",
-            border: "1px solid #E2E8F0",
-            borderRadius: "8px",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-            overflow: "hidden",
-            borderCollapse: "collapse", // Add this line
-            borderSpacing: "0",
-          }}
-        >
-          <tbody>
-            {Object.entries(feeData).map(([key, value]: any, index) => (
-              <tr
-                key={index}
-                style={{
-                  borderBottom: "1px solid #E2E8F0",
-                  transition: "background-color 0.3s",
-                }}
-              >
-                <td
-                  style={{
-                    padding: "12px",
-                    fontWeight: "600",
-                    color: "#4A5568",
-                    backgroundColor: "#EDF2F7",
-                    width: "50%",
- 
-                    textTransform: "capitalize",
-                    border: "1px solid #E2E8F0",
-                  }}
-                >
-                  {key.replace(/([A-Z])/g, " $1").trim()}
-                </td>
-                <td style={{ padding: "12px", color: "#2D3748", width: "50%" }}>{value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
- 
-      {/* Installment Details */}
-      <h2
-        style={{
-          fontSize: "1.25rem",
-          fontWeight: "bold",
-          color: "#2D3748",
-          paddingBottom: "8px",
-          marginBottom: "12px",
-          marginTop: "60px",
-        }}
-      >
-        Installment Details
-      </h2>
-      <table
-        style={{
-          width: "100%",
-          fontSize: "0.875rem",
-          backgroundColor: "#FFFFFF",
-          border: "1px solid #E2E8F0",
-          borderRadius: "8px",
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-          overflow: "hidden",
-          borderCollapse: "collapse", // Add this line
-          borderSpacing: "0",
-        }}
-      >
-        <thead>
-          <tr
+          <img
+            src={logo}
+            alt="University Logo"
+            style={{ height: "60px" }}
+          />
+        </div>
+
+        <div>
+          <div
             style={{
-              background: "linear-gradient(to right, #EDF2F7, #E2E8F0)",
-              color: "#2D3748",
+              borderBottom: "1px solid #e2e8f0",
+              padding: "0px 20px",
+              display: "flex",
+              gap: "8px",
+              alignItems: "center",
+              marginTop: "2px",
             }}
           >
-            <th style={{ padding: "12px", borderRight: "1px solid #E2E8F0" }}>Installment Number</th>
-            <th style={{ padding: "12px", borderRight: "1px solid #E2E8F0" }}>Due Date</th>
-            <th style={{ padding: "12px", borderRight: "1px solid #E2E8F0" }}>Amount (Rs)</th>
-            <th style={{ padding: "12px", borderRight: "1px solid #E2E8F0" }}>Balance (Rs)</th>
-            <th style={{ padding: "12px" }}>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {installmentData.length > 0 ? (
-            installmentData.map((item, index) => (
-              <tr
-                key={index}
-                style={{
-                  textAlign: "center",
-                  transition: "background-color 0.3s",
-                }}
-              >
-                <td style={{ padding: "12px", border: "1px solid #E2E8F0" }}>{item.installmentSeq}</td>
-                <td style={{ padding: "12px", border: "1px solid #E2E8F0" }}>{new Date(item.dueDate).toLocaleDateString()}</td>
-                <td style={{ padding: "12px", border: "1px solid #E2E8F0" }}>{item.installmentAmount.toFixed(2)}</td>
-                <td style={{ padding: "12px", border: "1px solid #E2E8F0" }}>{item.balance.toFixed(2)}</td>
-                <td
+            <span
+              style={{
+                border: "2px solid #3b82f6",
+                width: "32px",
+                height: "32px",
+                minWidth: "32px",
+                minHeight: "32px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "50%",
+              }}
+            >
+              <FaFileContract />
+            </span>
+            <h2 style={{ fontSize: "24px", fontWeight: "600" }}>
+              Contract Acceptance
+            </h2>
+          </div>
+
+          <div style={{ padding: "20px" }}>
+            <div
+              style={{
+                width: "100%",
+                borderRadius: "6px",
+                backgroundColor: "#fff",
+              }}
+            >
+              <div style={{ width: "100%", marginTop: "4px" }}>
+                <h2
                   style={{
-                    padding: "12px",
-                    borderBottom: "1px solid #E2E8F0",
+                    fontSize: "20px",
                     fontWeight: "600",
-                    color: item.status === "paid" ? "#38A169" : "#E53E3E",
+                    color: "#3b82f6",
+                    marginBottom: "8px",
                   }}
                 >
-                  {item.status}
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td
-                colSpan={5}
+                  General Information
+                </h2>
+                <div style={{ width: "100%", overflowX: "auto" }}>
+                  <table
+                    style={{
+                      width: "100%",
+                      border: "1px solid #ccc",
+                      borderCollapse: "collapse",
+                    }}
+                  >
+                    <tbody>
+                      {Object.entries(generalInfo).map(([key, value]: any, index) => (
+                        <tr key={index}>
+                          <td
+                            style={{
+                              fontWeight: "600",
+                              border: "1px solid #ccc",
+                              padding: "8px",
+                              width: "50%",
+                            }}
+                          >
+                            {key.replace(/([A-Z])/g, " $1").trim()} :
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #ccc",
+                              padding: "8px",
+                              width: "50%",
+                            }}
+                          >
+                            {value}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+
+              <div style={{ width: "100%", marginTop: "16px" }}>
+                <h2
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "600",
+                    color: "#3b82f6",
+                    marginBottom: "8px",
+                  }}
+                >
+                  Scholarship Options
+                </h2>
+                <div style={{ width: "100%", overflowX: "auto" }}>
+                  <table
+                    style={{
+                      width: "100%",
+                      border: "1px solid #ccc",
+                      borderCollapse: "collapse", // 🔧 This is key to fix double borders
+                    }}
+                  >
+                    <tbody>
+                      {Object.entries(scholarshipData).map(([key, value]: any, index) => (
+                        <tr key={index}>
+                          <td
+                            style={{
+                              fontWeight: "600",
+                              border: "1px solid #ccc",
+                              padding: "8px",
+                              width: "50%",
+                            }}
+                          >
+                            {key.replace(/([A-Z])/g, " $1").trim()} :
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid #ccc",
+                              padding: "8px",
+                              width: "50%",
+                            }}
+                          >
+                            {value}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+            {/* ViewInstallmentFee Component Here */}
+            <FeeAndInstallmentDetailsPdf installmentData={installmentData} feeData={feeData} />
+
+            <div style={{ width: "100%", marginTop: "16px" }}>
+              <h2
                 style={{
-                  textAlign: "center",
-                  padding: "12px",
-                  color: "#4B5563",
-                }}
-              >
-                No installment data available
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
- 
-      {/* Terms and Conditions */}
-      <div style={{ width: "100%", marginTop: "16px" }}>
-        <h2
-          style={{
-            fontSize: "20px",
-            fontWeight: "600",
-            color: "#2D3748",
-            marginBottom: "8px",
-          }}
-        >
-          Terms & Conditions
-        </h2>
-        <div style={{ width: "100%", overflowX: "auto" }}>
-          <ol style={{ listStyleType: "disc", paddingLeft: "20px" }}>
-            {termsAndConditions.map((term) => (
-              <li
-                key={term.id}
-                style={{
-                  fontSize: "0.975rem",
-                  color: "#4A5568",
+                  fontSize: "20px",
+                  fontWeight: "600",
+                  color: "#3b82f6",
                   marginBottom: "8px",
                 }}
               >
-                {term.text}
-              </li>
-            ))}
-          </ol>
+                Terms & Conditions
+              </h2>
+              <div style={{ width: "100%", overflowX: "auto" }}>
+                <ol style={{ paddingLeft: "20px" }}>
+                  {termsAndConditions.map((term) => (
+                    <li
+                      key={term.id}
+                      style={{
+                        fontSize: "14px",
+                        color: "#4b5563",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      {term.text}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
-    </div>
+
+    </>
   );
 };
- 
+
 export default DownloadFeeAndInstallmentDetails;
- 
- 

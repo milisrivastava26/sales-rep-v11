@@ -14,7 +14,10 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
   let activityData: any;
   let isLoading = false;
 
-  const { leadActivityDataByTrackingId } = useSelector((state: RootState) => state.getleadActivityDataByTrackingId);
+  const {
+    leadActivityDataByTrackingId
+  } = useSelector((state: RootState) => state.getleadActivityDataByTrackingId);
+
   const { isLoading: inBLoading, getInboundCallDetailsResponse } = useSelector((state: RootState) => state.getInboundCallDetails);
   const { isLoading: ldEnqLoading, leadEnquiryDetailsDataById } = useSelector((state: RootState) => state.getLeadEnquiryDetailsDataNewById);
   const { isLoading: outBLoading, leadPhoneConvoOutcomeDataById } = useSelector((state: RootState) => state.getleadPhoneConvoOutcomeDataById);
@@ -38,7 +41,9 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
   const { isLoading: isLoadingForGeneralInfo, responseForLeadGeneralInfo } = useSelector((state: RootState) => state.getLeadGeneralInfoDetails);
   const { isLoading: isLoadingForOfferDetails, leadOfferAnalysisDetailsDataById } = useSelector((state: RootState) => state.getLeadOfferDetails);
   const { responseForSuperBotCallback, isLoading: isLoadingForSuperBotDetails } = useSelector((state: RootState) => state.getSuperBotCallbackDetails);
+  const { responseForLeadWhatsappMessageDetails, isLoading: isLoadingForWhatsapp } = useSelector((state: RootState) => state.getLeadWhatsappMessageDetails);
 
+  // Title-to-data mapping
   if (title === "Had a Phone Conversation : Inbound") {
     activityData = getInboundCallDetailsResponse;
     isLoading = inBLoading;
@@ -87,6 +92,9 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
   } else if (title === "SuperBot Callback") {
     activityData = responseForSuperBotCallback;
     isLoading = isLoadingForSuperBotDetails;
+  } else if (title === "WhatsApp Message") {
+    activityData = responseForLeadWhatsappMessageDetails;
+    isLoading = isLoadingForWhatsapp;
   } else {
     activityData = leadActivityDataByTrackingId;
   }
@@ -136,50 +144,30 @@ const ActivityTable: React.FC<ActivityTableData> = ({ title }) => {
                       </Link>
                     </td>
                   </>
-                ) : key === "Conversation" ? (
-                  <>
-                    <td className="px-4 py-2 border">{key}</td>
-                    <td className="px-4 py-2 border align-top">
-                      {Array.isArray(value) ? (
-                        <div className="space-y-1">
-                          {value.map((line: string, index: number) => {
-                            const match = line.match(/^(superbot:|user:)(.*)$/i);
-                            const speaker = match ? match[1] : "";
-                            const message = match ? match[2] : line;
-
-                            return (
-                              <div key={index} className="text-sm whitespace-pre-line text-gray-800">
-                                {speaker && (
-                                  <span className={speaker.toLowerCase() === "superbot:" ? "text-blue-700 font-medium" : "text-red-600 font-semibold"}>
-                                    {capitalizeName(speaker)}
-                                  </span>
-                                )}
-                                {message}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      ) : (
-                        <textarea value={value} readOnly rows={8} className="w-full rounded-md px-4 py-2 text-sm bg-blue-50 resize-none" />
-                      )}
-                    </td>
-                  </>
                 ) : (
                   <>
                     {key !== "leadCaptureId" && key !== "coreDocAttachmentTypeId" && (
                       <>
                         <td className="px-4 py-2 border">{capitalizeName(key)}</td>
                         <td
-                          className={`px-4 py-2 max-w-[300px] border break-words whitespace-normal overflow-hidden text-ellipsis ${
-                            key === "name" && title === "Leads Notes" ? "text-blue-500 cursor-pointer" : ""
-                          }`}
+                          className={`
+                            px-4 py-2 max-w-[300px] border break-words whitespace-normal overflow-hidden text-ellipsis
+                            ${key === "name" && title === "Leads Notes" ? "text-blue-500 cursor-pointer" : ""}
+                            ${key === "Message" ? "whitespace-pre-line leading-relaxed text-sm text-gray-800" : ""}
+                          `}
                           onClick={() => {
                             if (key === "name" && title === "Leads Notes" && value !== null) {
                               downloadDoc();
                             }
                           }}
                         >
-                          {key === "description" ? notesDescription : key === "New Owner Assigned Date" || key === "Assigned Date" ? String(value)?.split("T")[0] : value}
+                          {key === "description"
+                            ? notesDescription
+                            : key === "Message"
+                            ? value
+                            : key === "New Owner Assigned Date" || key === "Assigned Date"
+                            ? String(value)?.split("T")[0]
+                            : value}
                         </td>
                       </>
                     )}

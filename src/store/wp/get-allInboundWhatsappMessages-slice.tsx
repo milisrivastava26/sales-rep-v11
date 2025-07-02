@@ -8,6 +8,8 @@ export interface InboundWhatsappMessage {
   name: string;
   message: string;
   createdAt: string;
+  owner: string;
+  leadCaptureId: string;
 }
 
 interface GetAllInboundWhatsappMessagesState {

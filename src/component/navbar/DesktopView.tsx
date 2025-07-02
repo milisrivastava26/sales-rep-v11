@@ -112,7 +112,7 @@ const DesktopView: React.FC<Type> = ({ leadsItems, profileItems }) => {
             {isLeadsOpen && (
               <div className="absolute left-[-50p] top-[42px] z-50 min-w-[140px] bg-gray-100 border border-gray-200 shadow-lg rounded">
                 {!userDetails?.authority?.includes("ROLE_FINANCE") &&
-                  !userDetails?.authority?.includes("ROLE_AUTHORITY") && (
+                  !userDetails?.authority?.includes("ROLE_AUTHORITY") && !userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") && (
                     <>
                       {leadsItems
                         .slice(0, 3)
@@ -205,6 +205,28 @@ const DesktopView: React.FC<Type> = ({ leadsItems, profileItems }) => {
                         </NavLink>
                       );
                     })}
+                  </>
+                )}
+
+                {/* For ROLE_DOCUMENT_REVIEWER – show only "View Leads" */}
+                {userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") && (
+                  <>
+                    {leadsItems.slice(6, 7).map((item: any, index: number) => (
+                      <NavLink
+                        to={item.href}
+                        key={index}
+                        onClick={() => store.dispatch(onLeadsCloseHandler())}
+                        className={({ isActive }) =>
+                          `block text-sm px-4 py-2 text-gray-700 font-medium border-b text-nowrap cursor-pointer ${isActive ? "underline underline-offset-2" : ""
+                          } ${index % 2 === 0
+                            ? "bg-gray-100 hover:bg-white"
+                            : "bg-gray-100 hover:bg-white"
+                          }`
+                        }
+                      >
+                        {item.label}
+                      </NavLink>
+                    ))}
                   </>
                 )}
 

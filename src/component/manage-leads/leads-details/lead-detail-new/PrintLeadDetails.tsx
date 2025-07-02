@@ -11,6 +11,9 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
   const bioInfo = data[2];
   const acadDetialsRaw = data[3];
   const srmusetInfo = data[4];
+  const erpId = data[5];
+  const fatherContact = data[6];
+  const motherContact = data[7];
   const logo = "/srmulogo.png";
 
   const academicDetails = transformAcademicDetails(acadDetialsRaw);
@@ -29,15 +32,13 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
     >
       <header style={{ textAlign: "center", marginBottom: "0.5rem", position: "relative" }}>
         <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "0.5rem" }}>
-          <img src={logo} alt="SRMU Logo" style={{ height: "55px" }} />
+          <img src={logo} alt="SRMU Logo" style={{ height: "67px" }} />
         </div>
         <div style={{ position: "absolute", top: "10px", left: "50%", transform: "translateX(-50%)" }}>
-          <div style={{ fontWeight: "700", fontSize: "1rem", textDecoration: "underline" }}>REGISTRATION FORM</div>
-          <div style={{ fontSize: "0.75rem", fontWeight: "600", marginBottom: "0.75rem" }}>
-            Session (20
-            <input style={{ display: "inline-block", width: "1.25rem", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
-            20
-            <input style={{ display: "inline-block", width: "1.25rem", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />)
+          <div style={{ fontWeight: "700", fontSize: "1.2rem" }}>REGISTRATION FORM</div>
+          <div style={{ fontSize: "1rem", fontWeight: "600", marginBottom: "0.75rem" }}>
+            Session (2025-2026)
+
           </div>
         </div>
       </header>
@@ -58,7 +59,6 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <span
             style={{
               fontSize: "10px",
-              borderBottom: "1px solid black",
               paddingBottom: "2px",
               display: "inline-block",
             }}
@@ -71,44 +71,32 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "space-between",
+              gap: "0.5rem", // Adds spacing between columns/rows
               marginTop: "0.25rem",
             }}
           >
-            <label style={{ width: "48%" }}>
-              Recruiter ID:
-              <input style={{ display: "inline-block", width: "5rem", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
-            </label>
-            <label style={{ width: "48%", textAlign: "right" }}>
-              Recruiting Centre:
-              <input style={{ display: "inline-block", width: "5rem", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
-            </label>
+            {[
+              { label: "Recruiter Name:", value: "", width: "5rem" },
+              { label: "ERP ID:", value: erpId, width: "4rem" },
+              { label: "Enquiry #:", value: generalInfo.leadEnquiryId, width: "4rem" },
+              { label: "Lead #:", value: generalInfo.leadCaptureId, width: "4rem" },
+            ].map((field, index) => (
+              <label key={index} style={{ width: "48%", display: "flex", flexDirection: "row" }}>
+                {field.label}
+                <input
+                  value={field.value}
+                  readOnly
+                  style={{
+                    width: field.width,
+                    border: "none",
+                    borderBottom: "1px solid black",
+                    outline: "none",
+                  }}
+                />
+              </label>
+            ))}
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              marginTop: "0.25rem",
-            }}
-          >
-            <label style={{ width: "48%" }}>
-              ERP ID:
-              <input style={{ display: "inline-block", width: "103px", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
-            </label>
-            <label style={{ width: "48%", textAlign: "right" }}>
-              No.
-              <input style={{ display: "inline-block", width: "5rem", border: "none", borderBottom: "1px solid black", outline: "none" }} readOnly />
-            </label>
-            <label style={{ width: "48%" }}>
-              Lead #:
-              <input
-                defaultValue={generalInfo.leadCaptureId}
-                style={{ display: "inline-block", width: "103px", border: "none", borderBottom: "1px solid black", outline: "none" }}
-                readOnly
-              />
-            </label>
-          </div>
         </fieldset>
 
         <div style={{ display: "flex", columnGap: "1rem" }}>
@@ -199,13 +187,6 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           </div>
 
           <div style={{ border: "1px solid #ccc", padding: "0.25rem", width: "7rem", minWidth: "7rem", height: "9rem" }}>
-            {/* <img
-              alt="Photo"
-              src="https://storage.googleapis.com/a1aa/image/7f626238-f9b9-46e7-75e9-766e2f59e6e9.jpg"
-              width="120"
-              height="150"
-              style={{ width: "7rem", minWidth: "7rem", height: "9rem", objectFit: "cover" }}
-            /> */}
           </div>
         </div>
 
@@ -349,7 +330,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <label style={{ whiteSpace: "nowrap" }}>Father's Mobile:</label>
           <input
-            defaultValue=""
+            defaultValue={fatherContact || ""}
             readOnly
             style={{
               display: "inline-block",
@@ -426,7 +407,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
         <div style={{ marginBottom: "0.5rem", display: "flex", gap: "1rem", alignItems: "center" }}>
           <label style={{ whiteSpace: "nowrap" }}>Mother's Mobile:</label>
           <input
-            defaultValue=""
+            defaultValue={motherContact || ""}
             readOnly
             style={{
               display: "inline-block",
@@ -444,8 +425,8 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             defaultValue={
               addressPermanent
                 ? [addressPermanent.addressLine1, addressPermanent.addressLine2, addressPermanent.cityName, addressPermanent.stateName, addressPermanent.pin]
-                    .filter(Boolean)
-                    .join(", ")
+                  .filter(Boolean)
+                  .join(", ")
                 : ""
             }
             readOnly
@@ -496,14 +477,14 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             defaultValue={
               addressCorrespondence
                 ? [
-                    addressCorrespondence.addressLine1,
-                    addressCorrespondence.addressLine2,
-                    addressCorrespondence.cityName,
-                    addressCorrespondence.stateName,
-                    addressCorrespondence.pin,
-                  ]
-                    .filter(Boolean)
-                    .join(", ")
+                  addressCorrespondence.addressLine1,
+                  addressCorrespondence.addressLine2,
+                  addressCorrespondence.cityName,
+                  addressCorrespondence.stateName,
+                  addressCorrespondence.pin,
+                ]
+                  .filter(Boolean)
+                  .join(", ")
                 : ""
             }
             readOnly
@@ -583,52 +564,52 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           <tbody>
             {academicDetails.length > 0
               ? academicDetails.map((item: any, index: any) => (
-                  <tr key={index}>
-                    <td style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
-                      <div
-                        style={{
-                          display: "inline-block",
-                          width: "100%",
-                          border: "none",
-                          textAlign: "center",
-                          outline: "none",
-                        }}
-                      >
-                        {`${index + 1}.`}
-                      </div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.exam}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.subject}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.board}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.school}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.year}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.marks}</div>
-                    </td>
-                    <td style={{ border: "1px solid black", padding: "2px 4px" }}>
-                      <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.percentage}</div>
-                    </td>
-                  </tr>
-                ))
+                <tr key={index}>
+                  <td style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
+                    <div
+                      style={{
+                        display: "inline-block",
+                        width: "100%",
+                        border: "none",
+                        textAlign: "center",
+                        outline: "none",
+                      }}
+                    >
+                      {`${index + 1}.`}
+                    </div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.exam}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.subject}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.board}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.school}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.year}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.marks}</div>
+                  </td>
+                  <td style={{ border: "1px solid black", padding: "2px 4px" }}>
+                    <div style={{ display: "inline-block", width: "100%", border: "none", textAlign: "center", outline: "none" }}>{item.percentage}</div>
+                  </td>
+                </tr>
+              ))
               : [...Array(1)].map((_, rowIndex) => (
-                  <tr key={`empty-${rowIndex}`}>
-                    {[...Array(8)].map((_, colIndex) => (
-                      <td key={colIndex} style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
-                        <div style={{ display: "inline-block", width: "100%", height: "30px" }}></div>
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                <tr key={`empty-${rowIndex}`}>
+                  {[...Array(8)].map((_, colIndex) => (
+                    <td key={colIndex} style={{ border: "1px solid black", padding: "2px 4px", textAlign: "center" }}>
+                      <div style={{ display: "inline-block", width: "100%", height: "30px" }}></div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
           </tbody>
         </table>
 
@@ -662,8 +643,11 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           </span>
         </div>
       </form>
-      {academicDetails.length === 0 && (
+      {(academicDetails.length !== 3) && (
         <>
+          <br />
+          <br />
+          <br />
           <br />
           <br />
           <br />
@@ -784,16 +768,24 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             <span>Signature of Student</span>
           </div>
         </div>
-        <footer
-          style={{
-            fontSize: "11px",
-            padding: "8px 0",
-            textAlign: "center",
-            fontFamily: "'Times New Roman', serif",
-          }}
-        >
-          Toll Free: 1800-102-6004 | Website: www.srmu.ac.in
-        </footer>
+        <div style={{ display: "flex", flexDirection: "column", minHeight: "10vh" }}>
+          <div style={{ flex: "1 0 auto" }}>
+            {/* Your page content goes here */}
+          </div>
+
+          <footer
+            style={{
+              fontSize: "11px",
+              padding: "8px 0",
+              textAlign: "center",
+              fontFamily: "'Times New Roman', serif",
+              flexShrink: 0, // Prevents footer from shrinking
+            }}
+          >
+            Toll Free: 1800-102-6004 | Website: www.srmu.ac.in
+          </footer>
+        </div>
+
       </div>
     </div>
   );

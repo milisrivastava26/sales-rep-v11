@@ -3,7 +3,7 @@ import { LeadNotesType } from "../../../../types/manage-leads/notes-type";
 import { downloadDocForNotes } from "../../../../store/task/download-doc-slice";
 import { BiDownload } from "react-icons/bi";
 import store from "../../../../store";
-import PreviewDocument from "../../../../util/custom/PreviewDocument";
+import PreviewDocumentSalesRep from "./PreviewDocumentSalesRep";
 
 export const DocumentDetailsColumn: Column<LeadNotesType>[] = [
   {
@@ -67,7 +67,7 @@ export const DocumentDetailsColumn: Column<LeadNotesType>[] = [
     Header: "Preview",
     Cell: ({ row }: { row: { original: LeadNotesType } }) => {
       return (
-        <PreviewDocument
+        <PreviewDocumentSalesRep
           coreDocAttachmentTypeId={row.original.coreDocAttachmentTypeId}
           leadCaptureId={row.original.leadCaptureId}
           name={row.original.name}

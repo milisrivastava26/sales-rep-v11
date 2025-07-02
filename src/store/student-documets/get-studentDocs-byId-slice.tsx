@@ -1,47 +1,53 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import coreLeadCaptureApi from "../../interceptor/coreLeadCaptureApi";
 
-interface StudentDocsByLeadCaptureIdType {
-  StudentDocsByLeadCaptureIdResponse: [] | any;
+interface StudentDocsByCareerIdType {
+  studentDocsByCareerIdResponse: any[];
   isLoading: boolean;
   isError: null | string;
 }
 
-const initialState: StudentDocsByLeadCaptureIdType = {
-  StudentDocsByLeadCaptureIdResponse: [],
+const initialState: StudentDocsByCareerIdType = {
+  studentDocsByCareerIdResponse: [],
   isLoading: false,
   isError: null,
 };
-export const getStudentDocsByLeadCaptureId = createAsyncThunk<any, string | undefined>("getStudentDocsByLeadCaptureIdResponse", async (leadCaptureId, { rejectWithValue }) => {
-  try {
-    const response = await coreLeadCaptureApi.get(`api/crm/lead/leadDocAttachment/findAllByLeadCaptureId/${leadCaptureId}/S`);
-    return response.data;
-  } catch (error: any) {
-    return rejectWithValue(error.response?.data.message || "An error occurred.");
-  }
-});
 
-const getStudentDocsByLeadCaptureIdSlice = createSlice({
-  name: "LeadCapture/getStudentDocsByLeadCaptureIdResponse",
+// Pass careerId as argument to thunk
+export const getStudentDocsByCareerId = createAsyncThunk<any, string>(
+  "getStudentDocsByCareerIdResponse",
+  async (careerId, { rejectWithValue }) => {
+    try {
+      const response = await coreLeadCaptureApi.get(`api/crm/lead/leadDocAttachmentV1/getDocuments/${careerId}`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data.message || "An error occurred.");
+    }
+  }
+);
+
+const getStudentDocsByCareerIdSlice = createSlice({
+  name: "LeadCapture/getStudentDocsByCareerIdResponse",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getStudentDocsByLeadCaptureId.pending, (state) => {
+      .addCase(getStudentDocsByCareerId.pending, (state) => {
         state.isLoading = true;
         state.isError = null;
       })
-      .addCase(getStudentDocsByLeadCaptureId.fulfilled, (state, action) => {
+      .addCase(getStudentDocsByCareerId.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.StudentDocsByLeadCaptureIdResponse = action.payload;
+        state.studentDocsByCareerIdResponse = action.payload;
       })
-      .addCase(getStudentDocsByLeadCaptureId.rejected, (state, action) => {
+      .addCase(getStudentDocsByCareerId.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = action.error.message || "Something went wrong!";
+        state.isError = action.payload as string;
       });
   },
 });
 
-export const getStudentDocsByLeadCaptureIdReducer = getStudentDocsByLeadCaptureIdSlice.reducer;
+export const getStudentDocsByCareerIdReducer = getStudentDocsByCareerIdSlice.reducer;
 
-//getStudentDocsByLeadCaptureIdResponse
+
+//getStudentDocsByCareerId

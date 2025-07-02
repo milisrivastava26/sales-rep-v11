@@ -27,6 +27,8 @@ import { getCourseYardSolutionLeads } from "../../store/third-party-slices/get-c
 import { getAkshatEducationalServicesLeads } from "../../store/third-party-slices/get-akshatEducationconsultancyLeads-slice";
 import { getPiyushShuklaLeads } from "../../store/third-party-slices/get-piyushShuklaLeads-slice";
 import { getChandraCollegeLeads } from "../../store/third-party-slices/get-chandraCollege-leads-slice";
+import { getPlpsLeads } from "../../store/third-party-slices/get-plpsLeads-slice";
+import { getVisionEducationLeads } from "../../store/third-party-slices/get-visionEducation-leads-slice";
 
 interface TyepFor {
   actionVal: () => {};
@@ -120,6 +122,12 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     else if (role === "ROLE_CHANDRA_COLLEGE") {
       dispatch(getChandraCollegeLeads({ startDate: fromDate, endDate: toDate }));
     }
+    else if (role === "ROLE_PLPS") {
+      dispatch(getPlpsLeads({ startDate: fromDate, endDate: toDate }));
+    }
+    else if (role === "ROLE_VISION_EDUCATION") {
+      dispatch(getVisionEducationLeads({ startDate: fromDate, endDate: toDate }));
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -192,6 +200,12 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     }
     else if (role === "ROLE_CHANDRA_COLLEGE") {
       dispatch(getChandraCollegeLeads());
+    }
+    else if (role === "ROLE_PLPS") {
+      dispatch(getPlpsLeads());
+    }
+    else if (role === "ROLE_VISION_EDUCATION") {
+      dispatch(getVisionEducationLeads());
     }
   };
 

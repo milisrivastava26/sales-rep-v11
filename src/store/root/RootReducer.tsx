@@ -3,19 +3,14 @@ import authReducer from "../auth/auth-Slice";
 import callRequestReducer from "../lead-contact-phone/make-call-slice";
 import paginationReducer from "../ui/pagination-slice";
 import { tableReducer } from "../ui/table-slice";
-
 import leadsFilterReducer from "../lead-capturing/filter-data-slice";
 import { loggedInUserReducer } from "../auth/loggedIn-user-slice";
 import leadStagesReducer from "../lead-capturing/get-allLeadStage-slice";
 import leadSourceReducer from "../lead-capturing/get-allLeadSource-slice";
 import { AddLeadCaptureReducer } from "../lead-capturing/create-lead-capture-slice";
 import { getLeadCaptureByIdReducer } from "../lead-capturing/get-lead-capture-byId-slice";
-
 import { createLeadApplicationStatusReducer } from "../lead-applicationStatus/create-leadApplicationStatus-slice";
 import { getLeadApplicationStatusByIdReducer } from "../lead-applicationStatus/get-leadApplicationStatusById-slice";
-
-import { getLeadAcadDetailsUGByIdReducer } from "../lead-academicDetailsForUG/get-acadDetailsUGById-slice";
-import { createLeadAcadDetailsUGReducer } from "../lead-academicDetailsForUG/create-acadDetailsUG-slice";
 import { addLeadContactPhoneReducer } from "../lead-contact-phone/create-lead-contact-slice";
 import { leadContactPhoneByIdReducer } from "../lead-contact-phone/get-lead-contact-by-id-slice";
 import { addLeadAcademicDetailsForTenthReducer } from "../lead-academic-details-for-tenth/create-lead-academic-details-for-tenth-slice";
@@ -95,10 +90,8 @@ import { getLeadOfferHistoryByOfferIdReducer } from "../offer-analysis/find-lead
 import { getFeeCalculationForDeclineByIdReducer } from "../lead-with-decline-offer/get-feeCalculationForDecline-byId-slice";
 import { getLeadScholarshipDetailsForDeclineByIdSliceReducer } from "../lead-with-decline-offer/get-ScholarshipDetailsForDecline-byId-slice";
 import { reissueContractByIdReducer } from "../lead-with-decline-offer/save-ReissueContract-byid-slice";
-import { getStudentDocsByLeadCaptureIdReducer } from "../student-documets/get-studentDocs-byId-slice";
+import { getStudentDocsByCareerIdReducer } from "../student-documets/get-studentDocs-byId-slice";
 import { verifyStudentDocsReducer } from "../student-documets/verify-studentDocs-slice";
-import { getConfirmationForAllDocsByLeadCaptureIdReducer } from "../student-documets/get-confirmation-all-docs-by-lead-id-slice";
-import { studentDocsStatusReducer } from "../student-documets/get-studentDocsStatus-slice";
 import { getPackageDealByLeadCaptureIdReducer } from "../package-deal/get-package-deal-by-programId-leadCaptureId-slice";
 import { updateLeadBiograficalInfoReducer } from "../lead-attribute-update/update-leadBiograficalInfo-slice";
 import { updateLeadContactReducer } from "../lead-attribute-update/update-contact-slice";
@@ -263,6 +256,12 @@ import { assignPsIdReducer } from "../crm-to-ps-integration/assign-ps-id-slice";
 import { syncDataToPsReducer } from "../crm-to-ps-integration/sync-data-to-ps-slice";
 import { getPsEmplIdReducer } from "../crm-to-ps-integration/get-PsEmplId-slice";
 import { getChandraCollegeLeadsReducer } from "../third-party-slices/get-chandraCollege-leads-slice";
+import { allDocsStatusByIdReducer } from "../student-documets/get-all-doc-upload-status-by-leadCapture-id-slice";
+import { saveAdditionalUgDetailsReducer } from "../lead-academicDetailsForUG/save-ugAdditionalDetails-slice";
+import { getUgAdditionalDetailsByIdReducer } from "../lead-academicDetailsForUG/get-ugAdditionalDetails-slice";
+import { getPlpsLeadsReducer } from "../third-party-slices/get-plpsLeads-slice";
+import { getLeadWhatsappMessageDetailsReducer } from "../activity/get-leadWhatsappMessage-details-slice";
+import { getVisionEducationLeadsReducer } from "../third-party-slices/get-visionEducation-leads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -311,8 +310,6 @@ const RootReducer = {
   getLeadAcadDetailsTwelfthDataById: getLeadAcadDetailsTwelfthByIdReducer,
 
   //lead academic details for UG
-  addLeadAcadDetailsUG: createLeadAcadDetailsUGReducer,
-  getLeadAcadDetailsUGDataById: getLeadAcadDetailsUGByIdReducer,
   addLeadContactPhone: addLeadContactPhoneReducer,
   getLeadContactPhoneById: leadContactPhoneByIdReducer,
   addLeadAcademicDetailsForTenth: addLeadAcademicDetailsForTenthReducer,
@@ -408,10 +405,9 @@ const RootReducer = {
 
   //*******************************  student documents *********************************
 
-  getStudentDocsByLeadCaptureIdResponse: getStudentDocsByLeadCaptureIdReducer,
+  getStudentDocsByCareerId: getStudentDocsByCareerIdReducer,
   verifyStudentDocsResponse: verifyStudentDocsReducer,
-  getConfirmationForAllDocsByLeadCaptureId: getConfirmationForAllDocsByLeadCaptureIdReducer,
-  studentDocsStatus: studentDocsStatusReducer,
+  getAllDocStatusByLeadIdData: allDocsStatusByIdReducer,
 
   //*******************************  scholarship details *********************************
   // updateLeadScholarshipDetails: updateLeadScholarshipDetailsReducer,
@@ -477,6 +473,7 @@ const RootReducer = {
   getManualOutboundCallDetails: getManualOutboundCallDetailsReducer,
   exportLeadForAdvanceSearch: advanceSearchExportReducer,
   getSuperBotCallbackDetails: getSuperBotcallbackReducer,
+  getLeadWhatsappMessageDetails: getLeadWhatsappMessageDetailsReducer,
 
   // ********************lead merge ************************************
   changeLeadEnquiryStatus: changeLeadEnquiryStatusReducer,
@@ -569,6 +566,8 @@ const RootReducer = {
   getAkshatEducationalServicesLeads: getAkshatEducationalServicesLeadsReducer,
   getPiyushShuklaLeads: getPiyushShuklaLeadsReducer,
   getChandraCollegeLeads: getChandraCollegeLeadsReducer,
+  getPlpsLeads: getPlpsLeadsReducer,
+  getVisionEducationLeads: getVisionEducationLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,
@@ -627,6 +626,10 @@ const RootReducer = {
   assignPsId: assignPsIdReducer,
   syncDataToPs: syncDataToPsReducer,
   getEmplId: getPsEmplIdReducer,
+
+  //leadadditionalug
+  saveUgAdditionalDetails: saveAdditionalUgDetailsReducer,
+  getUgAdditionalDetailsById: getUgAdditionalDetailsByIdReducer,
 };
 
 export default RootReducer;
