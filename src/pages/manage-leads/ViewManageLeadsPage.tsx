@@ -20,6 +20,11 @@ const ViewManageLeadsPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const { userDetails } = useSelector(
+    (state: RootState) => state.getLoggedInUserData
+  );
+  const isDocumentReviewer = userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER")
+
   const isViaButton = location.state?.viaButton;
 
   const { isRun: isRunForCreate } = useSelector(
@@ -72,7 +77,9 @@ const ViewManageLeadsPage: React.FC = () => {
   }, [location.state, navigate]);
 
   useEffect(() => {
-    dispatch(getLeadPropertiesById(leadCaptureId));
+    if (!isDocumentReviewer) {
+      dispatch(getLeadPropertiesById(leadCaptureId));
+    }
   }, [leadCaptureId, isRunForUpdateLeadProperties, isRunForChangeEnquiry, isRunForChangeStage]);
 
   useEffect(() => {
@@ -90,7 +97,7 @@ const ViewManageLeadsPage: React.FC = () => {
   }, [leadCaptureId, responseOfLeadEnquiryDetailsById]);
 
   useEffect(() => {
-    if (Object.keys(responseOfLeadEnquiryDetailsById).length !== 0) {
+    if (Object.keys(responseOfLeadEnquiryDetailsById).length !== 0 && !isDocumentReviewer) {
       const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
       const payloadForApplicationStatus = {
         leadCaptureId: leadCaptureId,

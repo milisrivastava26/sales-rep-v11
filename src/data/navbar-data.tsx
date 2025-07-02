@@ -10,14 +10,13 @@ export const dashboardItems: DropdownItem[] = [
 ];
 
 export const leadsItems: DropdownItem[] = [
-  // { label: "Manage Leads", href: "/manage-leads" },
   { label: "Manage Leads", href: "/manage-leads-v1" },
   { label: "Inbound Whatsapp Messages", href: "/inbound-whatsapp-messages" },
   { label: "Smart View", href: "/smart-view" },
   { label: "View Declined Cases", href: "/view-decline-cases" },
   { label: "View Cash Payments", href: "/view-cash-payments" },
   { label: "View Payment Info", href: "/payment-info" },
-  { label: "View Leads", href: "/view-leads" },
+  { label: "Document Review", href: "/document-review" },
 ];
 export const leadAuthorityItems = [{ label: "View Declined Cases", href: "/view-decline-cases" }];
 

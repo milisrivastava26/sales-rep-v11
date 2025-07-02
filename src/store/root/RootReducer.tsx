@@ -262,6 +262,8 @@ import { getUgAdditionalDetailsByIdReducer } from "../lead-academicDetailsForUG/
 import { getPlpsLeadsReducer } from "../third-party-slices/get-plpsLeads-slice";
 import { getLeadWhatsappMessageDetailsReducer } from "../activity/get-leadWhatsappMessage-details-slice";
 import { getVisionEducationLeadsReducer } from "../third-party-slices/get-visionEducation-leads-slice";
+import { getLeadForDocumentReviewReducer } from "../document-review/get-leadsForDocumentReview-slice";
+import { getConfirmationForAllDocsByLeadCaptureIdReducer } from "../student-documets/get-confirmation-all-docs-by-lead-id-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -630,6 +632,10 @@ const RootReducer = {
   //leadadditionalug
   saveUgAdditionalDetails: saveAdditionalUgDetailsReducer,
   getUgAdditionalDetailsById: getUgAdditionalDetailsByIdReducer,
+
+  //document review
+  getLeadForDocumentReview: getLeadForDocumentReviewReducer,
+  getConfirmationForAllDocsByLeadCaptureId: getConfirmationForAllDocsByLeadCaptureIdReducer,
 };
 
 export default RootReducer;

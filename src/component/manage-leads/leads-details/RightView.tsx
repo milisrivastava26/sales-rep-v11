@@ -61,7 +61,7 @@ const RightView: React.FC = () => {
   );
   const { getPsEmplIdResponse } = useSelector((state: RootState) => state.getEmplId);
   const { responseOfLeadContactDetailsById } = useSelector((state: RootState) => state.getLeadContactDetailsDataById);
-  
+
 
 
 
@@ -157,8 +157,16 @@ const RightView: React.FC = () => {
 
   const MergedLeadData = mergedLeadDetailsData(responseOfLeadEnquiryDetailsById, responseOfLeadAddressById, responseofLeadAdditionalInfo, responseOfLeadAcademicDetailsById, srmusetOptionDetails, getPsEmplIdResponse, responseOfLeadContactDetailsById);
 
-  if (leadDetailsPrint && !isLoadingForAddress && !isLoadingForAdditionalDetails && !isLoadingForAcademicDetails && responseOfLeadAddressById && responseofLeadAdditionalInfo) {
-  }
+  const { userDetails } = useSelector(
+    (state: RootState) => state.getLoggedInUserData
+  );
+  const isDocumentReviewer = userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER")
+
+  useEffect(() => {
+    if (isDocumentReviewer) {
+      setActiveTab(7)
+    }
+  }, [isDocumentReviewer])
   return (
     <>
       <div className="border-b border-gray-200 bg-white text-sm  ">
@@ -168,18 +176,23 @@ const RightView: React.FC = () => {
         </div>
         <div className="flex gap-x-5 justify-between items-center px-3">
           <ul className="flex space-x-4 text-gray-500 overflow-x-auto remove_scroll_bar overflow-y-hidden">
-            {tabs.map((tab, i) => (
-              <li
-                key={tab.id}
-                className={`cursor-pointer relative text-nowrap block text-[13px]  py-2 font-semibold ${activeTab === i ? "active" : ""}`}
-                onClick={() => {
-                  setActiveTab(i);
-                  dispatch(resetLeadNotesDetailsDataById());
-                }}
-              >
-                {displayOfferAnalysis || tab.label !== "Offer Analysis" ? tab.label : ""}
-              </li>
-            ))}
+            {tabs.map((tab, i) => {
+              if (isDocumentReviewer && tab.label !== "Student's Documents") {
+                return null
+              }
+              return (
+                <li
+                  key={tab.id}
+                  className={`cursor-pointer relative text-nowrap block text-[13px]  py-2 font-semibold ${activeTab === i ? "active" : ""}`}
+                  onClick={() => {
+                    setActiveTab(i);
+                    dispatch(resetLeadNotesDetailsDataById());
+                  }}
+                >
+                  {displayOfferAnalysis || tab.label !== "Offer Analysis" ? tab.label : ""}
+                </li>
+              )
+            })}
           </ul>
 
           {activeTab !== 6 && (

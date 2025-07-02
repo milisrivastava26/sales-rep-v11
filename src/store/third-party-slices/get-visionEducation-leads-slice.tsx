@@ -39,7 +39,7 @@ export const getVisionEducationLeads = createAsyncThunk<
   { startDate?: string; endDate?: string } | undefined
 >("crm/lead/getVisionEducationLeads", async (params, { rejectWithValue }) => {
   try {
-    let url = "api/crm/lead/thirdPartyLeads/bisvioneducation"; // Replace with correct endpoint if needed
+    let url = "api/crm/lead/thirdPartyLeads/vmoppdevtxzswl"; // Replace with correct endpoint if needed
     const queryParams = new URLSearchParams();
     if (params?.startDate) queryParams.append("startDate", params.startDate);
     if (params?.endDate) queryParams.append("endDate", params.endDate);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import store, { RootState } from "../../../../store";
 import { ExclamationCircleTwoTone } from "@ant-design/icons";
@@ -18,14 +18,26 @@ import toast from "react-hot-toast";
 import { MdDownload } from "react-icons/md";
 import { downloadDocForNotes } from "../../../../store/task/download-doc-slice";
 import { useParams } from "react-router-dom";
+import { getConfirmationForAllDocsById } from "../../../../store/student-documets/get-confirmation-all-docs-by-lead-id-slice";
 
 const StudentDocuments: React.FC = () => {
-  const {leadCaptureId} = useParams();
+  const { leadCaptureId } = useParams();
+  const [isChecked, setIsChecked] = useState(false);
   const { isLoading, studentDocsByCareerIdResponse } = useSelector((state: RootState) => state.getStudentDocsByCareerId);
   const { isLoading: isLoadingForVerify } = useSelector(
-      (state: RootState) => state.verifyStudentDocsResponse
-    );
+    (state: RootState) => state.verifyStudentDocsResponse
+  );
 
+  const { responseOfLeadEnquiryDetailsById } = useSelector(
+    (state: RootState) => state.getLeadEnquiryDetailsDataById
+  );
+  const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
+    ? responseOfLeadEnquiryDetailsById.filter(
+      (item: any) => item.status === "ACTIVE"
+    )
+    : [];
+
+  const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
   const { responseForAllDocStatus } = useSelector((state: RootState) => state.getAllDocStatusByLeadIdData);
 
   const allowedSampleFor = ["Gap Affidavit", "Anti-Ragging Affidavit By Student", "Anti-Ragging Affidavit By Parents/ Guardian", "Medical Fitness Certificate"];
@@ -54,6 +66,15 @@ const StudentDocuments: React.FC = () => {
       return medicalFitness
     }
   }
+
+  const handleSubmit = () => {
+    if (!isChecked) return;
+    const payload = {
+      leadCaptureId: leadCaptureId,
+      leadEnquiryId: leadEnquiryId,
+    };
+    store.dispatch(getConfirmationForAllDocsById(payload));
+  };
 
   const columns = [
     {
@@ -148,6 +169,8 @@ const StudentDocuments: React.FC = () => {
           (item: any) => item.coreCareerDocumentId === record.coreCareerDocumentsId
         );
 
+
+
         return (
           <>
             {match?.status === "verified" && <p className="text-sm text-green-600 ">Verified</p>}
@@ -218,6 +241,27 @@ const StudentDocuments: React.FC = () => {
                 </li>
               </ol>
             </div>
+
+            <div className="p-4">
+              <div className="flex items-center gap-4 w-fit">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <input type="checkbox" className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" onChange={(e) => setIsChecked(e.target.checked)} />
+                  Proceed for Metriculation
+                </label>
+                <button
+                  onClick={handleSubmit}
+                  disabled={!isChecked}
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 ${isChecked
+                    ? 'bg-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                >
+                  Submit
+                </button>
+              </div>
+
+            </div>
+
           </div>
         </>
       )}
