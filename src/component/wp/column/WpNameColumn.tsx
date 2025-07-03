@@ -14,6 +14,11 @@ const WpNameColumn = (onCreateLead: (rowData: InboundWhatsappMessage) => void, h
     Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{row.original.leadCaptureId || "N/A"}</span>,
   },
   {
+    Header: "Owner",
+    accessor: "owner",
+    Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{row.original.owner || "N/A"}</span>,
+  },
+  {
     Header: "Name",
     accessor: "name",
     Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{row.original.name}</span>,
@@ -33,11 +38,6 @@ const WpNameColumn = (onCreateLead: (rowData: InboundWhatsappMessage) => void, h
     accessor: "createdAt",
     Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{formatDate(row.original.createdAt)}</span>,
   },
-   {
-    Header: "Owner",
-    accessor: "owner",
-    Cell: ({ row }: { row: { original: InboundWhatsappMessage } }) => <span>{row.original.owner || "N/A"}</span>,
-  },
   {
     Header: "Action",
     accessor: "action",
@@ -46,13 +46,13 @@ const WpNameColumn = (onCreateLead: (rowData: InboundWhatsappMessage) => void, h
         <div className="flex gap-2">
           <button
             onClick={handleReject.bind({}, row.original.leadCaptureClientR2nId)}
-            className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"
+            className="px-3 py-0.5 bg-red-500 text-white rounded-md hover:bg-red-600"
           >
             Reject
           </button>
           <button
             onClick={onCreateLead.bind({},row.original)} // Pass only the clicked row's data
-            className="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600"
+            className="px-3 py-0.5 bg-green-500 text-white rounded-md hover:bg-green-600"
           >
             Create lead
           </button>

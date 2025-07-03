@@ -180,6 +180,10 @@ const RightView: React.FC = () => {
               if (isDocumentReviewer && tab.label !== "Student's Documents") {
                 return null
               }
+
+              if(!isDocumentReviewer && tab.label === "Student's Documents"){
+                return null;
+              }
               return (
                 <li
                   key={tab.id}

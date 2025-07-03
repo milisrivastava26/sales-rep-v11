@@ -77,9 +77,8 @@ const ViewManageLeadsPage: React.FC = () => {
   }, [location.state, navigate]);
 
   useEffect(() => {
-    if (!isDocumentReviewer) {
       dispatch(getLeadPropertiesById(leadCaptureId));
-    }
+    
   }, [leadCaptureId, isRunForUpdateLeadProperties, isRunForChangeEnquiry, isRunForChangeStage]);
 
   useEffect(() => {
@@ -97,7 +96,7 @@ const ViewManageLeadsPage: React.FC = () => {
   }, [leadCaptureId, responseOfLeadEnquiryDetailsById]);
 
   useEffect(() => {
-    if (Object.keys(responseOfLeadEnquiryDetailsById).length !== 0 && !isDocumentReviewer) {
+    if (Object.keys(responseOfLeadEnquiryDetailsById).length !== 0) {
       const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
       const payloadForApplicationStatus = {
         leadCaptureId: leadCaptureId,
@@ -112,7 +111,9 @@ const ViewManageLeadsPage: React.FC = () => {
   ]);
 
   useEffect(() => {
-    dispatch(getleadDetailsById(leadCaptureId));
+    if (!isDocumentReviewer) {
+      dispatch(getleadDetailsById(leadCaptureId));
+    }
   }, [
     leadCaptureId,
     isRunForManualOutboundCall,

@@ -9,7 +9,7 @@ interface LeadPropertiesByIdType {
 
 const initialState: LeadPropertiesByIdType = {
   leadPropertiesDataById: {},
-  isLoading: true,
+  isLoading: false,
   isError: null,
 };
 

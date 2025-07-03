@@ -37,6 +37,11 @@ const StudentDocuments: React.FC = () => {
     )
     : [];
 
+  const { leadApplicationStatusByLeadId } = useSelector((state: RootState) => state.getLeadApplicationStatusDataByLeadId);
+
+  const DocumentReviewObject = !isLoading && leadApplicationStatusByLeadId.length !== 0 && leadApplicationStatusByLeadId.find((item: any) => item.name === "Document Review");
+  const isAllDocsVerified = DocumentReviewObject && DocumentReviewObject.status;
+
   const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
   const { responseForAllDocStatus } = useSelector((state: RootState) => state.getAllDocStatusByLeadIdData);
 
@@ -242,25 +247,29 @@ const StudentDocuments: React.FC = () => {
               </ol>
             </div>
 
-            <div className="p-4">
-              <div className="flex items-center gap-4 w-fit">
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                  <input type="checkbox" className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" onChange={(e) => setIsChecked(e.target.checked)} />
-                  Proceed for Metriculation
-                </label>
-                <button
-                  onClick={handleSubmit}
-                  disabled={!isChecked}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 ${isChecked
-                    ? 'bg-blue-600 text-white hover:bg-blue-700'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    }`}
-                >
-                  Submit
-                </button>
-              </div>
+            {isAllDocsVerified ?
+              <p className="text-green-600 font-semibold mt-3 px-4">All documents are verified, student moved for metriculation.</p>
+              :
+              <div className="p-4">
+                <div className="flex items-center gap-4 w-fit">
+                  <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                    <input type="checkbox" className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" onChange={(e) => setIsChecked(e.target.checked)} />
+                    Proceed for Metriculation
+                  </label>
+                  <button
+                    onClick={handleSubmit}
+                    disabled={!isChecked}
+                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 ${isChecked
+                      ? 'bg-blue-600 text-white hover:bg-blue-700'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      }`}
+                  >
+                    Submit
+                  </button>
+                </div>
 
-            </div>
+              </div>
+            }
 
           </div>
         </>

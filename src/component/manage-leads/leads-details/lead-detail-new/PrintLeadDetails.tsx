@@ -665,6 +665,13 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           marginRight: "auto",
         }}
       >
+
+
+        
+
+<div >
+
+
         <div
           style={{
             textAlign: "center",
@@ -672,6 +679,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             fontSize: "13px",
             marginBottom: "16px",
             lineHeight: 1.3,
+            
           }}
         >
           Undertaking
@@ -785,7 +793,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
             Toll Free: 1800-102-6004 | Website: www.srmu.ac.in
           </footer>
         </div>
-
+</div>
       </div>
     </div>
   );

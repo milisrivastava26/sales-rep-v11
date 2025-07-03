@@ -73,7 +73,7 @@ export function CustomTableForOthers<T extends object>({ columns, data, isModeTy
 
   return (
     <div className="overflow-x-auto horizontal w-full">
-      <table className="w-full table-auto mt-4">
+      <table className="w-full table-auto mt-2">
         <thead className="bg-[#e5e7eb]">
           {headerGroups.map((headerGroup: any) => {
             const { key, ...restHeaderGroupProps } = headerGroup.getHeaderGroupProps();
@@ -103,7 +103,18 @@ export function CustomTableForOthers<T extends object>({ columns, data, isModeTy
                   const { key: cellKey, ...restCellProps } = cell.getCellProps();
 
                   return (
-                    <td key={cellKey} className={`py-1 pl-2 border border-[#e5e7eb] ${(isModeType === "wpTable" && cell.column.Header !== "Message") ? "text-nowrap":""} `} {...restCellProps}>
+                    <td
+                      key={cellKey}
+                      className={`pl-2 py-1 border border-[#e5e7eb] ${isModeType === "wpTable" && cell.column.Header !== "Message" ? "text-nowrap" : ""
+                        }`}
+                      style={
+                        cell.column.id === "message"
+                          ? { maxWidth: "250px", whiteSpace: "pre-wrap", wordWrap: "break-word" }
+                          : {}
+                      }
+                      {...restCellProps}
+                    >
+
                       {/* Name Field with Editing Logic */}
                       {cell.column.id === "name" && isModeType === "wpTable" ? (
                         <div
