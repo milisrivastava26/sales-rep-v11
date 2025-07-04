@@ -264,11 +264,13 @@ import { getLeadWhatsappMessageDetailsReducer } from "../activity/get-leadWhatsa
 import { getVisionEducationLeadsReducer } from "../third-party-slices/get-visionEducation-leads-slice";
 import { getLeadForDocumentReviewReducer } from "../document-review/get-leadsForDocumentReview-slice";
 import { getConfirmationForAllDocsByLeadCaptureIdReducer } from "../student-documets/get-confirmation-all-docs-by-lead-id-slice";
+import { whatsappMessageTableReducer } from "../ui/wp-table-slice";
 
 const RootReducer = {
   auth: authReducer,
   ui: uiSliceReducer,
   table: tableReducer,
+  wpTable: whatsappMessageTableReducer,
   notification: notificationReducer,
   callReq: callRequestReducer,
   paginationForLeads: paginationReducer,

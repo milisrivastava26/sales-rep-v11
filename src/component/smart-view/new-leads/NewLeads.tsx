@@ -4,7 +4,6 @@ import Card from "../../../util/custom/ui/Card";
 import CustomTabHeader from "../../../util/custom/smartView/CustomTabHeader";
 import { useEffect, useRef, useState } from "react";
 import Search from "../../../util/custom/customSearchPagination/Search";
-import Pagination from "../../../util/custom/customSearchPagination/Pagination";
 import LoadingSpinner from "../../../util/custom/ui/LoadingSpinner";
 import { CustomDetailsTable } from "../../../util/custom/leadsFormat/CustomDetailsTable";
 import { NewLeadColumn } from "./NewLeadsColumn";
@@ -21,6 +20,7 @@ import { uiSliceAction } from "../../../store/ui/ui-slice";
 import { getStateValues } from "../../../store/get/get-all-state-slice";
 import Fallback from "../../../util/custom/ui/Fallback";
 import { emptyDataIcon } from "../../../data/savgIcons";
+import Pagination from "../../../util/custom/customSearchPagination/Pagination";
 
 function NewLeads() {
   const { isCardShow, isQuickAddFormModalOpen } = useSelector((state: RootState) => state.ui);

@@ -54,5 +54,3 @@ function Pagination() {
 }
 
 export default Pagination;
-
-// header rootlayout table slice paginaltion search detailstable
