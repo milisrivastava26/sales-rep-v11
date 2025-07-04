@@ -7,7 +7,7 @@ export const documentReviewColumns: Column<any>[] = [
     Cell: ({ row }: { row: { original: any } }) => <span>{row.original.leadCaptureId}</span>,
   },
   {
-    Header: "Lead #",
+    Header: "Enquiry #",
     accessor: "leadEnquiryId",
     Cell: ({ row }: { row: { original: any } }) => <span>{row.original.leadEnquiryId}</span>,
   },
