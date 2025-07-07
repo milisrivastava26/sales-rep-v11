@@ -19,6 +19,7 @@ import { MdDownload } from "react-icons/md";
 import { downloadDocForNotes } from "../../../../store/task/download-doc-slice";
 import { useParams } from "react-router-dom";
 import { getConfirmationForAllDocsById } from "../../../../store/student-documets/get-confirmation-all-docs-by-lead-id-slice";
+import submissionProcess from "../../../../assets/sample-pdf/online-anti-ragging-affidavit-submission-process-010725043218.pdf";
 
 const StudentDocuments: React.FC = () => {
   const { leadCaptureId } = useParams();
@@ -89,11 +90,12 @@ const StudentDocuments: React.FC = () => {
       width: 420,
       render: (text: string, record: any) => (
         <div>
-          <div className="font-medium text-gray-800 text-[15px]">{text}</div>
-          <div className="text-[13px] text-gray-500">{record.description}</div>
-          {allowedSampleFor.includes(text) && <div className="text-[13px] text-gray-700">Download <a target="_blank"
-            href={getPdf(text)} className="text-blue-600 underline underline-offset-2 pt-0.5">sample</a> for your reference</div>}
-        </div>
+            <div className="font-medium text-gray-800 text-[15px]">{text}</div>
+            {text !== "Anti-Ragging Affidavits By Student & Parents/ Guardian" &&<div className="text-[13px] text-gray-500">{record.description}</div>}
+            {allowedSampleFor.includes(text) && <div className="text-[13px] text-gray-700">Download <a target="_blank"
+              href={getPdf(text)} className="text-blue-600 underline underline-offset-2 pt-0.5">sample</a> for your reference</div>}
+            {text === "Anti-Ragging Affidavits By Student & Parents/ Guardian" && <div className="text-[13px] text-gray-700"><a className="text-blue-500 underline underline-offset-2" href={"https://www.antiragging.in/affidavit_registration_disclaimer.html"} target="_blank">Fill Undertaking</a> on the official anti-ragging portal. To check out the complete online anti-ragging affidavit submission process, <a className="text-blue-500 underline underline-offset-2" href={submissionProcess} target="_blank">click here</a>. </div>}
+          </div>
       ),
     },
     {

@@ -12,12 +12,20 @@ const InboundWPMessagesPage: React.FC = () => {
   const { isLoading, responseOfGetAllInboundWhatsappMessages: wpResponse } = useSelector(
     (state: RootState) => state.getAllInboundWhatsappMessagesData
   );
+  const { userDetails } = useSelector(
+    (state: RootState) => state.getLoggedInUserData
+  );
+
+
   const { isRunURL1, isRunURL2 } = useSelector((state: RootState) => state.manageWhatsAppActionsData);
   const { isRun } = useSelector((state: RootState) => state.updateNameWpLeadsData);
 
   useEffect(() => {
-    dispatch(getAllInboundWhatsappMessages());
-  }, [dispatch, isRunURL1, isRunURL2, isRun]);
+     const fullName = userDetails?.fullName;
+   if(fullName!==undefined) {
+     dispatch(getAllInboundWhatsappMessages(fullName));
+   }
+  }, [dispatch, isRunURL1, isRunURL2, isRun, userDetails]);
 
   return (
     <div className="my-4 mx-3 sm:mx-5 px-3 py-3 sm:px-6 sm:py-6 shadow-md rounded-md bg-white">

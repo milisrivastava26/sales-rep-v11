@@ -28,14 +28,19 @@ const initialState: GetAllInboundWhatsappMessagesState = {
   responseOfGetAllInboundWhatsappMessages: [],
 };
 
-export const getAllInboundWhatsappMessages = createAsyncThunk<InboundWhatsappMessage[]>("crm/lead/getAllInboundWhatsappMessages", async (_, { rejectWithValue }) => {
-  try {
-    const response = await coreLeadCaptureApi.get("api/crm/lead/leadCapturer2win/findAll");
-    return response.data;
-  } catch (error: any) {
-    return rejectWithValue(error.response?.data.message || "An error occurred");
+export const getAllInboundWhatsappMessages = createAsyncThunk<InboundWhatsappMessage[], string>(
+  "crm/lead/getAllInboundWhatsappMessages",
+  async (fullName, { rejectWithValue }) => {
+    try {
+      const response = await coreLeadCaptureApi.get(
+        `api/crm/lead/leadCapturer2win/findAll/${fullName}`
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "An error occurred");
+    }
   }
-});
+);
 
 const getAllInboundWhatsappMessagesSlice = createSlice({
   name: "getAllInboundWhatsappMessages",
