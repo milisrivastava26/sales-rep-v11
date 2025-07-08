@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
     <>
       {/* ================Desktop Veiw========================== */}
       <div className="sticky top-0 w-full left-0 z-50">
-        <DesktopView dashboardItems={dashboardItems} leadsItems={leadsItems} profileItems={profileItems} />
+        <DesktopView leadsItems={leadsItems} profileItems={profileItems} />
         {/* {currentURL !== "/" && (currentURL !== "/manage-leads") && currentURL !== "/view-decline-cases" && ( */}
 
         {currentURL !== "/" && currentURL !== "/manage-leads" && (

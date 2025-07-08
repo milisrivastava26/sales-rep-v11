@@ -265,6 +265,9 @@ import { getVisionEducationLeadsReducer } from "../third-party-slices/get-vision
 import { getLeadForDocumentReviewReducer } from "../document-review/get-leadsForDocumentReview-slice";
 import { getConfirmationForAllDocsByLeadCaptureIdReducer } from "../student-documets/get-confirmation-all-docs-by-lead-id-slice";
 import { whatsappMessageTableReducer } from "../ui/wp-table-slice";
+import { superbotDirectionsReducer } from "../superbot-details/get-superbot-directions-slice";
+import { getSuperbotCallbackDetailsReducer } from "../superbot-details/get-superbotCallbackDetails-slice";
+import { superbotConversationReducer } from "../superbot-details/get-superbotConversation-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -638,6 +641,11 @@ const RootReducer = {
   //document review
   getLeadForDocumentReview: getLeadForDocumentReviewReducer,
   getConfirmationForAllDocsByLeadCaptureId: getConfirmationForAllDocsByLeadCaptureIdReducer,
+
+  //superbot details
+  getSuperbotDirections: superbotDirectionsReducer,
+  getSuperbotCallbackDetails: getSuperbotCallbackDetailsReducer,
+  getSuperbotConvo: superbotConversationReducer,
 };
 
 export default RootReducer;

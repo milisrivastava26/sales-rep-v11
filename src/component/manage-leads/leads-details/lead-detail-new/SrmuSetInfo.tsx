@@ -109,7 +109,7 @@ const SrmuSetInfo: React.FC = () => {
     <>
       <div className="bg-white relative  mt-5  pb-1">
         <div className="flex justify-between items-center h-[50px] relative bg-blue-100 ">
-          <h1 className="text-lg font-semibold px-4">Opted For SRMUSET</h1>
+          <h1 className="text-lg font-semibold px-4">CUET Candidates</h1>
           {!isEditing && (
             <button
               className=" px-6 py-1.5  font-medium rounded-lg"
@@ -143,7 +143,7 @@ const SrmuSetInfo: React.FC = () => {
           <div className="px-5 py-4 space-y-4">
             <div className="flex items-center gap-2">
               <label className="block text-[16px] font-medium mb-2 mr-4 text-gray-700">
-                Do you want to opt for SRMUSET Scholarship?
+                Have you appeared in CUET?
               </label>
               <div className="flex gap-6">
                 <label className="flex items-center gap-2">
