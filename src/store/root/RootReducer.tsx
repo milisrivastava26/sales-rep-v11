@@ -268,6 +268,7 @@ import { whatsappMessageTableReducer } from "../ui/wp-table-slice";
 import { superbotDirectionsReducer } from "../superbot-details/get-superbot-directions-slice";
 import { getSuperbotCallbackDetailsReducer } from "../superbot-details/get-superbotCallbackDetails-slice";
 import { superbotConversationReducer } from "../superbot-details/get-superbotConversation-slice";
+import { getProfessionalCareerAcademyLeadsReducer } from "../third-party-slices/get-professionalCareerAcademyLeads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -575,6 +576,7 @@ const RootReducer = {
   getChandraCollegeLeads: getChandraCollegeLeadsReducer,
   getPlpsLeads: getPlpsLeadsReducer,
   getVisionEducationLeads: getVisionEducationLeadsReducer,
+  getProfessionalCareerAcademyLeads: getProfessionalCareerAcademyLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,

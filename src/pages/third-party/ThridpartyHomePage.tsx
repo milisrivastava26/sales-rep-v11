@@ -29,6 +29,7 @@ import { getPiyushShuklaLeads } from "../../store/third-party-slices/get-piyushS
 import { getChandraCollegeLeads } from "../../store/third-party-slices/get-chandraCollege-leads-slice";
 import { getPlpsLeads } from "../../store/third-party-slices/get-plpsLeads-slice";
 import { getVisionEducationLeads } from "../../store/third-party-slices/get-visionEducation-leads-slice";
+import { getProfessionalCareerAcademyLeads } from "../../store/third-party-slices/get-professionalCareerAcademyLeads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -98,6 +99,7 @@ const ThirdpartyHomePage: React.FC = () => {
   const chandraCollegeLeads = useSelector((state:RootState) => state.getChandraCollegeLeads);
   const plpsLeads = useSelector((state:RootState) => state.getPlpsLeads);
   const visionEducationLeads = useSelector((state:RootState) => state.getVisionEducationLeads);
+  const professionalCareerLeads = useSelector((state:RootState) => state.getProfessionalCareerAcademyLeads)
 
   // State object to store loader, response, and action
   const [apiState, setApiState] = useState<ApiStateType>({
@@ -177,6 +179,9 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_VISION_EDUCATION") {
         dispatch(getVisionEducationLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_PROFESSIONAL_CAREER_ACADEMY") {
+        dispatch(getProfessionalCareerAcademyLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -363,6 +368,13 @@ const ThirdpartyHomePage: React.FC = () => {
         action: () => visionEducationLeads,
       });
     }
+    else if (role === "ROLE_PROFESSIONAL_CAREER_ACADEMY") {
+      setApiState({
+        isLoading: professionalCareerLeads.isLoading,
+        response: professionalCareerLeads.responseOfGetProfessionalCareerAcademyLeads,
+        action: () => professionalCareerLeads,
+      });
+    }
 
 
   }, [
@@ -393,7 +405,8 @@ const ThirdpartyHomePage: React.FC = () => {
     piyushShuklaLeads,
     chandraCollegeLeads,
     plpsLeads,
-    visionEducationLeads
+    visionEducationLeads,
+    professionalCareerLeads
   ]);
 
   return (

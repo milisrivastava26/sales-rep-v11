@@ -10,9 +10,9 @@ export interface DropdownItem {
 }
 
 export const leadsItems: DropdownItem[] = [
-  { label: "Manage Leads", href: "/manage-leads-v1", roles: ["ROLE_USER"] },
-  { label: "Inbound Whatsapp Messages", href: "/inbound-whatsapp-messages", roles: ["ROLE_USER"] },
-  { label: "Smart View", href: "/smart-view", roles: ["ROLE_USER"] },
+  { label: "Manage Leads", href: "/manage-leads-v1", roles: ["ROLE_USER", "ROLE_ADMIN", "ROLE_MANAGER"] },
+  { label: "Inbound Whatsapp Messages", href: "/inbound-whatsapp-messages", roles: ["ROLE_USER", "ROLE_ADMIN", "ROLE_MANAGER"] },
+  { label: "Smart View", href: "/smart-view", roles: ["ROLE_USER", "ROLE_ADMIN", "ROLE_MANAGER"] },
   { label: "View Declined Cases", href: "/view-decline-cases", roles: ["ROLE_AUTHORITY"] },
   { label: "View Cash Payments", href: "/view-cash-payments", roles: ["ROLE_FINANCE"] },
   { label: "View Payment Info", href: "/payment-info", roles: ["ROLE_ADMIN"] },

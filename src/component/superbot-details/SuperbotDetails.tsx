@@ -7,6 +7,8 @@ import { CustomDetailsTable } from "../../util/custom/leadsFormat/CustomDetailsT
 import { SuperbotCallbackColumns } from "./SuperbotCallbackColumns";
 import { Spin, Empty } from "antd";
 import { IoMdRefresh } from "react-icons/io";
+import Search from "../../util/custom/customSearchPagination/Search";
+import Pagination from "../../util/custom/customSearchPagination/Pagination";
 
 const SuperbotDetails: React.FC = () => {
     const { isLoading, directions } = useSelector(
@@ -114,11 +116,21 @@ const SuperbotDetails: React.FC = () => {
                             <Spin tip="Loading data..." size="large" />
                         </div>
                     ) : callbackDetails && callbackDetails.length > 0 ? (
-                        <CustomDetailsTable
-                            columns={SuperbotCallbackColumns}
-                            data={callbackDetails}
-                            isMode="superbot"
-                        />
+                        <div className="">
+                            <div className="flex items-center gap-10 mb-4">
+                                <Search />
+                                <Pagination />
+                            </div>
+
+                            <div className="">
+                                <CustomDetailsTable
+                                    columns={SuperbotCallbackColumns}
+                                    data={callbackDetails}
+                                    isMode="superbot"
+                                />
+                            </div>
+
+                        </div>
                     ) : (
                         <div className="flex justify-center items-center h-64">
                             <Empty description="No data found" />

@@ -29,6 +29,7 @@ import { getPiyushShuklaLeads } from "../../store/third-party-slices/get-piyushS
 import { getChandraCollegeLeads } from "../../store/third-party-slices/get-chandraCollege-leads-slice";
 import { getPlpsLeads } from "../../store/third-party-slices/get-plpsLeads-slice";
 import { getVisionEducationLeads } from "../../store/third-party-slices/get-visionEducation-leads-slice";
+import { getProfessionalCareerAcademyLeads } from "../../store/third-party-slices/get-professionalCareerAcademyLeads-slice";
 
 interface TyepFor {
   actionVal: () => {};
@@ -128,6 +129,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     else if (role === "ROLE_VISION_EDUCATION") {
       dispatch(getVisionEducationLeads({ startDate: fromDate, endDate: toDate }));
     }
+    else if (role === "ROLE_PROFESSIONAL_CAREER_ACADEMY") {
+      dispatch(getProfessionalCareerAcademyLeads({ startDate: fromDate, endDate: toDate }));
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -206,6 +210,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     }
     else if (role === "ROLE_VISION_EDUCATION") {
       dispatch(getVisionEducationLeads());
+    }
+    else if (role === "ROLE_PROFESSIONAL_CAREER_ACADEMY") {
+      dispatch(getProfessionalCareerAcademyLeads());
     }
   };
 
