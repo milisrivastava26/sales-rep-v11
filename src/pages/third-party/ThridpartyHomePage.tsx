@@ -30,6 +30,10 @@ import { getChandraCollegeLeads } from "../../store/third-party-slices/get-chand
 import { getPlpsLeads } from "../../store/third-party-slices/get-plpsLeads-slice";
 import { getVisionEducationLeads } from "../../store/third-party-slices/get-visionEducation-leads-slice";
 import { getProfessionalCareerAcademyLeads } from "../../store/third-party-slices/get-professionalCareerAcademyLeads-slice";
+import { getCareerGuidanceInstituteLeads } from "../../store/third-party-slices/get-careerGuidanceInstitute-leads-slice";
+import { getYourCampusLeads } from "../../store/third-party-slices/get-getYourCampusLeads-slice";
+import { getRcpConsultantLeads } from "../../store/third-party-slices/get-rcpConsultantLeads-slice";
+import { getASCareerCounselingLeads } from "../../store/third-party-slices/get-asCareerCounsellingLeads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -100,6 +104,10 @@ const ThirdpartyHomePage: React.FC = () => {
   const plpsLeads = useSelector((state:RootState) => state.getPlpsLeads);
   const visionEducationLeads = useSelector((state:RootState) => state.getVisionEducationLeads);
   const professionalCareerLeads = useSelector((state:RootState) => state.getProfessionalCareerAcademyLeads)
+  const careerGuidanceInstituteLeads = useSelector((state:RootState) => state.getCareerGuidanceInstituteLeads);
+  const yourCampusLeads = useSelector((state:RootState) => state.getYourCampusLeads)
+  const rcpConsultantLeads = useSelector((state:RootState) => state.getRcpConsultantLeads);
+  const asCareerCounseling = useSelector((state:RootState) => state.getAsCareerCounsellingLeads);
 
   // State object to store loader, response, and action
   const [apiState, setApiState] = useState<ApiStateType>({
@@ -182,6 +190,18 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_PROFESSIONAL_CAREER_ACADEMY") {
         dispatch(getProfessionalCareerAcademyLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_CGI") {
+        dispatch(getCareerGuidanceInstituteLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_GYC") {
+        dispatch(getYourCampusLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_RCP") {
+        dispatch(getRcpConsultantLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_ASCC") {
+        dispatch(getASCareerCounselingLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -375,7 +395,34 @@ const ThirdpartyHomePage: React.FC = () => {
         action: () => professionalCareerLeads,
       });
     }
-
+    else if (role === "ROLE_CGI") {
+      setApiState({
+        isLoading: careerGuidanceInstituteLeads.isLoading,
+        response: careerGuidanceInstituteLeads.responseOfCareerGuidanceInstituteLeads,
+        action: () => careerGuidanceInstituteLeads,
+      });
+    }
+     else if (role === "ROLE_GYC") {
+      setApiState({
+        isLoading: yourCampusLeads.isLoading,
+        response: yourCampusLeads.responseOfGetYourCampusLeads,
+        action: () => yourCampusLeads,
+      });
+    }
+    else if (role === "ROLE_RCP") {
+      setApiState({
+        isLoading: rcpConsultantLeads.isLoading,
+        response: rcpConsultantLeads.responseOfRcpConsultantLeads,
+        action: () => rcpConsultantLeads,
+      });
+    }
+    else if (role === "ROLE_ASCC") {
+      setApiState({
+        isLoading: asCareerCounseling.isLoading,
+        response: asCareerCounseling.responseOfASCareerCounselingLeads,
+        action: () => asCareerCounseling,
+      });
+    }
 
   }, [
     userDetails,
@@ -406,7 +453,11 @@ const ThirdpartyHomePage: React.FC = () => {
     chandraCollegeLeads,
     plpsLeads,
     visionEducationLeads,
-    professionalCareerLeads
+    professionalCareerLeads,
+    careerGuidanceInstituteLeads,
+    yourCampusLeads,
+    rcpConsultantLeads,
+    asCareerCounseling
   ]);
 
   return (

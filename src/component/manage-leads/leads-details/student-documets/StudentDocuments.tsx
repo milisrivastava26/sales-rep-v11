@@ -7,7 +7,7 @@ import Fallback from "../../../../util/custom/ui/Fallback";
 import { emptyDataIcon } from "../../../../data/savgIcons";
 import { Table, Tag, Tooltip } from "antd";
 import PreviewDocument from "../../../../util/custom/PreviewDocument";
-import gapAffidavit from "../../../../assets/sample-pdf/updated-affidavit-format-gap-nios-191223122320.pdf";
+import gapAffidavit from "../../../../assets/sample-pdf/gap-certificate-affidavit-010725042947.pdf";
 import antiRaggingStudent from "../../../../assets/sample-pdf/anti-ragging-by-student-191223122233.pdf";
 import antiRaggingParent from "../../../../assets/sample-pdf/anti-ragging-by-parents-191223122255.pdf";
 import medicalFitness from "../../../../assets/sample-pdf/medicalcertificate-191223122338.pdf";

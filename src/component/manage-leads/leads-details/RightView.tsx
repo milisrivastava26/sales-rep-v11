@@ -160,7 +160,8 @@ const RightView: React.FC = () => {
   const { userDetails } = useSelector(
     (state: RootState) => state.getLoggedInUserData
   );
-  const isDocumentReviewer = userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER")
+  
+  const isDocumentReviewer = userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") || userDetails?.authority?.includes("ROLE_DOCUMENT_ADMIN");
 
   useEffect(() => {
     if (isDocumentReviewer) {

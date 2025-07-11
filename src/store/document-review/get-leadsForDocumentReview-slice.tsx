@@ -13,12 +13,12 @@ const initialState: LeadForDocumentReviewType = {
   isError: null,
 };
 
-export const getLeadForDocumentReview = createAsyncThunk<any, string>(
+export const getLeadForDocumentReview = createAsyncThunk<any, any>(
   "lead/leadForDocumentReview",
-  async (userName, { rejectWithValue }) => {
+  async ({email, role}, { rejectWithValue }) => {
     try {
       const response = await coreLeadCaptureApi.get(
-        `/api/crm/lead/documentReviewer/getLeadsForReviewer/${userName}`
+        `/api/crm/lead/documentReviewer/getLeadsForReviewer/${email}/${role}`
       );
       return response.data;
     } catch (error: any) {

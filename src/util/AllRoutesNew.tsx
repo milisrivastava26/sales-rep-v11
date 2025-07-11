@@ -54,7 +54,11 @@ export const getRoutes = (userDetails: any) => {
     "ROLE_CHANDRA_COLLEGE",
     "ROLE_PLPS",
     "ROLE_VISION_EDUCATION",
-    "ROLE_PROFESSIONAL_CAREER_ACADEMY"
+    "ROLE_PROFESSIONAL_CAREER_ACADEMY",
+    "ROLE_CGI",
+    "ROLE_GYC",
+    "ROLE_RCP",
+    "ROLE_ASCC"
   ];
   const isThirdPartyUser = userDetails?.authority?.some((role: any) =>
     thirdPartyRoles.includes(role)

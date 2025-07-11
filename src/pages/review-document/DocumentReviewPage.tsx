@@ -14,7 +14,8 @@ const DocumentReviewPage: React.FC = () => {
 
   useEffect(() => {
     if (userDetails !== null && userDetails!==undefined && email!==undefined) {
-      store.dispatch(getLeadForDocumentReview(email))
+      const role = userDetails?.authority[0];
+      store.dispatch(getLeadForDocumentReview({email, role}))
     }
   }, [userDetails])
 

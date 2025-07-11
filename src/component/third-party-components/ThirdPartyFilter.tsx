@@ -30,6 +30,10 @@ import { getChandraCollegeLeads } from "../../store/third-party-slices/get-chand
 import { getPlpsLeads } from "../../store/third-party-slices/get-plpsLeads-slice";
 import { getVisionEducationLeads } from "../../store/third-party-slices/get-visionEducation-leads-slice";
 import { getProfessionalCareerAcademyLeads } from "../../store/third-party-slices/get-professionalCareerAcademyLeads-slice";
+import { getCareerGuidanceInstituteLeads } from "../../store/third-party-slices/get-careerGuidanceInstitute-leads-slice";
+import { getYourCampusLeads } from "../../store/third-party-slices/get-getYourCampusLeads-slice";
+import { getRcpConsultantLeads } from "../../store/third-party-slices/get-rcpConsultantLeads-slice";
+import { getASCareerCounselingLeads } from "../../store/third-party-slices/get-asCareerCounsellingLeads-slice";
 
 interface TyepFor {
   actionVal: () => {};
@@ -132,6 +136,18 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     else if (role === "ROLE_PROFESSIONAL_CAREER_ACADEMY") {
       dispatch(getProfessionalCareerAcademyLeads({ startDate: fromDate, endDate: toDate }));
     }
+    else if (role === "ROLE_CGI") {
+      dispatch(getCareerGuidanceInstituteLeads({ startDate: fromDate, endDate: toDate }));
+    }
+    else if (role === "ROLE_GYC") {
+      dispatch(getYourCampusLeads({ startDate: fromDate, endDate: toDate }));
+    }
+    else if (role === "ROLE_RCP") {
+      dispatch(getRcpConsultantLeads({ startDate: fromDate, endDate: toDate }));
+    }
+    else if (role === "ROLE_ASCC") {
+      dispatch(getASCareerCounselingLeads({ startDate: fromDate, endDate: toDate }));
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -213,6 +229,18 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     }
     else if (role === "ROLE_PROFESSIONAL_CAREER_ACADEMY") {
       dispatch(getProfessionalCareerAcademyLeads());
+    }
+    else if (role === "ROLE_CGI") {
+      dispatch(getCareerGuidanceInstituteLeads());
+    }
+    else if (role === "ROLE_GYC") {
+      dispatch(getYourCampusLeads());
+    }
+    else if (role === "ROLE_RCP") {
+      dispatch(getRcpConsultantLeads());
+    }
+    else if (role === "ROLE_ASCC") {
+      dispatch(getASCareerCounselingLeads());
     }
   };
 

@@ -269,6 +269,10 @@ import { superbotDirectionsReducer } from "../superbot-details/get-superbot-dire
 import { getSuperbotCallbackDetailsReducer } from "../superbot-details/get-superbotCallbackDetails-slice";
 import { superbotConversationReducer } from "../superbot-details/get-superbotConversation-slice";
 import { getProfessionalCareerAcademyLeadsReducer } from "../third-party-slices/get-professionalCareerAcademyLeads-slice";
+import { careerGuidanceInstituteLeadsReducer } from "../third-party-slices/get-careerGuidanceInstitute-leads-slice";
+import { getYourCampusLeadsReducer } from "../third-party-slices/get-getYourCampusLeads-slice";
+import { rcpConsultantLeadsReducer } from "../third-party-slices/get-rcpConsultantLeads-slice";
+import { asCareerCounselingLeadsReducer } from "../third-party-slices/get-asCareerCounsellingLeads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -577,6 +581,10 @@ const RootReducer = {
   getPlpsLeads: getPlpsLeadsReducer,
   getVisionEducationLeads: getVisionEducationLeadsReducer,
   getProfessionalCareerAcademyLeads: getProfessionalCareerAcademyLeadsReducer,
+  getCareerGuidanceInstituteLeads: careerGuidanceInstituteLeadsReducer,
+  getYourCampusLeads: getYourCampusLeadsReducer,
+  getRcpConsultantLeads: rcpConsultantLeadsReducer,
+  getAsCareerCounsellingLeads: asCareerCounselingLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,
