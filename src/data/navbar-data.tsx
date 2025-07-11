@@ -15,7 +15,7 @@ export const leadsItems: DropdownItem[] = [
   { label: "Smart View", href: "/smart-view", roles: ["ROLE_USER", "ROLE_ADMIN", "ROLE_MANAGER"] },
   { label: "View Declined Cases", href: "/view-decline-cases", roles: ["ROLE_AUTHORITY"] },
   { label: "View Cash Payments", href: "/view-cash-payments", roles: ["ROLE_FINANCE"] },
-  { label: "View Payment Info", href: "/payment-info", roles: ["ROLE_ADMIN"] },
+  { label: "View Payment Info", href: "/payment-info", roles: ["ROLE_ADMIN", "ROLE_MANAGER"] },
   { label: "Document Review", href: "/document-review", roles: ["ROLE_DOCUMENT_REVIEWER"] },
   { label: "Manage Task", href: "/manage-task", roles: ["ROLE_MANAGER", "ROLE_ADMIN"] },
   { label: "Super Bot Callback Details", href: "/superbot-details", roles: ["ROLE_MANAGER", "ROLE_ADMIN", "ROLE_USER"] },
