@@ -39,7 +39,7 @@ export const getASCareerCounselingLeads = createAsyncThunk<
   { startDate?: string; endDate?: string } | undefined
 >("crm/lead/getASCareerCounselingLeads", async (params, { rejectWithValue }) => {
   try {
-    let url = "api/crm/lead/thirdPartyLeads/getASCareerCounselingLeads";
+    let url = "api/crm/lead/thirdPartyLeads/azxswqyfswidwoc";
     const queryParams = new URLSearchParams();
     if (params?.startDate) queryParams.append("startDate", params.startDate);
     if (params?.endDate) queryParams.append("endDate", params.endDate);
