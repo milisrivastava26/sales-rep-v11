@@ -34,6 +34,7 @@ import { getCareerGuidanceInstituteLeads } from "../../store/third-party-slices/
 import { getYourCampusLeads } from "../../store/third-party-slices/get-getYourCampusLeads-slice";
 import { getRcpConsultantLeads } from "../../store/third-party-slices/get-rcpConsultantLeads-slice";
 import { getASCareerCounselingLeads } from "../../store/third-party-slices/get-asCareerCounsellingLeads-slice";
+import { getRightCareerLeads } from "../../store/third-party-slices/get-rightCareer-leads-slice";
 
 type ApiStateType = {
   isLoading: boolean;
@@ -108,6 +109,7 @@ const ThirdpartyHomePage: React.FC = () => {
   const yourCampusLeads = useSelector((state:RootState) => state.getYourCampusLeads)
   const rcpConsultantLeads = useSelector((state:RootState) => state.getRcpConsultantLeads);
   const asCareerCounseling = useSelector((state:RootState) => state.getAsCareerCounsellingLeads);
+  const rightCareerLeads = useSelector((state:RootState) => state.getRightCareerLeads);
 
   // State object to store loader, response, and action
   const [apiState, setApiState] = useState<ApiStateType>({
@@ -202,6 +204,9 @@ const ThirdpartyHomePage: React.FC = () => {
       }
       else if (role === "ROLE_ASCC") {
         dispatch(getASCareerCounselingLeads({ startDate: currentDate }));
+      }
+      else if (role === "ROLE_RIGHT_CAREER") {
+        dispatch(getRightCareerLeads({ startDate: currentDate }));
       }
     }
   }, [userDetails, dispatch]);
@@ -423,6 +428,13 @@ const ThirdpartyHomePage: React.FC = () => {
         action: () => asCareerCounseling,
       });
     }
+    else if (role === "ROLE_RIGHT_CAREER") {
+      setApiState({
+        isLoading: rightCareerLeads.isLoading,
+        response: rightCareerLeads.responseOfGetRightCareerLeads,
+        action: () => rightCareerLeads,
+      });
+    }
 
   }, [
     userDetails,
@@ -457,7 +469,8 @@ const ThirdpartyHomePage: React.FC = () => {
     careerGuidanceInstituteLeads,
     yourCampusLeads,
     rcpConsultantLeads,
-    asCareerCounseling
+    asCareerCounseling,
+    rightCareerLeads
   ]);
 
   return (

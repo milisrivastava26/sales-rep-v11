@@ -34,6 +34,7 @@ import { getCareerGuidanceInstituteLeads } from "../../store/third-party-slices/
 import { getYourCampusLeads } from "../../store/third-party-slices/get-getYourCampusLeads-slice";
 import { getRcpConsultantLeads } from "../../store/third-party-slices/get-rcpConsultantLeads-slice";
 import { getASCareerCounselingLeads } from "../../store/third-party-slices/get-asCareerCounsellingLeads-slice";
+import { getRightCareerLeads } from "../../store/third-party-slices/get-rightCareer-leads-slice";
 
 interface TyepFor {
   actionVal: () => {};
@@ -148,6 +149,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     else if (role === "ROLE_ASCC") {
       dispatch(getASCareerCounselingLeads({ startDate: fromDate, endDate: toDate }));
     }
+    else if (role === "ROLE_RIGHT_CAREER") {
+      dispatch(getRightCareerLeads({ startDate: fromDate, endDate: toDate }));
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -241,6 +245,9 @@ const ThirdPartyFilter: React.FC<TyepFor> = () => {
     }
     else if (role === "ROLE_ASCC") {
       dispatch(getASCareerCounselingLeads());
+    }
+    else if (role === "ROLE_RIGHT_CAREER") {
+      dispatch(getRightCareerLeads());
     }
   };
 

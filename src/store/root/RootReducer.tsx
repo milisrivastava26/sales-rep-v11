@@ -273,6 +273,7 @@ import { careerGuidanceInstituteLeadsReducer } from "../third-party-slices/get-c
 import { getYourCampusLeadsReducer } from "../third-party-slices/get-getYourCampusLeads-slice";
 import { rcpConsultantLeadsReducer } from "../third-party-slices/get-rcpConsultantLeads-slice";
 import { asCareerCounselingLeadsReducer } from "../third-party-slices/get-asCareerCounsellingLeads-slice";
+import { getRightCareerLeadsReducer } from "../third-party-slices/get-rightCareer-leads-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -585,6 +586,7 @@ const RootReducer = {
   getYourCampusLeads: getYourCampusLeadsReducer,
   getRcpConsultantLeads: rcpConsultantLeadsReducer,
   getAsCareerCounsellingLeads: asCareerCounselingLeadsReducer,
+  getRightCareerLeads: getRightCareerLeadsReducer,
 
   //lead merge
   getLeadPropertiesForLeadMerge: getLeadPropertiesForLeadMergeReducer,
