@@ -36,4 +36,9 @@ export const documentReviewColumns: Column<any>[] = [
     accessor: "career",
     Cell: ({ row }: { row: { original: any } }) => <span>{row.original.career}</span>,
   },
+  {
+    Header: "Status",
+    accessor: "status",
+    Cell: ({ row }: { row: { original: any } }) => <span className={`${row.original.status === true ? "text-green-600 font-medium" : "text-red-600 font-medium"}`}>{row.original.status === true ? "Verified" : "Not Verified"}</span>,
+  },
 ];

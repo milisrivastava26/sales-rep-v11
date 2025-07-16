@@ -22,6 +22,7 @@ import ManageTaskPage from "../pages/manage-task/ManageTaskPage";
 import PaymentInfoPage from "../pages/payment-info/PaymentInfoPage";
 import DocumentReviewPage from "../pages/review-document/DocumentReviewPage";
 import SuperbotDetailsPage from "../pages/superbot-details/SuperbotDetailsPage";
+import ViewVerifiedDocumentsPage from "../pages/review-document/ViewVerifiedDocumentsPage";
 
 // Helper function that builds routes based on user details
 export const getRoutes = (userDetails: any) => {
@@ -163,6 +164,10 @@ export const getRoutes = (userDetails: any) => {
           {
             path: "document-review",
             element: <DocumentReviewPage />,
+          },
+          {
+            path: "verified-documents",
+            element: <ViewVerifiedDocumentsPage />,
           },
           {
             path: "/superbot-details",

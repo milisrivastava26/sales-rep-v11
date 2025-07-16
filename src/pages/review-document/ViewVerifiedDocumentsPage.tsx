@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import DocumentReview from '../../component/document-review/DocumentReview'
 import store, { RootState } from '../../store'
 import { useSelector } from 'react-redux';
 import { getLeadForDocumentReview, resetLeadForDocumentReview } from '../../store/document-review/get-leadsForDocumentReview-slice';
+import VerifiedDocument from '../../component/document-review/VerifiedDocument';
 
-const DocumentReviewPage: React.FC = () => {
+const ViewVerifiedDocumentsPage: React.FC = () => {
 
 
   const { userDetails } = useSelector(
@@ -16,7 +16,7 @@ const DocumentReviewPage: React.FC = () => {
     store.dispatch(resetLeadForDocumentReview());
     if (userDetails !== null && userDetails!==undefined && email!==undefined) {
       const role = userDetails?.authority[0];
-      const status = false;
+      const status = true;
       store.dispatch(getLeadForDocumentReview({email, role, status}))
     }
   }, [userDetails])
@@ -24,9 +24,9 @@ const DocumentReviewPage: React.FC = () => {
 
   return (
     <div>
-      <DocumentReview />
+      <VerifiedDocument />
     </div>
   )
 }
 
-export default DocumentReviewPage
+export default ViewVerifiedDocumentsPage
