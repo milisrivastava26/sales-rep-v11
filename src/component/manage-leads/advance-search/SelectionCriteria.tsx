@@ -82,7 +82,6 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({ setFilterQuer
     validateOnChange: false, // Prevent validation on change
     validateOnMount: false, // Prevent validation on mount
     onSubmit: (values) => {
-      // console.log("payloadddd", values);
       setFilterQuery(values);
       getAdvanceSearchData(values);
     },

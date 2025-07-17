@@ -45,9 +45,7 @@ const Payment: React.FC = () => {
       const printContent =
         document.getElementById("download-receipt")?.innerHTML;
 
-      console.log("printContent", printContent)
       if (printContent) {
-        console.log("inside if")
         const iframe = document.createElement("iframe");
         iframe.style.position = "absolute";
         iframe.style.width = "0";
@@ -122,7 +120,6 @@ const Payment: React.FC = () => {
       receiptNumber
     );
 
-    console.log("data", receiptData);
     setReceiptData(receiptData);
     handleDownload();
   };

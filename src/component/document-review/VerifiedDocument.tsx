@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { CustomDetailsTable } from '../../util/custom/leadsFormat/CustomDetailsTable';
-import { documentReviewColumns } from './DocumentReviewColumn';
 import { Spin, Empty } from 'antd'; // Use AntD spinner and empty state
 import Search from '../../util/custom/customSearchPagination/Search';
 import Pagination from '../../util/custom/customSearchPagination/Pagination';
+import { getDocumentReviewColumns } from './DocumentReviewColumn';
 
 const VerifiedDocument: React.FC = () => {
     const { leadForDocumentReview, isLoading } = useSelector(
@@ -13,6 +13,13 @@ const VerifiedDocument: React.FC = () => {
     );
 
     const hasData = Array.isArray(leadForDocumentReview) && leadForDocumentReview.length > 0;
+
+    const { userDetails } = useSelector(
+            (state: RootState) => state.getLoggedInUserData
+          );
+          const role = userDetails?.authority;
+    
+        const documentReviewColumns = getDocumentReviewColumns(role)
 
     return (
         <div className="m-3">

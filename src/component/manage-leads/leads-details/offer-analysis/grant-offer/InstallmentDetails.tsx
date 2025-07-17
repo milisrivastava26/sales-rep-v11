@@ -30,7 +30,6 @@ const InstallmentDetails: React.FC<propsType> = ({
 }) => {
   const { leadCaptureId } = useParams();
   const { packageDeal } = useSelector((state: RootState) => state.ui);
-  console.log("packageDeal", packageDeal);
   const dispatch = store.dispatch;
   const { FeeDetailsV2Response } = useSelector(
     (state: RootState) => state.getFeeDetailsV2
@@ -64,9 +63,7 @@ const InstallmentDetails: React.FC<propsType> = ({
     newInstallmentDetailsResponse
   );
 
-  console.log(installments);
   useEffect(() => {
-    console.log("inside effect");
     setInstallments(newInstallmentDetailsResponse);
   }, [newInstallmentDetailsResponse]);
 
@@ -93,8 +90,6 @@ const InstallmentDetails: React.FC<propsType> = ({
     const installment = installments.find(
       (inst) => inst.installmentSequence === id
     );
-
-    console.log(installment);
 
     if (installment) {
       setTempAmount(installment.installmentAmount);
@@ -127,8 +122,6 @@ const InstallmentDetails: React.FC<propsType> = ({
       }
     );
 
-    console.log("isValid", isValid);
-
     if (isValid === false) {
       return;
     } else {
@@ -141,8 +134,6 @@ const InstallmentDetails: React.FC<propsType> = ({
         installments,
         packageDeal
       );
-
-      console.log("finalInstallmentPayload", finalInstallmentPayload);
       dispatch(lockLeadOffer(finalInstallmentPayload));
     }
   };
@@ -248,7 +239,6 @@ const InstallmentDetails: React.FC<propsType> = ({
     const deletedInstallment = installments.find(
       (inst) => inst.installmentSequence === id
     );
-    console.log(deletedInstallment);
     if (!deletedInstallment) return;
 
     const remainingAmount = deletedInstallment.installmentAmount;

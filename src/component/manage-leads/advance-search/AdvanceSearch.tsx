@@ -62,7 +62,6 @@ const AdvanceSearch: React.FC = () => {
   const getAdvanceSearchData = (data: any) => {
     store.dispatch(resetViewLeadResponse());
     const arraysOnly = buildFilterArrays(data?.fields);
-    console.log(arraysOnly)
     if (userDetails !== null && Object.keys(userDetails).length !== 0 && Object.keys(arraysOnly).length !== 0 ) {
       const payload = {
         loggedInUser: fullName,
@@ -79,7 +78,6 @@ const AdvanceSearch: React.FC = () => {
   useEffect(() => {
     // Fetch once on mount
     const initialFetch = async () => {
-      console.log(initialValues.fields)
       if (initialValues.fields.length !== 0) {
         store.dispatch(onOpenModalForAdvanceSearch());
         getAdvanceSearchData(initialValues);
@@ -89,14 +87,6 @@ const AdvanceSearch: React.FC = () => {
     // Empty array means this only runs once
   }, [paginatedPropsForAdvanceSearch]);
 
-  // useEffect(() => {
-  //   console.log("inside effect2")
-  //   // Run only when pagination props change
-  //   const paginationFetch = async () => {
-  //     await getAdvanceSearchData(filterQuery);
-  //   };
-  //   paginationFetch();
-  // }, [paginatedPropsForAdvanceSearch]);
 
   const handleColumnChange = (updatedColumns: any[]) => {
     setColumn(updatedColumns);

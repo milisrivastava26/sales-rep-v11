@@ -43,9 +43,6 @@ const AcademicInfo: React.FC = () => {
     const updatedData = transformPayloadForAcademicData(data.values, isEnableForTwelfthInputFields, isEnableForDiplomaInputFields, isEnableForUGInputFields, leadCaptureId);
 
     const payloadForAditionalUgDetails = transformPayloadForUgAdditionalDetails(data.values, leadCaptureId);
-
-    console.log(payloadForAditionalUgDetails)
-
     if (showUGDetails) {
       store.dispatch(saveAdditionalUgDetails(payloadForAditionalUgDetails));
     }

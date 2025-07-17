@@ -14,7 +14,6 @@ const CrmToPsIntegration: React.FC = () => {
   const { leadDetails, isLoading } = useSelector((state: RootState) => state.getPsIntegrationLeadDetails);
 
   useEffect(() => {
-    console.log("inside efffect");
     setColumns(getPsIntegrationLeadDetailsColumns(syncDataToPsResponse));
   }, [syncDataToPsResponse]);
 

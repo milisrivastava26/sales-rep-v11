@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { CustomDetailsTable } from '../../util/custom/leadsFormat/CustomDetailsTable';
-import { documentReviewColumns } from './DocumentReviewColumn';
-import { Spin, Empty } from 'antd'; // Use AntD spinner and empty state
+import { getDocumentReviewColumns } from './DocumentReviewColumn';
+import { Spin, Empty } from 'antd';
 import Search from '../../util/custom/customSearchPagination/Search';
 import Pagination from '../../util/custom/customSearchPagination/Pagination';
 
@@ -14,13 +14,21 @@ const DocumentReview: React.FC = () => {
 
     const hasData = Array.isArray(leadForDocumentReview) && leadForDocumentReview.length > 0;
 
+     const { userDetails, isLoading:isLoadingForUserDetails } = useSelector(
+        (state: RootState) => state.getLoggedInUserData
+      );
+
+      const role = userDetails?.authority;
+            const documentReviewColumns = getDocumentReviewColumns(role)
+
+
     return (
         <div className="m-3">
             <div className="bg-white py-6 h-screen overflow-x-hidden">
                 <h3 className="text-base sm:text-[22px] font-medium px-6">Manage Leads</h3>
 
                 <div className="px-6 pt-4">
-                    {isLoading ? (
+                    {(isLoading || isLoadingForUserDetails) ? (
                         <div className="flex justify-center items-center h-[300px]">
                             <Spin size="large" />
                         </div>

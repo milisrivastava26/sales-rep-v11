@@ -35,7 +35,6 @@ export const getReceiptData = (
   mode: string | any,
   receiptNumber: string | number | any
 ): ReceiptData => {
-  console.log("paymentAmount", paymentAmount)
   const permanentAddress = responseOfLeadAddressById[0];
 
   const receiptData: ReceiptData = {
