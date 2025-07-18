@@ -24,62 +24,60 @@ import submissionProcess from "../../../../assets/sample-pdf/online-anti-ragging
 const StudentDocuments: React.FC = () => {
   const { leadCaptureId } = useParams();
   const [isChecked, setIsChecked] = useState(false);
-  const { isLoading, studentDocsByCareerIdResponse } = useSelector((state: RootState) => state.getStudentDocsByCareerId);
-  const { isLoading: isLoadingForVerify } = useSelector(
-    (state: RootState) => state.verifyStudentDocsResponse
-  );
 
-  const { responseOfLeadEnquiryDetailsById } = useSelector(
-    (state: RootState) => state.getLeadEnquiryDetailsDataById
-  );
+  const { isLoading, studentDocsByCareerIdResponse } = useSelector((state: RootState) => state.getStudentDocsByCareerId);
+  const { isLoading: isLoadingForVerify } = useSelector((state: RootState) => state.verifyStudentDocsResponse);
+  const { responseOfLeadEnquiryDetailsById } = useSelector((state: RootState) => state.getLeadEnquiryDetailsDataById);
+  const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
+  const role = userDetails?.authority;
+  const isDocumentAdmin = role.includes("ROLE_DOCUMENT_ADMIN");
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
-    ? responseOfLeadEnquiryDetailsById.filter(
-      (item: any) => item.status === "ACTIVE"
-    )
+    ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE")
     : [];
+  const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
 
   const { leadApplicationStatusByLeadId } = useSelector((state: RootState) => state.getLeadApplicationStatusDataByLeadId);
-
-  const DocumentReviewObject = !isLoading && leadApplicationStatusByLeadId.length !== 0 && leadApplicationStatusByLeadId.find((item: any) => item.name === "Document Review");
-  const isAllDocsVerified = DocumentReviewObject && DocumentReviewObject.status;
-
-  const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
   const { responseForAllDocStatus } = useSelector((state: RootState) => state.getAllDocStatusByLeadIdData);
 
-  const allowedSampleFor = ["Gap Affidavit", "Anti-Ragging Affidavit By Student", "Anti-Ragging Affidavit By Parents/ Guardian", "Medical Fitness Certificate"];
+  const DocumentReviewObject = !isLoading &&
+    leadApplicationStatusByLeadId.length !== 0 &&
+    leadApplicationStatusByLeadId.find((item: any) => item.name === "Document Review");
+
+  const isAllDocsVerified = DocumentReviewObject && DocumentReviewObject.status;
+
+  const allowedSampleFor = [
+    "Gap Affidavit",
+    "Anti-Ragging Affidavit By Student",
+    "Anti-Ragging Affidavit By Parents/ Guardian",
+    "Medical Fitness Certificate"
+  ];
 
   const handleVerifyAndReject = (leadDocAttachmentId: any, status: any) => {
-
-    if (leadDocAttachmentId === undefined) {
+    if (!leadDocAttachmentId) {
       toast.error("Document has not been uploaded yet.");
-    }
-    else {
+    } else {
       store.dispatch(verifyStudentDocs({ leadDocAttachmentId, status }));
     }
   };
 
   const getPdf = (name: string) => {
-    if (name === "Gap Affidavit") {
-      return gapAffidavit;
+    switch (name) {
+      case "Gap Affidavit":
+        return gapAffidavit;
+      case "Anti-Ragging Affidavit By Student":
+        return antiRaggingStudent;
+      case "Anti-Ragging Affidavit By Parents/ Guardian":
+        return antiRaggingParent;
+      case "Medical Fitness Certificate":
+        return medicalFitness;
+      default:
+        return "#";
     }
-    else if (name === "Anti-Ragging Affidavit By Student") {
-      return antiRaggingStudent
-    }
-    else if (name === "Anti-Ragging Affidavit By Parents/ Guardian") {
-      return antiRaggingParent
-    }
-    else if (name === "Medical Fitness Certificate") {
-      return medicalFitness
-    }
-  }
+  };
 
   const handleSubmit = () => {
     if (!isChecked) return;
-    const payload = {
-      leadCaptureId: leadCaptureId,
-      leadEnquiryId: leadEnquiryId,
-    };
-    store.dispatch(getConfirmationForAllDocsById(payload));
+    store.dispatch(getConfirmationForAllDocsById({ leadCaptureId, leadEnquiryId }));
   };
 
   const columns = [
@@ -90,12 +88,16 @@ const StudentDocuments: React.FC = () => {
       width: 420,
       render: (text: string, record: any) => (
         <div>
-            <div className="font-medium text-gray-800 text-[15px]">{text}</div>
-            {text !== "Anti-Ragging Affidavits By Student & Parents/ Guardian" &&<div className="text-[13px] text-gray-500">{record.description}</div>}
-            {allowedSampleFor.includes(text) && <div className="text-[13px] text-gray-700">Download <a target="_blank"
-              href={getPdf(text)} className="text-blue-600 underline underline-offset-2 pt-0.5">sample</a> for your reference</div>}
-            {text === "Anti-Ragging Affidavits By Student & Parents/ Guardian" && <div className="text-[13px] text-gray-700"><a className="text-blue-500 underline underline-offset-2" href={"https://www.antiragging.in/affidavit_registration_disclaimer.html"} target="_blank">Fill Undertaking</a> on the official anti-ragging portal. To check out the complete online anti-ragging affidavit submission process, <a className="text-blue-500 underline underline-offset-2" href={submissionProcess} target="_blank">click here</a>. </div>}
-          </div>
+          <div className="font-medium text-gray-800 text-[15px]">{text}</div>
+          {text !== "Anti-Ragging Affidavits By Student & Parents/ Guardian" &&
+            <div className="text-[13px] text-gray-500">{record.description}</div>}
+          {allowedSampleFor.includes(text) &&
+            <div className="text-[13px] text-gray-700">Download <a target="_blank" href={getPdf(text)} className="text-blue-600 underline">sample</a> for your reference</div>}
+          {text === "Anti-Ragging Affidavits By Student & Parents/ Guardian" &&
+            <div className="text-[13px] text-gray-700">
+              <a className="text-blue-500 underline" href="https://www.antiragging.in/affidavit_registration_disclaimer.html" target="_blank">Fill Undertaking</a> on the official portal. To check process, <a className="text-blue-500 underline" href={submissionProcess} target="_blank">click here</a>.
+            </div>}
+        </div>
       ),
     },
     {
@@ -104,17 +106,11 @@ const StudentDocuments: React.FC = () => {
       key: "mandatory",
       width: 120,
       align: "center" as const,
-      render: (mandatory: boolean) =>
-        mandatory ? (
-          <p className="text-xs text-blue-700">
-            Mandatory
-          </p>
-        ) : (
-          <p className="text-xs text-gray-700">
-            Optional
-          </p>
-
-        ),
+      render: (mandatory: boolean) => (
+        <p className={`text-xs ${mandatory ? "text-blue-700" : "text-gray-700"}`}>
+          {mandatory ? "Mandatory" : "Optional"}
+        </p>
+      ),
     },
     {
       title: "Preview",
@@ -125,18 +121,10 @@ const StudentDocuments: React.FC = () => {
         const match = responseForAllDocStatus?.find(
           (item: any) => item.coreCareerDocumentId === record.coreCareerDocumentsId
         );
-
-        if (match?.status === "submitted" || match?.status === "verified" || match?.status === "rejected") {
-          return (
-            <PreviewDocument coreDocAttachmentTypeId={record.coreCareerDocumentsId} />
-          );
+        if (["submitted", "verified", "rejected"].includes(match?.status ?? "")) {
+          return <PreviewDocument coreDocAttachmentTypeId={record.coreCareerDocumentsId} />;
         }
-
-        return (
-          <Tag color="default" icon={<ExclamationCircleTwoTone twoToneColor="#faad14" />}>
-            Not available
-          </Tag>
-        );
+        return <Tag color="default" icon={<ExclamationCircleTwoTone twoToneColor="#faad14" />}>Not available</Tag>;
       },
     },
     {
@@ -147,24 +135,20 @@ const StudentDocuments: React.FC = () => {
         const match = responseForAllDocStatus?.find(
           (item: any) => item.coreCareerDocumentId === record.coreCareerDocumentsId
         );
-
         const handleDownload = () => {
           if (!match) return;
-
           store.dispatch(downloadDocForNotes({
             leadCaptureId,
             docName: match.fileName,
             docTypeId: match.coreCareerDocumentId
           }));
         };
-
         return (
           <div className="flex justify-center text-gray-700 cursor-pointer hover:text-blue-600" onClick={handleDownload}>
             <MdDownload className="text-xl" />
           </div>
         );
       }
-
     },
     {
       title: "Status",
@@ -176,105 +160,91 @@ const StudentDocuments: React.FC = () => {
           (item: any) => item.coreCareerDocumentId === record.coreCareerDocumentsId
         );
 
-
-
         return (
           <>
-            {match?.status === "verified" && <p className="text-sm text-green-600 ">Verified</p>}
+            {match?.status === "verified" && <p className="text-sm text-green-600">Verified</p>}
             {match?.status === "rejected" && <p className="text-sm text-red-600">Rejected</p>}
-            {(match?.status !== "verified" && match?.status !== "rejected") && <div className="flex gap-2 justify-center items-center">
-              <Tooltip
-                title={
-                  <div className="tooltip-content">
-                    Verify Document
-                    <br />
-                  </div>
-                }
-                placement="top"
-                overlayClassName="custom-tooltip"
-              >
-                <button className="verify" disabled={isLoadingForVerify} onClick={() => handleVerifyAndReject(match?.leadDocAttachmentId, "verified")}>
-                  <IoCheckboxOutline color="green" size="22" />
-                </button>
-              </Tooltip>
-              <Tooltip
-                title={
-                  <div className="tooltip-content">
-                    Reject Document
-                    <br />
-                  </div>
-                }
-                placement="top"
-                overlayClassName="custom-tooltip"
-              >
-                <button className="reject" disabled={isLoadingForVerify} onClick={() => handleVerifyAndReject(match?.leadDocAttachmentId, "rejected")}>
-                  <CgCloseR color="red" size="19" />
-                </button>
-              </Tooltip>
-            </div>}
+            {!["verified", "rejected"].includes(match?.status ?? "") &&
+              <div className="flex gap-2 justify-center items-center">
+                <Tooltip title="Verify Document" placement="top">
+                  <button className="verify" disabled={isLoadingForVerify} onClick={() => handleVerifyAndReject(match?.leadDocAttachmentId, "verified")}>
+                    <IoCheckboxOutline color="green" size="22" />
+                  </button>
+                </Tooltip>
+                <Tooltip title="Reject Document" placement="top">
+                  <button className="reject" disabled={isLoadingForVerify} onClick={() => handleVerifyAndReject(match?.leadDocAttachmentId, "rejected")}>
+                    <CgCloseR color="red" size="19" />
+                  </button>
+                </Tooltip>
+              </div>}
           </>
         );
       },
-    },
-
+    }
   ];
+
+  const filteredColumns = isDocumentAdmin
+    ? columns.filter(col => col.title !== "Status")
+    : columns;
 
   return (
     <>
-      {isLoading && <LoadingSpinner size={25} mainLoading={true} message={"Fetching Docs!"} centered={true} />}
+      {isLoading && <LoadingSpinner size={25} mainLoading={true} message="Fetching Docs!" centered={true} />}
       {!isLoading && studentDocsByCareerIdResponse.length === 0 && <Fallback isCenter={true} errorInfo="Documents not found" icon={emptyDataIcon} />}
       {!isLoading && studentDocsByCareerIdResponse.length !== 0 && (
-        <>
-          <div className="px-3 pt-[9px] pb-[30px] overflow-x-auto">
-            <div className="">
-              <Table
-                columns={columns}
-                dataSource={studentDocsByCareerIdResponse}
-                rowKey="name"
-                pagination={false}
-                bordered
-                size="middle"
-              />
-            </div>
+        <div className="px-3 pt-[9px] pb-[30px] overflow-x-auto">
+          <Table
+            columns={filteredColumns}
+            dataSource={studentDocsByCareerIdResponse}
+            rowKey="name"
+            pagination={false}
+            bordered
+            size="middle"
+          />
 
-
-            <div className="mt-6 p-4 border border-red-100 bg-red-50 rounded-md text-sm text-gray-700 leading-relaxed">
-              <strong className="block text-red-700 mb-1">Note:</strong>
-              <ol className="list-decimal list-inside space-y-1">
-                <li>All the documents should be uploaded on <strong>NAD DigiLocker Portal</strong>.</li>
-                <li>
-                  Students must submit all affidavits in original and bring two photocopies along with the
-                  originals of all other documents at the time of physical verification.
-                </li>
-              </ol>
-            </div>
-
-            {isAllDocsVerified ?
-              <p className="text-green-600 font-semibold mt-3 px-4">All documents are verified, student moved for metriculation.</p>
-              :
-              <div className="p-4">
-                <div className="flex items-center gap-4 w-fit">
-                  <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                    <input type="checkbox" className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" onChange={(e) => setIsChecked(e.target.checked)} />
-                    Proceed for Metriculation
-                  </label>
-                  <button
-                    onClick={handleSubmit}
-                    disabled={!isChecked}
-                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 ${isChecked
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      }`}
-                  >
-                    Submit
-                  </button>
-                </div>
-
-              </div>
-            }
-
+          <div className="mt-6 p-4 border border-red-100 bg-red-50 rounded-md text-sm text-gray-700 leading-relaxed">
+            <strong className="block text-red-700 mb-1">Note:</strong>
+            <ol className="list-decimal list-inside space-y-1">
+              <li>All the documents should be uploaded on <strong>NAD DigiLocker Portal</strong>.</li>
+              <li>
+                Students must submit all affidavits in original and bring two photocopies along with the
+                originals of all other documents at the time of physical verification.
+              </li>
+            </ol>
           </div>
-        </>
+
+          {!isDocumentAdmin &&
+            <>
+              {isAllDocsVerified ? (
+                <p className="text-green-600 font-semibold mt-3 px-4">
+                  All documents are verified, student moved for metriculation.
+                </p>
+              ) : (
+                <div className="p-4">
+                  <div className="flex items-center gap-4 w-fit">
+                    <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        onChange={(e) => setIsChecked(e.target.checked)}
+                      />
+                      Proceed for Metriculation
+                    </label>
+                    <button
+                      onClick={handleSubmit}
+                      disabled={!isChecked}
+                      className={`px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 ${isChecked
+                        ? "bg-blue-600 text-white hover:bg-blue-700"
+                        : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          }
+        </div>
       )}
     </>
   );
