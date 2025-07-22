@@ -30,7 +30,7 @@ const StudentDocuments: React.FC = () => {
   const { responseOfLeadEnquiryDetailsById } = useSelector((state: RootState) => state.getLeadEnquiryDetailsDataById);
   const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
   const role = userDetails?.authority;
-  const isDocumentAdmin = role.includes("ROLE_DOCUMENT_ADMIN");
+  const isDocumentReviewer = role.includes("ROLE_DOCUMENT_REVIEWER");
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
     ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE")
     : [];
@@ -183,9 +183,10 @@ const StudentDocuments: React.FC = () => {
     }
   ];
 
-  const filteredColumns = isDocumentAdmin
-    ? columns.filter(col => col.title !== "Status")
-    : columns;
+  const filteredColumns = isDocumentReviewer
+    ? columns
+    : columns.filter(col => col.title !== "Status");
+
 
   return (
     <>
@@ -213,7 +214,7 @@ const StudentDocuments: React.FC = () => {
             </ol>
           </div>
 
-          {!isDocumentAdmin &&
+          {isDocumentReviewer &&
             <>
               {isAllDocsVerified ? (
                 <p className="text-green-600 font-semibold mt-3 px-4">

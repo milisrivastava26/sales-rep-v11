@@ -14,7 +14,7 @@ const TopIconHeader: React.FC = () => {
   const { userDetails } = useSelector(
     (state: RootState) => state.getLoggedInUserData
   );
-  const isDocumentReviewer = userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER")
+  const isDocumentReviewer = userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") || userDetails?.authority?.includes("ROLE_DOCUMENT_ADMIN")
   return (
     <>
       {!isDocumentReviewer && <div className="mt-3 sm:mt-0 sm:ml-auto flex gap-2 flex-wrap">
