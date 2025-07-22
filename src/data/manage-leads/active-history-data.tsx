@@ -5,7 +5,6 @@ import MessageDetails from "../../component/manage-leads/leads-details/activity-
 import MessagePhoneDetails from "../../component/manage-leads/leads-details/activity-history/MessagePhoneDetails";
 import { activeHistoryType, MessagePhoneDetailsDataType } from "../../types/manage-leads/leads-details-types";
 import ActiveHistory from "../../component/manage-leads/leads-details/activity-history/ActiveHistory";
-import DocumentDetails from "../../component/manage-leads/leads-details/documents/DocumentDetails";
 import LeadDetailsNew from "../../component/manage-leads/leads-details/lead-detail-new/LeadDetailsNew";
 import Payment from "../../component/manage-leads/leads-details/payment/Payment";
 import TaskDetailPage from "../../component/manage-leads/leads-details/task/TaskDetailPage";
@@ -19,7 +18,7 @@ export const tabs = [
   { id: "3", label: "Payment", content: <Payment /> },
   { id: "4", label: "Tasks", content: <TaskDetailPage /> },
   { id: "5", label: "Notes", content: <NotesDetailsPage /> },
-  { id: "6", label: "Documents", content: <DocumentDetails /> },
+  // { id: "6", label: "Documents", content: <DocumentDetails /> },
   { id: "7", label: "Offer Analysis", content: <OfferAnalysisPageV1 /> },
   { id: "8", label: "Student's Documents", content: <StudentDocumentsPage /> },
 ];
