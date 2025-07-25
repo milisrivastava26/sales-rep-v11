@@ -1,12 +1,11 @@
 import { FieldArray, FormikProvider, useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import Select from "react-select";
 import * as Yup from "yup";
 import store, { RootState } from "../../../store";
 import { useSelector } from "react-redux";
 import { advanceSearchStyle } from "../../../data/manage-leads/advance-search-data";
-import { getAllLeadFieldByName } from "../../../store/advance-search/get-allLeadField-byName-slice";
 import { resetViewLeadResponse } from "../../../store/advance-search/get-coreViewLead-byQuery-slice";
 import toast from "react-hot-toast";
 import { getAllLeadNames } from "../../../store/advance-search/get-all-leadName-slice";
@@ -37,20 +36,33 @@ interface selectionCriteriaPropsType {
 
 const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({ setFilterQuery, filterQuery, getAdvanceSearchData }) => {
   const dispatch = store.dispatch;
-  const [selectedValue, setSelectedValue] = useState<any>();
 
   const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
-  const { responseLeadNameData } = useSelector((state: RootState) => state.getAllLeadNameData);
-  const { responseLeadEmailData } = useSelector((state: RootState) => state.getAllLeadEmailsData);
-  const { responseLeadPhoneData } = useSelector((state: RootState) => state.getAllLeadPhonesData);
-  const { responseLeadCareerData } = useSelector((state: RootState) => state.getAllLeadCareersData);
-  const { responseLeadProgramData } = useSelector((state: RootState) => state.getAllLeadProgramsData);
-  const { responseLeadApplicationStatusData } = useSelector((state: RootState) => state.getAllLeadApplicationStatusData);
-  const { responseLeadCityData } = useSelector((state: RootState) => state.getAllLeadCitysData);
-  const { responseLeadSourseData } = useSelector((state: RootState) => state.getAllLeadSoursesData);
-  const { responseLeadStageData } = useSelector((state: RootState) => state.getAllLeadStagesData);
-  const { responseLeadSubStageData } = useSelector((state: RootState) => state.getAllLeadSubStagesData);
-  const { responseLeadStateData } = useSelector((state: RootState) => state.getAllLeadStatesData);
+  const { responseLeadNameData, isLoading: isLoadingLeadName } = useSelector((state: RootState) => state.getAllLeadNameData);
+  const { responseLeadEmailData, isLoading: isLoadingLeadEmail } = useSelector((state: RootState) => state.getAllLeadEmailsData);
+  const { responseLeadPhoneData, isLoading: isLoadingLeadPhone } = useSelector((state: RootState) => state.getAllLeadPhonesData);
+  const { responseLeadCareerData, isLoading: isLoadingLeadCareer } = useSelector((state: RootState) => state.getAllLeadCareersData);
+  const { responseLeadProgramData, isLoading: isLoadingLeadProgram } = useSelector((state: RootState) => state.getAllLeadProgramsData);
+  const { responseLeadApplicationStatusData, isLoading: isLoadingLeadApplicationStatus } = useSelector((state: RootState) => state.getAllLeadApplicationStatusData);
+  const { responseLeadCityData, isLoading: isLoadingLeadCity } = useSelector((state: RootState) => state.getAllLeadCitysData);
+  const { responseLeadSourseData, isLoading: isLoadingLeadSourse } = useSelector((state: RootState) => state.getAllLeadSoursesData);
+  const { responseLeadStageData, isLoading: isLoadingLeadStage } = useSelector((state: RootState) => state.getAllLeadStagesData);
+  const { responseLeadSubStageData, isLoading: isLoadingLeadSubStage } = useSelector((state: RootState) => state.getAllLeadSubStagesData);
+  const { responseLeadStateData, isLoading: isLoadingLeadState } = useSelector((state: RootState) => state.getAllLeadStatesData);
+
+  const loadingMap: Record<string, boolean> = {
+    name: isLoadingLeadName,
+    email: isLoadingLeadEmail,
+    phone: isLoadingLeadPhone,
+    career: isLoadingLeadCareer,
+    program: isLoadingLeadProgram,
+    application_status: isLoadingLeadApplicationStatus,
+    city: isLoadingLeadCity,
+    source: isLoadingLeadSourse,
+    lead_stage: isLoadingLeadStage,
+    lead_sub_stage: isLoadingLeadSubStage,
+    state: isLoadingLeadState,
+  };
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -91,14 +103,6 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({ setFilterQuer
     (state: RootState) => state.getAllAdvanceSearchFilterFields
   );
 
-  useEffect(() => {
-    formik.values.fields.forEach((field) => {
-      if (field.type) {
-        store.dispatch(getAllLeadFieldByName(field.type));
-      }
-    });
-  }, []);
-
   const getModeOptions = () => {
     return [
       { value: "include", label: "Include" },
@@ -109,8 +113,6 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({ setFilterQuer
   const isSalesRepUser = !userDetails?.authority?.some((role: string) => role === "ROLE_ADMIN" || role === "ROLE_MANAGER");
 
   const fetchSelectedApi = (value: string) => {
-    setSelectedValue(value);
-
     if (value === "career") {
       dispatch(getAllLeadCareers());
     } else if (value === "program") {
@@ -135,6 +137,46 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({ setFilterQuer
       dispatch(getAllLeadApplicationStatus());
     }
   };
+
+
+  const [inputValue, setInputValue] = useState("");
+
+  const getAllOptions = (type: string) => {
+    switch (type) {
+      case "name":
+        return responseLeadNameData;
+      case "email":
+        return responseLeadEmailData;
+      case "phone":
+        return responseLeadPhoneData;
+      case "career":
+        return responseLeadCareerData;
+      case "program":
+        return responseLeadProgramData;
+      case "state":
+        return responseLeadStateData;
+      case "city":
+        return responseLeadCityData;
+      case "lead_source":
+        return responseLeadSourseData;
+      case "lead_stage":
+        return responseLeadStageData;
+      case "lead_sub_stage":
+        return responseLeadSubStageData;
+      case "application_status":
+        return responseLeadApplicationStatusData;
+      default:
+        return [];
+    }
+  };
+
+  const getFilteredOptions = (type: string, query: string) => {
+    const all = getAllOptions(type);
+    return all?.filter((item: any) =>
+      item.label?.toLowerCase().includes(query.toLowerCase())
+    );
+  };
+
 
   return (
     <div>
@@ -196,9 +238,9 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({ setFilterQuer
                             value={
                               field.mode
                                 ? {
-                                    value: field.mode,
-                                    label: field.mode.charAt(0).toUpperCase() + field.mode.slice(1),
-                                  }
+                                  value: field.mode,
+                                  label: field.mode.charAt(0).toUpperCase() + field.mode.slice(1),
+                                }
                                 : null
                             }
                             className="w-full"
@@ -225,79 +267,39 @@ const SelectionCriteria: React.FC<selectionCriteriaPropsType> = ({ setFilterQuer
                           <label className="text-gray-600 text-xs py-0 font-medium">Criteria:</label>
                           <Select
                             isMulti
+                            isLoading={loadingMap[field.type]}
+                            isDisabled={loadingMap[field.type]}
                             options={
-                              selectedValue === "name"
-                                ? responseLeadNameData
-                                : selectedValue === "email"
-                                ? responseLeadEmailData
-                                : selectedValue === "phone"
-                                ? responseLeadPhoneData
-                                : selectedValue === "career"
-                                ? responseLeadCareerData
-                                : selectedValue === "program"
-                                ? responseLeadProgramData
-                                : selectedValue === "state"
-                                ? responseLeadStateData
-                                : selectedValue === "city"
-                                ? responseLeadCityData
-                                : selectedValue === "lead_source"
-                                ? responseLeadSourseData
-                                : selectedValue === "lead_stage"
-                                ? responseLeadStageData
-                                : selectedValue === "lead_sub_stage"
-                                ? responseLeadSubStageData
-                                : selectedValue === "application_status"
-                                ? responseLeadApplicationStatusData
+                              inputValue.length >= 4
+                                ? getFilteredOptions(field.type, inputValue)
                                 : []
                             }
-                            onChange={(selected) => formik.setFieldValue(`fields.${index}.value`, selected?.map((opt) => opt.value) || [])}
-
-                            value={(selectedValue === "name"
-                              ? responseLeadNameData
-                              : selectedValue === "email"
-                              ? responseLeadEmailData
-                              : selectedValue === "phone"
-                              ? responseLeadPhoneData
-                              : selectedValue === "career"
-                              ? responseLeadCareerData
-                              : selectedValue === "program"
-                              ? responseLeadProgramData
-                              : selectedValue === "state"
-                              ? responseLeadStateData
-                              : selectedValue === "city"
-                              ? responseLeadCityData
-                              : selectedValue === "lead_source"
-                              ? responseLeadSourseData
-                              : selectedValue === "lead_stage"
-                              ? responseLeadStageData
-                              : selectedValue === "lead_sub_stage"
-                              ? responseLeadSubStageData
-                              : selectedValue === "application_status"
-                              ? responseLeadApplicationStatusData
-                              : []
-                            ).filter((opt) => formik.values.fields[index].value?.includes(opt.value))}
+                            onInputChange={(val) => setInputValue(val)}
+                            onChange={(selected) =>
+                              formik.setFieldValue(
+                                `fields.${index}.value`,
+                                selected?.map((opt) => opt.value) || []
+                              )
+                            }
+                            value={getAllOptions(field.type).filter((opt) =>
+                              formik.values.fields[index].value?.includes(opt.value)
+                            )}
                             className="w-full"
-                            placeholder="Select Multiple critria"
+                            placeholder="Type at least 4 characters to search"
                             styles={advanceSearchStyle}
                           />
+
                           {typeof formik.errors.fields?.[index] === "object" &&
-                            (
-                              formik.errors.fields?.[index] as {
-                                value?: string;
-                              }
-                            )?.value && (
+                            (formik.errors.fields?.[index] as { value?: string })?.value && (
                               <p className="text-red-500 text-sm">
-                                {
-                                  (
-                                    formik.errors.fields?.[index] as {
-                                      value?: string;
-                                    }
-                                  ).value
-                                }
+                                {(formik.errors.fields?.[index] as { value?: string })?.value}
                               </p>
                             )}
                         </div>
                       )}
+
+
+
                     </div>
 
                     {/* Remove Button */}
