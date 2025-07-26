@@ -20,6 +20,8 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
   const addressPermanent = addressDetails[0];
   const addressCorrespondence = addressDetails[1];
 
+  console.log("erp", erpId);
+
   return (
     <div
       style={{
@@ -77,7 +79,7 @@ const PrintLeadDetails: React.FC<propstype> = ({ data }) => {
           >
             {[
               { label: "Recruiter Name:", value: "", width: "5rem" },
-              { label: "ERP ID:", value: erpId, width: "4rem" },
+              { label: "ERP ID:", value: erpId, width: "10rem" },
               { label: "Enquiry #:", value: generalInfo.leadEnquiryId, width: "4rem" },
               { label: "Lead #:", value: generalInfo.leadCaptureId, width: "4rem" },
             ].map((field, index) => (
