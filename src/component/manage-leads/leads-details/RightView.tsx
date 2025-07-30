@@ -163,9 +163,10 @@ const RightView: React.FC = () => {
   
   const isDocumentReviewer = userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") || userDetails?.authority?.includes("ROLE_DOCUMENT_ADMIN");
 
+
   useEffect(() => {
     if (isDocumentReviewer) {
-      setActiveTab(7)
+      setActiveTab(6)
     }
   }, [isDocumentReviewer])
   return (
@@ -178,13 +179,10 @@ const RightView: React.FC = () => {
         <div className="flex gap-x-5 justify-between items-center px-3">
           <ul className="flex space-x-4 text-gray-500 overflow-x-auto remove_scroll_bar overflow-y-hidden">
             {tabs.map((tab, i) => {
-              // if (isDocumentReviewer && tab.label !== "Student's Documents") {
-              //   return null
-              // }
+              if (isDocumentReviewer && tab.label !== "Student's Documents") {
+                return null
+              }
 
-              // if(!isDocumentReviewer && tab.label === "Student's Documents"){
-              //   return null;
-              // }
               return (
                 <li
                   key={tab.id}
