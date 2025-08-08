@@ -65,6 +65,8 @@ const getAllAcademicCareerForQuickaddSlice = createSlice({
           value: item.academicCareerId,
           label: item.description,
         }));
+
+
       })
       .addCase(getAcademicCareerValuesForQuickadd.rejected, (state, action) => {
         state.isLoading = false;

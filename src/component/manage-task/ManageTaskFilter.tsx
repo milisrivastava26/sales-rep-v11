@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import store, { RootState } from "../../store";
 import { resetFilteredTaskResponse } from "../../store/manage-task/get-filtered-task-slice";
+import { getApByCareerId } from "../../store/get/get-all-academic-program-by-academic-career-id-slice";
 
 interface Option {
     label: string;
@@ -35,6 +36,12 @@ const ManageTaskFilter: React.FC<Props> = ({
     const { responseForfilter }: { responseForfilter: Option[] } = useSelector(
         (state: RootState) => state.getAllOwner
     );
+    const {
+        responseForFilterHeadAcademicCareerQuickadd: careerOptions,
+    } = useSelector((state: RootState) => state.getAllAcademicCareerForQuickadd);
+    const {
+        responseForFilterHeadAcademicProgram: programOptions,
+    } = useSelector((state: RootState) => state.getAllAcademicProgramByCareer);
     const { filteredTasks } = useSelector((state: RootState) => state.getFilteredTask);
 
     const [isFilterApplied, setIsFilterApplied] = useState(false);
@@ -80,17 +87,29 @@ const ManageTaskFilter: React.FC<Props> = ({
                                                 ? filterLeadSource
                                                 : field.name === "salesrepName"
                                                     ? responseForfilter
-                                                    : field.options
+                                                    : field.name === "career" ?
+                                                        careerOptions :
+                                                        field.name === "program" ?
+                                                            programOptions
+                                                            : field.options
                                         }
                                         value={
                                             (field.name === "leadSource"
                                                 ? filterLeadSource
                                                 : field.name === "salesrepName"
                                                     ? responseForfilter
-                                                    : field.options || []
+                                                    : field.name === "career" ?
+                                                        careerOptions :
+                                                        field.name === "program" ?
+                                                            programOptions
+                                                            : field.options || []
                                             ).find((opt: any) => opt.value === values[field.name]) || null
                                         }
                                         onChange={(newValue) => {
+
+                                            if (field.name === "career") {
+                                                store.dispatch(getApByCareerId(newValue.value));
+                                            }
 
                                             setFieldValue(field.name, newValue ? (newValue as Option).value : "");
                                             setIsFilterApplied(false)
