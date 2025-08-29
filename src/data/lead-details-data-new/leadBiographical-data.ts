@@ -16,6 +16,7 @@ interface BiographicalInfo {
   motherName: string;
   dob: string;
   leadDemographicDetailsDTO: {
+    adharNumber: string;
     leadCaptureId: any;
     nationality: any;
     bloodGroup: any;
@@ -127,6 +128,13 @@ export const biographicalFormInput = [
     type: "number",
     isrequired: false,
   },
+  {
+    id: 22,
+    name: "adharNumber",
+    label: "Aadhar Number",
+    type: "text",
+    isrequired: true,
+  },
 ];
 
 export const getInitialValuesForBiographicalInfo = (
@@ -151,7 +159,7 @@ export const getInitialValuesForBiographicalInfo = (
     motherOccupation: data.leadDemographicDetailsDTO?.motherOccupation,
     motherDesignation: data.leadDemographicDetailsDTO?.motherDesignation,
     motherAnnualIncome: data.leadDemographicDetailsDTO?.motherAnnualIncome,
-
+    adharNumber: data.leadDemographicDetailsDTO?.adharNumber,
     leadCaptureId: leadCaptureId,
   };
 
@@ -212,6 +220,9 @@ export const validationSchemaForBiographicalInfo = Yup.object({
   bloodGroup: Yup.string()
     .matches(/^(A|B|AB|O)[+-]$/, "Invalid blood group")
     .nullable(),
+  adharNumber: Yup.string()
+    .required("Aadhaar number is required")
+    .matches(/^\d{12}$/, "Aadhaar number must be exactly 12 digits"),
 });
 
 export const transformBiographicalPayload = (
@@ -239,6 +250,7 @@ export const transformBiographicalPayload = (
       nationality: values.nationality,
       bloodGroup: values.bloodGroup,
       leadCaptureId,
+      adharNumber: values.adharNumber,
     },
   };
 
