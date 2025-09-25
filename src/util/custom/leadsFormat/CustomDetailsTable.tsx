@@ -3,7 +3,16 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import store, { RootState } from "../../../store";
 import { highlightText } from "../general/genral-action";
-import { deleteRazorPayPaymentId, getLeadsForManageTask, getLeadsForOverdueTask, onGetAllCheckSelectedDataFormCustomTable, openFailedCaseModalModal, openPaymentInfoModal, setRazorPayPaymentId } from "../../../store/ui/ui-slice";
+import {
+  deleteRazorPayPaymentId,
+  getLeadsForDiscountAudit,
+  getLeadsForManageTask,
+  getLeadsForOverdueTask,
+  onGetAllCheckSelectedDataFormCustomTable,
+  openFailedCaseModalModal,
+  openPaymentInfoModal,
+  setRazorPayPaymentId,
+} from "../../../store/ui/ui-slice";
 import { getFilterProps, getPaginationProps, onGetOnlyDataLength } from "../../../store/ui/table-slice";
 import { useTable, usePagination, useFilters, useGlobalFilter, Column, TableInstance, TableState, useRowSelect } from "react-table";
 import { getLeadPaymentDetailsByOrderId, resetLeadPaymentDetails } from "../../../store/paymentInfo/get-leadPaymentDetails-byOrderId-slice";
@@ -50,6 +59,7 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
   const [filteredDataLength, setFilteredDataLength] = useState(data?.length || 0);
   const { settingId } = useSelector((state: RootState) => state.ui);
   const { isError, responseExportLead } = useSelector((state: RootState) => state.exportLeadData);
+  const { isLoading: isLoadingForPostDiscountToPs } = useSelector((state: RootState) => state.postDiscountToPs);
 
   // const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
   // const [selectedRows, setSelectedRows] = useState<any[]>([]); // Store selected rows
@@ -96,18 +106,32 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
     usePagination,
     useRowSelect, // Enable row selection plugin
     (hooks: any) => {
-      if (isMode === "manageLeads" || isMode === "advanceSearch" || isMode === "overdueTask" || isMode === "manageTask") {
+      if (isMode === "manageLeads" || isMode === "advanceSearch" || isMode === "overdueTask" || isMode === "manageTask" || isMode === "discountAudits") {
         hooks.visibleColumns.push((columns: any) => [
           {
             id: "selection",
             // use getToggleAllPageRowsSelectedProps to only select rows on the current page
             Header: ({ getToggleAllPageRowsSelectedProps }: any) => {
               const { indeterminate, ...rest } = getToggleAllPageRowsSelectedProps();
-              return <input type="checkbox" ref={(el) => el && (el.indeterminate = indeterminate)} {...rest} />;
+              return (
+                <input
+                  type="checkbox"
+                  ref={(el) => el && (el.indeterminate = indeterminate)}
+                  {...rest}
+                  disabled={isMode === "discountAudits" ? isLoadingForPostDiscountToPs : false}
+                />
+              );
             },
             Cell: ({ row }: any) => {
               const { indeterminate, ...rest } = row.getToggleRowSelectedProps();
-              return <input type="checkbox" ref={(el) => el && (el.indeterminate = indeterminate)} {...rest} />;
+              return (
+                <input
+                  type="checkbox"
+                  ref={(el) => el && (el.indeterminate = indeterminate)}
+                  {...rest}
+                  disabled={isMode === "discountAudits" ? isLoadingForPostDiscountToPs : false}
+                />
+              );
             },
             className: "w-8",
           },
@@ -119,17 +143,14 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
 
   const { globalFilter, pageIndex, pageSize } = state as TableStateWithFiltersAndPagination<T>;
 
-
   useEffect(() => {
     if (JSON.stringify(currentData) !== JSON.stringify(data)) {
       setCurrentData(data);
     }
   }, [data]);
 
-  // const dataLength = currentData?.length;
 
   useEffect(() => {
-
     dispatch(
       getFilterProps({
         globalFilter,
@@ -139,7 +160,6 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
   }, [globalFilter, dispatch]);
 
   useEffect(() => {
-
     if (globalFilter) {
       setFilteredDataLength(page.length || 0);
     } else {
@@ -148,7 +168,6 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
   }, [globalFilter, page, data]);
 
   useEffect(() => {
-
     dispatch(onGetOnlyDataLength(filteredDataLength));
   }, [filteredDataLength]);
 
@@ -169,11 +188,7 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
     );
   }, [pageIndex, pageSize, filteredDataLength, dispatch]); // Include currentData as a dependency
 
-  // const handleDownload = (docName: string, leadCaptureId: number, docTypeId: number | undefined) => {
-  //   dispatch(downloadDocForNotes({ leadCaptureId, docName, docTypeId }));
-  // };
   const handleNavigation = (leadId: number) => {
-    // const path = userDetails?.authority?.includes("ROLE_AUTHORITY") ? `/view-decline-cases/manage-contract/${leadId}` : `/manage-leads/details/${leadId}`;
     const path = `/manage-leads-v1/details/${leadId}`;
     navigate(path, { state: { viaButton: true } });
   };
@@ -185,6 +200,8 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
       dispatch(getLeadsForOverdueTask(selectedData));
     } else if (isMode === "manageTask") {
       dispatch(getLeadsForManageTask(selectedData));
+    } else if (isMode === "discountAudits") {
+      dispatch(getLeadsForDiscountAudit(selectedData));
     } else {
       dispatch(onGetAllCheckSelectedDataFormCustomTable(selectedData));
     }
@@ -192,7 +209,6 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
 
   // this useEffect is resppnsible for the toggling selected rows only after export is successfully working
   useEffect(() => {
-
     if (isError || responseExportLead) {
       if (responseExportLead.success) toggleAllRowsSelected(false);
     }
@@ -208,8 +224,7 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
                 <th
                   {...column.getHeaderProps()}
                   key={id}
-                  className={`border p-2 text-left text-black text-sm text-nowrap ${column.render("Header") === "Action" ? " w-[150px] min-w-[150px] max-w-[130px]" : " "
-                    }`}
+                  className={`border p-2 text-left text-black text-sm text-nowrap ${column.render("Header") === "Action" ? " w-[150px] min-w-[150px] max-w-[130px]" : " "}`}
                 >
                   {column.render("Header")}
                 </th>
@@ -243,67 +258,65 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
                       className={`${leadId === settingId && i % 2 === 0 ? "bg-gray-200" : ""}  
               ${leadId === settingId && i % 2 !== 0 ? "bg-gray-100" : ""}  
               ${leadId === settingId ? "border border-gray-300 " : "border "}  
-            ${isMode === "offerAnalysis" &&
-                          row.original.leadOfferId === selectedRow.offerId
-                          ? "bg-blue-100 cursor-pointer"
-                          : "cursor-pointer"
-                        }
+            ${isMode === "offerAnalysis" && row.original.leadOfferId === selectedRow.offerId ? "bg-blue-100 cursor-pointer" : "cursor-pointer"}
  p-2 text-left text-sm text-nowrap`}
                     >
-                      {
-
-                        cell.column.Header === "Recording" ? (
-                          <div className="flex items-center ">
-                            <audio controls className="w-52 h-8">
-                              <source src={cellValue} type="audio/wav" />
-                              Your browser does not support the audio element.
-                            </audio>
-                          </div>
-                        ) : cell.column.Header === "Status" && isMode === "paymentDetails" ? (
-                          <p className={`px-2 rounded-full w-20 flex justify-center font-medium py-1 text-white text-sm ${row.original.status === "captured"
-                            ? "bg-green-600"
-                            : row.original.status === "failed"
-                              ? "bg-red-600"
-                              : "bg-yellow-600"
-                            }`}>{cell.render("Cell")}</p>
-                        ) : cell.column.Header === "Amount" && isMode === "paymentDetails" ? (
-                          <p className="flex justify-end">{cell.render("Cell")}</p>
-                        ) : cell.column.Header === "Order ID" && isMode === "paymentDetails" ? (
-                          <p className={`${row.original.status === "captured" ? "text-blue-600 font-medium underline underline-offset-2" : ""}`} onClick={() => {
+                      {cell.column.Header === "Recording" ? (
+                        <div className="flex items-center ">
+                          <audio controls className="w-52 h-8">
+                            <source src={cellValue} type="audio/wav" />
+                            Your browser does not support the audio element.
+                          </audio>
+                        </div>
+                      ) : cell.column.Header === "Status" && isMode === "paymentDetails" ? (
+                        <p
+                          className={`px-2 rounded-full w-20 flex justify-center font-medium py-1 text-white text-sm ${
+                            row.original.status === "captured" ? "bg-green-600" : row.original.status === "failed" ? "bg-red-600" : "bg-yellow-600"
+                          }`}
+                        >
+                          {cell.render("Cell")}
+                        </p>
+                      ) : cell.column.Header === "Amount" && isMode === "paymentDetails" ? (
+                        <p className="flex justify-end">{cell.render("Cell")}</p>
+                      ) : cell.column.Header === "Order ID" && isMode === "paymentDetails" ? (
+                        <p
+                          className={`${row.original.status === "captured" ? "text-blue-600 font-medium underline underline-offset-2" : ""}`}
+                          onClick={() => {
                             if (row.original.status === "captured") {
                               store.dispatch(deleteRazorPayPaymentId());
                               store.dispatch(resetCrmLeadPaymentDetails());
                               store.dispatch(resetLeadPaymentDetails());
                               store.dispatch(openPaymentInfoModal());
-                              store.dispatch(setRazorPayPaymentId(row.original.id))
-                              store.dispatch(getCrmLeadPaymentDetailsByOrderId(row.original.orderId))
-                              store.dispatch(getLeadPaymentDetailsByOrderId(row.original.orderId))
+                              store.dispatch(setRazorPayPaymentId(row.original.id));
+                              store.dispatch(getCrmLeadPaymentDetailsByOrderId(row.original.orderId));
+                              store.dispatch(getLeadPaymentDetailsByOrderId(row.original.orderId));
                             }
-
-                          }}>{cell.render("Cell")}</p>
-                        ) : cell.column.Header === "Payment ID" && isMode === "paymentDetails" ? (
-                          <p className={`${row.original.status === "failed" ? "text-blue-600 font-medium underline underline-offset-2" : ""}`} onClick={() => {
+                          }}
+                        >
+                          {cell.render("Cell")}
+                        </p>
+                      ) : cell.column.Header === "Payment ID" && isMode === "paymentDetails" ? (
+                        <p
+                          className={`${row.original.status === "failed" ? "text-blue-600 font-medium underline underline-offset-2" : ""}`}
+                          onClick={() => {
                             if (row.original.status === "failed") {
                               store.dispatch(resetFailedPaymentDetails());
                               store.dispatch(getLeadFailedPaymentDetailsByPaymentId(row.original.id));
                               store.dispatch(openFailedCaseModalModal());
                             }
-                          }}>{cell.render("Cell")} </p>
-                        )
-                          : cell.column.Header === "Name" || cell.column.Header === "Lead ID" ? (
-                            <span
-                              onClick={() => handleNavigation(leadId)}
-                              className="text-blue-500 text-[14px] font-semibold hover:underline cursor-pointer"
-                            >
-                              {highlightText(cellValue, globalFilter || "")}
-                            </span>
-                          ) :
-                            typeof cellValue === "string" ? (
-                              highlightText(cellValue, globalFilter || "")
-                            ) : (
-                              cell.render("Cell")
-                            )
-                      }
+                          }}
+                        >
+                          {cell.render("Cell")}{" "}
+                        </p>
+                      ) : cell.column.Header === "Name" || cell.column.Header === "Lead ID" ? (
+                        <span onClick={() => handleNavigation(leadId)} className="text-blue-500 text-[14px] font-semibold hover:underline cursor-pointer">
+                          {highlightText(cellValue, globalFilter || "")}
+                        </span>
+                      ) : typeof cellValue === "string" ? (
+                        highlightText(cellValue, globalFilter || "")
+                      ) : (
+                        cell.render("Cell")
+                      )}
                     </td>
                   );
                 })}

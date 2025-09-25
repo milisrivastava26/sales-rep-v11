@@ -58,23 +58,30 @@ export const formInputsForContact = [
   },
 ];
 
-export const getInitialValuesForContact = (
-  contact: any,
-  leadCaptureId: any
-) => {
-  let getInitialValuesForContact = {
-    contact: Array.isArray(contact)
-      ? contact.map((c) => ({
-          leadCaptureId: leadCaptureId,
-          contactName: c?.contactName || "",
-          contactRelation: c?.contactRelation || "",
-          contactNumber: c?.contactNumber || "",
-          primary: c?.primary || false,
-        }))
-      : [],
-  };
+export const getInitialValuesForContact = (contact: any, leadCaptureId: any) => {
+  // Map existing contacts if any, else empty array
+  const contactsArray = Array.isArray(contact)
+    ? contact.map((c) => ({
+        leadCaptureId: leadCaptureId,
+        contactName: c?.contactName || "",
+        contactRelation: c?.contactRelation || "",
+        contactNumber: c?.contactNumber || "",
+        primary: c?.primary || false,
+      }))
+    : [];
 
-  return getInitialValuesForContact;
+  // Ensure at least one contact exists
+  if (contactsArray.length === 1) {
+    contactsArray.push({
+      leadCaptureId: leadCaptureId,
+      contactName: "",
+      contactRelation: "father",
+      contactNumber: "",
+      primary: false,
+    });
+  }
+
+  return { contact: contactsArray };
 };
 
 export const validationSchemaForContact = Yup.object({
@@ -82,10 +89,7 @@ export const validationSchemaForContact = Yup.object({
     Yup.object().shape({
       contactName: Yup.string()
         .trim()
-        .matches(
-          /^[A-Za-z\s_]+$/,
-          "Only alphabets, spaces, and underscores are allowed"
-        )
+        .matches(/^[A-Za-z\s_]+$/, "Only alphabets, spaces, and underscores are allowed")
         .min(2, "Name must be at least 2 characters")
         .max(50, "Name must not exceed 50 characters")
         .required("Contact Name is required"),

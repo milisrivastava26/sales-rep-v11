@@ -83,13 +83,13 @@ interface typeUI {
   packageDeal: string;
   oneTimeDiscount: string;
   paginatedProps: {
-    pageSize: number,
-    pageNumber: number,
-  },
+    pageSize: number;
+    pageNumber: number;
+  };
   paginatedPropsForAdvanceSearch: {
-    pageSize: number,
-    pageNumber: number,
-  },
+    pageSize: number;
+    pageNumber: number;
+  };
   searchQuery: string;
   whatsappMessengerModal: boolean;
   quickAddLeadData: any;
@@ -98,6 +98,7 @@ interface typeUI {
   razorPayPaymentId: null | string;
   paymentDetailsPageSize: number;
   failedCaseModal: boolean;
+  discountAuditLeads: any;
 }
 
 const initialState: typeUI = {
@@ -142,7 +143,7 @@ const initialState: typeUI = {
   getHeaderTabIconsName: "",
   NotesData: [],
   selectedOption: {},
-  ResetFormikInitialValues: () => { },
+  ResetFormikInitialValues: () => {},
   isQuickAddFormModalOpen: false,
   isLeadsImportModalOpen: false,
   rightSectionTabname: "Activity History",
@@ -209,11 +210,11 @@ const initialState: typeUI = {
   oneTimeDiscount: "",
   paginatedProps: {
     pageSize: 50,
-    pageNumber: 0
+    pageNumber: 0,
   },
   paginatedPropsForAdvanceSearch: {
     pageSize: 50,
-    pageNumber: 0
+    pageNumber: 0,
   },
   searchQuery: "",
   whatsappMessengerModal: false,
@@ -223,6 +224,7 @@ const initialState: typeUI = {
   razorPayPaymentId: null,
   paymentDetailsPageSize: 100,
   failedCaseModal: false,
+  discountAuditLeads: [],
 };
 
 const uiSlice = createSlice({
@@ -590,8 +592,7 @@ const uiSlice = createSlice({
       state.isModalOpenForAdvanceSearchColumn = false;
     },
     onAdvanceSearchModelFlag: (state) => {
-      state.isAdvanceSearchModelColumnFlag =
-        state.isAdvanceSearchModelColumnFlag ? false : true;
+      state.isAdvanceSearchModelColumnFlag = state.isAdvanceSearchModelColumnFlag ? false : true;
     },
 
     getThirdpartySelectedLead: (state, action) => {
@@ -649,7 +650,7 @@ const uiSlice = createSlice({
     deleteRazorPayPaymentId: (state) => {
       state.razorPayPaymentId = null;
     },
-    setPaymentDetailsPageSize : (state, action) => {
+    setPaymentDetailsPageSize: (state, action) => {
       state.paymentDetailsPageSize = action.payload;
     },
     openFailedCaseModalModal: (state) => {
@@ -658,10 +659,14 @@ const uiSlice = createSlice({
     closeFailedCaseModalModal: (state) => {
       state.failedCaseModal = false;
     },
+    getLeadsForDiscountAudit: (state, action) => {
+      state.discountAuditLeads = action.payload;
+    },
   },
 });
 
 export const {
+  getLeadsForDiscountAudit,
   openFailedCaseModalModal,
   closeFailedCaseModalModal,
   setPaymentDetailsPageSize,
@@ -755,7 +760,7 @@ export const {
   setPaginatedPropsForAdvanceSearch,
   setQuickAddLeadData,
   openLeadExistModal,
-  closeLeadExistModal
+  closeLeadExistModal,
 } = uiSlice.actions;
 
 export const uiSliceAction = uiSlice.actions;

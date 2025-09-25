@@ -1,33 +1,7 @@
 import { Column } from "react-table";
+import { DiscountAuditType } from "./getDiscountAuditsColumns";
 
-// API se aane wale data ka type
-export interface DiscountAuditType {
-  status: string;
-  leadCaptureId: number;
-  psEmployeeId: number;
-  scholarshipDiscount: number;
-  totalDiscount: number;
-  specialDiscount: number | null;
-  packageDeal: number;
-  programDescription: string;
-  careerDescription: string;
-}
-
-export const getDiscountAuditsColumnsWithCheckbox = (
-  selectedRowIds: { [key: string]: boolean },
-  toggleRow: (id: number) => void,
-  toggleAll: (checked: boolean) => void
-): Column<DiscountAuditType>[] => {
-  const columns: Column<DiscountAuditType>[] = [
-    {
-      id: "selection",
-      Header: () => (
-        <input type="checkbox" onChange={(e) => toggleAll(e.target.checked)} checked={Object.values(selectedRowIds).length > 0 && Object.values(selectedRowIds).every(Boolean)} />
-      ),
-      Cell: ({ row }: { row: { original: DiscountAuditType } }) => (
-        <input type="checkbox" checked={!!selectedRowIds[row.original.leadCaptureId]} onChange={() => toggleRow(row.original.leadCaptureId)} />
-      ),
-    },
+export const discountAuditColumn: Column<DiscountAuditType>[] = [
     {
       Header: "Lead Capture ID",
       accessor: "leadCaptureId",
@@ -76,6 +50,3 @@ export const getDiscountAuditsColumnsWithCheckbox = (
       Cell: ({ row }: { row: { original: DiscountAuditType } }) => <span className="font-medium">{row.original.status || "N/A"}</span>,
     },
   ];
-
-  return columns;
-};

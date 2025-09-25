@@ -1,43 +1,49 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
+import { v4 as uuidv4 } from "uuid";
 import coreLeadCaptureApi from "../../interceptor/coreLeadCaptureApi";
 
+// ✅ State type
 interface PostDiscountToPsState {
-  isLoading: boolean;
+  isRun: string;
   isError: string | null;
-  isSuccess: boolean;
-  response: any;
+  isLoading: boolean;
+  resetActions: any;
+  responseOfPostDiscountToPs: any;
 }
 
+// ✅ Initial state
 const initialState: PostDiscountToPsState = {
   isLoading: false,
   isError: null,
-  isSuccess: false,
-  response: null,
+  isRun: uuidv4(),
+  resetActions: "",
+  responseOfPostDiscountToPs: "",
 };
 
-//AsyncThunk for POST API
-export const postDiscountToPs = createAsyncThunk<
-  any, // return type
-  any, // payload type
-  { rejectValue: string }
->("crm/lead/postDiscountToPs", async (payload, thunkAPI) => {
-  try {
-    const response = await coreLeadCaptureApi.post("api/crm/lead/postDiscountToPs", payload);
-    return response.data;
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || "An error occurred while posting discount");
-  }
+// ✅ AsyncThunk for POST discount
+export const postDiscountToPs = createAsyncThunk<any, any>("crm/lead/postDiscountToPs", async (payload, { rejectWithValue }) => {
+  const response = coreLeadCaptureApi.post("api/crm/lead/postDiscountToPs", payload);
+
+  toast.promise(response, {
+    loading: "Posting discount...",
+    success: "Discount posted successfully",
+    error: (e: any) => e.response?.data?.message || "An error occurred while posting discount",
+  });
+
+  return response.then((res) => res.data).catch((e) => rejectWithValue(e.message));
 });
 
+// ✅ Slice
 const postDiscountToPsSlice = createSlice({
   name: "postDiscountToPs",
   initialState,
   reducers: {
-    resetPostDiscountToPs: (state) => {
-      state.isLoading = false;
-      state.isError = null;
-      state.isSuccess = false;
-      state.response = null;
+    resetResponseForPostDiscountToPs: (state) => {
+      state.responseOfPostDiscountToPs = "";
+    },
+    takeActionForPostDiscountToPs: (state, action) => {
+      state.resetActions = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -45,20 +51,19 @@ const postDiscountToPsSlice = createSlice({
       .addCase(postDiscountToPs.pending, (state) => {
         state.isLoading = true;
         state.isError = null;
-        state.isSuccess = false;
       })
       .addCase(postDiscountToPs.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccess = true;
-        state.response = action.payload;
+        state.responseOfPostDiscountToPs = action.payload;
+        state.isRun = uuidv4();
       })
-      .addCase(postDiscountToPs.rejected, (state, action) => {
+      .addCase(postDiscountToPs.rejected, (state) => {
         state.isLoading = false;
-        state.isError = action.payload || "Failed to post discount";
-        state.isSuccess = false;
+        state.isError = "Error occurred!";
       });
   },
 });
 
-export const { resetPostDiscountToPs } = postDiscountToPsSlice.actions;
+export const { resetResponseForPostDiscountToPs, takeActionForPostDiscountToPs } = postDiscountToPsSlice.actions;
+
 export const postDiscountToPsReducer = postDiscountToPsSlice.reducer;

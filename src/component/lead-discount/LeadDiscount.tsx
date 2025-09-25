@@ -13,12 +13,11 @@ export interface SelectedRowPayload {
 }
 const LeadDiscount: React.FC = () => {
   const [activeKey, setActiveKey] = useState("1");
-  const [selectedRowIds, setSelectedRowIds] = useState<SelectedRowPayload[]>([]);
   const items = [
     {
       key: "1",
       label: "Unprocessed Data",
-      children: <UnprocessedDataTable onSelectionChange={(selectedRows) => setSelectedRowIds(selectedRows)} />,
+      children: <UnprocessedDataTable />,
     },
     {
       key: "2",
@@ -29,7 +28,7 @@ const LeadDiscount: React.FC = () => {
   return (
     <div className="my-4 mx-3 sm:mx-5 px-3 py-3 sm:px-6 sm:py-6 shadow-md rounded-md bg-white">
       <div className="overflow-x-auto">
-        <SectionHead sectionHeadData={sectionHeadData} selectedRowIds={selectedRowIds} />
+        <SectionHead sectionHeadData={sectionHeadData} />
 
         <div className="overflow-hidden pt-2">
           <div className="py-2">

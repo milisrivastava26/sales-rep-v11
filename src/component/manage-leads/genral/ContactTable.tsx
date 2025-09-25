@@ -26,24 +26,14 @@ interface ContactFieldProps {
   contact?: any;
   setError?: (e: any) => void;
   options?: { label: string; value: string }[];
-  isDisabled:boolean
+  isDisabled: boolean;
 }
 
-const ContactField: React.FC<ContactFieldProps> = ({
-  name,
-  idx,
-  type,
-  contact,
-  setError,
-  options,
-  isDisabled
-}) => {
+const ContactField: React.FC<ContactFieldProps> = ({ name, idx, type, contact, setError, options, isDisabled }) => {
   const [field, meta, helpers] = useField(name);
 
   useEffect(() => {
-    const isDuplicate = contact.some(
-      (c: any, i: any) => i !== idx && c.contactNumber === field.value
-    );
+    const isDuplicate = contact.some((c: any, i: any) => i !== idx && c.contactNumber === field.value);
 
     if (isDuplicate) {
       setError && setError(true);
@@ -62,9 +52,7 @@ const ContactField: React.FC<ContactFieldProps> = ({
           disabled={idx === 0 ? true : false || isDisabled}
           readOnly={idx === 0 ? true : false}
           {...field}
-          className={`w-full border px-2 outline-none focus:bg-gray-100 ${
-            meta.error && meta.touched ? "border-red-500" : "border-gray-200"
-          }`}
+          className={`w-full border px-2 outline-none focus:bg-gray-100 ${meta.error && meta.touched ? "border-red-500" : "border-gray-200"}`}
         >
           <option value="">Select Relation</option>
           {options?.map((option) => (
@@ -78,9 +66,7 @@ const ContactField: React.FC<ContactFieldProps> = ({
           {...field}
           type={type}
           readOnly={idx === 0 ? true : false || isDisabled}
-          className={`w-full border px-2 outline-none focus:bg-gray-100 ${
-            idx === 0 ? "cursor-not-allowed" : ""
-          } ${
+          className={`w-full border px-2 outline-none focus:bg-gray-100 ${idx === 0 ? "cursor-not-allowed" : ""} ${
             meta.error && meta.touched ? "border-red-500" : "border-gray-200"
           }`}
         />
@@ -99,24 +85,14 @@ const ContactField: React.FC<ContactFieldProps> = ({
   );
 };
 
-const ContactTable: React.FC<TypeFor> = ({
-  values,
-  isEditing,
-  setError,
-  error,
-}) => {
+const ContactTable: React.FC<TypeFor> = ({ values, isEditing, setError, error }) => {
   const [isEnableForContactField, setIsEnableForContactField] = useState(false);
   // boolean state isEnableForcontactField is taken so that no fields can be added if the previous fields are empty
   const { contact } = values;
 
   // array.some method returns the boolean true and false
   useEffect(() => {
-    const hasEmptyFields = contact.some(
-      (_: any, idx: number) =>
-        contact[idx].contactName === "" ||
-        contact[idx].contactRelation === "" ||
-        contact[idx].contactNumber === ""
-    );
+    const hasEmptyFields = contact.some((_: any, idx: number) => contact[idx].contactName === "" || contact[idx].contactRelation === "" || contact[idx].contactNumber === "");
 
     setIsEnableForContactField(hasEmptyFields);
   }, [contact]);
@@ -154,14 +130,7 @@ const ContactTable: React.FC<TypeFor> = ({
               {contact.map((_: any, idx: number) => (
                 <tr key={idx}>
                   <td className="px-2 border">
-                    <ContactField
-                      name={`contact[${idx}].contactName`}
-                      type="text"
-                      idx={idx}
-                      contact={contact}
-                      setError={setError}
-                      isDisabled={!isEditing}
-                    />
+                    <ContactField name={`contact[${idx}].contactName`} type="text" idx={idx} contact={contact} setError={setError} isDisabled={!isEditing} />
                   </td>
                   <td className="px-2 border">
                     <ContactField
@@ -175,14 +144,7 @@ const ContactTable: React.FC<TypeFor> = ({
                     />
                   </td>
                   <td className="px-2 border">
-                    <ContactField
-                      name={`contact[${idx}].contactNumber`}
-                      idx={idx}
-                      type="text"
-                      contact={contact}
-                      setError={setError}
-                      isDisabled={!isEditing}
-                    />
+                    <ContactField name={`contact[${idx}].contactNumber`} idx={idx} type="text" contact={contact} setError={setError} isDisabled={!isEditing} />
                   </td>
                   <td className="px-2 border text-center">
                     <Field
@@ -196,7 +158,7 @@ const ContactTable: React.FC<TypeFor> = ({
                   </td>
                   {isEditing && (
                     <td className="px-2 border text-center">
-                      {idx === 0 ? (
+                      {idx === 0 && (
                         <button
                           type="button"
                           disabled={!isEditing}
@@ -211,15 +173,12 @@ const ContactTable: React.FC<TypeFor> = ({
                               });
                             }
                           }}
-                          className={`${
-                            isEnableForContactField || error
-                              ? "bg-opacity-50"
-                              : "first-line:"
-                          } bg-blue-500 text-white px-3 py-[6px] text-sm font-semibold rounded-md`}
+                          className={`${isEnableForContactField || error ? "bg-opacity-50" : "first-line:"} bg-blue-500 text-white px-3 py-[6px] text-sm font-semibold rounded-md`}
                         >
                           +
                         </button>
-                      ) : (
+                      )}
+                      {idx !== 0 && idx !== 1 && (
                         <button
                           disabled={!isEditing}
                           type="button"
