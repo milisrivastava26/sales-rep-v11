@@ -20,6 +20,7 @@ export const leadsItems: DropdownItem[] = [
   { label: "View Verified Documents", href: "/verified-documents", roles: ["ROLE_DOCUMENT_REVIEWER"] },
   { label: "Manage Task", href: "/manage-task", roles: ["ROLE_MANAGER", "ROLE_ADMIN"] },
   { label: "Super Bot Callback Details", href: "/superbot-details", roles: ["ROLE_MANAGER", "ROLE_ADMIN", "ROLE_USER"] },
+  { label: "Lead Discount", href: "/lead-discount", roles: ["ROLE_DISCOUNT", "ROLE_USER"] },
 ];
 
 export const leadAuthorityItems = [{ label: "View Declined Cases", href: "/view-decline-cases" }];

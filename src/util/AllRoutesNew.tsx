@@ -23,6 +23,7 @@ import PaymentInfoPage from "../pages/payment-info/PaymentInfoPage";
 import DocumentReviewPage from "../pages/review-document/DocumentReviewPage";
 import SuperbotDetailsPage from "../pages/superbot-details/SuperbotDetailsPage";
 import ViewVerifiedDocumentsPage from "../pages/review-document/ViewVerifiedDocumentsPage";
+import LeadDiscountPage from "../pages/lead-discount/LeadDiscountPage";
 
 // Helper function that builds routes based on user details
 export const getRoutes = (userDetails: any) => {
@@ -115,13 +116,17 @@ export const getRoutes = (userDetails: any) => {
               },
               {
                 path: "advance-search",
-                element: <AdvanceSearchPage />
+                element: <AdvanceSearchPage />,
               },
               {
                 path: "merge-leads",
-                element: <MergeLeadsPage />
-              }
+                element: <MergeLeadsPage />,
+              },
             ],
+          },
+          {
+            path: "/lead-discount",
+            element: <LeadDiscountPage />,
           },
           {
             path: "inbound-whatsapp-messages",
@@ -137,11 +142,11 @@ export const getRoutes = (userDetails: any) => {
           },
           {
             path: "manage-leads-v2",
-            element: <ManageLeadsV2Page />
+            element: <ManageLeadsV2Page />,
           },
           {
             path: "/payment-info",
-            element: <PaymentInfoPage />
+            element: <PaymentInfoPage />,
           },
           {
             path: "view-decline-cases",
@@ -179,7 +184,6 @@ export const getRoutes = (userDetails: any) => {
         path: "testApi",
         element: <TestApiPage />,
       },
-
     ];
   }
 };

@@ -14,6 +14,7 @@ import ViewCashPaymentPage from "../pages/view-cash-payments/ViewCashPaymentPage
 import InboundWPMessagesPage from "../pages/wpMessages/InboundWPMessagesPage";
 import ThirdPartyPage from "../pages/third-party/ThirdPartyRootLayout";
 import ImportedLeadPage from "../pages/imported-leads/ImportedLeadPage";
+import LeadDiscountPage from "../pages/lead-discount/LeadDiscountPage";
 
 export const routes = [
   {
@@ -63,6 +64,10 @@ export const routes = [
         ],
       },
       {
+        path: "/lead-discount",
+        element: <LeadDiscountPage />,
+      },
+      {
         path: "inbound-whatsapp-messages",
         element: <InboundWPMessagesPage />,
       },
@@ -92,10 +97,10 @@ export const routes = [
   },
   {
     path: "/imported-leads",
-    element: <ImportedLeadPage />
+    element: <ImportedLeadPage />,
   },
   {
-    path:"/",
-    element:<ThirdPartyPage/>
-  }
+    path: "/",
+    element: <ThirdPartyPage />,
+  },
 ];

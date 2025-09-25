@@ -274,6 +274,9 @@ import { getYourCampusLeadsReducer } from "../third-party-slices/get-getYourCamp
 import { rcpConsultantLeadsReducer } from "../third-party-slices/get-rcpConsultantLeads-slice";
 import { asCareerCounselingLeadsReducer } from "../third-party-slices/get-asCareerCounsellingLeads-slice";
 import { getRightCareerLeadsReducer } from "../third-party-slices/get-rightCareer-leads-slice";
+import { getDiscountAuditsReducer } from "../lead-discount/getDiscountAuditsSlice";
+import { postDiscountToPsReducer } from "../lead-discount/postDiscountToPsSlice";
+import { getProcessedDiscountAuditsReducer } from "../lead-discount/getProcessedDiscountAuditsSlice";
 
 const RootReducer = {
   auth: authReducer,
@@ -658,6 +661,11 @@ const RootReducer = {
   getSuperbotDirections: superbotDirectionsReducer,
   getSuperbotCallbackDetails: getSuperbotCallbackDetailsReducer,
   getSuperbotConvo: superbotConversationReducer,
+
+  ////// lead discount///////////
+  getDiscountAudits: getDiscountAuditsReducer,
+  postDiscountToPs: postDiscountToPsReducer,
+  getProcessedDiscountAudits: getProcessedDiscountAuditsReducer,
 };
 
 export default RootReducer;

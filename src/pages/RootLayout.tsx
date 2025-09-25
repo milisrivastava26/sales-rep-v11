@@ -108,7 +108,7 @@ const RootLayout: React.FC = () => {
       <LoadingSpinner
         size={20}
         mainLoading={true}
-        message="preparing Dashboard for you "
+        message="Preparing Dashboard for you "
         centered={true}
       />
     );
