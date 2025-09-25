@@ -86,7 +86,7 @@ const ViewManageLeadsPage: React.FC = () => {
       if (activeEnquiry.length !== 0) {
         const payload = {
           leadCaptureId: leadCaptureId,
-          leadEnquiryId: activeEnquiry[0].leadEnquiryId,
+          leadEnquiryId: activeEnquiry[0]?.leadEnquiryId,
         };
         dispatch(onGetLeadCaptureId(leadCaptureId));
         dispatch(getMaxActiveAppStatus(payload));

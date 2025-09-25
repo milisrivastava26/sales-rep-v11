@@ -99,7 +99,7 @@ const ProgressStep: React.FC<ProgressStepType> = ({
   const { leadPropertiesDataById } = useSelector((state: RootState) => state.getLeadPropertiesDataById);
   const { responseOfLeadEnquiryDetailsById } = useSelector((state: RootState) => state.getLeadEnquiryDetailsDataById);
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById) ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE") : [];
-  const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
+  const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const isActive = activeStep === id;
   const { leadCaptureId } = useParams();

@@ -62,7 +62,7 @@ const AddressInfo: React.FC = () => {
       setEditing(false);
       resetActions.resetForm();
       store.dispatch(resetResponseForUpdateLeadAddress());
-      const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
+      const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
       const payloadForApplicationStatus = {
         leadCaptureId: leadCaptureId,
         leadEnquiryId: leadEnquiryId,

@@ -49,7 +49,7 @@ const BiographicalInfo: React.FC = () => {
       (item: any) => item.status === "ACTIVE"
     )
     : [];
-  const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
+  const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
   const additionalDetailsId =
     responseofLeadAdditionalInfo.leadAdditionalDetailId;
 
@@ -102,7 +102,7 @@ const BiographicalInfo: React.FC = () => {
       (!isErrorForCreate && responseOfAdditionalDetails)
     ) {
       if (!isErrorForCreate && responseOfAdditionalDetails) {
-        const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
+        const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
         const payloadForApplicationStatus = {
           leadCaptureId: leadCaptureId,
           leadEnquiryId: leadEnquiryId,

@@ -97,8 +97,8 @@ const InterestShownInfo: React.FC = () => {
     } else {
       const payload = {
         leadCaptureId: leadCaptureId,
-        existingLeadEnquiryId: currentActiveEnquiry[0].leadEnquiryId,
-        newEnquiryId: newActiveEnquiry[0].leadEnquiryId,
+        existingLeadEnquiryId: currentActiveEnquiry[0]?.leadEnquiryId,
+        newEnquiryId: newActiveEnquiry[0]?.leadEnquiryId,
       };
 
       store.dispatch(ChangeLeadEnquiryStatus(payload));

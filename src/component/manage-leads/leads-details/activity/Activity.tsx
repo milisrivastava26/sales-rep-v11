@@ -49,7 +49,7 @@ const Activity: React.FC = () => {
   const { isError, isLoading: isLoadingForCreateActivity, resetActions, responseOfCreateActivity } = useSelector((state: RootState) => state.addActivity);
 
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById) ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE") : [];
-  const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
+  const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
   const { leadName, email } = leadPropertiesDataById;
 
   const initialValuesForView = {
