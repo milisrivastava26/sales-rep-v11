@@ -19,7 +19,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData, selected
   // console.log(selectedRowIds, "selectedRowIds");
   const { heading } = sectionHeadData[0];
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, isError, isSuccess } = useSelector((state: RootState) => state.postDiscountToPs);
+  const { isLoading } = useSelector((state: RootState) => state.postDiscountToPs);
 const handlePost = () => {
   // const payload = {
   //   selectedIds: selectedRowIds,
