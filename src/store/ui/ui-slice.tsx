@@ -99,6 +99,7 @@ interface typeUI {
   paymentDetailsPageSize: number;
   failedCaseModal: boolean;
   discountAuditLeads: any;
+  processedDiscountLead: any;
 }
 
 const initialState: typeUI = {
@@ -225,6 +226,7 @@ const initialState: typeUI = {
   paymentDetailsPageSize: 100,
   failedCaseModal: false,
   discountAuditLeads: [],
+  processedDiscountLead: []
 };
 
 const uiSlice = createSlice({
@@ -662,10 +664,14 @@ const uiSlice = createSlice({
     getLeadsForDiscountAudit: (state, action) => {
       state.discountAuditLeads = action.payload;
     },
+    getLeadsForProcessedDiscount: (state, action) => {
+      state.processedDiscountLead = action.payload;
+    }
   },
 });
 
 export const {
+  getLeadsForProcessedDiscount,
   getLeadsForDiscountAudit,
   openFailedCaseModalModal,
   closeFailedCaseModalModal,

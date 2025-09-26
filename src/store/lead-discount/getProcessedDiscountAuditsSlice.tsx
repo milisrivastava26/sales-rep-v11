@@ -32,14 +32,22 @@ const initialState: GetProcessedDiscountAuditsState = {
 };
 
 // ✅ AsyncThunk -> API call
-export const getProcessedDiscountAudits = createAsyncThunk<any>("crm/lead/dashboard/getProcessedDiscountAudits", async (_, thunkAPI) => {
-  try {
-    const response = await coreLeadCaptureApi.get("api/crm/lead/processed-discount-audits");
-    return response.data;
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.response?.data.message || "An error occurred");
+export const getProcessedDiscountAudits = createAsyncThunk<any, { startDate?: string; endDate?: string } | undefined>(
+  "crm/lead/dashboard/getProcessedDiscountAudits",
+  async (params, thunkAPI) => {
+    try {
+      let url = "api/crm/lead/processed-discount-audits";
+      const queryParams = new URLSearchParams();
+      if (params?.startDate) queryParams.append("fromDate", params.startDate);
+      if (params?.endDate) queryParams.append("toDate", params.endDate);
+      if (queryParams.toString()) url += `?${queryParams.toString()}`;
+      const response = await coreLeadCaptureApi.get(url);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response?.data.message || "An error occurred");
+    }
   }
-});
+);
 
 // ✅ Slice
 const getProcessedDiscountAuditsSlice = createSlice({

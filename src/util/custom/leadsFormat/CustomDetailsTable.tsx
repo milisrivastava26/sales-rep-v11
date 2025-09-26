@@ -8,6 +8,7 @@ import {
   getLeadsForDiscountAudit,
   getLeadsForManageTask,
   getLeadsForOverdueTask,
+  getLeadsForProcessedDiscount,
   onGetAllCheckSelectedDataFormCustomTable,
   openFailedCaseModalModal,
   openPaymentInfoModal,
@@ -106,7 +107,14 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
     usePagination,
     useRowSelect, // Enable row selection plugin
     (hooks: any) => {
-      if (isMode === "manageLeads" || isMode === "advanceSearch" || isMode === "overdueTask" || isMode === "manageTask" || isMode === "discountAudits") {
+      if (
+        isMode === "manageLeads" ||
+        isMode === "advanceSearch" ||
+        isMode === "overdueTask" ||
+        isMode === "manageTask" ||
+        isMode === "discountAudits" ||
+        isMode === "processedDiscountAudit"
+      ) {
         hooks.visibleColumns.push((columns: any) => [
           {
             id: "selection",
@@ -148,7 +156,6 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
       setCurrentData(data);
     }
   }, [data]);
-
 
   useEffect(() => {
     dispatch(
@@ -202,6 +209,8 @@ export function CustomDetailsTable<T extends object>({ columns, data, onRowClick
       dispatch(getLeadsForManageTask(selectedData));
     } else if (isMode === "discountAudits") {
       dispatch(getLeadsForDiscountAudit(selectedData));
+    } else if (isMode === "processedDiscountAudit") {
+      dispatch(getLeadsForProcessedDiscount(selectedData));
     } else {
       dispatch(onGetAllCheckSelectedDataFormCustomTable(selectedData));
     }

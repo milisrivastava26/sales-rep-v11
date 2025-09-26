@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { sectionHeadData } from "../../data/lead-discount-data/sectionHeadData";
-import SectionHead from "./table/heads/SectionHead";
+
 import { ConfigProvider, Tabs } from "antd";
 import ProcessedDataTable from "./table/ProcessedDataTable";
 import UnprocessedDataTable from "./table/UnprocessedDataTable";
@@ -27,9 +26,10 @@ const LeadDiscount: React.FC = () => {
   ];
   return (
     <div className="my-4 mx-3 sm:mx-5 px-3 py-3 sm:px-6 sm:py-6 shadow-md rounded-md bg-white">
+      <div className="flex gap-x-1 justify-between items-center">
+        <h3 className="text-base sm:text-[22px] font-medium">Manage Lead Discount</h3>
+      </div>
       <div className="overflow-x-auto">
-        <SectionHead sectionHeadData={sectionHeadData} />
-
         <div className="overflow-hidden pt-2">
           <div className="py-2">
             <ConfigProvider

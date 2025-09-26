@@ -9,35 +9,55 @@ import { getDiscountAudits } from "../../../store/lead-discount/getDiscountAudit
 import Search from "../../../util/custom/customSearchPagination/Search";
 import Pagination from "../../../util/custom/customSearchPagination/Pagination";
 import { discountAuditColumn } from "./heads/getDiscountAuditsColumnsWithCheckbox";
+import SectionHead from "./heads/SectionHead";
 
 const UnprocessedDataTable: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { responseOfGetDiscountAudits, isLoading, isError } = useSelector((state: RootState) => state.getDiscountAudits);
 
-  //API call
+  const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
+  const roles = userDetails?.authority || [];
+  const allowedRoles = ["ROLE_DISCOUNT", "ROLE_ADMIN"];
+
+  const isEdit = allowedRoles.some((role) => roles.includes(role));
+
+  // API call
   useEffect(() => {
     dispatch(getDiscountAudits());
   }, [dispatch]);
 
   return (
     <div className="w-full overflow-x-scroll">
-      {isLoading ? (
-        <LoadingSpinner centered={false} size={20} message="Loading Discount Audits..." mainLoading={true} />
-      ) : isError ? (
+      {isEdit && <SectionHead isMode="unprocessed" />}
+
+      {/* Top controls always mounted */}
+      <div className="flex items-center gap-10 justify-between mb-5">
+        <Search />
+        <Pagination />
+      </div>
+
+      {/* Filter always mounted */}
+      {/* <div className="flex justify-between items-center pb-4">
+        <LeadDiscountFilter isMode="unprocessed" />
+      </div> */}
+
+      {/* Loader overlay */}
+      {isLoading && <LoadingSpinner centered={false} size={20} message="Loading Discount Audits..." mainLoading={true} />}
+
+      {/* Error state */}
+      {!isLoading && isError && (
         <div className="bg-white">
           <Fallback isCenter={true} errorInfo={isError} icon={emptyDataIcon} />
         </div>
-      ) : responseOfGetDiscountAudits && responseOfGetDiscountAudits.length > 0 ? (
-        <div>
-          <div className="flex items-center gap-10 justify-between mb-5">
-            <Search />
-            <Pagination />
-          </div>
+      )}
 
-          {/* Table gets only filtered + paginated data */}
-          <CustomDetailsTable columns={discountAuditColumn} data={responseOfGetDiscountAudits} isMode="discountAudits" />
-        </div>
-      ) : (
+      {/* Success with data */}
+      {!isLoading && !isError && responseOfGetDiscountAudits && responseOfGetDiscountAudits.length > 0 && (
+        <CustomDetailsTable columns={discountAuditColumn} data={responseOfGetDiscountAudits} isMode={isEdit ? "discountAudits" : "documentAuditView"} />
+      )}
+
+      {/* No data */}
+      {!isLoading && !isError && (!responseOfGetDiscountAudits || responseOfGetDiscountAudits.length === 0) && (
         <div className="bg-white">
           <Fallback isCenter={true} errorInfo="No Discount Audits Found" icon={emptyDataIcon} />
         </div>
