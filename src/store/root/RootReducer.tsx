@@ -277,6 +277,17 @@ import { getRightCareerLeadsReducer } from "../third-party-slices/get-rightCaree
 import { getDiscountAuditsReducer } from "../lead-discount/getDiscountAuditsSlice";
 import { postDiscountToPsReducer } from "../lead-discount/postDiscountToPsSlice";
 import { getProcessedDiscountAuditsReducer } from "../lead-discount/getProcessedDiscountAuditsSlice";
+import { raisedTicketsByLeadReducer } from "../tickets/get-all-raised-tickets-slice";
+import { serviceTypeReducer } from "../tickets/get-all-serviceType-slice";
+import { departmentReducer } from "../tickets/get-all-department-slice";
+import { priorityReducer } from "../tickets/get-all-priority-slice";
+import { assigneeReducer } from "../tickets/get-all-assignees-slice";
+import { createTicketReducer } from "../tickets/create-ticket-slice";
+import { ticketDetailsReducer } from "../tickets/get-ticket-details-by-ticketNumber-slice";
+import { ticketNumberReducer } from "../tickets/generate-ticketNumber-by-leadCaptureId-slice";
+import { giveSolutionReducer } from "../tickets/give-solution-slice";
+import { statusReducer } from "../tickets/get-all-status-slice";
+import { downloadTicketReducer } from "../tickets/download-ticket-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -666,6 +677,19 @@ const RootReducer = {
   getDiscountAudits: getDiscountAuditsReducer,
   postDiscountToPs: postDiscountToPsReducer,
   getProcessedDiscountAudits: getProcessedDiscountAuditsReducer,
+
+  ////////// tickets
+  getAllRaisedTickets: raisedTicketsByLeadReducer,
+  getAllServiceType: serviceTypeReducer,
+  getAllDepartment: departmentReducer,
+  getAllPriority: priorityReducer,
+  getAllAssignees: assigneeReducer,
+  createTicket: createTicketReducer,
+  getTicketDetailsByNumber: ticketDetailsReducer,
+  generateTicketNumber: ticketNumberReducer,
+  giveSolution: giveSolutionReducer,
+  getAllStatuses: statusReducer,
+  downloadTicket: downloadTicketReducer,
 };
 
 export default RootReducer;

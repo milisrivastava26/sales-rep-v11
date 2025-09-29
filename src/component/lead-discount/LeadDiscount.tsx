@@ -17,11 +17,13 @@ const LeadDiscount: React.FC = () => {
       key: "1",
       label: "Unprocessed Data",
       children: <UnprocessedDataTable />,
+      destroyInactiveTabPane: true,
     },
     {
       key: "2",
       label: "Processed Data",
       children: <ProcessedDataTable />,
+      destroyInactiveTabPane: true,
     },
   ];
   return (

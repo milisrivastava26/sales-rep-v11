@@ -18,19 +18,13 @@ const ProcessedDataTable: React.FC = () => {
 
   const { responseOfGetProcessedDiscountAudits, isLoading, isError } = useSelector((state: RootState) => state.getProcessedDiscountAudits);
 
-  const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
-  const roles = userDetails?.authority || [];
-  const allowedRoles = ["ROLE_DISCOUNT", "ROLE_ADMIN"];
-
-  const isEdit = allowedRoles.some((role) => roles.includes(role));
-
   useEffect(() => {
     dispatch(getProcessedDiscountAudits());
   }, [dispatch]);
 
   return (
     <div className="w-full overflow-x-scroll">
-      {isEdit && <SectionHead isMode="processed" />}
+      <SectionHead isMode="processed" />
 
       {/* Top controls always mounted */}
       <div className="bg-white flex gap-10 justify-between items-center mb-5">
@@ -53,7 +47,7 @@ const ProcessedDataTable: React.FC = () => {
 
       {/* Success with data */}
       {!isLoading && !isError && responseOfGetProcessedDiscountAudits && responseOfGetProcessedDiscountAudits.length > 0 && (
-        <CustomDetailsTable columns={column} data={responseOfGetProcessedDiscountAudits} isMode={isEdit ? "processedDiscountAudit" : "processedDiscountAuditView"} />
+        <CustomDetailsTable columns={column} data={responseOfGetProcessedDiscountAudits} isMode={"processedDiscountAudit"} />
       )}
 
       {/* No data */}

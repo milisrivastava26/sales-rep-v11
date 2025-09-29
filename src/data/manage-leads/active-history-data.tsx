@@ -11,6 +11,7 @@ import TaskDetailPage from "../../component/manage-leads/leads-details/task/Task
 import NotesDetailsPage from "../../component/manage-leads/leads-details/notes/NotesDetailsPage";
 import StudentDocumentsPage from "../../component/manage-leads/leads-details/student-documets/StudentDocumentsPage";
 import OfferAnalysisPageV1 from "../../pages/manage-leads/OfferAnalysisPageV1";
+import Service from "../../component/manage-leads/leads-details/services/Service";
 
 export const tabs = [
   { id: "1", label: "Activity History", content: <ActiveHistory /> },
@@ -21,6 +22,7 @@ export const tabs = [
   // { id: "6", label: "Documents", content: <DocumentDetails /> },
   { id: "7", label: "Offer Analysis", content: <OfferAnalysisPageV1 /> },
   { id: "8", label: "Student's Documents", content: <StudentDocumentsPage /> },
+  { id: "9", label: "Services", content: <Service /> },
 ];
 
 export const ActiveHistoryData = [
