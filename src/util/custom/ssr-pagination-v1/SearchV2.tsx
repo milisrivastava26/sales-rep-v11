@@ -34,6 +34,8 @@ const SearchV2: React.FC = () => {
         }
     };
 
+    //componnet
+
 
     return (
         <div className='flex items-center gap-2 py-4 rounded-md w-full'>
