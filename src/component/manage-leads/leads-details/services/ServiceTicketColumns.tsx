@@ -6,7 +6,7 @@ import { setLeadServiceTicketId, setViewTicketId } from "../../../../store/ui/ui
 import { getTicketDetailsByTicketNumber } from "../../../../store/tickets/get-ticket-details-by-ticketNumber-slice";
 
 export const getPriorityBadge = (servicePriorityName: string) => {
-  switch (servicePriorityName) {
+  switch (servicePriorityName.toLocaleLowerCase()) {
     case "low":
       return <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-600">Low</span>;
     case "normal":
@@ -18,7 +18,7 @@ export const getPriorityBadge = (servicePriorityName: string) => {
     case "immediate":
       return <span className="px-2 py-1 text-xs rounded bg-purple-100 text-purple-600">Immediate</span>;
     default:
-      return <span className="px-2 py-1 text-xs rounded bg-gray-100 text-gray-600">Unknown</span>;
+      return <span className="px-2 py-1 text-xs rounded bg-gray-100 text-gray-600">{servicePriorityName}</span>;
   }
 };
 

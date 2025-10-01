@@ -24,6 +24,7 @@ import DocumentReviewPage from "../pages/review-document/DocumentReviewPage";
 import SuperbotDetailsPage from "../pages/superbot-details/SuperbotDetailsPage";
 import ViewVerifiedDocumentsPage from "../pages/review-document/ViewVerifiedDocumentsPage";
 import LeadDiscountPage from "../pages/lead-discount/LeadDiscountPage";
+import ManageTicketPage from "../pages/manage-tickets/ManageTicketPage";
 
 // Helper function that builds routes based on user details
 export const getRoutes = (userDetails: any) => {
@@ -60,11 +61,9 @@ export const getRoutes = (userDetails: any) => {
     "ROLE_CGI",
     "ROLE_GYC",
     "ROLE_RCP",
-    "ROLE_ASCC"
+    "ROLE_ASCC",
   ];
-  const isThirdPartyUser = userDetails?.authority?.some((role: any) =>
-    thirdPartyRoles.includes(role)
-  );
+  const isThirdPartyUser = userDetails?.authority?.some((role: any) => thirdPartyRoles.includes(role));
 
   if (isThirdPartyUser) {
     return [
@@ -97,6 +96,10 @@ export const getRoutes = (userDetails: any) => {
           {
             path: "profile",
             element: <ProfilePage />,
+          },
+          {
+            path: "manage-ticket",
+            element: <ManageTicketPage />,
           },
           {
             path: "manage-leads-v1",

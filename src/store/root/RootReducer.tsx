@@ -288,6 +288,8 @@ import { ticketNumberReducer } from "../tickets/generate-ticketNumber-by-leadCap
 import { giveSolutionReducer } from "../tickets/give-solution-slice";
 import { statusReducer } from "../tickets/get-all-status-slice";
 import { downloadTicketReducer } from "../tickets/download-ticket-slice";
+import { autocompleteReducer } from "../pagination-v1/get-autocomplete-lead-slice";
+import { TicketLeadsByUsernameReducer } from "../manage-ticket/get-leadTicketData-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -641,6 +643,7 @@ const RootReducer = {
   //manage task
   getFilteredTask: FilteredTaskReducer,
   getsearchedLeads: searchedLeadsReducer,
+  autocompleteSearch: autocompleteReducer,
 
   //whatsapp messenger
   getAllWhatsappTemplate: getAllWhatsappTemplateReducer,
@@ -690,6 +693,9 @@ const RootReducer = {
   giveSolution: giveSolutionReducer,
   getAllStatuses: statusReducer,
   downloadTicket: downloadTicketReducer,
+
+  ///////////manage ticket
+  getLeadTicketData: TicketLeadsByUsernameReducer,
 };
 
 export default RootReducer;

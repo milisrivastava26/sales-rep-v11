@@ -11,38 +11,37 @@ const TopIconHeader: React.FC = () => {
     dispatch(onDrawrOpenHandler());
   };
 
-  const { userDetails } = useSelector(
-    (state: RootState) => state.getLoggedInUserData
-  );
-  const isDocumentReviewer = userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") || userDetails?.authority?.includes("ROLE_DOCUMENT_ADMIN")
+  const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
+  const isDocumentReviewer =
+    userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") ||
+    userDetails?.authority?.includes("ROLE_DOCUMENT_ADMIN") ||
+    userDetails?.authority?.includes("ROLE_TICKET_RESOLVER");
   return (
     <>
-      {!isDocumentReviewer && <div className="mt-3 sm:mt-0 sm:ml-auto flex gap-2 flex-wrap">
-        {TopIconHeaderData.map((element: any) => (
-          <button
-            className="border border-gray-300 px-2 py-1 rounded text-sm"
-            key={element.id}
-            onClick={
-              element?.name === "Note" ||
-                element?.name === "Tasks" ||
-                element?.name === "Upload Docs" ||
-                element?.name === "Activity"
-                ? onIconHandler.bind({}, element.name)
-                : element?.name === "Change Stage"
+      {!isDocumentReviewer && (
+        <div className="mt-3 sm:mt-0 sm:ml-auto flex gap-2 flex-wrap">
+          {TopIconHeaderData.map((element: any) => (
+            <button
+              className="border border-gray-300 px-2 py-1 rounded text-sm"
+              key={element.id}
+              onClick={
+                element?.name === "Note" || element?.name === "Tasks" || element?.name === "Upload Docs" || element?.name === "Activity"
+                  ? onIconHandler.bind({}, element.name)
+                  : element?.name === "Change Stage"
                   ? () => store.dispatch(onSetOpenModalForChangeStage())
                   : element?.name === "Change Owner"
-                    ? () => store.dispatch(uiSliceAction.onShowOwnerModalForActionHandler())
-                    : undefined
-            }
-
-          >
-            <div className="flex items-center gap-x-1">
-              {element?.icon}
-              {element?.name}
-            </div>
-          </button>
-        ))}
-      </div >}
+                  ? () => store.dispatch(uiSliceAction.onShowOwnerModalForActionHandler())
+                  : undefined
+              }
+            >
+              <div className="flex items-center gap-x-1">
+                {element?.icon}
+                {element?.name}
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
     </>
   );
 };

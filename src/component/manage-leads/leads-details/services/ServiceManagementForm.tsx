@@ -17,6 +17,8 @@ export interface FieldConfig {
 
 import { FormikHelpers } from "formik";
 import { setLeadServiceTicketId, setViewTicketId } from "../../../../store/ui/ui-slice";
+import { downloadTicketDoc } from "../../../../store/tickets/download-ticket-slice";
+import { useParams } from "react-router-dom";
 
 interface ServiceFormProps {
   initialValues: Record<string, any>;
@@ -29,8 +31,18 @@ interface ServiceFormProps {
 
 const ServiceManagementForm: React.FC<ServiceFormProps> = ({ initialValues, validationSchema, formInputs, onSubmit, isMode, setIsCreateTicket }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { leadCaptureId } = useParams();
   const [loadingField, setLoadingField] = useState<string | null>(null);
 
+  const handleDownload = (attachmentName: string) => {
+    store.dispatch(
+      downloadTicketDoc({
+        leadCaptureId: leadCaptureId,
+        fileType: "tickets",
+        fileName: attachmentName,
+      })
+    );
+  };
   const { serviceTypes } = useSelector((state: RootState) => state.getAllServiceType);
   const { departments } = useSelector((state: RootState) => state.getAllDepartment);
   const { priorities } = useSelector((state: RootState) => state.getAllPriority);
@@ -108,13 +120,27 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({ initialValues, vali
                   />
                 ) : field.type === "file" ? (
                   <div>
-                    {values[field.name] && typeof values[field.name] === "string" && <p className="text-sm text-gray-500 mb-1">Current File: {values[field.name]}</p>}
+                    {/* Show current file name if exists in initialValues */}
+                    {initialValues.attachmentName && <p className="text-sm text-gray-500 mb-1">Current File: {initialValues.attachmentName}</p>}
+
                     <input
                       type="file"
                       disabled={isMode === "update"}
                       className="w-full mt-1 px-2 py-1.5 border rounded-md text-sm"
-                      onChange={(e) => setFieldValue(field.name, e.currentTarget.files?.[0])}
+                      onChange={(e) => {
+                        const file = e.currentTarget.files?.[0];
+                        if (file) {
+                          setFieldValue(field.name, file); // update Formik state
+                        }
+                      }}
                     />
+
+                    {/* Optional: show newly selected file name */}
+                    {values[field.name] && values[field.name] instanceof File && (
+                      <p onClick={() => handleDownload(values[field.name].name)} className="text-sm cursor-pointer text-blue-600 hover:text-blue-700 underline mt-1">
+                        Selected File: {values[field.name].name}
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <Field type="text" disabled={isMode === "update"} name={field.name} placeholder={field.placeholder} className="w-full mt-1 p-2 border rounded-md text-sm" />
