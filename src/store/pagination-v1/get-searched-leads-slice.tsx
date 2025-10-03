@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import manageLeadsApi from "../../interceptor/manageLeadsApi";
 
 interface searchedLeads {
+  totalHits: any;
+  totalPages: number;
   length: number;
   data: [];
   totalElements: number;
@@ -24,10 +26,22 @@ const initialState: searchedLeadsState = {
 
 export const getsearchedLeads = createAsyncThunk<any, any>("leadCapture/getsearchedLeads", async (payload, { rejectWithValue }) => {
   try {
-    const response = await manageLeadsApi.post(`/leads/searchString`, payload);
+    const response = await manageLeadsApi.get(
+      `api/leads/search`,
+      {
+        params: {
+          query: payload.query,
+          page: payload.page,
+          size: payload.size,
+          role: payload.role,
+          salesrepName: payload.salesrepName,
+        },
+      }
+    );
+
     return response.data;
   } catch (error: any) {
-    return rejectWithValue(error.response?.data.message || "An error occurred.");
+    return rejectWithValue(error.response?.data?.message || "An error occurred.");
   }
 });
 

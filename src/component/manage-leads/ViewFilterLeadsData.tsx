@@ -18,7 +18,7 @@ const ViewFilterLeadsData: React.FC = () => {
 
   const data =
     searchedLeads && searchedLeads.length !== 0
-      ? searchedLeads.data
+      ? searchedLeads?.data
       : paginatedLeads?.data || [];
 
   return (

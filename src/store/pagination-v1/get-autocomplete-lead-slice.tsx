@@ -17,7 +17,7 @@ const initialState: AutocompleteState = {
 export const getAutocompleteResults = createAsyncThunk<string[], string>("leadCapture/getAutocompleteResults", async (query, { rejectWithValue }) => {
   try {
     const response = await manageLeadsApi.get(`/api/leads/autocomplete`, {
-      params: { prefix: query }, // Axios automatically appends ?prefix=...
+      params: { prefix: query, size: 10 }, // Axios automatically appends ?prefix=...
     });
     // assuming API returns an array of strings
     return response.data;

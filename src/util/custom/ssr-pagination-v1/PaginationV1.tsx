@@ -20,20 +20,22 @@ const PaginationV1: React.FC = () => {
   const { paginatedProps, searchQuery } = useSelector((state: RootState) => state.ui);
   const { searchedLeads } = useSelector((state: RootState) => state.getsearchedLeads);
 
-  const totalPages: number = searchedLeads && searchedLeads.length !== 0 ? searchedLeads.totalPageCount : paginatedLeads?.totalPageCount || 0;
+  const totalPages: number = searchedLeads && searchedLeads.length !== 0 ? searchedLeads.totalPages : paginatedLeads?.totalPageCount || 0;
 
   const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newSize = parseInt(e.target.value);
+    const role = userDetails?.authority?.includes("ROLE_ADMIN") ? "ROLE_ADMIN" : "ROLE_USER";
     setPageSize(newSize);
     setSize(newSize);
     setPage(0); // Reset to page 1 when size changes
     store.dispatch(setPaginatedProps({ pageNumber: 0, pageSize: newSize }));
     if (searchQuery !== "") {
       const payload = {
-        currentSalesrepFullName: fullName,
-        searchString: searchQuery,
-        pageNumber: paginatedProps.pageNumber,
-        pageSize: newSize,
+        salesrepName: fullName,
+        query: searchQuery,
+        page: paginatedProps.pageNumber,
+        size: newSize,
+        role: role,
       };
 
       store.dispatch(getsearchedLeads(payload));
@@ -43,12 +45,14 @@ const PaginationV1: React.FC = () => {
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     store.dispatch(setPaginatedProps({ pageNumber: newPage, pageSize: size }));
+    const role = userDetails?.authority?.includes("ROLE_ADMIN") ? "ROLE_ADMIN" : "ROLE_USER";
     if (searchQuery !== "") {
       const payload = {
-        currentSalesrepFullName: fullName,
-        searchString: searchQuery,
-        pageNumber: newPage,
-        pageSize: paginatedProps.pageSize,
+        salesrepName: fullName,
+        query: searchQuery,
+        page: newPage,
+        size: paginatedProps.pageSize,
+        role: role,
       };
 
       store.dispatch(getsearchedLeads(payload));

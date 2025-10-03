@@ -14,15 +14,15 @@ const TableHead: React.FC<typeFor> = ({ isMode }) => {
   const { paginatedLeads } = useSelector((state: RootState) => state.getPaginatedLeads);
   const { searchedLeads } = useSelector((state: RootState) => state.getsearchedLeads);
 
-  const totalRecords =
-    searchedLeads && searchedLeads.length !== 0
-      ? searchedLeads.totalRecords
-      : paginatedLeads?.totalRecords || [];
+  const totalRecords = searchedLeads && searchedLeads.length !== 0 ? searchedLeads.totalHits : paginatedLeads?.totalRecords || [];
 
   return (
     <div className="flex justify-between gap-x-7 items-center pb-3">
       <SearchV2 />
-      <span className="text-nowrap"> <strong>Total data</strong>: {totalRecords}</span>
+      <span className="text-nowrap">
+        {" "}
+        <strong>Total data</strong>: {totalRecords}
+      </span>
       <PaginationV1 />
       {isMode !== "thirdParty" && (
         <div className=" cursor-pointer text-[25px]  column " onClick={() => dispatch(onShowModalForHamburger())}>
