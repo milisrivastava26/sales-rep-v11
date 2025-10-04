@@ -25,19 +25,17 @@ const initialState: searchedLeadsState = {
 };
 
 export const getsearchedLeads = createAsyncThunk<any, any>("leadCapture/getsearchedLeads", async (payload, { rejectWithValue }) => {
+  console.log(payload);
   try {
-    const response = await manageLeadsApi.get(
-      `api/leads/search`,
-      {
-        params: {
-          query: payload.query,
-          page: payload.page,
-          size: payload.size,
-          role: payload.role,
-          salesrepName: payload.salesrepName,
-        },
-      }
-    );
+    const response = await manageLeadsApi.get(`api/leads/search`, {
+      params: {
+        query: payload.query,
+        page: payload.page,
+        size: payload.size,
+        role: payload.role,
+        salesrepName: payload.salesrepname,
+      },
+    });
 
     return response.data;
   } catch (error: any) {

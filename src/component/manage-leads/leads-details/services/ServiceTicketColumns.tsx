@@ -87,6 +87,11 @@ export const ServiceTicketsColumn: Column<any>[] = [
     Cell: ({ row }: { row: { original: any } }) => <span>{row.original.assignee || "-"}</span>,
   },
   {
+    Header: "Assigned By",
+    accessor: "assignedBy",
+    Cell: ({ row }: { row: { original: any } }) => <span>{row.original.assignedBy || "-"}</span>,
+  },
+  {
     Header: "Status",
     accessor: "status",
     Cell: ({ row }: { row: { original: any } }) => getStatusBadge(row.original.status),

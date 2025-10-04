@@ -16,12 +16,21 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ isMode }) => {
   const { isLoading, responseOfPostDiscountToPs } = useSelector((state: RootState) => state.postDiscountToPs);
   const { discountAuditLeads, processedDiscountLead } = useSelector((state: RootState) => state.ui);
 
+  const { responseOfGetDiscountAudits } = useSelector((state: RootState) => state.getDiscountAudits);
+  const { responseOfGetProcessedDiscountAudits } = useSelector((state: RootState) => state.getProcessedDiscountAudits);
+
   const [selectedAction, setSelectedAction] = useState<any>(null);
 
   // 🔹 Options for react-select
   const actionOptions = [
     { value: "post", label: "Post" },
     { value: "export", label: "Export" },
+    { value: "bulkExport", label: "Bulk Export" },
+  ];
+
+  const processedActionOptions = [
+    { value: "export", label: "Export" },
+    { value: "bulkExport", label: "Bulk Export" },
   ];
 
   // 🔹 Handle Post
@@ -44,14 +53,25 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ isMode }) => {
     }
   };
 
+  const handleBulkExport = () => {
+    if (isMode === "unprocessed") {
+      store.dispatch(exportDiscountedLead(responseOfGetDiscountAudits));
+    } else {
+      store.dispatch(exportDiscountedLead(responseOfGetProcessedDiscountAudits));
+    }
+  };
+
   // 🔹 Handle dropdown change
   const handleActionChange = (selectedOption: any) => {
+    console.log(selectedOption);
     setSelectedAction(selectedOption);
 
     if (selectedOption?.value === "post") {
       handlePost();
     } else if (selectedOption?.value === "export") {
       handleExport();
+    } else if (selectedOption?.value === "bulkExport") {
+      handleBulkExport();
     }
 
     // reset dropdown after action
@@ -76,9 +96,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ isMode }) => {
         )}
 
         {isMode === "processed" && processedDiscountLead.length !== 0 ? (
-          <button onClick={handleExport} className="bg-blue-600 text-white px-4 py-1.5 rounded">
-            Export
-          </button>
+          <Select value={selectedAction} onChange={handleActionChange} options={processedActionOptions} placeholder="Select Action" isDisabled={isLoading} isClearable />
         ) : null}
       </div>
     </div>
