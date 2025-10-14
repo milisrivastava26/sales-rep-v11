@@ -17,6 +17,8 @@ export interface DiscountAuditType {
   packageDeal: number;
   programDescription: string;
   careerDescription: string;
+  additionalDiscount: string;
+  oneTimeDiscount: string;
 }
 
 export const getDiscountAuditsColumns = (): Column<DiscountAuditType>[] => {
@@ -78,10 +80,17 @@ export const getDiscountAuditsColumns = (): Column<DiscountAuditType>[] => {
     },
 
     {
-      Header: "Special Discount",
-      accessor: "specialDiscount",
-      Cell: ({ row }: { row: { original: DiscountAuditType } }) => <span>{row.original.specialDiscount ?? "N/A"}</span>,
+      Header: "Additional Discount",
+      accessor: "additionalDiscount",
+      Cell: ({ row }: { row: { original: DiscountAuditType } }) => <span>{row.original.additionalDiscount ?? "N/A"}</span>,
     },
+
+    {
+      Header: "One Time Discount",
+      accessor: "oneTimeDiscount",
+      Cell: ({ row }: { row: { original: DiscountAuditType } }) => <span>{row.original.oneTimeDiscount ?? "N/A"}</span>,
+    },
+
     {
       Header: "Package Deal",
       accessor: "packageDeal",
