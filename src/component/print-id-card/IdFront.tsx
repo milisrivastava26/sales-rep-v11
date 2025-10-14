@@ -11,14 +11,16 @@ const IdFront: React.FC = () => {
   const { metriculatedLeadDetail } = useSelector((state: RootState) => state.getMetriculatedLeadDetailbyId);
 
   useEffect(() => {
-    store.dispatch(
-      viewDoc({
-        leadCaptureId: idCardData?.leadCaptureId,
-        docTypeId: 9,
-        docName: metriculatedLeadDetail?.document_name,
-      })
-    );
-  }, []);
+    if (metriculatedLeadDetail !== null) {
+      store.dispatch(
+        viewDoc({
+          leadCaptureId: idCardData?.leadCaptureId,
+          docTypeId: 9,
+          docName: metriculatedLeadDetail?.document_name,
+        })
+      );
+    }
+  }, [metriculatedLeadDetail]);
 
   return (
     <div>

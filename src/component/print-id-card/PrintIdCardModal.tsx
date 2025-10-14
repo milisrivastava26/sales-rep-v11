@@ -8,14 +8,20 @@ import IdBack from "./IdBack";
 const PrintIdCardModal: React.FC = () => {
   const { isLoading } = useSelector((state: RootState) => state.getMetriculatedLeadDetailbyId);
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center my-10">
+        <Spin tip="Loading..." size="large" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-center my-10">
-      <Spin spinning={isLoading} tip="Loading...">
-        <div className="flex justify-evenly">
-          <IdFront />
-          <IdBack />
-        </div>
-      </Spin>
+      <div className="flex justify-evenly">
+        <IdFront />
+        <IdBack />
+      </div>
     </div>
   );
 };
