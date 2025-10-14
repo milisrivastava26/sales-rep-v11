@@ -18,10 +18,7 @@ import {
   takeActionsForUpdateLeadAdditionalInfo,
   updateLeadAdditionalInfo,
 } from "../../../../store/lead-attribute-update/update-leadAdditionalDetails-slice";
-import {
-  AddAdditionalDetails,
-  resetResposneforAdditionalDetails,
-} from "../../../../store/lead-attribute-update/create-leadAdditionalDetails-slice";
+import { AddAdditionalDetails, resetResposneforAdditionalDetails } from "../../../../store/lead-attribute-update/create-leadAdditionalDetails-slice";
 import { getCategoryValues } from "../../../../store/get/get-all-category-slice";
 import { getAdmitTypeValues } from "../../../../store/get/get-all-admit-type-slice";
 
@@ -29,29 +26,14 @@ import { getMaxActiveAppStatus } from "../../../../store/scholarship-services/ge
 
 const BiographicalInfo: React.FC = () => {
   const { leadCaptureId } = useParams();
-  const { isLoading, responseofLeadBiographicalInfo } = useSelector(
-    (state: RootState) => state.getBiographicalInfoByIdData
-  );
-  const { responseOfLeadAdditionalInfo, resetActions, isError } = useSelector(
-    (state: RootState) => state.LeadAdditionalInfoUpdate
-  );
-  const {
-    isLoading: isLoadingForLeadadditionalDetails,
-    responseofLeadAdditionalInfo,
-  } = useSelector((state: RootState) => state.getAdditionalInfoByIdData);
-  const { isError: isErrorForCreate, responseOfAdditionalDetails } =
-    useSelector((state: RootState) => state.addAdditionalDetails);
-  const { responseOfLeadEnquiryDetailsById } = useSelector(
-    (state: RootState) => state.getLeadEnquiryDetailsDataById
-  );
-  const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
-    ? responseOfLeadEnquiryDetailsById.filter(
-      (item: any) => item.status === "ACTIVE"
-    )
-    : [];
+  const { isLoading, responseofLeadBiographicalInfo } = useSelector((state: RootState) => state.getBiographicalInfoByIdData);
+  const { responseOfLeadAdditionalInfo, resetActions, isError } = useSelector((state: RootState) => state.LeadAdditionalInfoUpdate);
+  const { isLoading: isLoadingForLeadadditionalDetails, responseofLeadAdditionalInfo } = useSelector((state: RootState) => state.getAdditionalInfoByIdData);
+  const { isError: isErrorForCreate, responseOfAdditionalDetails } = useSelector((state: RootState) => state.addAdditionalDetails);
+  const { responseOfLeadEnquiryDetailsById } = useSelector((state: RootState) => state.getLeadEnquiryDetailsDataById);
+  const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById) ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE") : [];
   const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
-  const additionalDetailsId =
-    responseofLeadAdditionalInfo.leadAdditionalDetailId;
+  const additionalDetailsId = responseofLeadAdditionalInfo.leadAdditionalDetailId;
 
   const [isEditing, setEditing] = useState(false);
 
@@ -72,35 +54,20 @@ const BiographicalInfo: React.FC = () => {
   const onUpdateLeadHandler = (data: any) => {
     const { values, actions } = data;
 
-    const payloadForAddAdditionalDetails = transformBiographicalPayload(values, leadEnquiryId, leadCaptureId)
+    const payloadForAddAdditionalDetails = transformBiographicalPayload(values, leadEnquiryId, leadCaptureId);
 
-
-    if (
-      Object.values(responseofLeadAdditionalInfo).every((item) => item === null)
-    ) {
+    if (Object.values(responseofLeadAdditionalInfo).every((item) => item === null)) {
       store.dispatch(AddAdditionalDetails(payloadForAddAdditionalDetails));
-
     } else {
-      store.dispatch(
-        updateLeadAdditionalInfo({ additionalDetailsId, payloadForAddAdditionalDetails })
-      );
+      store.dispatch(updateLeadAdditionalInfo({ additionalDetailsId, payloadForAddAdditionalDetails }));
     }
     store.dispatch(takeActionsForUpdateLeadAdditionalInfo(actions));
   };
 
-  const initialValuesForBiographical =
-    responseofLeadBiographicalInfo !== null
-      ? getInitialValuesForBiographicalInfo(
-        responseofLeadAdditionalInfo,
-        leadCaptureId
-      )
-      : null;
+  const initialValuesForBiographical = responseofLeadBiographicalInfo !== null ? getInitialValuesForBiographicalInfo(responseofLeadAdditionalInfo, leadCaptureId) : null;
 
   useEffect(() => {
-    if (
-      (!isError && responseOfLeadAdditionalInfo) ||
-      (!isErrorForCreate && responseOfAdditionalDetails)
-    ) {
+    if ((!isError && responseOfLeadAdditionalInfo) || (!isErrorForCreate && responseOfAdditionalDetails)) {
       if (!isErrorForCreate && responseOfAdditionalDetails) {
         const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
         const payloadForApplicationStatus = {
@@ -122,23 +89,13 @@ const BiographicalInfo: React.FC = () => {
 
   return (
     <>
-      {isLoadingForLeadadditionalDetails && (
-        <LoadingSpinner
-          size={20}
-          mainLoading={false}
-          message="Loading Details"
-          centered={false}
-        />
-      )}
+      {isLoadingForLeadadditionalDetails && <LoadingSpinner size={20} mainLoading={false} message="Loading Details" centered={false} />}
       {initialValuesForBiographical !== null && !isLoading && (
         <div className="bg-white  mt-5  pb-1 relative">
           <div className="flex justify-between items-center h-[50px] mb-5 px-4 bg-blue-100">
             <h1 className="text-lg font-semibold">Biographical Details</h1>
             {!isEditing && (
-              <button
-                className=" px-3 py-1.5 font-medium rounded-lg"
-                onClick={handleEditClick}
-              >
+              <button className=" px-3 py-1.5 font-medium rounded-lg" onClick={handleEditClick}>
                 <MdOutlineEdit size={20} />
               </button>
             )}

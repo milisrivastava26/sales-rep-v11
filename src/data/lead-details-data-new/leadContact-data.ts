@@ -59,7 +59,6 @@ export const formInputsForContact = [
 ];
 
 export const getInitialValuesForContact = (contact: any, leadCaptureId: any) => {
-  // Map existing contacts if any, else empty array
   const contactsArray = Array.isArray(contact)
     ? contact.map((c) => ({
         leadCaptureId: leadCaptureId,
@@ -69,17 +68,6 @@ export const getInitialValuesForContact = (contact: any, leadCaptureId: any) => 
         primary: c?.primary || false,
       }))
     : [];
-
-  // Ensure at least one contact exists
-  if (contactsArray.length === 1) {
-    contactsArray.push({
-      leadCaptureId: leadCaptureId,
-      contactName: "",
-      contactRelation: "father",
-      contactNumber: "",
-      primary: false,
-    });
-  }
 
   return { contact: contactsArray };
 };

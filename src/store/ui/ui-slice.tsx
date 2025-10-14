@@ -6,6 +6,15 @@ export interface selectedColumnType {
   label: string;
 }
 
+interface IdCardData {
+  name: string;
+  rollNumber: string;
+  erpId: string;
+  program: string;
+  phone: string;
+  leadCaptureId: string;
+}
+
 interface typeUI {
   settingId: any;
   isFilterDropdown: boolean;
@@ -102,6 +111,8 @@ interface typeUI {
   processedDiscountLead: any;
   viewTicketId: string;
   leadServiceTicketId: number;
+  isModalOpenForIdCard: boolean;
+  idCardData: IdCardData | null;
 }
 
 const initialState: typeUI = {
@@ -231,6 +242,8 @@ const initialState: typeUI = {
   processedDiscountLead: [],
   viewTicketId: "",
   leadServiceTicketId: 0,
+  isModalOpenForIdCard: false,
+  idCardData: null,
 };
 
 const uiSlice = createSlice({
@@ -677,10 +690,20 @@ const uiSlice = createSlice({
     setLeadServiceTicketId: (state, action) => {
       state.leadServiceTicketId = action.payload;
     },
+    openModalForPrintIdCard: (state, action) => {
+      state.isModalOpenForIdCard = true;
+      state.idCardData = action.payload;
+    },
+    closeModalForPrintIdCard: (state) => {
+      state.isModalOpenForIdCard = false;
+      state.idCardData = null;
+    },
   },
 });
 
 export const {
+  openModalForPrintIdCard,
+  closeModalForPrintIdCard,
   setViewTicketId,
   setLeadServiceTicketId,
   getLeadsForProcessedDiscount,

@@ -25,6 +25,7 @@ import SuperbotDetailsPage from "../pages/superbot-details/SuperbotDetailsPage";
 import ViewVerifiedDocumentsPage from "../pages/review-document/ViewVerifiedDocumentsPage";
 import LeadDiscountPage from "../pages/lead-discount/LeadDiscountPage";
 import ManageTicketPage from "../pages/manage-tickets/ManageTicketPage";
+import PrintIdCardPage from "../pages/print-id-card/PrintIdCardPage";
 
 // Helper function that builds routes based on user details
 export const getRoutes = (userDetails: any) => {
@@ -176,6 +177,10 @@ export const getRoutes = (userDetails: any) => {
           {
             path: "verified-documents",
             element: <ViewVerifiedDocumentsPage />,
+          },
+          {
+            path: "/print-id-card",
+            element: <PrintIdCardPage />,
           },
           {
             path: "/superbot-details",

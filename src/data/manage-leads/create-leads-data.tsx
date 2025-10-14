@@ -245,6 +245,19 @@ export const genderOptions = [
   },
 ];
 
+export const nationalityOptions = [
+  {
+    id: 0,
+    name: "Indian",
+    value: "Indian",
+  },
+  {
+    id: 1,
+    name: "Other",
+    value: "Other",
+  },
+];
+
 export const resultStatusOptions = [
   {
     id: 1,

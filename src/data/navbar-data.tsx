@@ -22,6 +22,7 @@ export const leadsItems: DropdownItem[] = [
   { label: "Super Bot Callback Details", href: "/superbot-details", roles: ["ROLE_MANAGER", "ROLE_ADMIN", "ROLE_USER"] },
   { label: "Lead Discount", href: "/lead-discount", roles: ["ROLE_DISCOUNT", "ROLE_DISCOUNT_VIEW", "ROLE_ADMIN"] },
   { label: "Manage Tickets", href: "/manage-ticket", roles: ["ROLE_TICKET_RESOLVER"] },
+  { label: "Print Id Card", href: "/print-id-card", roles: ["ROLE_ID_CARD_ADMIN"] },
 ];
 
 export const leadAuthorityItems = [{ label: "View Declined Cases", href: "/view-decline-cases" }];

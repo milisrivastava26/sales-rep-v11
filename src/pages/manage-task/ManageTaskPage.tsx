@@ -1,22 +1,24 @@
-import React, { useEffect } from 'react'
-import ManageTask from '../../component/manage-task/ManageTask'
-import store from '../../store';
-import { getOwnerValues } from '../../store/lead-capturing/get-allOwner-slice';
-import { getLeadSourceValues } from '../../store/lead-capturing/get-allLeadSource-slice';
-import { getAcademicCareerValuesForQuickadd } from '../../store/get/get-all-careerFor-quickAdd-slice';
+import React, { useEffect } from "react";
+import ManageTask from "../../component/manage-task/ManageTask";
+import store from "../../store";
+import { getOwnerValues } from "../../store/lead-capturing/get-allOwner-slice";
+import { getLeadSourceValues } from "../../store/lead-capturing/get-allLeadSource-slice";
+import { getAcademicCareerValuesForQuickadd } from "../../store/get/get-all-careerFor-quickAdd-slice";
+import { getLeadStageValues } from "../../store/lead-capturing/get-allLeadStage-slice";
 
 const ManageTaskPage: React.FC = () => {
   useEffect(() => {
     store.dispatch(getOwnerValues());
     store.dispatch(getLeadSourceValues());
     store.dispatch(getAcademicCareerValuesForQuickadd());
-  }, [])
+    store.dispatch(getLeadStageValues());
+  }, []);
 
   return (
     <div>
       <ManageTask />
     </div>
-  )
-}
+  );
+};
 
-export default ManageTaskPage
+export default ManageTaskPage;

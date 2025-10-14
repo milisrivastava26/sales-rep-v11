@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { genderOptions } from "../../../../data/manage-leads/create-leads-data";
+import { genderOptions, nationalityOptions } from "../../../../data/manage-leads/create-leads-data";
 import SelectInput from "../../../../util/custom/FormInputs/SelectInput";
 import { useSelector } from "react-redux";
 import store, { RootState } from "../../../../store";
@@ -118,6 +118,8 @@ const BiographicalInfoForm: React.FC<FormType> = ({
                         ? genderOptions
                         : field.name === "bloodGroup"
                         ? bloodGroupOptions
+                        : field.name === "nationality"
+                        ? nationalityOptions
                         : []
                     }
                     isLoading={field.label === "Academic Career" ? isLoadingForCareer : field.name === "academicProgramId" ? isLoadingForProgram : false}

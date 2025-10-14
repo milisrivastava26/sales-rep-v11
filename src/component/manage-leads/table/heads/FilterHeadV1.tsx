@@ -10,10 +10,7 @@ import { InputDataType } from "../../../../data/manage-leads/filter-head-data";
 import { hamburgerModalData } from "../../../../data/manage-leads/ManageLeadsData";
 import { getleadSubStagesById } from "../../../../store/lead-capturing/get-allLeadSubStages-byId-slice";
 import { getApByCareerId } from "../../../../store/get/get-all-academic-program-by-academic-career-id-slice";
-import {
-  transformDataForLeadStagesAndSource,
-  transformDataForLeadSubStages,
-} from "../../../../util/actions/transformFilterApiData";
+import { transformDataForLeadStagesAndSource, transformDataForLeadSubStages } from "../../../../util/actions/transformFilterApiData";
 import { getLeadStageValues } from "../../../../store/lead-capturing/get-allLeadStage-slice";
 import { getLeadSourceValues } from "../../../../store/lead-capturing/get-allLeadSource-slice";
 import { getOwnerValues } from "../../../../store/lead-capturing/get-allOwner-slice";
@@ -29,53 +26,26 @@ interface PropsType {
   setFilterPayload: any;
 }
 
-const FilterHeadV1: React.FC<PropsType> = ({
-  inputData,
-  filterpayload,
-  setFilterPayload,
-}) => {
+const FilterHeadV1: React.FC<PropsType> = ({ inputData, filterpayload, setFilterPayload }) => {
   const dispatch = store.dispatch;
   const [selectedValues, setSelectedValues] = useState<Record<string, any>>({});
 
-  const {
-    isLoading: isLoadingForLeadStage,
-    responseForLeadStage: leadStageData,
-  } = useSelector((state: RootState) => state.leadStageValues);
-  const { isLoading: isLoadingForLeadSource, responseForLeadSource } =
-    useSelector((state: RootState) => state.leadSourceValues);
-  const { userDetails } = useSelector(
-    (state: RootState) => state.getLoggedInUserData
-  );
-  const { isLoading: isLoadingForLeadSubStage, leadSubStagesDataById } =
-    useSelector((state: RootState) => state.getleadSubStagesDataById);
-  const { isLoading: isLoadingForOwner, responseForOwner } = useSelector(
-    (state: RootState) => state.getAllOwner
-  );
-  const {
-    isLoading: isLoadingForApplicationStatus,
-    responseForApplicationStatus,
-  } = useSelector((state: RootState) => state.getAllApplicationStatus);
+  const { isLoading: isLoadingForLeadStage, responseForLeadStage: leadStageData } = useSelector((state: RootState) => state.leadStageValues);
+  const { isLoading: isLoadingForLeadSource, responseForLeadSource } = useSelector((state: RootState) => state.leadSourceValues);
+  const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
+  const { isLoading: isLoadingForLeadSubStage, leadSubStagesDataById } = useSelector((state: RootState) => state.getleadSubStagesDataById);
+  const { isLoading: isLoadingForOwner, responseForOwner } = useSelector((state: RootState) => state.getAllOwner);
+  const { isLoading: isLoadingForApplicationStatus, responseForApplicationStatus } = useSelector((state: RootState) => state.getAllApplicationStatus);
   const { isHamburgerModalOpen } = useSelector((state: RootState) => state.ui);
   const { paginatedProps, searchQuery } = useSelector((state: RootState) => state.ui);
-  const {
-    isLoading: isLoadingForCareer,
-    responseForFilterHeadAcademicCareer: careerOptions,
-  } = useSelector((state: RootState) => state.getAllAcademicCareer);
-  const {
-    isLoading: isLoadingForProgram,
-    responseForFilterHeadAcademicProgram: programOptions,
-  } = useSelector((state: RootState) => state.getAllAcademicProgramByCareer);
+  const { isLoading: isLoadingForCareer, responseForFilterHeadAcademicCareer: careerOptions } = useSelector((state: RootState) => state.getAllAcademicCareer);
+  const { isLoading: isLoadingForProgram, responseForFilterHeadAcademicProgram: programOptions } = useSelector((state: RootState) => state.getAllAcademicProgramByCareer);
 
   const fullName = userDetails?.fullName;
 
-  const optionForLeadStages =
-    transformDataForLeadStagesAndSource(leadStageData);
-  const optionForLeadSource = transformDataForLeadStagesAndSource(
-    responseForLeadSource
-  );
-  const optionForLeadSubStages = transformDataForLeadSubStages(
-    leadSubStagesDataById
-  );
+  const optionForLeadStages = transformDataForLeadStagesAndSource(leadStageData);
+  const optionForLeadSource = transformDataForLeadStagesAndSource(responseForLeadSource);
+  const optionForLeadSubStages = transformDataForLeadSubStages(leadSubStagesDataById);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -85,8 +55,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
       setSelectedValues(parsed);
       const restoredPayload: any = {};
       Object.entries(parsed).forEach(([key, val]: any) => {
-        restoredPayload[key] =
-          typeof val === "object" && val !== null ? val.label : val;
+        restoredPayload[key] = typeof val === "object" && val !== null ? val.label : val;
       });
       setFilterPayload(restoredPayload);
     }
@@ -101,7 +70,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
       sessionStorage.removeItem("filterpayload");
       sessionStorage.removeItem("selectedValues");
     }
-  }, [isLoadingForSearchedLeads])
+  }, [isLoadingForSearchedLeads]);
 
   // Save to localStorage when filterpayload/selectedValues change
   useEffect(() => {
@@ -113,11 +82,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
     if (name === "currentLeadStageDisplayName") {
       dispatch(getLeadStageValues());
     } else if (name === "currentLeadSubStageDisplayName") {
-      dispatch(
-        getleadSubStagesById(
-          selectedValues.currentLeadStageDisplayName?.value
-        )
-      );
+      dispatch(getleadSubStagesById(selectedValues.currentLeadStageDisplayName?.value));
     } else if (name === "leadSourceDescription") {
       dispatch(getLeadSourceValues());
     } else if (name === "currentSalesrepFullName") {
@@ -129,10 +94,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
     }
   };
 
-  const handleFilterChange = (
-    name: string,
-    selectedOption: { value: string; label: string } | null
-  ) => {
+  const handleFilterChange = (name: string, selectedOption: { value: string; label: string } | null) => {
     store.dispatch(resetsearchedLeads());
     store.dispatch(setSearchQuery(""));
     setFilterPayload((prev: any) => {
@@ -150,7 +112,6 @@ const FilterHeadV1: React.FC<PropsType> = ({
       dispatch(getApByCareerId(selectedOption.value));
     }
   };
-
 
   const handleDateChange = (name: string, value: string) => {
     store.dispatch(resetsearchedLeads());
@@ -173,19 +134,17 @@ const FilterHeadV1: React.FC<PropsType> = ({
     sessionStorage.removeItem("selectedValues");
   };
 
-
-
   useEffect(() => {
     if (Object.keys(userDetails).length !== 0 && searchQuery === "") {
-      const isSalesRepUser = !userDetails?.authority?.some(
-        (role: string) => role === "ROLE_ADMIN" || role === "ROLE_MANAGER"
-      );
+      const isSalesRepUser = !userDetails?.authority?.some((role: string) => role === "ROLE_ADMIN" || role === "ROLE_MANAGER");
       const payload =
         Object.keys(filterpayload).length > 0
           ? isSalesRepUser
             ? { loggedInUser: fullName, currentSalesrepFullName: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
             : { loggedInUser: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
-          : isSalesRepUser ? { loggedInUser: fullName, currentSalesrepFullName: fullName, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber } : { loggedInUser: fullName, currentSalesrepFullName: "", pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber };
+          : isSalesRepUser
+          ? { loggedInUser: fullName, currentSalesrepFullName: fullName, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
+          : { loggedInUser: fullName, currentSalesrepFullName: "", pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber };
       dispatch(getPaginatedLeads(payload));
     }
   }, [filterpayload, userDetails, paginatedProps, searchQuery]);
@@ -196,18 +155,18 @@ const FilterHeadV1: React.FC<PropsType> = ({
     if (Object.keys(userDetails).length !== 0) {
       store.dispatch(resetsearchedLeads());
       store.dispatch(setSearchQuery(""));
-      const isSalesRepUser = !userDetails?.authority?.some(
-        (role: string) => role === "ROLE_ADMIN" || role === "ROLE_MANAGER"
-      );
+      const isSalesRepUser = !userDetails?.authority?.some((role: string) => role === "ROLE_ADMIN" || role === "ROLE_MANAGER");
       const payload =
         Object.keys(filterpayload).length > 0
           ? isSalesRepUser
             ? { loggedInUser: fullName, currentSalesrepFullName: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
             : { loggedInUser: fullName, ...filterpayload, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
-          : isSalesRepUser ? { loggedInUser: fullName, currentSalesrepFullName: fullName, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber } : { loggedInUser: fullName, currentSalesrepFullName: "", pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber };
+          : isSalesRepUser
+          ? { loggedInUser: fullName, currentSalesrepFullName: fullName, pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber }
+          : { loggedInUser: fullName, currentSalesrepFullName: "", pageSize: paginatedProps.pageSize, pageNumber: paginatedProps.pageNumber };
       dispatch(getPaginatedLeads(payload));
     }
-  }
+  };
 
   return (
     <>
@@ -219,60 +178,51 @@ const FilterHeadV1: React.FC<PropsType> = ({
                 field.name === "currentLeadStageDisplayName"
                   ? optionForLeadStages
                   : field.name === "currentLeadSubStageDisplayName"
-                    ? optionForLeadSubStages.length > 0
-                      ? optionForLeadSubStages
-                      : [{ label: "No data", value: "" }]
-                    : field.name === "leadSourceDescription"
-                      ? optionForLeadSource
-                      : field.name === "currentSalesrepFullName"
-                        ? responseForOwner
-                        : field.name === "applicationStatusName"
-                          ? responseForApplicationStatus
-                          : field.name === "academicCareerDescription"
-                            ? careerOptions
-                            : field.name === "academicProgramDescription"
-                              ? programOptions
-                              : [];
+                  ? optionForLeadSubStages.length > 0
+                    ? optionForLeadSubStages
+                    : [{ label: "No data", value: "" }]
+                  : field.name === "leadSourceDescription"
+                  ? optionForLeadSource
+                  : field.name === "currentSalesrepFullName"
+                  ? responseForOwner
+                  : field.name === "applicationStatusName"
+                  ? responseForApplicationStatus
+                  : field.name === "academicCareerDescription"
+                  ? careerOptions
+                  : field.name === "academicProgramDescription"
+                  ? programOptions
+                  : [];
 
               const loading =
                 field.name === "currentLeadSubStageDisplayName"
                   ? isLoadingForLeadStage
                   : field.name === "currentLeadSubStageDisplayName"
-                    ? isLoadingForLeadSubStage
-                    : field.name === "leadSourceDescription"
-                      ? isLoadingForLeadSource
-                      : field.name === "currentSalesrepFullName"
-                        ? isLoadingForOwner
-                        : field.name === "applicationStatusName"
-                          ? isLoadingForApplicationStatus
-                          : field.name === "academicCareerDescription"
-                            ? isLoadingForCareer
-                            : field.name === "academicProgramDescription"
-                              ? isLoadingForProgram
-                              : false;
+                  ? isLoadingForLeadSubStage
+                  : field.name === "leadSourceDescription"
+                  ? isLoadingForLeadSource
+                  : field.name === "currentSalesrepFullName"
+                  ? isLoadingForOwner
+                  : field.name === "applicationStatusName"
+                  ? isLoadingForApplicationStatus
+                  : field.name === "academicCareerDescription"
+                  ? isLoadingForCareer
+                  : field.name === "academicProgramDescription"
+                  ? isLoadingForProgram
+                  : false;
 
               return (
                 <div key={field.id} className="flex flex-col gap-y-1">
-                  <label className="text-xs font-medium pl-[1px]">
-                    {field.label}
-                  </label>
+                  <label className="text-xs font-medium pl-[1px]">{field.label}</label>
                   <Select
                     className="min-w-[165px]"
                     options={options}
                     value={selectedValues[field.name] || null}
-                    onChange={(option) =>
-                      handleFilterChange(field.name, option)
-                    }
+                    onChange={(option) => handleFilterChange(field.name, option)}
                     isLoading={loading}
                     isSearchable
                     onMenuOpen={() => handleMenuOpen(field.name)}
                     isClearable
-                    isDisabled={
-                      field.name === "currentSalesrepFullName" &&
-                      !userDetails?.authority?.some((role: string) =>
-                        ["ROLE_ADMIN", "ROLE_MANAGER"].includes(role)
-                      )
-                    }
+                    isDisabled={field.name === "currentSalesrepFullName" && !userDetails?.authority?.some((role: string) => ["ROLE_ADMIN", "ROLE_MANAGER"].includes(role))}
                     styles={{
                       control: (base) => ({
                         ...base,
@@ -301,37 +251,25 @@ const FilterHeadV1: React.FC<PropsType> = ({
               );
             } else if (field.type === "date") {
               return (
-                <div
-                  key={field.id}
-                  className="flex min-w-[150px] flex-col gap-y-1"
-                >
-                  <label className="text-xs font-medium pl-[1px]">
-                    {field.label}
-                  </label>
+                <div key={field.id} className="flex min-w-[150px] flex-col gap-y-1">
+                  <label className="text-xs font-medium pl-[1px]">{field.label}</label>
                   <input
                     type="date"
                     name={field.name}
                     className="border min-w-[165px] border-[#c9cccd] focus:outline-none focus:border-gray-400 rounded-[0.26rem] px-[6px] py-[1.7px] text-gray-600 text-sm"
                     value={selectedValues[field.name] || ""}
-                    onChange={(e) =>
-                      handleDateChange(field.name, e.target.value)
-                    }
+                    onChange={(e) => handleDateChange(field.name, e.target.value)}
                   />
                 </div>
               );
             }
             return null;
           })}
-
-
         </div>
         <div className="flex gap-3 items-center justify-end mt-2">
           <div className="">
             {Object.keys(filterpayload).length > 0 && (
-              <button
-                onClick={resetFilters}
-                className="bg-red-500 text-white px-[9px] py-[1.5px] rounded text-nowrap"
-              >
+              <button onClick={resetFilters} className="bg-red-500 text-white px-[9px] py-[1.5px] rounded text-nowrap">
                 Reset Filters
               </button>
             )}
@@ -352,12 +290,7 @@ const FilterHeadV1: React.FC<PropsType> = ({
       </div>
 
       {isHamburgerModalOpen && (
-        <CustomModal
-          isMode="testAction"
-          isShowModal={isHamburgerModalOpen}
-          onHideModal={closeModalForHamburger}
-          data={hamburgerModalData}
-        >
+        <CustomModal isMode="testAction" isShowModal={isHamburgerModalOpen} onHideModal={closeModalForHamburger} data={hamburgerModalData}>
           <ManageHamburgerColumn />
         </CustomModal>
       )}

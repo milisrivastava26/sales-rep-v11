@@ -22,6 +22,16 @@ export const formInputSchemaForManageTask = [
     ],
   },
   {
+    name: "leadStage",
+    label: "Lead Stage",
+    type: "select",
+  },
+  {
+    name: "leadSubStage",
+    label: "Lead Sub Stage",
+    type: "select",
+  },
+  {
     name: "createdAtFrom",
     label: "From Date",
     type: "date",
@@ -51,6 +61,8 @@ export const initialValuesForManageTask = {
   createdAtTo: "",
   career: "",
   program: "",
+  leadSubStage: "",
+  leadStage: "",
 };
 
 export const validationSchemaForManageTask = Yup.object().shape({

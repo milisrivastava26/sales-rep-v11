@@ -290,6 +290,8 @@ import { statusReducer } from "../tickets/get-all-status-slice";
 import { downloadTicketReducer } from "../tickets/download-ticket-slice";
 import { autocompleteReducer } from "../pagination-v1/get-autocomplete-lead-slice";
 import { TicketLeadsByUsernameReducer } from "../manage-ticket/get-leadTicketData-slice";
+import { getMetriculatedLeadsReducer } from "../print-id-card/get-metriculated-lead-slice";
+import { getMetriculatedLeadDetailReducer } from "../print-id-card/get-metriculated-lead-byId-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -696,6 +698,10 @@ const RootReducer = {
 
   ///////////manage ticket
   getLeadTicketData: TicketLeadsByUsernameReducer,
+  getMetriculatedLeadDetailbyId: getMetriculatedLeadDetailReducer,
+
+  //print id card
+  getAllMetriculatedLeads: getMetriculatedLeadsReducer,
 };
 
 export default RootReducer;

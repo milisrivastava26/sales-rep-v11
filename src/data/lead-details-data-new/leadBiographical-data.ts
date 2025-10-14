@@ -26,6 +26,8 @@ interface BiographicalInfo {
     motherOccupation: any;
     motherDesignation: any;
     motherAnnualIncome: any;
+    motherContactNumber: string;
+    fatherContactNumber: string;
   };
 }
 
@@ -62,7 +64,7 @@ export const biographicalFormInput = [
     id: 14,
     name: "nationality",
     label: "Nationality",
-    type: "text",
+    type: "select",
     isrequired: true,
   },
   {
@@ -77,6 +79,13 @@ export const biographicalFormInput = [
     name: "fatherName",
     label: "Father's Name",
     type: "text",
+    isrequired: true,
+  },
+  {
+    id: 23,
+    name: "fatherContactNumber",
+    label: "Father's Contact Number",
+    type: "number",
     isrequired: true,
   },
   {
@@ -108,6 +117,13 @@ export const biographicalFormInput = [
     isrequired: true,
   },
   {
+    id: 24,
+    name: "motherContactNumber",
+    label: "Mother's Contact Number",
+    type: "number",
+    isrequired: true,
+  },
+  {
     id: 19,
     name: "motherOccupation",
     label: "Mother's Occupation",
@@ -131,16 +147,13 @@ export const biographicalFormInput = [
   {
     id: 22,
     name: "adharNumber",
-    label: "Aadhar Number",
+    label: "Student Aadhar Card Number",
     type: "text",
     isrequired: true,
   },
 ];
 
-export const getInitialValuesForBiographicalInfo = (
-  data: BiographicalInfo,
-  leadCaptureId: number | undefined | string
-) => {
+export const getInitialValuesForBiographicalInfo = (data: BiographicalInfo, leadCaptureId: number | undefined | string) => {
   const dobResponse = data.dob || "";
   let initialValues = {
     categoryId: data.categoryId || "",
@@ -151,6 +164,8 @@ export const getInitialValuesForBiographicalInfo = (
     bloodGroup: data.leadDemographicDetailsDTO?.bloodGroup,
 
     fatherName: data.fatherName || "",
+    fatherContactNumber: data.leadDemographicDetailsDTO?.fatherContactNumber || "",
+    motherContactNumber: data.leadDemographicDetailsDTO?.motherContactNumber || "",
     fatherOccupation: data.leadDemographicDetailsDTO?.fatherOccupation,
     fatherDesignation: data.leadDemographicDetailsDTO?.fatherDesignation,
     fatherAnnualIncome: data.leadDemographicDetailsDTO?.fatherAnnualIncome,
@@ -183,6 +198,14 @@ export const validationSchemaForBiographicalInfo = Yup.object({
     .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
     .required("Nationality is required"),
 
+  fatherContactNumber: Yup.string()
+    .matches(/^\+?[0-9]{10}$/, "Father's contact number is not valid")
+    .required("Father's contact number is required"),
+
+  motherContactNumber: Yup.string()
+    .matches(/^\+?[0-9]{10}$/, "Mother's contact number is not valid")
+    .required("Mother's contact number is required"),
+
   fatherName: Yup.string()
     .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
     .required("Father's Name is required"),
@@ -195,10 +218,7 @@ export const validationSchemaForBiographicalInfo = Yup.object({
     .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
     .nullable(),
 
-  fatherAnnualIncome: Yup.number()
-    .typeError("Father's Annual Income must be a number")
-    .min(0, "Income cannot be negative")
-    .nullable(),
+  fatherAnnualIncome: Yup.number().typeError("Father's Annual Income must be a number").min(0, "Income cannot be negative").nullable(),
 
   motherName: Yup.string()
     .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
@@ -212,10 +232,7 @@ export const validationSchemaForBiographicalInfo = Yup.object({
     .matches(/^[A-Za-z\s]+$/, "Only characters are allowed")
     .nullable(),
 
-  motherAnnualIncome: Yup.number()
-    .typeError("Mother's Annual Income must be a number")
-    .min(0, "Income cannot be negative")
-    .nullable(),
+  motherAnnualIncome: Yup.number().typeError("Mother's Annual Income must be a number").min(0, "Income cannot be negative").nullable(),
 
   bloodGroup: Yup.string()
     .matches(/^(A|B|AB|O)[+-]$/, "Invalid blood group")
@@ -225,11 +242,7 @@ export const validationSchemaForBiographicalInfo = Yup.object({
     .matches(/^\d{12}$/, "Aadhaar number must be exactly 12 digits"),
 });
 
-export const transformBiographicalPayload = (
-  values: any,
-  leadEnquiryId: any,
-  leadCaptureId: any
-) => {
+export const transformBiographicalPayload = (values: any, leadEnquiryId: any, leadCaptureId: any) => {
   const payload = {
     categoryId: values.categoryId,
     admitTypeId: values.admitTypeId,
@@ -251,6 +264,8 @@ export const transformBiographicalPayload = (
       bloodGroup: values.bloodGroup,
       leadCaptureId,
       adharNumber: values.adharNumber,
+      fatherContactNumber: values.fatherContactNumber,
+      motherContactNumber: values.motherContactNumber,
     },
   };
 
