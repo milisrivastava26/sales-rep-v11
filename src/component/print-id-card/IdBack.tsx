@@ -6,11 +6,26 @@ import { RootState } from "../../store";
 const IdBack: React.FC = () => {
   const { idCardData } = useSelector((state: RootState) => state.ui);
   const { metriculatedLeadDetail } = useSelector((state: RootState) => state.getMetriculatedLeadDetailbyId);
+
+  const facilityType = metriculatedLeadDetail?.facility_type;
+
+  // Determine background color and text based on facility type
+  let bottomColor = "";
+  let bottomText = "";
+
+  if (facilityType === "Bus") {
+    bottomColor = "red";
+    bottomText = "BUS COMMUTER";
+  } else if (facilityType === "Hostel") {
+    bottomColor = "#FFED29"; // yellow
+    bottomText = "HOSTEL RESIDENT";
+  }
+
   return (
     <div>
       <style>{`
-        :root{
-          --blue:#002b5c
+        :root {
+          --blue: #002b5c;
         }
         body {
           display: flex;
@@ -25,20 +40,17 @@ const IdBack: React.FC = () => {
           width: 450px;
           padding: 5px;
         }
-
         .id-card {
           border: 10px solid var(--blue);
           padding: 10px;
           text-align: center;
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
           position: relative;
-          min-height:404px;
+          min-height: 404px;
         }
-
         table {
           width: 100%;
         }
-
         tr td {
           text-align: left;
           font-weight: 600;
@@ -46,36 +58,32 @@ const IdBack: React.FC = () => {
           font-size: 12px;
           vertical-align: super;
           line-height: 1.5;
-          padding-bottom:5px;
+          padding-bottom: 5px;
         }
-
         .bar-code {
           width: 100%;
-        
           height: 40px;
-         position: absolute;
+          position: absolute;
           bottom: 40px;
           left: 0;
           margin-bottom: 20px;
-          display:flex;
-          justify-content:center;
+          display: flex;
+          justify-content: center;
         }
-
         .bottom-fixed {
           width: 100%;
-          background-color: var(--color);
           padding: 5px 0px;
           font-weight: 600;
           font-size: 14px;
           position: absolute;
           bottom: 0;
           left: 0;
+          color: #000;
         }
-         .address {
-           overflow-wrap: break-word;
-           white-space: normal;
+        .address {
+          overflow-wrap: break-word;
+          white-space: normal;
         }
-
       `}</style>
 
       <div className="container" id="id-card-back">
@@ -104,7 +112,7 @@ const IdBack: React.FC = () => {
               </tr>
               <tr>
                 <td>Permanent Address:</td>
-                <td>
+                <td className="address">
                   {metriculatedLeadDetail?.address}
                   <br />
                   Pin {metriculatedLeadDetail?.pin}
@@ -112,11 +120,17 @@ const IdBack: React.FC = () => {
               </tr>
             </tbody>
           </table>
+
           <div className="bar-code">
             <Barcode height={30} value={idCardData?.rollNumber || ""} displayValue={false} />
           </div>
-          {/* <div className="bottom-fixed" style={{ "--color": "#ffff60" } as React.CSSProperties}>HOSTEL RESIDENT</div> */}
-          {/* <div className="bottom-fixed" style={{ "--color": "red" } as React.CSSProperties}>BUS COMMUTER</div> */}
+
+          {/* Conditional bottom bar */}
+          {bottomText && (
+            <div className="bottom-fixed" style={{ backgroundColor: bottomColor }}>
+              {bottomText}
+            </div>
+          )}
         </div>
       </div>
     </div>

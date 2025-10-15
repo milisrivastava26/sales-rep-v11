@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import srmuLogo from "../../assets/srmu_logo.jpg";
-import user from "../../assets/user.jpg";
 import { QRCodeSVG } from "qrcode.react";
 import { useSelector } from "react-redux";
 import store, { RootState } from "../../store";
@@ -10,17 +9,30 @@ const IdFront: React.FC = () => {
   const { idCardData } = useSelector((state: RootState) => state.ui);
   const { metriculatedLeadDetail } = useSelector((state: RootState) => state.getMetriculatedLeadDetailbyId);
 
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
+
   useEffect(() => {
     if (metriculatedLeadDetail !== null) {
-      store.dispatch(
-        viewDoc({
-          leadCaptureId: idCardData?.leadCaptureId,
-          docTypeId: 9,
-          docName: metriculatedLeadDetail?.document_name,
+      store
+        .dispatch(
+          viewDoc({
+            leadCaptureId: idCardData?.leadCaptureId,
+            docTypeId: 9,
+            docName: metriculatedLeadDetail?.document_name,
+          }) as any
+        )
+        .unwrap()
+        .then((blob: Blob) => {
+          const url = window.URL.createObjectURL(blob);
+          setFileUrl(url);
         })
-      );
+        .catch(() => {
+          setFileUrl(null);
+        });
     }
   }, [metriculatedLeadDetail]);
+
+  console.log(fileUrl);
 
   return (
     <div>
@@ -43,8 +55,8 @@ const IdFront: React.FC = () => {
         }
 
         .id-card {
-          border: 10px solid var(--blue);
           padding: 10px;
+          border: 10px solid var(--blue);
           text-align: center;
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
           min-height:404px;
@@ -205,7 +217,7 @@ const IdFront: React.FC = () => {
 
           <div className="content">
             <div className="photo">
-              <img src={user} alt="Student Photo" />
+              <img src={fileUrl ?? undefined} alt="Student Photo" />
               <p className="name">{idCardData?.name}</p>
               <p className="course">Course: {idCardData?.program}</p>
             </div>

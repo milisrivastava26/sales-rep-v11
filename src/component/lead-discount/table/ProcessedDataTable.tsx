@@ -23,7 +23,7 @@ const ProcessedDataTable: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className="w-full overflow-x-scroll">
+    <div className="w-full">
       <SectionHead isMode="processed" />
 
       {/* Top controls always mounted */}
@@ -47,7 +47,9 @@ const ProcessedDataTable: React.FC = () => {
 
       {/* Success with data */}
       {!isLoading && !isError && responseOfGetProcessedDiscountAudits && responseOfGetProcessedDiscountAudits.length > 0 && (
-        <CustomDetailsTable columns={column} data={responseOfGetProcessedDiscountAudits} isMode={"processedDiscountAudit"} />
+        <div className="overflow-x-scroll">
+          <CustomDetailsTable columns={column} data={responseOfGetProcessedDiscountAudits} isMode={"processedDiscountAudit"} />
+        </div>
       )}
 
       {/* No data */}

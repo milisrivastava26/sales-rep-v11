@@ -8,8 +8,8 @@ import { emptyDataIcon } from "../../../data/savgIcons";
 import { getDiscountAudits } from "../../../store/lead-discount/getDiscountAuditsSlice";
 import Search from "../../../util/custom/customSearchPagination/Search";
 import Pagination from "../../../util/custom/customSearchPagination/Pagination";
-import { discountAuditColumn } from "./heads/getDiscountAuditsColumnsWithCheckbox";
 import SectionHead from "./heads/SectionHead";
+import { getDiscountAuditsColumns } from "./heads/getDiscountAuditsColumns";
 
 const UnprocessedDataTable: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,6 +20,7 @@ const UnprocessedDataTable: React.FC = () => {
   const allowedRoles = ["ROLE_DISCOUNT", "ROLE_ADMIN"];
 
   const isEdit = allowedRoles.some((role) => roles.includes(role));
+  const column = getDiscountAuditsColumns();
 
   // API call
   useEffect(() => {
@@ -27,7 +28,7 @@ const UnprocessedDataTable: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className="w-full overflow-x-scroll">
+    <div className="w-full">
       {isEdit && <SectionHead isMode="unprocessed" />}
 
       {/* Top controls always mounted */}
@@ -53,7 +54,9 @@ const UnprocessedDataTable: React.FC = () => {
 
       {/* Success with data */}
       {!isLoading && !isError && responseOfGetDiscountAudits && responseOfGetDiscountAudits.length > 0 && (
-        <CustomDetailsTable columns={discountAuditColumn} data={responseOfGetDiscountAudits} isMode={isEdit ? "discountAudits" : "documentAuditView"} />
+        <div className="overflow-x-scroll">
+          <CustomDetailsTable columns={column} data={responseOfGetDiscountAudits} isMode={isEdit ? "discountAudits" : "documentAuditView"} />
+        </div>
       )}
 
       {/* No data */}

@@ -8,6 +8,7 @@ export interface MetriculatedLeadDetail {
   father_name: string;
   document_name: string;
   pin: string;
+  facility_type: string;
 }
 
 interface MetriculatedLeadDetailState {
