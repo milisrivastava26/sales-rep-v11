@@ -26,6 +26,7 @@ import ViewVerifiedDocumentsPage from "../pages/review-document/ViewVerifiedDocu
 import LeadDiscountPage from "../pages/lead-discount/LeadDiscountPage";
 import ManageTicketPage from "../pages/manage-tickets/ManageTicketPage";
 import PrintIdCardPage from "../pages/print-id-card/PrintIdCardPage";
+import AssignTicketPage from "../pages/manage-tickets/AssignTicketPage";
 
 // Helper function that builds routes based on user details
 export const getRoutes = (userDetails: any) => {
@@ -101,6 +102,12 @@ export const getRoutes = (userDetails: any) => {
           {
             path: "manage-ticket",
             element: <ManageTicketPage />,
+            children: [
+              {
+                path: ":ticketNumber",
+                element: <AssignTicketPage />,
+              }
+            ],
           },
           {
             path: "manage-leads-v1",

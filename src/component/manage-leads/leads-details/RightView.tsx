@@ -32,15 +32,23 @@ const RightView: React.FC = () => {
   const { leadCaptureId } = useParams();
 
   const { rightSectionTabname } = useSelector((state: RootState) => state.ui);
-  const { isLoading, leadApplicationStatusByLeadId } = useSelector((state: RootState) => state.getLeadApplicationStatusDataByLeadId);
+  const { isLoading, leadApplicationStatusByLeadId } = useSelector(
+    (state: RootState) => state.getLeadApplicationStatusDataByLeadId
+  );
 
   const [displayOfferAnalysis, setDisplayOfferAnalysis] = useState(false);
 
   useEffect(() => {
     let registrationFeeObject: any = null;
 
-    if (!isLoading && Array.isArray(leadApplicationStatusByLeadId) && leadApplicationStatusByLeadId.length !== 0) {
-      registrationFeeObject = leadApplicationStatusByLeadId.find((item: any) => item.name === "Registration Fee");
+    if (
+      !isLoading &&
+      Array.isArray(leadApplicationStatusByLeadId) &&
+      leadApplicationStatusByLeadId.length !== 0
+    ) {
+      registrationFeeObject = leadApplicationStatusByLeadId.find(
+        (item: any) => item.name === "Registration Fee"
+      );
     }
 
     const shouldDisplayOfferAnalysis = registrationFeeObject?.status === true;
@@ -52,28 +60,42 @@ const RightView: React.FC = () => {
     store.dispatch(onGetRightSectionTabname(tabs[activeTab].label));
   }, [activeTab]);
 
-  const { responseOfLeadEnquiryDetailsById } = useSelector((state: RootState) => state.getLeadEnquiryDetailsDataById);
-  const { isLoading: isLoadingForAddress, responseOfLeadAddressById } = useSelector((state: RootState) => state.getLeadAddressDataById);
-  const { isLoading: isLoadingForAdditionalDetails, responseofLeadAdditionalInfo } = useSelector((state: RootState) => state.getAdditionalInfoByIdData);
-  const { isLoading: isLoadingForAcademicDetails, responseOfLeadAcademicDetailsById } = useSelector((state: RootState) => state.getLeadAcademicDetailsDataById);
+  const { responseOfLeadEnquiryDetailsById } = useSelector(
+    (state: RootState) => state.getLeadEnquiryDetailsDataById
+  );
+  const { isLoading: isLoadingForAddress, responseOfLeadAddressById } =
+    useSelector((state: RootState) => state.getLeadAddressDataById);
+  const {
+    isLoading: isLoadingForAdditionalDetails,
+    responseofLeadAdditionalInfo,
+  } = useSelector((state: RootState) => state.getAdditionalInfoByIdData);
+  const {
+    isLoading: isLoadingForAcademicDetails,
+    responseOfLeadAcademicDetailsById,
+  } = useSelector((state: RootState) => state.getLeadAcademicDetailsDataById);
   const { srmusetOptionDetails } = useSelector(
     (state: RootState) => state.getSrmusetOptionDetails
   );
-  const { getPsEmplIdResponse } = useSelector((state: RootState) => state.getEmplId);
-  const { responseOfLeadContactDetailsById } = useSelector((state: RootState) => state.getLeadContactDetailsDataById);
+  const { getPsEmplIdResponse } = useSelector(
+    (state: RootState) => state.getEmplId
+  );
+  const { responseOfLeadContactDetailsById } = useSelector(
+    (state: RootState) => state.getLeadContactDetailsDataById
+  );
 
-
-
-
-  const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById) ? responseOfLeadEnquiryDetailsById.filter((item: any) => item.status === "ACTIVE") : [];
+  const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
+    ? responseOfLeadEnquiryDetailsById.filter(
+        (item: any) => item.status === "ACTIVE"
+      )
+    : [];
   const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
   const careerId = activeEnquiry[0]?.academicCareerId;
   const programId = activeEnquiry[0]?.academicProgramId;
 
   const payload = {
     careerId: careerId,
-    programId: programId
-  }
+    programId: programId,
+  };
 
   const handleRefresh = function () {
     if (rightSectionTabname === "Activity History") {
@@ -104,7 +126,6 @@ const RightView: React.FC = () => {
     setLeadDetailsPrint(true);
   };
 
-
   useEffect(() => {
     if (
       leadDetailsPrint &&
@@ -115,7 +136,8 @@ const RightView: React.FC = () => {
       responseofLeadAdditionalInfo &&
       responseOfLeadAcademicDetailsById
     ) {
-      const printContent = document.getElementById("print-leadDetails")?.innerHTML;
+      const printContent =
+        document.getElementById("print-leadDetails")?.innerHTML;
       if (!printContent) return;
 
       const iframe = document.createElement("iframe");
@@ -161,20 +183,31 @@ const RightView: React.FC = () => {
     responseOfLeadAcademicDetailsById,
   ]);
 
-  const MergedLeadData = mergedLeadDetailsData(responseOfLeadEnquiryDetailsById, responseOfLeadAddressById, responseofLeadAdditionalInfo, responseOfLeadAcademicDetailsById, srmusetOptionDetails, getPsEmplIdResponse, responseOfLeadContactDetailsById);
+  const MergedLeadData = mergedLeadDetailsData(
+    responseOfLeadEnquiryDetailsById,
+    responseOfLeadAddressById,
+    responseofLeadAdditionalInfo,
+    responseOfLeadAcademicDetailsById,
+    srmusetOptionDetails,
+    getPsEmplIdResponse,
+    responseOfLeadContactDetailsById
+  );
 
   const { userDetails } = useSelector(
     (state: RootState) => state.getLoggedInUserData
   );
-  
-  const isDocumentReviewer = userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") || userDetails?.authority?.includes("ROLE_DOCUMENT_ADMIN");
 
+  const isDocumentReviewer =
+    userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") ||
+    userDetails?.authority?.includes("ROLE_DOCUMENT_ADMIN");
+  
 
   useEffect(() => {
     if (isDocumentReviewer) {
-      setActiveTab(6)
+      setActiveTab(6);
     }
-  }, [isDocumentReviewer])
+  }, [isDocumentReviewer]);
+
   return (
     <>
       <div className="border-b border-gray-200 bg-white text-sm  ">
@@ -186,30 +219,40 @@ const RightView: React.FC = () => {
           <ul className="flex space-x-4 text-gray-500 overflow-x-auto remove_scroll_bar overflow-y-hidden">
             {tabs.map((tab, i) => {
               if (isDocumentReviewer && tab.label !== "Student's Documents") {
-                return null
+                return null;
               }
 
               return (
                 <li
                   key={tab.id}
-                  className={`cursor-pointer relative text-nowrap block text-[13px]  py-2 font-semibold ${activeTab === i ? "active" : ""}`}
+                  className={`cursor-pointer relative text-nowrap block text-[13px]  py-2 font-semibold ${
+                    activeTab === i ? "active" : ""
+                  }`}
                   onClick={() => {
                     setActiveTab(i);
                     dispatch(resetLeadNotesDetailsDataById());
                   }}
                 >
-                  {displayOfferAnalysis || tab.label !== "Offer Analysis" ? tab.label : ""}
+                  {displayOfferAnalysis || tab.label !== "Offer Analysis"
+                    ? tab.label
+                    : ""}
                 </li>
-              )
+              );
             })}
           </ul>
 
           {activeTab !== 6 && (
             <div className="flex space-x-2 ml-auto">
               {/* <i className="fas fa-cog text-gray-500"></i> */}
-              {activeTab === 1 && <button type="button" className="border border-gray-300 px-2 py-1 rounded text-sm" onClick={handlePrintClick}>
-                Print Details
-              </button>}
+              {activeTab === 1 && (
+                <button
+                  type="button"
+                  className="border border-gray-300 px-2 py-1 rounded text-sm"
+                  onClick={handlePrintClick}
+                >
+                  Print Details
+                </button>
+              )}
               <button type="button" onClick={handleRefresh}>
                 <i className="fas fa-sync-alt text-gray-500"></i>
               </button>
@@ -223,7 +266,9 @@ const RightView: React.FC = () => {
           !isLoadingForAdditionalDetails &&
           !isLoadingForAcademicDetails &&
           responseOfLeadAddressById &&
-          responseofLeadAdditionalInfo && <PrintLeadDetails data={MergedLeadData} />}
+          responseofLeadAdditionalInfo && (
+            <PrintLeadDetails data={MergedLeadData} />
+          )}
       </div>
       {tabs[activeTab].content}
     </>
@@ -231,4 +276,3 @@ const RightView: React.FC = () => {
 };
 
 export default RightView;
-

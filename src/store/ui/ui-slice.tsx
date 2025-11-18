@@ -109,10 +109,10 @@ interface typeUI {
   failedCaseModal: boolean;
   discountAuditLeads: any;
   processedDiscountLead: any;
-  viewTicketId: string;
-  leadServiceTicketId: number;
   isModalOpenForIdCard: boolean;
   idCardData: IdCardData | null;
+  bulkWhatsappModal: boolean;
+  openAssignModalForAdmin: boolean;
 }
 
 const initialState: typeUI = {
@@ -240,10 +240,10 @@ const initialState: typeUI = {
   failedCaseModal: false,
   discountAuditLeads: [],
   processedDiscountLead: [],
-  viewTicketId: "",
-  leadServiceTicketId: 0,
   isModalOpenForIdCard: false,
   idCardData: null,
+  bulkWhatsappModal: false,
+  openAssignModalForAdmin: false,
 };
 
 const uiSlice = createSlice({
@@ -684,12 +684,6 @@ const uiSlice = createSlice({
     getLeadsForProcessedDiscount: (state, action) => {
       state.processedDiscountLead = action.payload;
     },
-    setViewTicketId: (state, action) => {
-      state.viewTicketId = action.payload;
-    },
-    setLeadServiceTicketId: (state, action) => {
-      state.leadServiceTicketId = action.payload;
-    },
     openModalForPrintIdCard: (state, action) => {
       state.isModalOpenForIdCard = true;
       state.idCardData = action.payload;
@@ -698,14 +692,28 @@ const uiSlice = createSlice({
       state.isModalOpenForIdCard = false;
       state.idCardData = null;
     },
+    openModalForBulkWhatsapp: (state) => {
+      state.bulkWhatsappModal = true;
+    },
+    closeModalForBulkWhatsapp: (state) => {
+      state.bulkWhatsappModal = false;
+    },
+    openAssignModalForAdmin: (state) => {
+      state.openAssignModalForAdmin = true;
+    },
+    closeAssignModalForAdmin: (state) => {
+      state.openAssignModalForAdmin = false;
+    },
   },
 });
 
 export const {
+  openAssignModalForAdmin,
+  closeAssignModalForAdmin,
+  openModalForBulkWhatsapp,
+  closeModalForBulkWhatsapp,
   openModalForPrintIdCard,
   closeModalForPrintIdCard,
-  setViewTicketId,
-  setLeadServiceTicketId,
   getLeadsForProcessedDiscount,
   getLeadsForDiscountAudit,
   openFailedCaseModalModal,

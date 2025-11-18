@@ -292,6 +292,12 @@ import { autocompleteReducer } from "../pagination-v1/get-autocomplete-lead-slic
 import { TicketLeadsByUsernameReducer } from "../manage-ticket/get-leadTicketData-slice";
 import { getMetriculatedLeadsReducer } from "../print-id-card/get-metriculated-lead-slice";
 import { getMetriculatedLeadDetailReducer } from "../print-id-card/get-metriculated-lead-byId-slice";
+import { reassignTicketReducer } from "../tickets/reassign-ticketSlice";
+import { sendBulkWhatsappByTemplateIdReducer } from "../whatsapp -messenger/send-bulk-whatsapp-slice";
+import { TicketLeadsByAdminReducer } from "../manage-ticket/get-TicketLeadsData-forAdmin-slice";
+import { serviceSubTypeReducer } from "../tickets/get-all-serviceSubType-slice";
+import { updateSolutionReducer } from "../tickets/update-solution-slice";
+import { getTicketFeedbackReducer } from "../tickets/get-ticket-feedback-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -695,13 +701,21 @@ const RootReducer = {
   giveSolution: giveSolutionReducer,
   getAllStatuses: statusReducer,
   downloadTicket: downloadTicketReducer,
+  reassignTicket: reassignTicketReducer,
+  getServiceSubType: serviceSubTypeReducer,
 
   ///////////manage ticket
   getLeadTicketData: TicketLeadsByUsernameReducer,
   getMetriculatedLeadDetailbyId: getMetriculatedLeadDetailReducer,
+  getTicketLeadsDataForAdmin: TicketLeadsByAdminReducer,
+  updateSolution: updateSolutionReducer,
+  getTicketFeedback: getTicketFeedbackReducer,
 
   //print id card
   getAllMetriculatedLeads: getMetriculatedLeadsReducer,
+
+  //bulkWhatsapp
+  sendBulkWhatsapp: sendBulkWhatsappByTemplateIdReducer,
 };
 
 export default RootReducer;

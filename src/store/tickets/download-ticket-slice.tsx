@@ -47,7 +47,7 @@ export const downloadTicketDoc = createAsyncThunk<any, DownloadTicketPayload>("d
       }),
       {
         loading: "Downloading ticket...",
-        success: "Ticket downloaded successfully.",
+        success: "Attachment downloaded successfully.",
         error: "Error occurred while downloading the ticket.",
       }
     );

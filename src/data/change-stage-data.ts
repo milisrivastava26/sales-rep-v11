@@ -8,3 +8,9 @@ export const changeStageData = {
     cancelButton: "Cancel",
     saveButton: "Save",
   };
+
+  export const bulkWhatsappData = {
+    title: "Send Bulk Whatsapp Messages",
+    cancelButton: "Cancel",
+    saveButton: "Save",
+  };

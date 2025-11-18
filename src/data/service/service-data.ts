@@ -1,133 +1,129 @@
 import * as Yup from "yup";
-import { FieldConfig } from "../../component/manage-leads/leads-details/services/ServiceManagementForm";
-import { getAllServiceTypes } from "../../store/tickets/get-all-serviceType-slice";
-import { getAllDepartments } from "../../store/tickets/get-all-department-slice";
-import { getAllPriorities } from "../../store/tickets/get-all-priority-slice";
-import { getAllAssignees } from "../../store/tickets/get-all-assignees-slice";
+import { FieldConfig } from "../../component/manage-ticket/ticketResolver/ServiceManagementForm";
 import { getAllStatuses } from "../../store/tickets/get-all-status-slice";
+import { getAllServiceTypes } from "../../store/tickets/get-all-serviceType-slice";
 
-export const initialValuesForService = {
-  serviceType: "",
-  department: "",
-  subject: "",
-  description: "",
-  priority: "",
-  attachment: null,
-  assignee: "",
+export const getFormInputsForTicketResolution = (): FieldConfig[] => {
+  const baseFields: FieldConfig[] = [
+    {
+      name: "status",
+      label: "Status",
+      type: "select",
+      fetchThunk: getAllStatuses,
+    },
+    {
+      name: "description",
+      label: "Resolution Description",
+      type: "textarea",
+      placeholder: "Describe your query here...",
+      colSpan: 2,
+    },
+    {
+      name: "attachments",
+      label: "Attachments",
+      type: "file",
+      isMultiple: true,
+    },
+  ];
+  return baseFields;
 };
 
-export const validationSchemaForService = Yup.object({
-  serviceType: Yup.string().required("Service type is required"),
-  department: Yup.string().required("Department is required"),
-  subject: Yup.string().required("Subject is required"),
-  description: Yup.string().required("Description is required"),
-  priority: Yup.string().required("Priority is required"),
-  attachment: Yup.mixed().nullable(),
-  assignee: Yup.string().required("Assignee is required"),
-});
+export const getInitialValuesForTicketResolution = () => {
+  const baseValues = {
+    status: "",
+    description: "",
+    attachments: [],
+  };
 
-export const formInputsForService: FieldConfig[] = [
+  return baseValues;
+};
+
+export const getValidationSchemaForTicketResolution = () => {
+  const baseSchema = {
+    status: Yup.string().required("Status is required"),
+    description: Yup.string().required("Description is required"),
+    // attachments: Yup.array()
+    //   .of(Yup.mixed().required("File is required"))
+    //   .min(1, "At least one file is required"),
+  };
+
+  return Yup.object(baseSchema);
+};
+
+interface ResolutionValues {
+  description: string;
+  attachments: File | null;
+  status: number | string;
+}
+
+export const buildResolutionFormData = (
+  values: ResolutionValues,
+  leadServiceTicketId: any,
+  userName: string
+): FormData => {
+  const formData = new FormData();
+
+  // Build the resolutionData object
+  const resolutionData = {
+    leadServiceTicketId,
+    status: values.status,
+    resolutionDescription: values.description,
+    assignee: userName,
+    serviceTicketId: leadServiceTicketId,
+  };
+
+  // Append JSON as string
+  formData.append("resolutionData", JSON.stringify(resolutionData));
+
+  // Append files if present
+  if (Array.isArray(values.attachments) && values.attachments.length > 0) {
+    values.attachments.forEach((file: File) => {
+      formData.append("files", file); // backend should expect 'files' as array
+    });
+  }
+
+  return formData;
+};
+
+export const buildResolutionUpdateFormData = (
+  values: ResolutionValues,
+  leadCaptureId: any,
+  resolutionId: any
+): FormData => {
+  const formData = new FormData();
+
+  // Build the resolutionData object
+  const resolutionData = {
+    status: values.status,
+    description: values.description,
+    leadCaptureId,
+    ticketResolutionId: resolutionId,
+  };
+
+  // Append JSON as string
+  formData.append("resolutionData", JSON.stringify(resolutionData));
+
+  // Append files if present
+  if (Array.isArray(values.attachments) && values.attachments.length > 0) {
+    values.attachments.forEach((file: File) => {
+      formData.append("files", file); // backend should expect 'files' as array
+    });
+  }
+
+  return formData;
+};
+
+export const filterInputDataForManageTicket = [
   {
-    name: "serviceType",
+    name: "typeId",
     label: "Service Type",
     type: "select",
     fetchThunk: getAllServiceTypes,
   },
   {
-    name: "department",
-    label: "Related Department",
+    name: "subTypeId",
+    label: "Service Sub Type",
     type: "select",
-    fetchThunk: getAllDepartments,
-  },
-  {
-    name: "subject",
-    label: "Subject",
-    type: "text",
-    placeholder: "Enter Subject",
-    colSpan: 2,
-  },
-  {
-    name: "description",
-    label: "Query Description",
-    type: "textarea",
-    placeholder: "Describe your query here...",
-    colSpan: 2,
-  },
-  {
-    name: "priority",
-    label: "Priority",
-    type: "select",
-    fetchThunk: getAllPriorities,
-  },
-  {
-    name: "attachment",
-    label: "Attachments",
-    type: "file",
-  },
-  {
-    name: "assignee",
-    label: "Assignee",
-    type: "select",
-    fetchThunk: getAllAssignees,
-  },
-];
-
-interface ApiTicketData {
-  leadServiceTicketId: number;
-  leadCaptureId: number;
-  sericeTypeId: number | null;
-  serviceTypeName: string;
-  servicePriorityId: number | null;
-  servicePriorityName: string;
-  serviceDepartmentId: number | null;
-  serviceDepartmentName: string;
-  ticketNumber: string;
-  title: string;
-  description: string;
-  attachmentPath: string | null;
-  attachmentName: string | null;
-  status: string;
-  assigneeId: number | null;
-  assignee: string;
-  createdAt: string;
-}
-
-interface FormInitialValues {
-  serviceType: string | number;
-  department: string | number;
-  subject: string;
-  description: string;
-  priority: string | number;
-  attachment: File | null;
-  assignee: string | number;
-}
-
-export const transformTicketDataToInitialValues = (apiData: ApiTicketData): FormInitialValues => {
-  return {
-    serviceType: apiData.sericeTypeId ?? "", // use ID if exists, else empty string
-    department: apiData.serviceDepartmentId ?? "",
-    subject: apiData.title || "",
-    description: apiData.description || "",
-    priority: apiData.servicePriorityId ?? "",
-    attachment: apiData.attachmentName
-      ? new File([], apiData.attachmentName) // placeholder File, real upload file needs user selection
-      : null,
-    assignee: apiData.assigneeId ?? "", // use ID if exists, else empty string
-  };
-};
-
-export const formInputsForTicketResolution: FieldConfig[] = [
-  {
-    name: "description",
-    label: "Resolution Description",
-    type: "textarea",
-    placeholder: "Describe your query here...",
-    colSpan: 2,
-  },
-  {
-    name: "attachment",
-    label: "Attachments",
-    type: "file",
   },
   {
     name: "status",
@@ -135,44 +131,104 @@ export const formInputsForTicketResolution: FieldConfig[] = [
     type: "select",
     fetchThunk: getAllStatuses,
   },
+  {
+    name: "isAssigned",
+    label: "Assignee Status",
+    type: "select",
+  },
+  {
+    name: "fromDate",
+    label: "From Date",
+    type: "date",
+  },
+  {
+    name: "toDate",
+    label: "To Date",
+    type: "date",
+  },
 ];
 
-export const initialValuesForTicketResolution = {
-  description: "",
-  attachment: null,
-  status: "",
+export const initialFilterDataForManageTicket = {
+  typeId: null,
+  subTypeId: null,
+  status: null,
+  isAssigned: null,
+  fromDate: null,
+  toDate: null,
 };
 
-export const validationSchemaForTicketResolution = Yup.object({
-  description: Yup.string().required("Description is required"),
-  attachment: Yup.mixed().nullable(),
-  status: Yup.string().required("Status is required"),
+export const reassignForInput: FieldConfig[] = [
+  {
+    name: "serviceType",
+    label: "Service Type",
+    type: "select",
+    fetchThunk: getAllServiceTypes,
+  },
+  {
+    name: "serviceSubType",
+    label: "Service Sub Type",
+    type: "select",
+  },
+  {
+    name: "departments",
+    label: "Department",
+    type: "multi-select",
+  },
+  {
+    name: "remark",
+    label: "Remark",
+    type: "textarea",
+    placeholder: "Describe your query here...",
+    colSpan: 2,
+  },
+];
+
+// export const initialReassignData = {
+//   serviceType: null,
+//   serviceSubType: null,
+//   departments: [],
+//   remark: "",
+// };
+
+export const getInitialValuesForReassign = (data: any = {}) => {
+  return {
+    serviceType: null,
+    serviceSubType: null,
+    departments: Array.isArray(data.serviceDepartment)
+      ? data.serviceDepartment.map((dept: any) => dept.departmentId)
+      : [],
+    remark: "",
+  };
+};
+
+
+export const validationSchemaForReassign = Yup.object({
+  serviceType: Yup.string().required("Service Type is required"),
+  serviceSubType: Yup.string().required("Service Sub Type is required"),
+  departments: Yup.array()
+    .min(1, "At least one assignee must be selected")
+    .required("Assignee is required"),
+  remark: Yup.string().required("Remark is required"),
 });
 
-interface ResolutionValues {
-  description: string;
-  attachment: File | null;
-  status: number | string;
-}
-
-export const buildResolutionFormData = (values: ResolutionValues, leadServiceTicketId: number): FormData => {
-  const formData = new FormData();
-
-  // Build the resolutionData object
-  const resolutionData = {
-    leadServiceTicketId,
-    status: values.status,
-    attachmentName: values.attachment ? values.attachment.name : "",
-    resolutionDescription: values.description,
-  };
-
-  // Append JSON as string
-  formData.append("resolutionData", JSON.stringify(resolutionData));
-
-  // Append file if present
-  if (values.attachment) {
-    formData.append("file", values.attachment);
-  }
-
-  return formData;
+export const customSelectStyles = {
+  control: (provided: any) => ({
+    ...provided,
+    minHeight: "34px", // ✅ reduced height
+    height: "34px",
+    fontSize: "14px",
+    padding: "0 2px",
+  }),
+  valueContainer: (provided: any) => ({
+    ...provided,
+    padding: "0 6px",
+  }),
+  indicatorsContainer: (provided: any) => ({
+    ...provided,
+    height: "34px",
+  }),
+  dropdownIndicator: (provided: any) => ({
+    ...provided,
+    padding: "2px",
+  }),
 };

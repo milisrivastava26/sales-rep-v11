@@ -10,7 +10,7 @@ import BulkChangeOwner from "../../genral/BulkChangeOwner";
 import QuickAddLeadForm from "../../genral/QuickAddLeadForm";
 import useClickOutside from "../../../../hooks/useClickOutside";
 import CustomModal from "../../../../util/custom/ui/CustomModal";
-import { changeStageData } from "../../../../data/change-stage-data";
+import { bulkWhatsappData, changeStageData } from "../../../../data/change-stage-data";
 import { exportLead } from "../../../../store/actions/export-lead-slice";
 import { bulkChangeOwnerData } from "../../../../data/bulk-changeOwner-data";
 import { resetResponseForImportLeads } from "../../../../store/actions/import-leads-slice";
@@ -23,9 +23,11 @@ import {
   onSetOpenModalForChangeStage,
   onShowModalForQuickAddLeadForm,
   onShowModalForTestAction,
+  openModalForBulkWhatsapp,
   uiSliceAction,
 } from "../../../../store/ui/ui-slice";
 import useLocalStorage from "../../../../hooks/useLocalStorage";
+import WhatsAppMessenger from "../../genral/WhatsappMessanger";
 
 interface SectionHeadPropsType {
   sectionHeadData: any;
@@ -53,6 +55,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
     isShowModalForTestAction,
     isShowModalForChangeStage,
     getAllCheckSelectedDataFormCustomTable,
+    bulkWhatsappModal
   } = useSelector((state: RootState) => state.ui);
 
   const [_, setSelectedLeads] = useLocalStorage("selectedLeadsForMerge", getAllCheckSelectedDataFormCustomTable);
@@ -63,6 +66,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
   const closeModal = () => dispatch(uiSliceAction.onDisableModalForQuickAddLeadForm());
   const closeSettingDataHandler = () => dispatch(uiSliceAction.onDisabledSettingData());
   const closeModalForLeadsImport = () => dispatch(uiSliceAction.onManageLeadsImportModal(false));
+  const closeBulkWhatsappModal = () => dispatch(uiSliceAction.closeModalForBulkWhatsapp());
   const { userDetails } = useSelector((state: RootState) => state.getLoggedInUserData);
 
   useClickOutside([settingRef, subDataRef], [closeSettingDataHandler, closeSubDataHandelr]);
@@ -147,7 +151,7 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
         </Tooltip>
       </div>
       <div className="flex gap-x-2 items-center">
-        <div className="select-container w-[150px]">
+        <div className="select-container w-[200px]">
           <div>
             <button
               onClick={handleToggleDropdown}
@@ -198,7 +202,11 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
                                   return; // Stop execution
                                 }
                                 store.dispatch(exportLead(getAllCheckSelectedDataFormCustomTable));
-                              } else if (item.id === 7) {
+                              }
+                              else if (item.id === 10) {
+                                dispatch(openModalForBulkWhatsapp());
+                              }
+                               else if (item.id === 7) {
                                 dispatch(onSetOpenModalForChangeStage());
                               }
                             }}
@@ -313,6 +321,12 @@ const SectionHead: React.FC<SectionHeadPropsType> = ({ sectionHeadData }) => {
       {isShowModalForChangeStage && (
         <CustomModal isMode="testAction" isShowModal={isShowModalForChangeStage} onHideModal={closeModalForChangeStage} data={changeStageData}>
           <ChangeStage onHideModal={closeModalForChangeStage} isMode="bulkUpdate" />
+        </CustomModal>
+      )}
+
+      {bulkWhatsappModal && (
+        <CustomModal isMode="testAction" isShowModal={bulkWhatsappModal} onHideModal={closeBulkWhatsappModal} data={bulkWhatsappData}>
+          <WhatsAppMessenger isMode="bulkUpdate" data={getAllCheckSelectedDataFormCustomTable}/>
         </CustomModal>
       )}
       

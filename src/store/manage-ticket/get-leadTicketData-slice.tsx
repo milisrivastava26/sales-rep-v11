@@ -19,8 +19,15 @@ const initialState: TicketLeadsByUsernameState = {
 };
 
 // Thunk
-export const getTicketLeadsDataByUsername = createAsyncThunk<any, any, { rejectValue: string }>("tickets/getByUsername", async (userName, { rejectWithValue }) => {
-  const response = coreLeadCaptureApi.get(`api/crm/lead/service-tickets/findByAssignee/${userName}`);
+export const getTicketLeadsDataByUsername = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: string }
+>("tickets/getByUsername", async (payload, { rejectWithValue }) => {
+  const response = coreLeadCaptureApi.post(
+    `api/crm/lead/service-tickets/findByAssignee`,
+    payload
+  );
 
   try {
     const res = await response;
@@ -56,12 +63,14 @@ const ticketLeadsByUsernameSlice = createSlice({
       })
       .addCase(getTicketLeadsDataByUsername.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = action.payload || "Error occurred while fetching ticket leads";
+        state.isError =
+          action.payload || "Error occurred while fetching ticket leads";
       });
   },
 });
 
-export const { resetTicketLeadsResponse, takeActionForTicketLeads } = ticketLeadsByUsernameSlice.actions;
+export const { resetTicketLeadsResponse, takeActionForTicketLeads } =
+  ticketLeadsByUsernameSlice.actions;
 
 export const TicketLeadsByUsernameReducer = ticketLeadsByUsernameSlice.reducer;
 

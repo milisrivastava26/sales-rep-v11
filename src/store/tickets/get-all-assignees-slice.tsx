@@ -14,9 +14,9 @@ const initialState: AssigneeState = {
 };
 
 // Async thunk to get all assignees
-export const getAllAssignees = createAsyncThunk<any>("tickets/getAllAssignees", async (_, { rejectWithValue }) => {
+export const getAllAssignees = createAsyncThunk<any, any>("tickets/getAllAssignees", async (departmentId, { rejectWithValue }) => {
   try {
-    const response = await coreservicesApi.get(`api/crm/core/core-service-ticket/assignees`);
+    const response = await coreservicesApi.get(`api/crm/core/core-service-ticket/assignees/${departmentId}`);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data.message || "Failed to fetch assignees.");

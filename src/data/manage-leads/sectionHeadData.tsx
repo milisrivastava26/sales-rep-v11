@@ -1,6 +1,6 @@
 import { BsGraphUpArrow } from "react-icons/bs";
 import { FaUserEdit } from "react-icons/fa";
-import { FaUserPlus } from "react-icons/fa6";
+import { FaUserPlus, FaWhatsapp } from "react-icons/fa6";
 import { RiExportFill, RiImportFill, RiSearchLine } from "react-icons/ri";
 import { TiFlowMerge } from "react-icons/ti";
 
@@ -32,7 +32,7 @@ export const sectionHeadData = [
             id: 2,
             icon: <RiImportFill />,
             name: "Imported Leads",
-            path: "/manage-leads-v1/imported-leads"
+            path: "/manage-leads-v1/imported-leads",
           },
         ],
       },
@@ -57,13 +57,19 @@ export const sectionHeadData = [
         id: 8,
         icon: <RiSearchLine />,
         name: "Advance Search",
-        path: "/manage-leads-v1/advance-search"
+        path: "/manage-leads-v1/advance-search",
       },
       {
         id: 9,
-        icon: <TiFlowMerge className="rotate-90 text-lg"/>,
+        icon: <TiFlowMerge className="rotate-90 text-lg" />,
         name: "Merge Leads",
-        path: "/manage-leads-v1/merge-leads"
+        path: "/manage-leads-v1/merge-leads",
+      },
+
+      {
+        id: 10,
+        icon: <FaWhatsapp className="text-lg" />,
+        name: "Bulk Send Whatsapp",
       },
     ],
 

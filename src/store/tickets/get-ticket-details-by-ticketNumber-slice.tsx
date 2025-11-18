@@ -14,7 +14,7 @@ const initialState: TicketDetailsState = {
 };
 
 // Async thunk to get ticket details by ticket number
-export const getTicketDetailsByTicketNumber = createAsyncThunk<any, string>("tickets/getTicketDetailsByTicketNumber", async (ticketNumber, { rejectWithValue }) => {
+export const getTicketDetailsByTicketNumber = createAsyncThunk<any, string | null>("tickets/getTicketDetailsByTicketNumber", async (ticketNumber, { rejectWithValue }) => {
   try {
     const response = await coreLeadCaptureApi.get(`api/crm/lead/service-tickets/findByTicketNumber/${ticketNumber}`);
     return response.data;
