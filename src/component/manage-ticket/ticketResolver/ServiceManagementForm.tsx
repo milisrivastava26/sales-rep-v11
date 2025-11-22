@@ -37,8 +37,6 @@ interface ServiceFormProps {
     formikHelpers: FormikHelpers<Record<string, any>>
   ) => void | Promise<any>;
   isMode: string;
-  setResolutionData?: (data: any) => void;
-  setEditEnabled?: (enabled: boolean) => void;
 }
 
 const ServiceManagementForm: React.FC<ServiceFormProps> = ({
@@ -47,8 +45,6 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
   formInputs,
   onSubmit,
   isMode,
-  setResolutionData,
-  setEditEnabled,
 }) => {
 
   const dispatch = useDispatch<AppDispatch>();
@@ -83,6 +79,8 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
     (state: RootState) => state.updateSolution
   );
 
+  const {isLoading: isLoadingForAssignToOtherDepartment} = useSelector((state:RootState) => state.assignTicketToOtherDepartment);
+
   const handleDownload = (attachmentName: string) => {
     store.dispatch(
       downloadTicketDoc({
@@ -94,12 +92,7 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
   };
 
   const handleCancel = () => {
-    if (isMode === "update") {
-      navigate(-1);
-    } else {
-      setResolutionData && setResolutionData(null);
-      setEditEnabled && setEditEnabled(false);
-    }
+    navigate(-1);
   };
 
   const getOptionsFromStore = (fieldName: string) => {
@@ -346,13 +339,15 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
                   isLoading ||
                   isLoadingForSolution ||
                   isLoadingForReassign ||
-                  isLoadingForUpdateSolution
+                  isLoadingForUpdateSolution||
+                  isLoadingForAssignToOtherDepartment
                 }
                 className={`${
                   isLoading ||
                   isLoadingForSolution ||
                   isLoadingForReassign ||
-                  isLoadingForUpdateSolution
+                  isLoadingForUpdateSolution ||
+                  isLoadingForAssignToOtherDepartment
                     ? "bg-opacity-50"
                     : ""
                 } px-4 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700`}

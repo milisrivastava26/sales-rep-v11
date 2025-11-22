@@ -298,6 +298,7 @@ import { TicketLeadsByAdminReducer } from "../manage-ticket/get-TicketLeadsData-
 import { serviceSubTypeReducer } from "../tickets/get-all-serviceSubType-slice";
 import { updateSolutionReducer } from "../tickets/update-solution-slice";
 import { getTicketFeedbackReducer } from "../tickets/get-ticket-feedback-slice";
+import { assignTicketToDepartmentReducer } from "../tickets/assign-ticket-to-other-department-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -703,6 +704,7 @@ const RootReducer = {
   downloadTicket: downloadTicketReducer,
   reassignTicket: reassignTicketReducer,
   getServiceSubType: serviceSubTypeReducer,
+  assignTicketToOtherDepartment: assignTicketToDepartmentReducer,
 
   ///////////manage ticket
   getLeadTicketData: TicketLeadsByUsernameReducer,

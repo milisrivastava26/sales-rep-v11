@@ -16,16 +16,19 @@ import {
   resetReassignTicket,
 } from "../../../store/tickets/reassign-ticketSlice";
 import { useNavigate } from "react-router-dom";
-import { getAllDepartments } from "../../../store/tickets/get-all-department-slice";
 import { getAllServiceTypes } from "../../../store/tickets/get-all-serviceType-slice";
 import { getServiceSubTypeById } from "../../../store/tickets/get-all-serviceSubType-slice";
-import { FaEdit } from "react-icons/fa";
 import { MdFeedback } from "react-icons/md";
 import { getTicketFeedback } from "../../../store/tickets/get-ticket-feedback-slice";
+import { assignTicketToDepartment, resetAssignTicketToDepartment } from "../../../store/tickets/assign-ticket-to-other-department-slice";
+import { getAssignee, getDepartment } from "../../../util/actions/getTicketDepartment";
 
 const AssignTicket: React.FC = () => {
   const { ticket, isLoading } = useSelector(
     (state: RootState) => state.getTicketDetailsByNumber
+  );
+  const { departments } = useSelector(
+    (state: RootState) => state.getAllDepartment
   );
 
   const [isServiceTypeAssigned, setIsServiceTypeAssigned] =
@@ -38,20 +41,37 @@ const AssignTicket: React.FC = () => {
     remark: "",
   });
 
-  const [editEnabled, setEditEnabled] = React.useState(false);
+  const [isReassign, setIsReassign] = React.useState(false);
+
+  useEffect(() => {
+    if (ticket === null) {
+      setIsReassign(false);
+    }
+  }, [])
+
+  useEffect(() => {
+
+    if (ticket !== null) {
+      const isReassign = ticket.leadServiceTicketResolutionDTOS.some((item: any) => item.status === "Assign to other department");
+      if (isReassign) {
+        setIsReassign(isReassign);
+        handleInitialValues();
+      }
+    }
+
+  }, [ticket])
 
   const handleInitialValues = () => {
     if (ticket) {
-      setEditEnabled(true);
       setInitialValues({
         serviceType: ticket.serviceTypeId || "",
         serviceSubType: ticket.serviceSubTypeId || "",
         departments:
           ticket.serviceDepartment.map((dept: any) => dept.departmentId) || [],
-        remark: ticket.remark || "",
+        remark: "",
       });
 
-      store.dispatch(getAllDepartments());
+      // store.dispatch(getAllDepartments());
       store.dispatch(getAllServiceTypes());
       store.dispatch(getServiceSubTypeById(ticket.serviceTypeId));
     }
@@ -67,32 +87,57 @@ const AssignTicket: React.FC = () => {
   const { isLoading: isLoadingForReassign, reassignment } = useSelector(
     (state: RootState) => state.reassignTicket
   );
-  const { feedback, isLoading:feedbackLoading } = useSelector(
+  const { feedback, isLoading: feedbackLoading } = useSelector(
     (state: RootState) => state.getTicketFeedback
   );
+  const { isLoading: isLoadingForAssignToOtherDepartment, assignment } = useSelector((state: RootState) => state.assignTicketToOtherDepartment);
+
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoadingForReassign && reassignment !== null) {
+    if ((!isLoadingForReassign && reassignment !== null) || (!isLoadingForAssignToOtherDepartment && assignment !== "")) {
       navigate("/manage-ticket");
+      store.dispatch(resetAssignTicketToDepartment());
       store.dispatch(resetReassignTicket());
     }
-  }, [reassignment]);
+  }, [reassignment, assignment]);
 
   const handleSubmit = (values: any) => {
-    const payload = {
-      leadServiceTicketId: ticket.leadServiceTicketId,
-      serviceSubTypeId: values.serviceSubType,
-      serviceTypeId: values.serviceType,
-      remark: values.remark,
-      serviceDepartment: values.departments.map((dept: any) => {
-        // Handle both number and object formats safely
-        return { departmentId: typeof dept === "object" ? dept.value : dept };
-      }),
-    };
 
-    store.dispatch(reassignTicket(payload));
+    if (isReassign) {
+      const assigneeIds = ticket.leadServiceTicketResolutionDTOS
+        .filter((item: any) => item.status === "Assign to other department")
+        .map((item: any) => item.assigneeId);
+
+      const payload = {
+        ticketId: ticket.leadServiceTicketId,
+        serviceSubTypeId: values.serviceSubType,
+        serviceTypeId: values.serviceType,
+        departmentId: values.departments,
+        assigneeId: assigneeIds,
+        resolutionDescription
+        : values.remark,
+      };
+      store.dispatch(assignTicketToDepartment(payload));
+    }
+    else {
+      const deptId = values.departments.map((dept: any) => {
+        // Handle both number and object formats safely
+        return { departmentId: typeof dept === "object" ? dept.value : dept }
+      });
+
+      const payload = {
+        leadServiceTicketId: ticket.leadServiceTicketId,
+        serviceSubTypeId: values.serviceSubType,
+        serviceTypeId: values.serviceType,
+        remark: values.remark,
+        serviceDepartment: deptId,
+      };
+      store.dispatch(reassignTicket(payload));
+    }
+
+
   };
 
   const handleSolutionDownload = (attachmentName: string) => {
@@ -238,11 +283,7 @@ const AssignTicket: React.FC = () => {
               <HiUserAdd className="text-2xl text-blue-600" /> Current Assignment Details
             </h3>
 
-            {feedback && feedback.isSatisfied === false && (
-              <button onClick={handleInitialValues}>
-                <FaEdit className="text-xl text-blue-600 hover:text-blue-700" />
-              </button>
-            )}
+
           </div>
 
           {/* Parent Grid → 3 Equal Columns */}
@@ -265,7 +306,7 @@ const AssignTicket: React.FC = () => {
                       </p>
 
                       <p className="text-sm mt-1">
-                        <span className="font-semibold">Assignee:</span> {ticket.assigneeNames[index]}
+                        <span className="font-semibold">Assignee:</span> {getAssignee(item.departmentName, departments)}
                       </p>
                     </div>
                   ))
@@ -326,9 +367,9 @@ const AssignTicket: React.FC = () => {
                             </span>
                           </div>
                           <div>
-                            <span className="text-gray-600">Department </span>
+                            <span className="text-gray-600">{item.status==="Reassigned" ? "Transferred to" : "Department"} </span>
                             <span className="text-blue-600">
-                              {item.departmentName}
+                              {getDepartment(item.assigneeId, departments)}
                             </span>
                           </div>
                         </>
@@ -447,7 +488,7 @@ const AssignTicket: React.FC = () => {
 
               {feedback.remark ? (
                 <p className="mt-2 text-gray-800 text-sm leading-relaxed bg-white border border-gray-100 rounded-lg px-4 py-2 shadow-sm">
-                  {feedback?.remark }
+                  {feedback?.remark}
                 </p>
               ) : (
                 <p className="mt-2 text-gray-500 italic text-sm">
@@ -460,7 +501,7 @@ const AssignTicket: React.FC = () => {
       )}
 
       {/* --- Reassign Ticket Section --- */}
-      {(!isServiceTypeAssigned || editEnabled) && (
+      {(!isServiceTypeAssigned || isReassign) && (
         <div className="bg-gray-50 border border-gray-100 rounded-lg p-5 shadow-sm">
           <h3 className="text-lg flex items-center gap-2 font-semibold text-gray-800 mb-4">
             <HiUserAdd className="text-2xl text-blue-600" /> Reassign Ticket
@@ -473,7 +514,6 @@ const AssignTicket: React.FC = () => {
             validationSchema={validationSchemaForReassign}
             isMode="admin"
             onSubmit={handleSubmit}
-            setEditEnabled={setEditEnabled}
           />
         </div>
       )}

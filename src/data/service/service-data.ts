@@ -183,12 +183,25 @@ export const reassignForInput: FieldConfig[] = [
   },
 ];
 
-// export const initialReassignData = {
-//   serviceType: null,
-//   serviceSubType: null,
-//   departments: [],
-//   remark: "",
-// };
+export const assignToOtherDeptFormInput: FieldConfig[] = [
+  {
+    name: "serviceType",
+    label: "Service Type",
+    type: "select",
+    fetchThunk: getAllServiceTypes,
+  },
+  {
+    name: "serviceSubType",
+    label: "Service Sub Type",
+    type: "select",
+  },
+  {
+    name: "departments",
+    label: "Department",
+    type: "multi-select",
+  },
+];
+
 
 export const getInitialValuesForReassign = (data: any = {}) => {
   return {
@@ -209,6 +222,14 @@ export const validationSchemaForReassign = Yup.object({
     .min(1, "At least one assignee must be selected")
     .required("Assignee is required"),
   remark: Yup.string().required("Remark is required"),
+});
+
+export const validationSchemaForAssignToOtherDept = Yup.object({
+  serviceType: Yup.string().required("Service Type is required"),
+  serviceSubType: Yup.string().required("Service Sub Type is required"),
+  departments: Yup.array()
+    .min(1, "At least one assignee must be selected")
+    .required("Assignee is required"),
 });
 
 export const customSelectStyles = {

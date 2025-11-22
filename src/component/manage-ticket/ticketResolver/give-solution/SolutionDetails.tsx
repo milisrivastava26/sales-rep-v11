@@ -23,6 +23,7 @@ import {
   updateSolution,
 } from "../../../../store/tickets/update-solution-slice";
 import { getTicketDetailsByTicketNumber } from "../../../../store/tickets/get-ticket-details-by-ticketNumber-slice";
+import { getDepartment } from "../../../../util/actions/getTicketDepartment";
 
 interface InfoRowProps {
   label: string;
@@ -70,6 +71,9 @@ const SolutionDetails: React.FC = () => {
   const { userDetails } = useSelector(
     (state: RootState) => state.getLoggedInUserData
   );
+    const { departments } = useSelector(
+      (state: RootState) => state.getAllDepartment
+    );
 
   const [resolutionData, setResolutionData] = useState<{
     id: string;
@@ -222,18 +226,8 @@ const SolutionDetails: React.FC = () => {
           <InfoRow label="Service Sub Type" value={ticket.serviceSubTypeName} />
           <InfoRow label="Service Type" value={ticket.serviceTypeName} />
           <InfoRow label="Department" value={ticket.serviceDepartment} />
-        </div>
-
-        {/* Subject & Description */}
-        <div className="mt-5 space-y-2 text-sm">
-          <p>
-            <span className="font-semibold text-gray-900">Subject:</span>{" "}
-            {ticket.title}
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            <span className="font-semibold text-gray-900">Description:</span>{" "}
-            {ticket.description}
-          </p>
+          <InfoRow label="Title" value={ticket.title} />
+          <InfoRow label="Description" value={ticket.description} />
         </div>
 
         {/* Attachments */}
@@ -258,6 +252,15 @@ const SolutionDetails: React.FC = () => {
           ) : (
             <p className="text-gray-500 text-xs">No attachments</p>
           )}
+        </div>
+
+
+      </div>
+
+      <div>
+        <div className="bg-blue-50 rounded-lg p-3">
+          <p className="font-medium text-gray-600">Admin's Remark:</p>
+          <p className="text-gray-900 mt-1">{ticket.remark || "N/A"}</p>
         </div>
       </div>
 
@@ -293,9 +296,10 @@ const SolutionDetails: React.FC = () => {
                               </span>
                             </div>
                             <div>
-                              <span className="text-gray-600">Department </span>
+                              <span className="text-gray-600">{item.status === "Reassigned" ? "Transferred to" : "Department"} </span>
+
                               <span className="text-blue-600">
-                                {item.departmentName}
+                                {getDepartment(item.assigneeId, departments)}
                               </span>
                             </div>
                           </>
@@ -313,7 +317,7 @@ const SolutionDetails: React.FC = () => {
                     {/* Only allow edit for the same resolver */}
                     {(
                       userDetails.email?.toLowerCase() ===
-                      item.updatedBy?.toLowerCase() && item.status !== "Closed") && (
+                      item.updatedBy?.toLowerCase() && item.status !== "Closed") && item.status !== "Assign to other department" && (
                         <button
                           onClick={() =>
                             setResolutionData({
@@ -393,7 +397,6 @@ const SolutionDetails: React.FC = () => {
             validationSchema={getValidationSchemaForTicketResolution()}
             isMode="solutionCreate"
             onSubmit={(values: any) => handleSubmit(values)}
-            setResolutionData={setResolutionData}
           />
         </div>
       ) : (
