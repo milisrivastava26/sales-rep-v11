@@ -5,6 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import useClickOutside from "../../hooks/useClickOutside";
 import useForLocation from "../../hooks/useForLocation";
 import extractFirstName from "../../util/actions/extractFirstName";
+// import img from "../../assets/SrdtLogo.png";
 
 import {
   onDashboardCloseHandler,
@@ -74,7 +75,7 @@ const DesktopView: React.FC<Props> = ({ leadsItems, profileItems }) => {
   return (
     <header ref={desktopRef} className="__header_gradient px-3 sm:px-6 flex justify-between items-center">
       <Link to="/" onClick={() => dispatch(onLeadsCloseHandler(), onDashboardCloseHandler(), onProfileCloseHandler())}>
-        <img src="/logo.png" alt="Company Logo" className="h-16" />
+        <img src="/logo.png" alt="Company Logo" className="h-14" />
       </Link>
 
       <div className="flex gap-x-7 items-center">
