@@ -113,6 +113,7 @@ interface typeUI {
   idCardData: IdCardData | null;
   bulkWhatsappModal: boolean;
   openAssignModalForAdmin: boolean;
+  ticketNumber: string;
 }
 
 const initialState: typeUI = {
@@ -244,6 +245,7 @@ const initialState: typeUI = {
   idCardData: null,
   bulkWhatsappModal: false,
   openAssignModalForAdmin: false,
+  ticketNumber: "",
 };
 
 const uiSlice = createSlice({
@@ -704,10 +706,18 @@ const uiSlice = createSlice({
     closeAssignModalForAdmin: (state) => {
       state.openAssignModalForAdmin = false;
     },
+    setTicketNumber: (state, action) => {
+      state.ticketNumber = action.payload;
+    },
+    clearTicketNumber: (state) => {
+      state.ticketNumber = "";
+    }
   },
 });
 
 export const {
+  setTicketNumber,
+  clearTicketNumber,
   openAssignModalForAdmin,
   closeAssignModalForAdmin,
   openModalForBulkWhatsapp,

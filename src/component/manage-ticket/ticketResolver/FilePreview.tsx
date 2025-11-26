@@ -29,10 +29,20 @@ const FilePreview: React.FC<FilePreviewProps> = ({ files, onDelete, onAdd, disab
     <div>
       <div className="flex flex-wrap gap-4">
         {files.map((file, idx) => {
+          // SAFETY CHECK: skip invalid objects
+          if (!(file instanceof File)) {
+            console.warn("Invalid file in preview:", file);
+            return null;
+          }
+
           const url = URL.createObjectURL(file);
-          const isImage = file.type.startsWith("image/");
+          const isImage = file.type?.startsWith("image/");
+
           return (
-            <div key={idx} className="relative w-24 h-24 border rounded-md overflow-hidden flex flex-col items-center justify-center group bg-gray-50">
+            <div
+              key={idx}
+              className="relative w-24 h-24 border rounded-md overflow-hidden flex flex-col items-center justify-center group bg-gray-50"
+            >
               {isImage ? (
                 <img
                   src={url}
@@ -50,7 +60,6 @@ const FilePreview: React.FC<FilePreviewProps> = ({ files, onDelete, onAdd, disab
                 </div>
               )}
 
-              {/* Delete button */}
               {!disabled && (
                 <button
                   type="button"
@@ -65,13 +74,13 @@ const FilePreview: React.FC<FilePreviewProps> = ({ files, onDelete, onAdd, disab
                 </button>
               )}
 
-              {/* File name (truncate) */}
               <p className="absolute bottom-0 bg-black bg-opacity-50 text-white text-xs w-full text-center truncate px-1">
                 {file.name}
               </p>
             </div>
           );
         })}
+
 
         {/* Add new files input */}
         {!disabled && (

@@ -85,8 +85,8 @@ const RightView: React.FC = () => {
 
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
     ? responseOfLeadEnquiryDetailsById.filter(
-        (item: any) => item.status === "ACTIVE"
-      )
+      (item: any) => item.status === "ACTIVE"
+    )
     : [];
   const leadEnquiryId = activeEnquiry[0]?.leadEnquiryId;
   const careerId = activeEnquiry[0]?.academicCareerId;
@@ -200,7 +200,9 @@ const RightView: React.FC = () => {
   const isDocumentReviewer =
     userDetails?.authority?.includes("ROLE_DOCUMENT_REVIEWER") ||
     userDetails?.authority?.includes("ROLE_DOCUMENT_ADMIN");
-  
+
+  const isTicketCreator = userDetails?.authority?.includes("ROLE_TICKET_CREATOR");
+
 
   useEffect(() => {
     if (isDocumentReviewer) {
@@ -221,13 +223,15 @@ const RightView: React.FC = () => {
               if (isDocumentReviewer && tab.label !== "Student's Documents") {
                 return null;
               }
+              if(!isTicketCreator && tab.label === "Ticket") {
+                return null;
+              }
 
               return (
                 <li
                   key={tab.id}
-                  className={`cursor-pointer relative text-nowrap block text-[13px]  py-2 font-semibold ${
-                    activeTab === i ? "active" : ""
-                  }`}
+                  className={`cursor-pointer relative text-nowrap block text-[13px]  py-2 font-semibold ${activeTab === i ? "active" : ""
+                    }`}
                   onClick={() => {
                     setActiveTab(i);
                     dispatch(resetLeadNotesDetailsDataById());

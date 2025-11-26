@@ -49,7 +49,7 @@ const SearchV2: React.FC = () => {
   // ✅ Search API call
   const fetchSearchResults = (query: string) => {
     if (!query.trim()) return;
-    const role = userDetails?.authority?.includes("ROLE_ADMIN") ? "ROLE_ADMIN" : "ROLE_USER";
+    const role = userDetails?.authority?.includes("ROLE_ADMIN") ? "ROLE_ADMIN" : userDetails?.authority?.includes("ROLE_MANAGER") ? "ROLE_MANAGER" : "ROLE_USER";
 
     const payload = {
       salesrepname: fullName,

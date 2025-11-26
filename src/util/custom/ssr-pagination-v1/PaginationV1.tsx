@@ -24,8 +24,7 @@ const PaginationV1: React.FC = () => {
 
   const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newSize = parseInt(e.target.value);
-    const role = userDetails?.authority?.includes("ROLE_ADMIN") ? "ROLE_ADMIN" : "ROLE_USER";
-    setPageSize(newSize);
+    const role = userDetails?.authority?.includes("ROLE_ADMIN") ? "ROLE_ADMIN" : userDetails?.authority?.includes("ROLE_MANAGER") ? "ROLE_MANAGER" : "ROLE_USER"; setPageSize(newSize);
     setSize(newSize);
     setPage(0); // Reset to page 1 when size changes
     store.dispatch(setPaginatedProps({ pageNumber: 0, pageSize: newSize }));
@@ -45,8 +44,7 @@ const PaginationV1: React.FC = () => {
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     store.dispatch(setPaginatedProps({ pageNumber: newPage, pageSize: size }));
-    const role = userDetails?.authority?.includes("ROLE_ADMIN") ? "ROLE_ADMIN" : "ROLE_USER";
-    if (searchQuery !== "") {
+    const role = userDetails?.authority?.includes("ROLE_ADMIN") ? "ROLE_ADMIN" : userDetails?.authority?.includes("ROLE_MANAGER") ? "ROLE_MANAGER" : "ROLE_USER"; if (searchQuery !== "") {
       const payload = {
         salesrepName: fullName,
         query: searchQuery,

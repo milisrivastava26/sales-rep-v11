@@ -37,6 +37,7 @@ interface ServiceFormProps {
     formikHelpers: FormikHelpers<Record<string, any>>
   ) => void | Promise<any>;
   isMode: string;
+  setIsCreateTicket?: (e: any) => void;
 }
 
 const ServiceManagementForm: React.FC<ServiceFormProps> = ({
@@ -45,6 +46,7 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
   formInputs,
   onSubmit,
   isMode,
+  setIsCreateTicket
 }) => {
 
   const dispatch = useDispatch<AppDispatch>();
@@ -67,7 +69,6 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
   );
   const { statuses } = useSelector((state: RootState) => state.getAllStatuses);
   const { isLoading } = useSelector((state: RootState) => state.createTicket);
-  const ticketNumber = sessionStorage.getItem("ticketNumber");
   const { isLoading: isLoadingForSolution } = useSelector(
     (state: RootState) => state.giveSolution
   );
@@ -79,7 +80,7 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
     (state: RootState) => state.updateSolution
   );
 
-  const {isLoading: isLoadingForAssignToOtherDepartment} = useSelector((state:RootState) => state.assignTicketToOtherDepartment);
+  const { isLoading: isLoadingForAssignToOtherDepartment } = useSelector((state: RootState) => state.assignTicketToOtherDepartment);
 
   const handleDownload = (attachmentName: string) => {
     store.dispatch(
@@ -92,7 +93,11 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
   };
 
   const handleCancel = () => {
-    navigate(-1);
+    if (isMode !== "ticketCreator") {
+      navigate(-1);
+    } else {
+      setIsCreateTicket && setIsCreateTicket(false);
+    }
   };
 
   const getOptionsFromStore = (fieldName: string) => {
@@ -150,34 +155,13 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
 
   return (
     <div className=" px-6 pb-6 pt-3">
-      {/* Header */}
-      <div className="flex justify-between items-center pb-3 mb-2">
-        <div className="flex items-center gap-4 text-sm text-gray-500">
-          {isMode === "create" && (
-            <span>{new Date().toLocaleDateString()}</span>
-          )}
-          {isMode === "update" && (
-            <span className="font-semibold text-black bg-gray-300 px-2 py-2 rounded-lg">
-              Ticket No : {ticketNumber}
-            </span>
-          )}
-        </div>
-        {isMode === "update" && (
-          <button
-            onClick={() => sessionStorage.setItem("ticketNumber", "")}
-            className="px-4 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-          >
-            Back
-          </button>
-        )}
-      </div>
 
       {/* Form */}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         enableReinitialize
-        onSubmit={onSubmit || (() => {})}
+        onSubmit={onSubmit || (() => { })}
       >
         {({ setFieldValue, values }) => (
           <Form className="grid grid-cols-2 gap-6">
@@ -247,64 +231,51 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
                 ) : field.type === "file" && field.isMultiple ? (
                   <Field name={field.name}>
                     {() => (
-                      <div className="space-y-2 w-full">
-                        <FilePreview
-                          files={values[field.name] || []}
-                          onDelete={(index) => {
-                            const newFiles = [...(values[field.name] || [])];
-                            newFiles.splice(index, 1);
-                            setFieldValue(field.name, newFiles);
-                          }}
-                          onAdd={(newFiles) => {
-                            if (!newFiles) return;
-                            setFieldValue(field.name, [
-                              ...(values[field.name] || []),
-                              ...Array.from(newFiles),
-                            ]);
-                          }}
-                          disabled={isMode === "update"}
-                        />
+                      <div className="space-y-2">
+                        {/* 🔹 If in update mode, just show existing attachment names */}
+                        {isMode === "update" ? (
+                          <>
+                            {Array.isArray(values[field.name]) &&
+                              values[field.name].length > 0 ? (
+                              values[field.name].map(
+                                (fileName: string, index: number) => (
+                                  <p
+                                    key={index}
+                                    onClick={() => handleDownload(fileName)}
+                                    className="text-sm text-blue-600 hover:text-blue-700 underline cursor-pointer mb-1"
+                                  >
+                                    {fileName}
+                                  </p>
+                                )
+                              )
+                            ) : (
+                              <p className="text-gray-500 text-sm">
+                                No attachments
+                              </p>
+                            )}
+                          </>
+                        ) : (
+                          /* 🔹 Create mode — use FilePreview for uploads */
+                          <FilePreview
+                            files={values[field.name] || []}
+                            onDelete={(index) => {
+                              const newFiles = [...(values[field.name] || [])];
+                              newFiles.splice(index, 1);
+                              setFieldValue(field.name, newFiles);
+                            }}
+                            onAdd={(newFiles) => {
+                              if (!newFiles) return;
+                              setFieldValue(field.name, [
+                                ...(values[field.name] || []),
+                                ...Array.from(newFiles),
+                              ]);
+                            }}
+                            disabled={isMode === "update"}
+                          />
+                        )}
                       </div>
                     )}
                   </Field>
-                ) : field.type === "file" ? (
-                  <div>
-                    {initialValues.attachmentName && (
-                      <p className="text-sm text-gray-500 mb-1">
-                        Current File: {initialValues.attachmentName}
-                      </p>
-                    )}
-
-                    <input
-                      type="file"
-                      disabled={isMode === "update"}
-                      className="w-full mt-1 px-2 py-1.5 border rounded-md text-sm"
-                      onChange={(e) => {
-                        const file = e.currentTarget.files?.[0];
-                        if (file) {
-                          setFieldValue(field.name, file);
-                        }
-                      }}
-                    />
-
-                    {values[field.name] &&
-                      values[field.name] instanceof File && (
-                        <p
-                          onClick={() =>
-                            handleDownload(values[field.name].name)
-                          }
-                          className="text-sm cursor-pointer text-blue-600 hover:text-blue-700 underline mt-1"
-                        >
-                          Selected File: {values[field.name].name}
-                        </p>
-                      )}
-
-                    <ErrorMessage
-                      name={field.name}
-                      component="p"
-                      className="text-red-500 text-xs mt-1"
-                    />
-                  </div>
                 ) : (
                   <Field
                     type="text"
@@ -325,7 +296,7 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
 
             {/* Actions */}
 
-            <div className="col-span-2 flex justify-end gap-3">
+            {isMode !== "update" && <div className="col-span-2 flex justify-end gap-3">
               <button
                 type="reset"
                 onClick={handleCancel}
@@ -339,22 +310,21 @@ const ServiceManagementForm: React.FC<ServiceFormProps> = ({
                   isLoading ||
                   isLoadingForSolution ||
                   isLoadingForReassign ||
-                  isLoadingForUpdateSolution||
+                  isLoadingForUpdateSolution ||
                   isLoadingForAssignToOtherDepartment
                 }
-                className={`${
-                  isLoading ||
+                className={`${isLoading ||
                   isLoadingForSolution ||
                   isLoadingForReassign ||
                   isLoadingForUpdateSolution ||
                   isLoadingForAssignToOtherDepartment
-                    ? "bg-opacity-50"
-                    : ""
-                } px-4 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700`}
+                  ? "bg-opacity-50"
+                  : ""
+                  } px-4 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700`}
               >
                 Submit
               </button>
-            </div>
+            </div>}
           </Form>
         )}
       </Formik>
