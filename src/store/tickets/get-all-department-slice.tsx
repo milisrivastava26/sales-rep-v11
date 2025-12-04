@@ -22,6 +22,8 @@ export const getAllDepartments = createAsyncThunk<any>("tickets/getAllDepartment
   }
 });
 
+//dept slice
+
 const departmentSlice = createSlice({
   name: "tickets/departments",
   initialState,
