@@ -15,7 +15,7 @@ const initialState: DepartmentState = {
 
 export const getAllDepartments = createAsyncThunk<any>("tickets/getAllDepartments", async (_, { rejectWithValue }) => {
   try {
-    const response = await coreservicesApi.get(`api/crm/core/core-service-ticket/department/${false}`);
+    const response = await coreservicesApi.get(`api/crm/core/core-service-ticket/department/${true}`);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data.message || "Failed to fetch departments.");
