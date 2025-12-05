@@ -50,6 +50,7 @@ const OwnersSlice = createSlice({
         state.responseForOwner = action.payload.map((item: any) => ({
           value: item.salesrpDetailsId,
           label: item.fullName,
+          id: item.salesrpDetailsId,
         }));
         state.responseForfilter = action.payload.map((item: any) => ({
           value: item.fullName,

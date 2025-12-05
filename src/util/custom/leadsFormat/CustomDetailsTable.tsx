@@ -139,8 +139,8 @@ export function CustomDetailsTable<T extends object>({
           isMode === "manageLeads"
             ? paginatedProps.pageSize
             : isMode === "paymentDetails"
-            ? paymentDetailsPageSize
-            : 50,
+              ? paymentDetailsPageSize
+              : 50,
       } as Partial<TableStateWithFiltersAndPagination<T>>,
     },
     useFilters,
@@ -289,11 +289,10 @@ export function CustomDetailsTable<T extends object>({
                 <th
                   {...column.getHeaderProps()}
                   key={id}
-                  className={`border p-2 text-left text-black text-sm text-nowrap ${
-                    column.render("Header") === "Action"
-                      ? " w-[150px] min-w-[150px] max-w-[130px]"
-                      : " "
-                  }`}
+                  className={`border p-2 text-left text-black text-sm text-nowrap ${column.render("Header") === "Action"
+                    ? " w-[150px] min-w-[150px] max-w-[130px]"
+                    : " "
+                    }`}
                 >
                   {column.render("Header")}
                 </th>
@@ -310,9 +309,8 @@ export function CustomDetailsTable<T extends object>({
               <tr
                 {...row.getRowProps()}
                 key={i}
-                className={`relative group  ${
-                  i % 2 === 0 ? "  hover:bg-gray-200" : "hover:bg-gray-100"
-                }`}
+                className={`relative group  ${i % 2 === 0 ? "  hover:bg-gray-200" : "hover:bg-gray-100"
+                  }`}
               >
                 {row.cells.map((cell: any, id: any) => {
                   const cellValue = cell.value;
@@ -331,17 +329,15 @@ export function CustomDetailsTable<T extends object>({
                           });
                         }
                       }} // Handle row click
-                      className={`${
-                        leadId === settingId && i % 2 === 0 ? "bg-gray-200" : ""
-                      }  
+                      className={`${leadId === settingId && i % 2 === 0 ? "bg-gray-200" : ""
+                        }  
               ${leadId === settingId && i % 2 !== 0 ? "bg-gray-100" : ""}  
               ${leadId === settingId ? "border border-gray-300 " : "border "}  
-            ${
-              isMode === "offerAnalysis" &&
-              row.original.leadOfferId === selectedRow.offerId
-                ? "bg-blue-100 cursor-pointer"
-                : "cursor-pointer"
-            }
+            ${isMode === "offerAnalysis" &&
+                          row.original.leadOfferId === selectedRow.offerId
+                          ? "bg-blue-100 cursor-pointer"
+                          : "cursor-pointer"
+                        }
  p-2 text-left text-sm text-nowrap`}
                     >
                       {cell.column.Header === "Recording" ? (
@@ -354,13 +350,12 @@ export function CustomDetailsTable<T extends object>({
                       ) : cell.column.Header === "Status" &&
                         isMode === "paymentDetails" ? (
                         <p
-                          className={`px-2 rounded-full w-20 flex justify-center font-medium py-1 text-white text-sm ${
-                            row.original.status === "captured"
-                              ? "bg-green-600"
-                              : row.original.status === "failed"
+                          className={`px-2 rounded-full w-20 flex justify-center font-medium py-1 text-white text-sm ${row.original.status === "captured"
+                            ? "bg-green-600"
+                            : row.original.status === "failed"
                               ? "bg-red-600"
                               : "bg-yellow-600"
-                          }`}
+                            }`}
                         >
                           {cell.render("Cell")}
                         </p>
@@ -377,11 +372,10 @@ export function CustomDetailsTable<T extends object>({
                       ) : cell.column.Header === "Order ID" &&
                         isMode === "paymentDetails" ? (
                         <p
-                          className={`${
-                            row.original.status === "captured"
-                              ? "text-blue-600 font-medium underline underline-offset-2"
-                              : ""
-                          }`}
+                          className={`${row.original.status === "captured"
+                            ? "text-blue-600 font-medium underline underline-offset-2"
+                            : ""
+                            }`}
                           onClick={() => {
                             if (row.original.status === "captured") {
                               store.dispatch(deleteRazorPayPaymentId());
@@ -409,11 +403,10 @@ export function CustomDetailsTable<T extends object>({
                       ) : cell.column.Header === "Payment ID" &&
                         isMode === "paymentDetails" ? (
                         <p
-                          className={`${
-                            row.original.status === "failed"
-                              ? "text-blue-600 font-medium underline underline-offset-2"
-                              : ""
-                          }`}
+                          className={`${row.original.status === "failed"
+                            ? "text-blue-600 font-medium underline underline-offset-2"
+                            : ""
+                            }`}
                           onClick={() => {
                             if (row.original.status === "failed") {
                               store.dispatch(resetFailedPaymentDetails());
@@ -439,19 +432,37 @@ export function CustomDetailsTable<T extends object>({
                         >
                           {cell.render("Cell")}
                         </span>
-                      ) : (cell.column.Header === "Name" ||
-                        cell.column.Header === "Lead ID") && isMode!=="manageTicketForResolver" ? (
+                      ) : cell.column.Header === "Description" &&
+                        (isMode === "manageTicketForAdmin" ||
+                          isMode === "manageTicketForResolver") ? (
                         <span
-                          onClick={() => handleNavigation(leadId)}
-                          className="text-blue-500 text-[14px] font-semibold hover:underline cursor-pointer"
+                          className="text-justify"
+                          style={{
+                            display: "inline-block",
+                            maxWidth: "500px",
+                            width: "500px",
+                            whiteSpace: "normal",
+                            wordWrap: "break-word",
+                          }}
                         >
-                          {highlightText(cellValue, globalFilter || "")}
+                          {cell.render("Cell")}
                         </span>
-                      ) : typeof cellValue === "string" ? (
-                        highlightText(cellValue, globalFilter || "")
-                      ) : (
-                        cell.render("Cell")
-                      )}
+                      )
+
+
+                        : (cell.column.Header === "Name" ||
+                          cell.column.Header === "Lead ID") && isMode !== "manageTicketForResolver" ? (
+                          <span
+                            onClick={() => handleNavigation(leadId)}
+                            className="text-blue-500 text-[14px] font-semibold hover:underline cursor-pointer"
+                          >
+                            {highlightText(cellValue, globalFilter || "")}
+                          </span>
+                        ) : typeof cellValue === "string" ? (
+                          highlightText(cellValue, globalFilter || "")
+                        ) : (
+                          cell.render("Cell")
+                        )}
                     </td>
                   );
                 })}

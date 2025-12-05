@@ -47,6 +47,7 @@ const ApplicationStatusSlice = createSlice({
         state.responseForApplicationStatus = action.payload.map((item: any) => ({
           value: item.displayName,
           label: item.displayName,
+          id: item.coreApplicationStatusId
         }));
       })
       .addCase(getApplicationStatusValues.rejected, (state, action) => {

@@ -49,67 +49,6 @@ export const transformAddressData = (data: any) => {
   };
 };
 
-export const transformPayloadForAcademicData = (
-  data: any,
-  isEnableForTwelfthInputFields: boolean,
-  isEnableForDiplomaInputFields: boolean,
-  isEnableForUGInputFields: boolean,
-  leadCaptureId: number | string | undefined
-) => {
-  let transformPayload = {
-    tenthBoard: {
-      leadCaptureId: leadCaptureId,
-      academicDetailsTenthId: data.academicDetailsTenthId,
-      school: data.school,
-      coreTenthBoardId: data.coreTenthBoardId,
-      coreTenthMarkingSchemeId: data.coreTenthMarkingSchemeId,
-      tenthMarksOrGrade: data.tenthMarksOrGrade,
-      stream: data.tenthMainSubject,
-      marksScored: data.tenthMarksScored,
-      yearOfPassing: data.tenthYearOfPassing,
-    },
-    ...(isEnableForTwelfthInputFields === true && {
-      twelfthBoard: {
-        leadCaptureId: leadCaptureId,
-        academicDetailsTwelfthId: data.academicDetailsTwelfthId,
-        school: data.twelfthSchool,
-        twelveBoardId: data.coreTwelfthBoardId,
-        twelveMarkingSchemeId: data.coreTwelfthMarkingSchemeId,
-        twelveMarksOrGrade: data.TwelfthMarksOrGrade,
-        twelveResultStatus: data.coreTwelfthResultStatus,
-        stream: data.twelfthMainSubject,
-        marksScored: data.twelfthMarksScored,
-        yearOfPassing: data.twelfthYearOfPassing,
-      },
-    }),
-    ...(isEnableForDiplomaInputFields === true && {
-      diploma: {
-        leadCaptureId: leadCaptureId,
-        academicDetailsDiplomaId: data.academicDetailsDiplomaId,
-        school: data.diplomaSchool,
-        diplomaBoard: data.coreDiplomaBoardId,
-        resultStatus: data.coreDiplomaResultStatus,
-        marks: data.coreDiplomaMarks,
-        program: data.diplomaProgram,
-        yearOfPassing: data.diplomaYearOfPassing,
-        marksScored: data.diplomaMarksScored
-      },
-    }),
-    ...(isEnableForUGInputFields === true && {
-      ug: {
-        leadCaptureId: leadCaptureId,
-        academicDetailsUGId: data.academicDetailsUGId,
-        degree: data.ugSchool,
-        resultStatus: data.coreUgResultStatus,
-        marks: data.coreUgMarks,
-        program: data.ugProgram,
-        yearOfPassing: data.ugYearOfPassing,
-        marksScored: data.ugMarksScored
-      },
-    }),
-  };
-  return transformPayload;
-};
 
 export const transformPayloadForInterestShown = (payload: any) => {
   const length = payload.interest.length;

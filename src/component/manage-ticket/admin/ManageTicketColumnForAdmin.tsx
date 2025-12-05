@@ -49,12 +49,12 @@ export const manageTicketColumnForAdmin: Column<any>[] = [
     accessor: "description",
     Cell: ({ row }: { row: { original: any } }) => (
       <span
-        style={{
-          display: "inline-block",
-          maxWidth: "250px",
-          whiteSpace: "normal",
-          wordWrap: "break-word",
-        }}
+        // style={{
+        //   display: "inline-block",
+        //   maxWidth: "250px",
+        //   whiteSpace: "normal",
+        //   wordWrap: "break-word",
+        // }}
       >
         {row.original.description}
       </span>

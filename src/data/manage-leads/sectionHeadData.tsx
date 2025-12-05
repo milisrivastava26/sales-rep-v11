@@ -1,7 +1,7 @@
 import { BsGraphUpArrow } from "react-icons/bs";
 import { FaUserEdit } from "react-icons/fa";
 import { FaUserPlus, FaWhatsapp } from "react-icons/fa6";
-import { RiExportFill, RiImportFill, RiSearchLine } from "react-icons/ri";
+import { RiExportFill, RiImportFill } from "react-icons/ri";
 import { TiFlowMerge } from "react-icons/ti";
 
 export const sectionHeadData = [
@@ -53,12 +53,18 @@ export const sectionHeadData = [
         icon: <BsGraphUpArrow />,
         name: "Change Stage",
       },
-      {
-        id: 8,
-        icon: <RiSearchLine />,
-        name: "Advance Search",
-        path: "/manage-leads-v1/advance-search",
-      },
+      // {
+      //   id: 8,
+      //   icon: <RiSearchLine />,
+      //   name: "Advance Search",
+      //   path: "/manage-leads-v1/advance-search",
+      // },
+      // {
+      //   id: 81,
+      //   icon: <RiSearchLine />,
+      //   name: "Advance Search V1",
+      //   path: "/manage-leads-v1/advance-search-v1",
+      // },
       {
         id: 9,
         icon: <TiFlowMerge className="rotate-90 text-lg" />,

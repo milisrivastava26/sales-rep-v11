@@ -16,13 +16,13 @@ import { useParams } from "react-router-dom";
 import { mergedLeadDetailsData } from "../../../util/actions/mergedLeadDetailsData";
 import { getLeadAddressById } from "../../../store/lead-attribute-update/get-leadAddress-byId-slice";
 import { getAdditionalInfoById } from "../../../store/lead-attribute-update/get-leadAdditionalDetails-slice";
-import { getLeadAcademicDetailsById } from "../../../store/lead-attribute-update/get-leadAcademicDetails-slice";
 import PrintLeadDetails from "./lead-detail-new/PrintLeadDetails";
 import { getStudentDocsByCareerId } from "../../../store/student-documets/get-studentDocs-byId-slice";
 import { getAllDocUploadStatusByleadCaptureId } from "../../../store/student-documets/get-all-doc-upload-status-by-leadCapture-id-slice";
 import { getPsEmplId } from "../../../store/crm-to-ps-integration/get-PsEmplId-slice";
 import { getLeadContactDetailsById } from "../../../store/lead-attribute-update/get-leadContactDetails-byId-slice";
 import { getSrmusetOptionDetails } from "../../../store/srmuset/get-srmuSetOption-detail-slice";
+import { getLeadAcademicDetailsById } from "../../../store/academic/get-lead-academicDetails-slice";
 
 const RightView: React.FC = () => {
   const dispatch = store.dispatch;

@@ -44,9 +44,6 @@ interface typeUI {
   isDrawerOpen: boolean;
   isDrawerOpenForTabAction: boolean;
   modalId: number | null;
-  isOpenFor12th: boolean;
-  isOpenForDiploma: boolean;
-  isNotUndergraduate: boolean;
   isActionOwnerModalShow: boolean;
   initialPhoneNumber: any;
   submittedFormData: any;
@@ -114,6 +111,8 @@ interface typeUI {
   bulkWhatsappModal: boolean;
   openAssignModalForAdmin: boolean;
   ticketNumber: string;
+  pgDialog: boolean;
+  isEnableForPgInputFields: boolean;
 }
 
 const initialState: typeUI = {
@@ -146,9 +145,6 @@ const initialState: typeUI = {
   seed: 1,
 
   modalId: null, // modal id to handle the popup for the manage leads table, modal id is taken because the settingId is set to null for the onDisabledDropdownHandler which results in conflict for the popup to open and close for particular leadId
-  isOpenFor12th: false,
-  isOpenForDiploma: false,
-  isNotUndergraduate: false,
   isActionOwnerModalShow: false,
   initialPhoneNumber: null,
   submittedFormData: null,
@@ -246,6 +242,8 @@ const initialState: typeUI = {
   bulkWhatsappModal: false,
   openAssignModalForAdmin: false,
   ticketNumber: "",
+  isEnableForPgInputFields: false,
+  pgDialog: false,
 };
 
 const uiSlice = createSlice({
@@ -424,31 +422,6 @@ const uiSlice = createSlice({
     onDrawerOpenHandlerForTabAction: (state, action) => {
       state.isDrawerOpenForTabAction = action.payload;
     },
-
-    // For 12th handler toggle
-    onShow12thHandler: (state) => {
-      state.isOpenFor12th = true;
-    },
-
-    onDisabled12thHandler: (state) => {
-      state.isOpenFor12th = false;
-    },
-
-    // For Diploma handler toggle
-
-    onShowDiplomaHandler: (state) => {
-      state.isOpenForDiploma = true;
-    },
-    onDisabledDiplomaHandler: (state) => {
-      state.isOpenForDiploma = false;
-    },
-
-    onSetUndergraduateHandler: (state) => {
-      state.isNotUndergraduate = false;
-    },
-    ondisableUndergraduateHandler: (state) => {
-      state.isNotUndergraduate = true;
-    },
     onShowOwnerModalForActionHandler: (state) => {
       state.isActionOwnerModalShow = !state.isActionOwnerModalShow;
     },
@@ -513,21 +486,6 @@ const uiSlice = createSlice({
     },
     onSetCloseForLeadDetailsUpdateModal: (state) => {
       state.isUpdateModalOpen = false;
-    },
-    onSetEnableForTwefthInputFields: (state) => {
-      state.isEnableForTwelfthInputFields = true;
-      state.isEnableForDiplomaInputFields = false;
-    },
-    onSetEnableForDiplomaInputFields: (state) => {
-      state.isEnableForDiplomaInputFields = true;
-      state.isEnableForTwelfthInputFields = false;
-    },
-    onSetEnableForUGInputFields: (state) => {
-      state.isEnableForUGInputFields = true;
-    },
-    onDisableAllInputFields: (state) => {
-      state.isEnableForDiplomaInputFields = false;
-      state.isEnableForTwelfthInputFields = false;
     },
     onGetAllCheckSelectedDataFormCustomTable: (state, action) => {
       state.getAllCheckSelectedDataFormCustomTable = action.payload;
@@ -613,7 +571,8 @@ const uiSlice = createSlice({
       state.isModalOpenForAdvanceSearchColumn = false;
     },
     onAdvanceSearchModelFlag: (state) => {
-      state.isAdvanceSearchModelColumnFlag = state.isAdvanceSearchModelColumnFlag ? false : true;
+      state.isAdvanceSearchModelColumnFlag =
+        state.isAdvanceSearchModelColumnFlag ? false : true;
     },
 
     getThirdpartySelectedLead: (state, action) => {
@@ -711,11 +670,42 @@ const uiSlice = createSlice({
     },
     clearTicketNumber: (state) => {
       state.ticketNumber = "";
-    }
+    },
+    onSetEnableForTwefthInputFields: (state) => {
+      state.isEnableForTwelfthInputFields = true;
+      state.isEnableForDiplomaInputFields = false;
+    },
+    onSetEnableForDiplomaInputFields: (state) => {
+      state.isEnableForDiplomaInputFields = true;
+      state.isEnableForTwelfthInputFields = false;
+    },
+    onSetEnableForUGInputFields: (state) => {
+      state.isEnableForUGInputFields = true;
+    },
+    onDisableAllInputFields: (state) => {
+      state.isEnableForDiplomaInputFields = false;
+      state.isEnableForTwelfthInputFields = false;
+    },
+    showPgDialog: (state) => {
+      state.pgDialog = true;
+    },
+    hidePgDialog: (state) => {
+      state.pgDialog = false;
+    },
+    onSetEnableForPgInputFields: (state) => {
+      state.isEnableForPgInputFields = true;
+    },
+    onSetDisableForPgInputFields: (state) => {
+      state.isEnableForPgInputFields = false;
+    },
   },
 });
 
 export const {
+  showPgDialog,
+  hidePgDialog,
+  onSetEnableForPgInputFields,
+  onSetDisableForPgInputFields,
   setTicketNumber,
   clearTicketNumber,
   openAssignModalForAdmin,
@@ -759,8 +749,6 @@ export const {
   onSetErrorHandler,
   onDrawrOpenHandler,
   onDrawrCloseHandler,
-  onSetUndergraduateHandler,
-  ondisableUndergraduateHandler,
   onShowOwnerModalForActionHandler,
   onSetInitialPhoneNumber,
   onSetFinalDataForForm,

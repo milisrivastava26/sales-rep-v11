@@ -1,14 +1,13 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import coreservicesApi from "../../interceptor/coreservicesApi";
-import { tenthBoardType } from "../../types/tenth-board-type";
 
 interface TenthBoardType {
   isLoading: boolean;
   isError: string | null;
   isRun: string;
   resetActions: string;
-  responseForTenthBoard: tenthBoardType[];
+  responseForTenthBoard: [];
 }
 
 const initialState: TenthBoardType = {
@@ -21,19 +20,14 @@ const initialState: TenthBoardType = {
 
 // create thunk to get all TenthBoard data
 
-export const getTenthBoardValues = createAsyncThunk<any>(
-  "getAllTenthBoard",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await coreservicesApi.get("api/crm/core/core10thboard");
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data.message || "An error occured"
-      );
-    }
+export const getTenthBoardValues = createAsyncThunk<any>("getAllTenthBoard", async (_, { rejectWithValue }) => {
+  try {
+    const response = await coreservicesApi.get("api/crm/core/core10thboard");
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response?.data.message || "An error occured");
   }
-);
+});
 
 const getAllTenthBoardSlice = createSlice({
   name: "tenthBoard/getAllTenthBoard",
@@ -63,16 +57,12 @@ const getAllTenthBoardSlice = createSlice({
       })
       .addCase(getTenthBoardValues.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError =
-          action.error.message ||
-          "An Error occured while getting TenthBoard data";
+        state.isError = action.error.message || "An Error occured while getting TenthBoard data";
       });
   },
 });
 
-export const {
-  resetActionsForTenthBoardFormField, takeActionsForTenthBoardFormField,
-} = getAllTenthBoardSlice.actions;
+export const { resetActionsForTenthBoardFormField, takeActionsForTenthBoardFormField } = getAllTenthBoardSlice.actions;
 export const getAllTenthBoardReducer = getAllTenthBoardSlice.reducer;
 
-//coreTenthBoard
+//getAllTenthBoardData

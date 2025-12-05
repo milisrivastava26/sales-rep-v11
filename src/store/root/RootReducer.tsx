@@ -26,26 +26,14 @@ import { getAllAdmitTypeReducer } from "../get/get-all-admit-type-slice";
 import { getAllCategoryReducer } from "../get/get-all-category-slice";
 import { getAllCityReducer } from "../get/get-all-city-slice";
 import { getAllStateReducer } from "../get/get-all-state-slice";
-import { getAllTwelfthBoardReducer } from "../get/get-all-twelfth-board-slice";
 import { getAllCityByStateIdReducer } from "../get/get-allCity-byStateId-slice";
-import { getAllTenthBoardReducer } from "../get/get-all10th-slice";
-import { getAllTenthMarkingSchemeReducer } from "../get/get-all10thScheme-slice";
 import { getAllLeadSourceReducer } from "../get/get-all-leadSource-slice";
-import { getAllTwelfthMarkingSchemeReducer } from "../get/get-all-twelfthMarkingScheme-slice";
-import { getAllTwelfthResultStatusReducer } from "../get/get-all-twelfthResultStatus-slice";
-import { getAllUgResultStatusReducer } from "../get/get-all-ugResultStatus-slice";
 import { getAcademicCareerByIdReducer } from "../get/get-academic-career-by-id-slice";
 import { getAcademicProgramByIdReducer } from "../get/get-academicProgram-byId-slice";
 import { getAdmitTypeServiceDataByIdReducer } from "../get/get-admitTypeService-byId-slice";
 import { getCityByIdReducer } from "../get/get-all-city-by-id-slice";
-import { getTenthBoardByIdReducer } from "../get/get-all-tenth-board-by-id-slice";
-import { getTenthMarkingSchemeByIdReducer } from "../get/get-all-tenth-marking-scheme-by-Id-slice";
-import { getTwelfthBoardByIdReducer } from "../get/get-all-twelfth-board-by-id-slice";
-import { getUgResultStatusByIdReducer } from "../get/get-all-Ug-result-status-by-id-slice";
 import { getCategoryByIdReducer } from "../get/get-category-by-id-slice";
 import { getCoreStateByStateIdReducer } from "../get/get-state-byStateId-slice";
-import { getTwelfthMarkingSchemeByIdReducer } from "../get/get-twelfthMarkingScheme-by-id-slice";
-import { getTwelveResultByIdReducer } from "../get/get-twelveResult-by-id-slice";
 import { getAllLeadOwnerReducer } from "../sales-rep-details(changeOwner)/get-all-lead-owner-slice";
 import { AddLeadAdditionalDetailsReducer } from "../lead-capturing/create-lead-with-additional-details-slice";
 import { getleadDetailsByIdReducer } from "../view-leads-details/get-leadDetails-byId-slice";
@@ -99,8 +87,6 @@ import { updateLeadAddressReducer } from "../lead-attribute-update/update-leadAd
 import { getBiographicalInfoByIdReducer } from "../lead-attribute-update/get-leadBiographicalInfo-slice";
 import { getLeadAddressByIdReducer } from "../lead-attribute-update/get-leadAddress-byId-slice";
 import { getLeadContactDetailsByIdReducer } from "../lead-attribute-update/get-leadContactDetails-byId-slice";
-import { getLeadAcademicDetailsByIdReducer } from "../lead-attribute-update/get-leadAcademicDetails-slice";
-import { updateLeadAcademicDetailsReducer } from "../lead-attribute-update/update-leadAcademicDetails-slice";
 import { getLeadOfferDeclineReasonByOfferIdSliceReducer } from "../lead-with-decline-offer/get-leadOfferdeclineReason-by-offerId-slice";
 import { getLeadCaptureByFullNameReducer } from "../lead-capture/get-allLeadCapture-By-fullName-slice";
 import { getleadSubStagesByIdReducer } from "../lead-capturing/get-allLeadSubStages-byId-slice";
@@ -111,8 +97,6 @@ import { getAcDataRowWiseByCareerIdReducer } from "../lead-attribute-update/get-
 import { getCityDataRowWiseByStateIdReducer } from "../lead-attribute-update/get-CityRowWise-byStateId-slice";
 import { createLeadEnquirySliceReducer } from "../lead-attribute-update/create-leadEnquiry-slice";
 import { getAdditionalInfoByIdReducer } from "../lead-attribute-update/get-leadAdditionalDetails-slice";
-import { updateLeadAdditionalInfoReducer } from "../lead-attribute-update/update-leadAdditionalDetails-slice";
-import { AddAdditionalDetailsReducer } from "../lead-attribute-update/create-leadAdditionalDetails-slice";
 import { getAllActiveScholarCategoryReducer } from "../scholarship-get/get-all-scholarship-category-slice";
 import { getScholarshipSchemeByCategIdReducer } from "../scholarship-get/get-all-scholarshipScheme-by-categoryId-slice";
 import { getScholarshipSlabBySchemeIdReducer } from "../scholarship-get/get-all-scholarshipSlab-by-schemeId-slice";
@@ -299,6 +283,24 @@ import { serviceSubTypeReducer } from "../tickets/get-all-serviceSubType-slice";
 import { updateSolutionReducer } from "../tickets/update-solution-slice";
 import { getTicketFeedbackReducer } from "../tickets/get-ticket-feedback-slice";
 import { assignTicketToDepartmentReducer } from "../tickets/assign-ticket-to-other-department-slice";
+import { academicProgramAdvanceSearchReducer } from "../advance-search-v1/get-academic-program-for-advance-search";
+import { leadSubStagesAdvanceSearchReducer } from "../advance-search-v1/leadSubStagesForAdvanceSearchSlice";
+import { AdvancedSearchedLeadReducer } from "../advance-search-v1/get-advanced-searched-lead-slice";
+import { updateLeadAdditionalInfoReducer } from "../lead-attribute-update/update-leadAdditionalDetails-slice";
+import { AddAdditionalDetailsReducer } from "../lead-attribute-update/create-leadAdditionalDetails-slice";
+import { getAllTwelfthBoardReducer } from "../academic/get-all-twelfth-board-slice";
+import { getAllTenthBoardReducer } from "../academic/get-all10th-slice";
+import { getAllTenthMarkingSchemeReducer } from "../academic/get-all10thScheme-slice";
+import { getLeadAcademicDetailsByIdReducer } from "../academic/get-lead-academicDetails-slice";
+import { updateLeadAcademicDetailsReducer } from "../academic/update-leadAcademicDetails-slice";
+import { getAllTwelfthSchoolReducer } from "../academic/get-twelfth-school-slice";
+import { getAllTenthSchoolReducer } from "../academic/get-all-tenth-school-slice";
+import { getAllDiplomaSchoolReducer } from "../academic/get-all-diploma-school-slice";
+import { getAllUgUniversityReducer } from "../academic/get-all-ug-university-slice";
+import { getAllUgCollegeReducer } from "../academic/get-all-ug-college-slice";
+import { getAllPgCollegeReducer } from "../academic/get-all-pg-college-slice";
+import { getAllPgUniversityReducer } from "../academic/get-all-pg-university-slice";
+import { getAllCompetitiveExamReducer } from "../academic/get-all-competitive-exam-slice";
 
 const RootReducer = {
   auth: authReducer,
@@ -364,31 +366,18 @@ const RootReducer = {
   getAllAdmitType: getAllAdmitTypeReducer,
   getAllCategory: getAllCategoryReducer,
   cityByStateId: getAllCityByStateIdReducer,
-  coreTenthMarkingScheme: getAllTenthMarkingSchemeReducer,
-  getAllTwelfthMarkingSchemeData: getAllTwelfthMarkingSchemeReducer,
-  getAllTwelfthBoardData: getAllTwelfthBoardReducer,
-  getAllTwelfthResultStatusData: getAllTwelfthResultStatusReducer,
   getAllStatesData: getAllStateReducer,
   getAllCityData: getAllCityReducer,
-  getAllTenthBoardData: getAllTenthBoardReducer,
   getAllCityDataByStateId: getAllCityByStateIdReducer,
-  getAllTenthMarkingSchemeData: getAllTenthMarkingSchemeReducer,
   getAllLeadSource: getAllLeadSourceReducer,
-  getAllUgResultStatusData: getAllUgResultStatusReducer,
 
   //############## getById ##########################
   getAcademicCareerById: getAcademicCareerByIdReducer,
   getAcademicProgramById: getAcademicProgramByIdReducer,
   getAdmitTypeServiceDataById: getAdmitTypeServiceDataByIdReducer,
   getCityById: getCityByIdReducer,
-  getTenthBoardByIdReducer: getTenthBoardByIdReducer,
-  getTenthMarkingSchemeById: getTenthMarkingSchemeByIdReducer,
-  getTwelfthBoardById: getTwelfthBoardByIdReducer,
-  getUgResultStatusById: getUgResultStatusByIdReducer,
   getCategoryById: getCategoryByIdReducer,
   getCoreStateByStateId: getCoreStateByStateIdReducer,
-  getTwelfthMarkingSchemeById: getTwelfthMarkingSchemeByIdReducer,
-  getTwelveResultById: getTwelveResultByIdReducer,
   getLeadCaptureDataById: getLeadCaptureByIdReducer,
   getAllLeadOwner: getAllLeadOwnerReducer,
   assignSalesRepToManager: assignSalesRepToManagerReducer,
@@ -471,8 +460,6 @@ const RootReducer = {
   LeadAddressUpdate: updateLeadAddressReducer,
   getLeadAddressDataById: getLeadAddressByIdReducer,
   getLeadContactDetailsDataById: getLeadContactDetailsByIdReducer,
-  getLeadAcademicDetailsDataById: getLeadAcademicDetailsByIdReducer,
-  LeadAcademicDetailsUpdate: updateLeadAcademicDetailsReducer,
   getLeadEnquiryDetailsDataById: getLeadEnquiryDetailsByIdReducer,
   getAcademicProgramRowWiseByCareerId: getAcDataRowWiseByCareerIdReducer,
   getCityRowWiseByStateId: getCityDataRowWiseByStateIdReducer,
@@ -480,6 +467,9 @@ const RootReducer = {
   getAdditionalInfoByIdData: getAdditionalInfoByIdReducer,
   LeadAdditionalInfoUpdate: updateLeadAdditionalInfoReducer,
   addAdditionalDetails: AddAdditionalDetailsReducer,
+  getAcademicProgramForAdvanceSearch: academicProgramAdvanceSearchReducer,
+  leadSubStageForAdvanceSearch:leadSubStagesAdvanceSearchReducer,
+
 
   //**************Scholarship Get************************************ */
   getAllActiveScholarCategory: getAllActiveScholarCategoryReducer,
@@ -718,6 +708,24 @@ const RootReducer = {
 
   //bulkWhatsapp
   sendBulkWhatsapp: sendBulkWhatsappByTemplateIdReducer,
+
+  //advanceSearchV1
+  getAdvancedSearchedLeads: AdvancedSearchedLeadReducer,
+
+  //academic details
+  coreTwelfthBoard: getAllTwelfthBoardReducer,
+  getAllTenthBoardData: getAllTenthBoardReducer,
+  coreTenthMarkingScheme: getAllTenthMarkingSchemeReducer,
+  getLeadAcademicDetailsDataById: getLeadAcademicDetailsByIdReducer,
+  LeadAcademicDetailsUpdate: updateLeadAcademicDetailsReducer,
+  coreTwelfthSchool: getAllTwelfthSchoolReducer,
+  coreTenthSchool: getAllTenthSchoolReducer,
+  coreDiplomaSchool: getAllDiplomaSchoolReducer,
+  coreUgUniversity: getAllUgUniversityReducer,
+  getAllUgCollege: getAllUgCollegeReducer,
+  getAllPgCollege: getAllPgCollegeReducer,
+  getAllPgUniversity: getAllPgUniversityReducer,
+  getAllCompetitiveExam: getAllCompetitiveExamReducer,
 };
 
 export default RootReducer;

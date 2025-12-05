@@ -1,11 +1,7 @@
 import { useEffect } from "react";
 import store from "../../../store";
 import {
-  ondisableUndergraduateHandler,
-  onSetEnableForDiplomaInputFields,
-  onSetEnableForTwefthInputFields,
   onSetErrorHandler,
-  onSetUndergraduateHandler,
   uiSliceAction,
 } from "../../../store/ui/ui-slice";
 
@@ -46,7 +42,6 @@ const SelectInput: React.FC<typeSelectInput> = ({
   firstCndtName,
   secondCndtName,
   thirdCndtName,
-  fourthCndtName,
   onGetAcademicProgram,
   onChangeHandlerForSelectedValue,
   isModeUpdate,
@@ -56,13 +51,6 @@ const SelectInput: React.FC<typeSelectInput> = ({
   // Handle the change event when an option is selected
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
-    if (selectedValue === "DIPLOMA") {
-      store.dispatch(onSetEnableForDiplomaInputFields());
-    }
-    if (selectedValue === "TWELFTH") {
-      store.dispatch(onSetEnableForTwefthInputFields());
-    }
-
 
     onChangeHandlerForSelectedValue && onChangeHandlerForSelectedValue(selectedValue);
 
@@ -73,14 +61,6 @@ const SelectInput: React.FC<typeSelectInput> = ({
       onGetCity && onGetCity(selectedValue);
     } else if (cndtVal === firstCndtName && (isModeFor === "create" || isModeUpdate) && nameForSelect === "coreStateId2") {
       onGetCity && onGetCity({ stateId: selectedValue, target: "coreStateId2" });
-    } else if (cndtVal === secondCndtName && (isModeFor === "create" || isModeUpdate)) {
-      dispatch(ondisableUndergraduateHandler());
-      onGetAcademicProgram && onGetAcademicProgram(selectedValue);
-
-      // condition for setting the isUndergraduate state true when undergraduate is selected for the academic career field based on id and name
-      if (cndtVal === secondCndtName && selectedValue !== "46" && (isModeFor === "create" || isModeUpdate)) {
-        dispatch(onSetUndergraduateHandler());
-      }
     }
     // this condition is for isModeFor quick add form
     else if (cndtVal === secondCndtName && (isModeFor === "quickAddForm" || isModeFor === "personalDetails")) {
@@ -97,12 +77,6 @@ const SelectInput: React.FC<typeSelectInput> = ({
     } else if (cndtVal === firstCndtName && (selectedValue !== secondCndtName || selectedValue !== thirdCndtName)) {
       setIsEnabled && setIsEnabled(false);
       store.dispatch(uiSliceAction.onManageFilterDropdownHandler(false));
-    } else if (selectedValue === fourthCndtName && (isModeFor === "create" || isModeUpdate)) {
-      dispatch(uiSliceAction.onShow12thHandler());
-      dispatch(uiSliceAction.onDisabledDiplomaHandler());
-    } else if (selectedValue === thirdCndtName && (isModeFor === "create" || isModeUpdate)) {
-      dispatch(uiSliceAction.onShowDiplomaHandler());
-      dispatch(uiSliceAction.onDisabled12thHandler());
     } else if (cndtVal === firstCndtName && (selectedValue === secondCndtName || selectedValue === thirdCndtName)) {
       onChangeHandler && onChangeHandler(e);
       dispatch(uiSliceAction.onManageFilterDropdownHandler(false));

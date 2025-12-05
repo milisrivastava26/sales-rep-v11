@@ -5,7 +5,6 @@ import store, { RootState } from "../../../../store";
 import { useParams } from "react-router-dom";
 import { getLeadAddressById } from "../../../../store/lead-attribute-update/get-leadAddress-byId-slice";
 import { getLeadContactDetailsById } from "../../../../store/lead-attribute-update/get-leadContactDetails-byId-slice";
-import { getLeadAcademicDetailsById } from "../../../../store/lead-attribute-update/get-leadAcademicDetails-slice";
 import { useSelector } from "react-redux";
 import ContactDetailsInfo from "./ContactDetailsInfo";
 import LoadingSpinner from "../../../../util/custom/ui/LoadingSpinner";
@@ -13,10 +12,13 @@ import InterestShownInfo from "./InterestShownInfo";
 import { getAdditionalInfoById } from "../../../../store/lead-attribute-update/get-leadAdditionalDetails-slice";
 import SrmuSetInfo from "./SrmuSetInfo";
 import { getSrmusetOptionDetails } from "../../../../store/srmuset/get-srmuSetOption-detail-slice";
-import AcademicInfo from "./AcademicDetailsInfo";
 import GenerateErpId from "./GenerateErpId";
-import { getPsEmplId, resetGetPsEmplIdResponse } from "../../../../store/crm-to-ps-integration/get-PsEmplId-slice";
-import { getUgAdditionalDetailsById } from "../../../../store/lead-academicDetailsForUG/get-ugAdditionalDetails-slice";
+import {
+  getPsEmplId,
+  resetGetPsEmplIdResponse,
+} from "../../../../store/crm-to-ps-integration/get-PsEmplId-slice";
+import AcademicDetails from "./academic-details/AcademicDetails";
+import { getLeadAcademicDetailsById } from "../../../../store/academic/get-lead-academicDetails-slice";
 
 const LeadDetailsNew: React.FC = () => {
   const { leadCaptureId } = useParams();
@@ -53,20 +55,22 @@ const LeadDetailsNew: React.FC = () => {
   const { responseOfLeadEnquiryDetailsById } = useSelector(
     (state: RootState) => state.getLeadEnquiryDetailsDataById
   );
-  const { isRun: isRunGetEmplId } = useSelector((state: RootState) => state.syncDataToPs);
+  const { isRun: isRunGetEmplId } = useSelector(
+    (state: RootState) => state.syncDataToPs
+  );
   const activeEnquiry = Array.isArray(responseOfLeadEnquiryDetailsById)
     ? responseOfLeadEnquiryDetailsById.filter(
-      (item: any) => item.status === "ACTIVE"
-    )
+        (item: any) => item.status === "ACTIVE"
+      )
     : [];
 
-  const { isLoading: isLoadingForEmplId } = useSelector((state: RootState) => state.getEmplId);
-
+  const { isLoading: isLoadingForEmplId } = useSelector(
+    (state: RootState) => state.getEmplId
+  );
 
   const leadEnquiryId = activeEnquiry[0].leadEnquiryId;
   useEffect(() => {
     store.dispatch(getLeadAcademicDetailsById(leadCaptureId));
-    store.dispatch(getUgAdditionalDetailsById(leadCaptureId));
   }, [leadCaptureId, isRunForAcademic]);
 
   useEffect(() => {
@@ -88,14 +92,14 @@ const LeadDetailsNew: React.FC = () => {
   useEffect(() => {
     store.dispatch(resetGetPsEmplIdResponse());
     store.dispatch(getPsEmplId(leadCaptureId));
-  }, [leadCaptureId, isRunGetEmplId])
-
+  }, [leadCaptureId, isRunGetEmplId]);
 
   const isLoading =
     isLoadingForBiographical ||
     isLoadingForContact ||
     isLoadingForAddress ||
-    isLoadingForAcademic || isLoadingForEmplId ||
+    isLoadingForAcademic ||
+    isLoadingForEmplId ||
     isLoadingForInterestShown;
 
   return (
@@ -116,7 +120,7 @@ const LeadDetailsNew: React.FC = () => {
           <GenerateErpId />
           <ContactDetailsInfo />
           <SrmuSetInfo />
-          <AcademicInfo />
+          <AcademicDetails />
         </>
       )}
     </>

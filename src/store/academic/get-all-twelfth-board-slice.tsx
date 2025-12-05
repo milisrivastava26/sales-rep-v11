@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import coreservicesApi from "../../interceptor/coreservicesApi";
-import { Option } from "../../types/twelfth-board-type";
 
 interface TwelfthBoardType {
   isLoading: boolean;
   isError: string | null;
   isRun: string;
   resetActions: string;
-  responseForTwelfthBoard: Option[];
+  responseForTwelfthBoard: [];
 }
 
 const initialState: TwelfthBoardType = {
@@ -23,7 +22,7 @@ const initialState: TwelfthBoardType = {
 
 export const getTwelfthBoardValues = createAsyncThunk<any>("getAllTwelfthBoard", async (_, { rejectWithValue }) => {
   try {
-    const response = await coreservicesApi.get("api/crm/core/core12thboard");
+    const response = await coreservicesApi.get("/api/crm/core/core12thboard");
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data.message || "An error occured");

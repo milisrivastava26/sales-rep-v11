@@ -117,7 +117,7 @@ const AssignTicket: React.FC = () => {
         departmentId: values.departments,
         assigneeId: assigneeIds,
         resolutionDescription
-        : values.remark,
+          : values.remark,
       };
       store.dispatch(assignTicketToDepartment(payload));
     }
@@ -301,11 +301,11 @@ const AssignTicket: React.FC = () => {
                       key={index}
                       className="flex-grow min-w-[180px] p-3 bg-white border border-blue-200 rounded-md shadow-sm"
                     >
-                      <p className="text-sm">
+                      <p className="text-sm whitespace-normal break-words">
                         <span className="font-semibold">Department:</span> {item.departmentName}
                       </p>
 
-                      <p className="text-sm mt-1">
+                      <p className="text-sm mt-1 whitespace-normal break-words">
                         <span className="font-semibold">Assignee:</span> {getAssignee(item.departmentName, departments)}
                       </p>
                     </div>
@@ -314,6 +314,7 @@ const AssignTicket: React.FC = () => {
                   <p className="text-gray-500 mt-1 italic">No Departments</p>
                 )}
               </div>
+
             </div>
 
             {/* --- Service Type --- */}
@@ -367,7 +368,7 @@ const AssignTicket: React.FC = () => {
                             </span>
                           </div>
                           <div>
-                            <span className="text-gray-600">{item.status==="Reassigned" ? "Transferred to" : "Department"} </span>
+                            <span className="text-gray-600">{item.status === "Reassigned" ? "Transferred to" : "Department"} </span>
                             <span className="text-blue-600">
                               {getDepartment(item.assigneeId, departments)}
                             </span>

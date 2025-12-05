@@ -23,6 +23,8 @@ export const leadsItems: DropdownItem[] = [
   { label: "Lead Discount", href: "/lead-discount", roles: ["ROLE_DISCOUNT", "ROLE_DISCOUNT_VIEW", "ROLE_ADMIN"] },
   { label: "Manage Ticket", href: "/manage-ticket", roles: ["ROLE_TICKET_RESOLVER", "ROLE_ADMIN"] },
   { label: "Print Id Card", href: "/print-id-card", roles: ["ROLE_ID_CARD_ADMIN"] },
+  { label: "Advance Search", href: "/advance-search-v1", roles: ["ROLE_USER", "ROLE_ADMIN", "ROLE_MANAGER"] },
+
 ];
 
 export const leadAuthorityItems = [{ label: "View Declined Cases", href: "/view-decline-cases" }];

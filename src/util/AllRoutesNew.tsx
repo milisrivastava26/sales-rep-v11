@@ -5,7 +5,6 @@ import ProfilePage from "../pages/ProfilePage";
 import SmartViewPage from "../pages/smart-view/SmartViewPage";
 import OAuth2RedirectHandler from "../component/OAuth2RedirectHandler";
 import ViewManageLeadsPage from "../pages/manage-leads/ViewManageLeadsPage";
-import CreateNewLeadsPage from "../pages/manage-leads/CreateNewLeadsPage";
 import ViewDeclineCasesPage from "../pages/view-decline-cases/ViewDeclineCasesPage";
 import ManageContractPage from "../pages/view-decline-cases/ManageContractPage";
 import ManageLeadsV1Page from "../pages/manage-leads-v1/ManageLeadsV1Page";
@@ -15,7 +14,6 @@ import ThridpartyHomePage from "../pages/third-party/ThridpartyHomePage";
 import ThirdPartyRootLayout from "../pages/third-party/ThirdPartyRootLayout";
 import ImportedLeadPage from "../pages/imported-leads/ImportedLeadPage";
 import TestApiPage from "../pages/test-api/TestApiPage";
-import AdvanceSearchPage from "../pages/advance-search/AdvanceSearchPage";
 import MergeLeadsPage from "../pages/merge-leads/MergeLeadsPage";
 import ManageLeadsV2Page from "../pages/manage-leads-v2/ManageLeadsV2Page";
 import ManageTaskPage from "../pages/manage-task/ManageTaskPage";
@@ -27,6 +25,7 @@ import LeadDiscountPage from "../pages/lead-discount/LeadDiscountPage";
 import ManageTicketPage from "../pages/manage-tickets/ManageTicketPage";
 import PrintIdCardPage from "../pages/print-id-card/PrintIdCardPage";
 import AssignTicketPage from "../pages/manage-tickets/AssignTicketPage";
+import AdvanceSearchV1Page from "../pages/advance-search-v1/AdvanceSearchV1Page";
 
 // Helper function that builds routes based on user details
 export const getRoutes = (userDetails: any) => {
@@ -114,10 +113,6 @@ export const getRoutes = (userDetails: any) => {
             element: <ManageLeadsV1Page />,
             children: [
               {
-                path: "add-new-leads",
-                element: <CreateNewLeadsPage />,
-              },
-              {
                 path: "details/:leadCaptureId",
                 element: <ViewManageLeadsPage />,
               },
@@ -125,10 +120,14 @@ export const getRoutes = (userDetails: any) => {
                 path: "imported-leads",
                 element: <ImportedLeadPage />,
               },
-              {
-                path: "advance-search",
-                element: <AdvanceSearchPage />,
-              },
+              // {
+              //   path: "advance-search",
+              //   element: <AdvanceSearchPage />,
+              // },
+              // {
+              //   path: "advance-search-v1",
+              //   element: <AdvanceSearchV1Page />,
+              // },
               {
                 path: "merge-leads",
                 element: <MergeLeadsPage />,
@@ -192,6 +191,10 @@ export const getRoutes = (userDetails: any) => {
           {
             path: "/superbot-details",
             element: <SuperbotDetailsPage />,
+          },
+          {
+            path: "/advance-search-v1",
+            element: <AdvanceSearchV1Page />
           },
         ],
       },

@@ -1,14 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import coreservicesApi from "../../interceptor/coreservicesApi";
-import { getValuesType } from "../../types/general/get-request-types";
 
 interface TenthMarkingSchemeType {
   isLoading: boolean;
   isError: string | null;
   isRun: string;
   resetActions: string;
-  responseForTenthMarkingScheme: getValuesType[];
+  responseForTenthMarkingScheme: [];
 }
 
 const initialState: TenthMarkingSchemeType = {
@@ -23,7 +22,7 @@ const initialState: TenthMarkingSchemeType = {
 
 export const getTenthMarkingSchemeValues = createAsyncThunk<any>("getAllTenthMarkingScheme", async (_, { rejectWithValue }) => {
   try {
-    const response = await coreservicesApi.get("api/crm/core/coremarkingscheme");
+    const response = await coreservicesApi.get("/api/crm/core/coremarkingscheme");
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data.message || "An error occured");

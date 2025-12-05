@@ -5,12 +5,14 @@ interface LeadSourseState {
   isLoading: boolean;
   isError: string | null;
   responseLeadSourseData: { label: string; value: string }[];
+  responseofLeadSourceAdvanceSearch: { is: number, label: string; value: string }[];
 }
 
 const initialState: LeadSourseState = {
   isLoading: false,
   isError: null,
   responseLeadSourseData: [],
+  responseofLeadSourceAdvanceSearch: []
 };
 
 // Thunk to fetch all lead programs
@@ -44,6 +46,11 @@ const leadSourseSlice = createSlice({
       state.responseLeadSourseData = action.payload.map((item: any) => ({
         label: item.description, // Adjust to the correct field name from the API
         value: item.description,
+      }));
+      state.responseofLeadSourceAdvanceSearch = action.payload.map((item: any) => ({
+        label: item.description, 
+        value: item.description,
+        id: item.leadSourceId
       }));
     });
 
